@@ -2,9 +2,13 @@
 {% load i18n %}
 
 {% block title %}{{ title }} | {% trans 'Proyecto PIC' %}{% endblock %}
-
+	
 {% block branding %}
-   <h1 id="site-name">{% trans 'Proyecto PIC' %}</h1>
+   <h1 id="site-name">
+  	{% load staticfiles %}
+  	<img src="{% static "images/logoPic.png" %}"/>
+   </h1>
+   
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
