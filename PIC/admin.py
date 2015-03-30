@@ -1,5 +1,5 @@
 from django.contrib import admin
-from sortComp.models import Proyecto
+from PIC.models import Proyecto
 from django.db import models
 
 # Register your models here.
