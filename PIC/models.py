@@ -3,7 +3,7 @@ import datetime
 from django.contrib.auth.models import User
 
 # Create your models here.
-
+#prueba de branch
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=60)
     descripcion = models.CharField(max_length=120)
