@@ -1,6 +1,6 @@
 from django.contrib import admin
-from PIC.models import Proyecto
-from django.db import models
+from PIC.models import Proyecto, Flujo
 
 # Register your models here.
 admin.site.register(Proyecto)
+admin.site.register(Flujo)
