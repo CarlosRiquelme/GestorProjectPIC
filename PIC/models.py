@@ -2,6 +2,7 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 #prueba de branch
 class Proyecto(models.Model):
@@ -15,3 +16,6 @@ class Proyecto(models.Model):
     usuarios = models.ManyToManyField(User, related_name='proyectos')
     def __unicode__(self):
         return self.nombre
+
+
+    
