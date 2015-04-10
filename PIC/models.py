@@ -1,5 +1,4 @@
 from django.db import models
-import datetime
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -15,3 +14,11 @@ class Proyecto(models.Model):
     usuarios = models.ManyToManyField(User, related_name='proyectos')
     def __unicode__(self):
         return self.nombre
+
+class Flujo(models.Model):
+	nombre=models.CharField(max_length=60)
+	tiempo_estimado=models.IntegerField()
+	estado=models.CharField(max_length=40)
+	proyecto = models.ForeignKey(Proyecto)
+	def __unicode__(self):
+		return self.nombre   
