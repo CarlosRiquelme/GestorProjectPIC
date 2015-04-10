@@ -41,7 +41,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 INSTALLED_APPS = (
     'bootstrap_admin',
-    'django_admin_bootstrapped'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
