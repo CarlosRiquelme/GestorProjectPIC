@@ -31,10 +31,10 @@ ALLOWED_HOSTS = []
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'paofigue@gmail.com'
-EMAIL_HOST_PASSWORD = 'informatica'
-DEFAULT_FROM_EMAIL = 'paofigue@gmail.com'
-SERVER_EMAIL = 'paofigue@gmail.com'
+EMAIL_HOST_USER = 'gestorprojectpic@gmail.com'
+EMAIL_HOST_PASSWORD = 'paolaivantato'
+DEFAULT_FROM_EMAIL = 'gestorprojectpic@gmail'
+SERVER_EMAIL = 'gestorprojectpic@gmail'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admindocs',
     'PIC',
 )
 
