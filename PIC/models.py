@@ -73,3 +73,11 @@ class Flujo(models.Model):
     def __unicode__(self):
         return self.nombre
 
+class user_story(models.Model):
+    nombre=models.CharField(max_length=40)
+    descripcion=models.TextField(max_length=120)
+    tiempo_estimado=models.IntegerField()
+    tiempo_trabajado=models.IntegerField()
+    fecha_inicio=models.DateTimeField('Fecha de Inicio')
+    fecha_fin=models.DateTimeField('Fecha Fin')
+    user=models.ForeignKey(User)
