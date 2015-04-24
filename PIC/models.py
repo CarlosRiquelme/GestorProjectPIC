@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 #prueba de branch
-
+#prueba commit2.1
 
 
 class Proyecto(models.Model):
