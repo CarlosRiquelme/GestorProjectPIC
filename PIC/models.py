@@ -1,17 +1,15 @@
+# encoding: utf-8
 from django.db import models
 from django.contrib.auth.models import User, Group
 
 
 # Create your models here.
 #prueba de branch
-<<<<<<< HEAD
+
 class Usuario_rol(models.Model):
     usuario = models.ForeignKey(User)
     rol = models.ForeignKey(Group)
-=======
 
-
->>>>>>> 05c1e52ab761cc08c528e9799f4e4e9c78cbaaa0
 
 class Proyecto(models.Model):
     """
@@ -34,17 +32,9 @@ class Proyecto(models.Model):
     estado = models.CharField(max_length=40)
     usuario_rol = models.ManyToManyField(Usuario_rol, related_name='proyectos')
     def __unicode__(self):
-<<<<<<< HEAD
+
         return self.nombre  
 
-=======
-        return self.nombre
-
-#<<<<<<< HEAD
-
-    
-#=======
->>>>>>> 05c1e52ab761cc08c528e9799f4e4e9c78cbaaa0
 class Flujo(models.Model):
 
     """
@@ -61,8 +51,4 @@ class Flujo(models.Model):
     proyecto = models.ForeignKey(Proyecto)
     def __unicode__(self):
 		return self.nombre   
-<<<<<<< HEAD
 
-=======
-#>>>>>>> cf64be24e8fb6eee3e0fc5f538b152687c3fa45d
->>>>>>> 05c1e52ab761cc08c528e9799f4e4e9c78cbaaa0

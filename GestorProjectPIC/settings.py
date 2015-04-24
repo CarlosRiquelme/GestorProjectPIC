@@ -22,6 +22,10 @@ SECRET_KEY = '#1ql!ezw6c=eu*f6pv&dj1e7-at-&qw9#4oj39t@iq!s&yf9ut'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+PATH = '/home/pfigueredo/GestorProjectPIC'
+
+ADMIN_MEDIA_PREFIX = '/media/'
+
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
