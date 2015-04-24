@@ -78,7 +78,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'plantillas'),
     #"/home/pfigueredo/Documentos/DjangoProyectos/electroDB/templates",
 )
-
+# thekukulele master
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 #hola bebe
@@ -90,7 +90,7 @@ DATABASES = {
         'USER': 'postgres',                      # Not used with sqlite3.
         'PASSWORD': 'postgres',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+        'PORT': '54332',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
