@@ -73,7 +73,7 @@ class Flujo(models.Model):
     def __unicode__(self):
         return self.nombre
 
-class user_story(models.Model):
+class User_Story(models.Model):
     nombre=models.CharField(max_length=40)
     descripcion=models.TextField(max_length=120)
     tiempo_estimado=models.IntegerField()
@@ -81,3 +81,12 @@ class user_story(models.Model):
     fecha_inicio=models.DateTimeField('Fecha de Inicio')
     fecha_fin=models.DateTimeField('Fecha Fin')
     user=models.ForeignKey(User)
+
+
+class Sprint(models.Model):
+    nombre = models.CharField(max_length=60)
+    fechaCreacion = models.DateTimeField('Fecha de Creacion')
+    fechaInicio = models.DateTimeField('Fecha de Inicio')
+    fechaFinEstimado = models.DateTimeField('Fecha de Fin Estimado')
+    tiempoEstimado = models.IntegerField()
+    sprint_us = models.ManyToManyField(User_Story)
