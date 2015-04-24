@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.test import TestCase
 from django.test.utils import override_settings
 from django.contrib.auth.models import User, Group
+from PIC.models import Proyecto, Flujo
 
 
 class TestUserBD(TestCase):
@@ -20,6 +21,12 @@ class TestUserBD(TestCase):
 		print("Base de Datos no se encuentra vacia")
 
 class TestLogin(TestCase):
+	"""
+	
+	Test para prueba de login de un usuario registrado
+	en el sistema
+	
+	"""
 
 	def test_login_usuario(self):
 		print("\n TEST: Loguear Usuario Registrado")
@@ -39,7 +46,16 @@ class TestLogin(TestCase):
 			print("Prueba Fallida, el usuario no existe")
 			return
 		print("Prueba exitosa, el usuario pudo iniciar sesion")
+
+class testf(TestCase):
+	def testf(self):
+		print "\n"
 class testNologin(TestCase):
+	"""
+	Test prueba de login de un usuario no registrado 
+	en el sistema 
+	
+	"""
 	def test_login_usuario(self):
 		print("\n TEST: Loguear Usuario NO Registrado")
 		usuario="admin"
@@ -94,6 +110,73 @@ class GrupoTestCase (TestCase):
       valido = Group.objects.filter(name='"oo"').exists()
       if valido==False:
           print "\n---No existe el grupo buscado"
+################################################################################################
+######TEST PROYECTO
+################################################################################################
+
+class TestProyecto(TestCase):
+
+	def setUp(self):
+		print "\n TEST PROYECTO"
+		print "\nBuscar Proyecto Creado"
+		Proyecto.objects.create(nombre='project1', descripcion='p1',fechaCreacion='2015-04-09 21:03:31-04',fechaInicio='2015-04-09 21:03:31-04',fechaFin='2015-04-09 21:03:31-04',duracionEstimada='3',estado='ok')
+		#dato={'nombre':'project1', 'descripcion':'p1', 'fechaCreacion':'2015-04-09 21:03:31-04', 'fechaInicio':'2015-04-09 21:03:31-04', 'fechaFin':'2015-04-09 21:03:31-04', 'duracionEstimada':'3', 'estado':'ok', 'usuarios':'1'}
+	def test_traet(self):
+		valido=False
+		valido=Proyecto.objects.filter(nombre='project1').exists()
+		if valido==False:
+			print "\nNo existe el Proyecto"
+		if valido == True:
+			print "\nExiste el Proyecto"
 
 
- 
+
+class TestProyectoNO(TestCase):
+
+	def setUp(self):
+		print "\n TEST PROYECTO no Existe"
+		print "\nBuscar Proyecto Creado"
+		Proyecto.objects.create(nombre='project1', descripcion='p1',fechaCreacion='2015-04-09 21:03:31-04',fechaInicio='2015-04-09 21:03:31-04',fechaFin='2015-04-09 21:03:31-04',duracionEstimada='3',estado='ok')
+		#dato={'nombre':'project1', 'descripcion':'p1', 'fechaCreacion':'2015-04-09 21:03:31-04', 'fechaInicio':'2015-04-09 21:03:31-04', 'fechaFin':'2015-04-09 21:03:31-04', 'duracionEstimada':'3', 'estado':'ok', 'usuarios':'1'}
+	def test_traet(self):
+		valido=False
+		valido=Proyecto.objects.filter(nombre='project2').exists()
+		if valido==False:
+			print "\nNo existe el Proyecto"
+		if valido == True:
+			print "\nExiste el Proyecto"
+
+################################################################################################
+######TEST Flujo
+################################################################################################
+
+class TestFlujo(TestCase):
+
+	def setUp(self):
+		print "\n TEST Flujo Existe"
+		print "\nBuscar Flujo Creado"
+		Flujo.objects.create(nombre='flujo1')
+		#dato={'nombre':'project1', 'descripcion':'p1', 'fechaCreacion':'2015-04-09 21:03:31-04', 'fechaInicio':'2015-04-09 21:03:31-04', 'fechaFin':'2015-04-09 21:03:31-04', 'duracionEstimada':'3', 'estado':'ok', 'usuarios':'1'}
+	def test_traet(self):
+		valido=False
+		valido=Flujo.objects.filter(nombre='flujo1').exists()
+		if valido==False:
+			print "\nNo existe el Flujo"
+		if valido == True:
+			print "\nExiste el Flujo"
+
+
+class TestFlujoNO(TestCase):
+
+	def setUp(self):
+		print "\n TEST Flujo no Existe"
+		print "\nBuscar Flujo Creado"
+		Flujo.objects.create(nombre='flujo1')
+		#dato={'nombre':'project1', 'descripcion':'p1', 'fechaCreacion':'2015-04-09 21:03:31-04', 'fechaInicio':'2015-04-09 21:03:31-04', 'fechaFin':'2015-04-09 21:03:31-04', 'duracionEstimada':'3', 'estado':'ok', 'usuarios':'1'}
+	def test_traet(self):
+		valido=False
+		valido=Flujo.objects.filter(nombre='flujo23').exists()
+		if valido==False:
+			print "\nNo existe el Flujo"
+		if valido == True:
+			print "\nExiste el Flujo"

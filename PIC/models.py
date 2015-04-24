@@ -1,11 +1,29 @@
+#-*-coding:utf-8-*-
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 
-# Create your models here.
-#prueba de branch
-#prueba commit2.1
 
+
+PROYECTOS_ESTADOS = (
+    ('EN-ESPERA', 'EN-ESPERA'),
+    ('EN-DESARROLLO', 'EN-DESARROLLO'),
+    ('FINALIZADO', 'FINALIZADO'),
+)
+
+
+FLUJOS_ESTADOS = (
+    ('EN-ESPERA', 'EN-ESPERA'),
+    ('EN-DESARROLLO', 'EN-DESARROLLO'),
+    ('FINALIZADO', 'FINALIZADO'),
+)
+
+class Usuario_Rol(models.Model):
+    usuario = models.ForeignKey(User)
+    rol= models.ForeignKey(Group)
+    # class Meta:
+    #     verbose_name = "Asignar Rol a User"
+    #     verbose_name_plural = "Asignar Rol a User"
 
 class Proyecto(models.Model):
     """
@@ -25,15 +43,13 @@ class Proyecto(models.Model):
     fechaInicio = models.DateTimeField('Fecha de Inicio')
     fechaFin = models.DateTimeField('Fecha de Fin')
     duracionEstimada = models.CharField(max_length=20)
-    estado = models.CharField(max_length=40)
-    usuarios = models.ManyToManyField(User, related_name='proyectos')
+    estado = models.CharField(max_length=40, choices=PROYECTOS_ESTADOS, default='EN-ESPERA')
+    rol_usuario = models.ManyToManyField(Usuario_Rol, related_name='proyectos')
+    scrumMaster=models.ForeignKey(User)
     def __unicode__(self):
         return self.nombre
 
-#<<<<<<< HEAD
 
-    
-#=======
 class Flujo(models.Model):
 
     """
@@ -46,8 +62,8 @@ class Flujo(models.Model):
 
     nombre=models.CharField(max_length=60)
     tiempo_estimado=models.IntegerField()
-    estado=models.CharField(max_length=40)
+    estado=models.CharField(max_length=40,choices=False,default='EN-ESPERA')
     proyecto = models.ForeignKey(Proyecto)
     def __unicode__(self):
 		return self.nombre   
-#>>>>>>> cf64be24e8fb6eee3e0fc5f538b152687c3fa45d
+
