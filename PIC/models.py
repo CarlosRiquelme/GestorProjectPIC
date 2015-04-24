@@ -6,6 +6,11 @@ from django.contrib.auth.models import User, Group
 # Create your models here.
 #prueba de branch
 
+class Usuario_rol(models.Model):
+    usuario = models.ForeignKey(User)
+    rol = models.ForeignKey(Group)
+
+
 PROYECTOS_ESTADOS = (
     ('EN-ESPERA', 'EN-ESPERA'),
     ('EN-DESARROLLO', 'EN-DESARROLLO'),
@@ -44,8 +49,9 @@ class Proyecto(models.Model):
     fechaFin = models.DateTimeField('Fecha de Fin')
     duracionEstimada = models.CharField(max_length=20)
     estado = models.CharField(max_length=40, choices=PROYECTOS_ESTADOS, default='EN-ESPERA')
-    rol_usuario = models.ManyToManyField(Usuario_Rol, related_name='proyectos')
     scrumMaster=models.ForeignKey(User)
+    usuario_rol = models.ManyToManyField(Usuario_rol, related_name='proyectos')
+
     def __unicode__(self):
         return self.nombre
 
@@ -65,5 +71,5 @@ class Flujo(models.Model):
     estado=models.CharField(max_length=40,choices=False,default='EN-ESPERA')
     proyecto = models.ForeignKey(Proyecto)
     def __unicode__(self):
-		return self.nombre   
+        return self.nombre
 
