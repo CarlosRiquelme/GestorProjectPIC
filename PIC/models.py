@@ -23,12 +23,12 @@ FLUJOS_ESTADOS = (
     ('FINALIZADO', 'FINALIZADO'),
 )
 
-class Usuario_Rol(models.Model):
-    usuario = models.ForeignKey(User)
-    rol= models.ForeignKey(Group)
-    # class Meta:
-    #     verbose_name = "Asignar Rol a User"
-    #     verbose_name_plural = "Asignar Rol a User"
+# class Usuario_Rol(models.Model):
+#     usuario = models.ForeignKey(User)
+#     rol= models.ForeignKey(Group)
+#     # class Meta:
+#     #     verbose_name = "Asignar Rol a User"
+#     #     verbose_name_plural = "Asignar Rol a User"
 
 class Proyecto(models.Model):
     """
@@ -77,10 +77,15 @@ class User_Story(models.Model):
     nombre=models.CharField(max_length=40)
     descripcion=models.TextField(max_length=120)
     tiempo_estimado=models.IntegerField()
-    tiempo_trabajado=models.IntegerField()
+    tiempo_trabajado=models.IntegerField(default=0)
     fecha_inicio=models.DateTimeField('Fecha de Inicio')
     fecha_fin=models.DateTimeField('Fecha Fin')
     user=models.ForeignKey(User)
+    class Meta:
+        verbose_name = "User Story"
+        verbose_name_plural = "User Story"
+    def __unicode__(self):
+        return self.nombre
 
 
 class Sprint(models.Model):
@@ -90,3 +95,6 @@ class Sprint(models.Model):
     fechaFinEstimado = models.DateTimeField('Fecha de Fin Estimado')
     tiempoEstimado = models.IntegerField()
     sprint_us = models.ManyToManyField(User_Story)
+    def __unicode__(self):
+        return self.nombre
+
