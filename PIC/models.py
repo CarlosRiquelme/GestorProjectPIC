@@ -7,8 +7,15 @@ from django.contrib.auth.models import User, Group
 #prueba de branch
 
 class Usuario_rol(models.Model):
+    usario_Rol=models.CharField(max_length=40)
     usuario = models.ForeignKey(User)
     rol = models.ForeignKey(Group)
+    class Meta:
+        verbose_name = "Asignar Rol a User"
+        verbose_name_plural = "Asignar Rol a User"
+    def __unicode__(self):
+        return self.usario_Rol
+
 
 
 PROYECTOS_ESTADOS = (
@@ -81,6 +88,10 @@ class User_Story(models.Model):
     fecha_inicio=models.DateTimeField('Fecha de Inicio')
     fecha_fin=models.DateTimeField('Fecha Fin')
     user=models.ForeignKey(User)
+    proyecto=models.ForeignKey(Proyecto)
+    flujo=models.ForeignKey(Flujo)
+    activo=models.BooleanField(default=False)
+    sprint=models.ForeignKey('Sprint')
     class Meta:
         verbose_name = "User Story"
         verbose_name_plural = "User Story"
@@ -93,8 +104,18 @@ class Sprint(models.Model):
     fechaCreacion = models.DateTimeField('Fecha de Creacion')
     fechaInicio = models.DateTimeField('Fecha de Inicio')
     fechaFinEstimado = models.DateTimeField('Fecha de Fin Estimado')
+    #user_story = models.ForeignKey(User_Story)
     tiempoEstimado = models.IntegerField()
-    sprint_us = models.ManyToManyField(User_Story)
     def __unicode__(self):
         return self.nombre
+
+class Comentario(models.Model):
+    titulo=models.CharField(max_length=20)
+    contenido=models.TextField(max_length=200)
+    fecha=models.DateTimeField(auto_now=True)
+    user_story=models.ForeignKey(User_Story)
+    hora_trabajada=models.IntegerField()
+    def __unicode__(self):
+        return self.titulo
+
 
