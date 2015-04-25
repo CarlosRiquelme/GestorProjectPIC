@@ -56,7 +56,7 @@ class Proyecto(models.Model):
     fechaFin = models.DateTimeField('Fecha de Fin')
     duracionEstimada = models.CharField(max_length=20)
     estado = models.CharField(max_length=40, choices=PROYECTOS_ESTADOS, default='EN-ESPERA')
-    scrumMaster=models.ForeignKey(User)
+    scrumMaster=models.ForeignKey(User,null=True)
     usuario_rol = models.ManyToManyField(Usuario_rol, related_name='proyectos')
 
     def __unicode__(self):
@@ -76,7 +76,7 @@ class Flujo(models.Model):
     nombre=models.CharField(max_length=60)
     tiempo_estimado=models.IntegerField()
     estado=models.CharField(max_length=40,choices=False,default='EN-ESPERA')
-    proyecto = models.ForeignKey(Proyecto)
+    proyecto = models.ForeignKey(Proyecto, null=True)
     def __unicode__(self):
         return self.nombre
 
