@@ -49,6 +49,23 @@ class Proyecto(models.Model):
         + *Estado*: Los estados posibles del Proyecto
         + *Usuarios*: Usuarios que posee un proyecto.
     """
+
+    """
+    Esta clase representa a los proyectos de desarrollo de software
+    que seran creados en la aplicacion.
+
+    Sus atributos seran:
+     - Nombre
+     - Descripcion
+     - Fecha de creacion
+     - Fecha de inicio del proyecto
+     - Fecha de finalizacion del proyecto
+     - Duracion estimada del proyecto
+     - Estado: que podria ser en espera, en desarrollo o finalizado
+     - Scrum master el usuario lider
+
+
+    """
     nombre = models.CharField(max_length=60)
     descripcion = models.CharField(max_length=120)
     fechaCreacion = models.DateTimeField('Fecha de Creacion')
@@ -71,7 +88,20 @@ class Flujo(models.Model):
         + *Tiempo Estimado*: Tiempo estimado de la finalizacion del flujo
         + *Estado*: Los estados posibles del Flujo
         + *Proyecto*: Proyecto al cual pertenece el Flujo.
+
     """
+
+    """
+    Esta clase representa a los flujos de desarrollo de software
+    que seran creados en la aplicacion.
+
+    Sus atributos seran:
+     - Nombre
+     - Duracion estimada del proyecto
+     - Estado: que podria ser en espera, en desarrollo o finalizado
+
+    """
+
 
     nombre=models.CharField(max_length=60)
     tiempo_estimado=models.IntegerField()
@@ -81,6 +111,24 @@ class Flujo(models.Model):
         return self.nombre
 
 class User_Story(models.Model):
+
+    """
+    Esta clase representa a los User Storys que tendra la aplicacion.
+
+    Sus atributos seran:
+     - Nombre
+     - Descripcion
+     - Fecha de creacion
+     - Tiempo acumulado
+     - Fecha de inicio
+     - Fecha de finalizacion
+     - Duracion estimada
+     - Estado: que podria ser en espera, en desarrollo o finalizado
+     - y sus respectivas referencias
+
+    """
+
+
     nombre=models.CharField(max_length=40)
     descripcion=models.TextField(max_length=120)
     tiempo_estimado=models.IntegerField()
@@ -100,6 +148,17 @@ class User_Story(models.Model):
 
 
 class Sprint(models.Model):
+    """
+    Esta clase representa a los Sprint
+
+    Sus atributos seran:
+     - Nombre
+     - Fecha de creacion
+     - Fecha de inicio
+     - Fecha fin estimada
+     - Tiempo estimado
+
+    """
     nombre = models.CharField(max_length=60)
     fechaCreacion = models.DateTimeField('Fecha de Creacion')
     fechaInicio = models.DateTimeField('Fecha de Inicio')
@@ -110,6 +169,17 @@ class Sprint(models.Model):
         return self.nombre
 
 class Comentario(models.Model):
+    """
+    Esta clase representa a los comentarios que se agregaran a cada user story
+
+    Sus atributos seran:
+     - Titulo
+     - Contenido
+     - Fecha del comentario
+     - User Story asociado
+     - Hora dedicada al user story en el dia
+
+    """
     titulo=models.CharField(max_length=20)
     contenido=models.TextField(max_length=200)
     fecha=models.DateTimeField(auto_now=True)
