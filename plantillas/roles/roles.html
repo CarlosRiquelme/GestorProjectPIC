@@ -1,0 +1,37 @@
+{% extends 'admin/base_site.html' %}
+
+
+
+
+{% block content %}
+<table>
+<a  class="btn btn-info" href="/rol/crear/">
+Nuevo Rol <i class="fa fa-plus"></i></a>
+</table>
+
+<div class="content-secondary">
+<!-- Aca van la  lista de Proyectos.. o de Solicitudes.. o de credenciales -->
+	<div class="panel-group" id="accordion">
+
+	<br>
+		{% if lista_roles %}
+			{% for rol in lista_roles %}
+                 {% if rol.name %}
+            <div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				          <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ rol.id }}">
+				          	{{ rol.name }}
+				          </a>
+                          <a href="/rol/consultar/{{ rol.id }}/"><button type="button" class="btn btn-default btn-sm">Consultar</button></a>
+                          <a href="/rol/modificar/{{ rol.id }}/"><button type="button" class="btn btn-primary btn-sm">Modificar</button></a>
+                          <a href="/rol/eliminar/{{ rol.id }}/"><button type="button" class="btn btn-danger btn-sm">Eliminar</button></a>
+				      </h4>
+				    </div>
+	</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+	</div>
+{% endblock %}

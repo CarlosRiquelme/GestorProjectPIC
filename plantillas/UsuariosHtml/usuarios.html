@@ -1,0 +1,62 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n admin_urls admin_static admin_modify %}
+
+{% block content %}
+
+<h1>LISTA DE USUARIOS</h1>
+<table>
+<a  class="btn btn-info" href="{% url 'PIC.views.nuevo_usuario'  %}">
+Nuevo Usuario <i class="fa fa-plus"></i></a>
+
+
+</table>
+
+ <table class="table table-bordered table-condensed table-striped" >
+    <thead>
+        <th >USERNAME</th>
+        <th >EMAIL</th>
+        <th >NOMBRE</th>
+        <th >APELLIDO</th>
+{#        <th >Rol</th>#}
+        <th >ACTIVO</th>
+        <th >ACCIÓN</th>
+    </thead>
+    {% for dato in objetos %}
+    <tr>
+	    <td >{{dato.username|capfirst}}</td>
+        <td><em>{{dato.email}}</em></td>
+        <td>{{ dato.first_name }}</td>
+        <td>{{ dato.last_name }}</td>
+
+{#    for r in roles:#}
+{#        print r.rol.descripcion#}
+{#        print r.user.username#}
+{##}
+{#          <td> {% for r in roles %}#}
+{#              {% if r.user.id == dato.id %}#}
+{#                  <a href="{% url 'PIC.views.ver_rol' r.rol.id_rol %}" target="_blank">{{ r.rol.nombre }}</a>#}
+{#               {% endif %}#}
+{#             {% endfor %}#}
+{#            </td>#}
+
+         <td>{{ dato.is_active }}</td>
+        <td>
+          <a  class="btn btn-primary" href="{% url 'PIC.views.editar_usuario' dato.id %}">Editar <i class="fa fa-edit"></i></a>
+            {% if dato.is_active %}
+           
+                <a class="btn btn-danger" href="{% url 'PIC.views.desactivar_usuario' dato.id %}">
+                Desactivar <i class="fa fa-ban"></i></a>
+            {% else %}
+                <a href="{% url 'PIC.views.activar_usuario' dato.id %}" class="btn btn-success" >Activar<i class="fa fa-check"></i></a>
+            {% endif %}
+              
+        </td>
+
+	</tr>
+	{% endfor %}
+ </table>
+
+
+<br><br><br>
+
+{% endblock %}

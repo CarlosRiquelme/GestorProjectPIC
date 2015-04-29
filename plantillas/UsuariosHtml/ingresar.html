@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load url from future %}
+{% block header %}
+INGRESAR
+{% endblock %}
+{% block content %}
+
+<center>
+<div class="row">
+  <div class="col-sm-6 col-md-5" style="margin-left: 20%">
+  
+  <div class="thumbnail">
+  <h3><STRONG>INGRESAR</STRONG></h3>
+  <div class="panel-body">
+  
+
+<a href="#" class="thumbnail">
+    <img class="radius" style="width: 95%;height:95%; margin-left: 2%;" src="{{STATIC_URL}}projectx.jpg">
+    </a>
+    <form id='formulario' method='post' action=''>{% csrf_token %}
+
+		<table class="table " >{{formulario.as_table}}</table>
+         
+			<button class="btn btn-primary" type='submit'/>Aceptar <i class="fa fa-sign-in"></i></button>
+	</form>
+  </div>
+</div>
+
+	    
+</center>
+
+
+{% endblock %}

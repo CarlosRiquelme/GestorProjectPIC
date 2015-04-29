@@ -1,0 +1,37 @@
+{% extends 'admin/base_site.html' %}
+
+
+
+{% block content %}
+        <h1>Crear Rol</h1>
+
+        <div class="content-secondary">
+                {% if registered %}
+                <h2>Rol Registrado Exitosamente</h2>
+                <a href="/rol/listar/">Volver a lista de Roles.</a><br />
+                    <hr />
+                {% else %}
+                <h2>Complete los campos</h2><br />
+
+                <form id="group_form" method="post" action="/rol/crear/"
+                        enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    <!-- Display each form. The as_p method wraps each element in a paragraph
+                         (<p>) element. This ensures each element appears on a new line,
+                         making everything look neater. -->
+                    {{ group_form }}
+
+                    <!-- Provide a button to click to submit the form. -->
+
+                    <div align="center">
+		                <input class="btn btn-primary" type="submit" value="Crear"/>
+		                <a href="/rol/listar/"><button type="button" class="btn btn-default">Cancelar</button></a>
+	                </div>
+                </form>
+                {% endif %}
+        </div>
+
+{% endblock %}
+

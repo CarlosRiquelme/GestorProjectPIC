@@ -1,0 +1,15 @@
+{% extends 'admin/base_site.html' %}
+
+
+
+{% block content %}
+<div class="jumbotron">
+	<div class="bs-example" align="center">
+		<h2>Notificacion</h2>
+			<p class="text-warning"><small>Seguro que desea eliminar el rol?</small></p>
+
+        <a href="/rol/listar"><button type="button" class="btn btn-default btn-sm">Si</button></a>
+		<a type="button" class="btn btn-default" href="/roles/">No</a>
+	</div>
+</div>
+{% endblock %}
