@@ -57,7 +57,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 #         user_story_form=User_StoryForm()
 #     return render_to_response('crear.html',{'user_story_form':user_story_form, 'register':register},context)
 #
-@user_passes_test(User.puede_agregar_usuarios, login_url="/admin/login/")
+
 def nuevo_usuario(request):
     """
     Crea un nuevo Usuario con sus atributos proveidos por el

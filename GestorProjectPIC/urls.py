@@ -20,7 +20,7 @@ urlpatterns = patterns('',
 
 
 
-    url(r'^usuario/nuevo$', 'PIC.views.nuevo_usuario'),
+    url(r'^usuario/nuevo/$', 'PIC.views.nuevo_usuario'),
     url(r'^usuarios/$','PIC.views.usuarios'),
     url(r'^usuario/eliminar/(?P<id_user>\d+)/$','PIC.views.desactivar_usuario'),
     url(r'^usuario/activar/(?P<id_user>\d+)/$','PIC.views.activar_usuario'),

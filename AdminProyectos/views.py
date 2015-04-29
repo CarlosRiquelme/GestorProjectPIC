@@ -62,8 +62,8 @@ def nuevo_proyecto(request):
             #===================================================================
             return HttpResponseRedirect('/proyecto/miproyecto/'+str(proyecto.id))
     else:
-        formulario= ProyectoForm(request.POST)
-    return render_to_response('HtmlProyecto/nuevoproyecto.html',{'formulario':formulario,'user':user},
+        proyecto_form= ProyectoForm(request.POST)
+    return render_to_response('HtmlProyecto/nuevoproyecto.html',{'formulario':proyecto_form,'user':user},
                               context_instance=RequestContext(request))
 
 #===============================================================================
