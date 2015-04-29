@@ -1,0 +1,21 @@
+{% extends 'admin/base_site.html' %}
+
+
+
+{% block contet %}
+<div class="content-secondary">
+	{% if rol_form.errors %}
+		Por favor verifique:
+	{% endif %}
+
+	<form action="" method="post"> {% csrf_token %}
+        {{ rol }}
+	<div align="center">
+		<input class="btn btn-default" type="submit" value="Guardar"/>
+		<a href="/rol/listar/"><button type="button" class="btn btn-default">Cancelar</button></a>
+	</div>
+	<br>
+	</form>
+
+</div>
+{% endblock %}

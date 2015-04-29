@@ -1,0 +1,29 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n admin_urls admin_static admin_modify %}
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+{{ media }}
+{% endblock %}
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
+{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block content%}
+
+    <br>
+    
+
+        <h1>INGRESE NUEVO USUARIO</h1>
+	<form id='formulario' method='post' action=''>{% csrf_token %}
+		<table class="table-striped">{{formulario.as_table}}</table>
+		<br>
+		<a class="btn btn-default" href="/usuarios/"> <i class="fa fa-backward"></i> Volver</a>
+		<button class="btn btn-primary" type='submit' >Registrar <i class="fa fa-save"></i></button>
+	
+
+	</form>
+
+{% endblock %}

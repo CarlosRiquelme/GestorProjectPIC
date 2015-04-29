@@ -14,5 +14,37 @@ urlpatterns = patterns('',
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete', name='password_reset_complete'),
     url(r'^accounts/login/', include(admin.site.urls) , name='login'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    # url(r'^user_story/crear', 'PIC.views.crear_user_story'),
 
+#USUARIOS
+
+
+
+    url(r'^usuario/nuevo$', 'PIC.views.nuevo_usuario'),
+    url(r'^usuarios/$','PIC.views.usuarios'),
+    url(r'^usuario/eliminar/(?P<id_user>\d+)/$','PIC.views.desactivar_usuario'),
+    url(r'^usuario/activar/(?P<id_user>\d+)/$','PIC.views.activar_usuario'),
+    url(r'^usuario/editar/(?P<id_user>\d+)/$','PIC.views.editar_usuario'),
+
+
+
+#PROYECTO
+     url(r'^proyecto/nuevo$','AdminProyectos.views.nuevo_proyecto'),
+     url(r'^proyectos/$', 'AdminProyectos.views.proyectos'),
+     url(r'^proyecto/editar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.editar_proyecto'),
+     url(r'^proyecto/iniciar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.iniciar_proyecto'),
+     url(r'^proyecto/eliminar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.eliminar_proyecto'),
+     url(r'^proyecto/misproyectos/$','AdminProyectos.views.mis_proyectos'),
+     url(r'^proyecto/miproyecto/(?P<id_proyecto>\d+)/$','AdminProyectos.views.mi_proyecto'),
+     url(r'^proyecto/colaboradores/(?P<id_proyecto>\d+)/$','AdminProyectos.views.colaboradores'),
+
+
+#ROLES
+
+    url(r'^rol/listar/$', 'PIC.views.roles', name='roles'),
+    url(r'^rol/crear/$', 'PIC.views.crearRol', name='crear_rol'), # ADD NEW PATTERN!
+    url(r'^rol/modificar/(?P<id_rol>\d+)/$', 'PIC.views.modificar_rol'),
+    url(r'^rol/consultar/(?P<id_rol>\d+)/$', 'PIC.views.consultar_roles'),
+    url(r'^rol/eliminar/(?P<id_rol>.*)/$', 'PIC.views.eliminar_rol'),
 )
+
