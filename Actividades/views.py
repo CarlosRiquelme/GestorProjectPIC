@@ -1,69 +1,67 @@
-# from mx.DateTime.DateTime import today
-# from django.contrib.auth.models import User
-# from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-# from django.shortcuts import render_to_response
-# from django.template.context import RequestContext
-# from django.http import HttpResponseRedirect
-# from django.views.generic.dates import timezone_today
-# from Actividades.models import Actividad
-# #from projectx.globales import execute_query
-# from AdminProyectos.models import Proyecto
-# from Flujo.models import Flujo
-# from django.contrib import messages
-#
-#
-# def actividad_flujo(request, id_flujo):
-#     flujo=Flujo.objects.get(pk=id_flujo)
-#     actividades=Actividad.objects.filter(flujo_id=id_flujo).order_by('secuencia')
-#     lista_actividades=Actividad.objects.filter(estado='PROGRAMADO').exclude(flujo_id=id_flujo).order_by('nombre')
-#     if request.method == 'POST':
-#         id_actividad=request.POST.get('id_actividad','')
-#         if id_actividad != "":
-#             actividad=Actividad.objects.get(pk=id_actividad)
-#             nombre=request.POST.get('nombre','')
-#             if nombre !="":
-#
-#                 fase.nombre=nombre
-#                 fase.descripcion=descripcion
-#                 fase.estado="INICIADO"
-#                 if fase.nombre == "":
-#                     messages.success(request,"Fase creada con exito!")
-#                 else:
-#                     messages.success(request,"Fase editada con exito!")
-#             fase.save()
-#
-#
-#
-#     return render_to_response('HtmlFases/fasesflujo.html',
-#     {'fases':fases,'flujo':flujo,'lista_fases':lista_fases,'ESTADOS_FASE':ESTADOS_FASE}, context_instance=RequestContext(request))
-#
-#
-# def actividad(request, id_actividad,id_flujo):
-#     actividad=Actividad.objects.get(pk=id_actividad)
-#     if actividad.nombre == None:
-#         modo='Crear'
-#     else:
-#         modo='Editar'
-#
-#     msg=''
-#     if request.method=='POST':
-#          nombre=request.POST.get('nombre','')
-#          aux=Actividad.objects.filter(nombre=nombre).count()
-#          if aux >1:
-#             msg='Ya existe una Actividad con el mismo nombre'
-#             messages.warning(request,msg)
-#
-#             return render_to_response('HtmlActividad/editActividad.html',{'fase':actividad,'modo':modo,'msg':msg,'id_proyecto':id_flujo},context_instance=RequestContext(request))
-#          fecha=timezone_today()
-#          actividad.nombre=nombre
-#          actividad.descripcion=descripcion
-#          actividad.estado='INICIADO'
-#          actividad.fecha_creacion=fecha
-#          actividad.save()
-#          messages.success(request,"Fase Modificada con exito!")
-#
-#          return HttpResponseRedirect('/proyecto/fases/'+str(id_proyecto))
-#
-#     estados=ESTADOS_FASE
-#
-#     return render_to_response('HtmlFases/editfase.html',{'fase':fase,'modo':modo,'msg':msg,'estados':['asdf','adsf'],'id_proyecto':id_proyecto},context_instance=RequestContext(request))
+ # coding=UTF-8
+from mx.DateTime.DateTime import today
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.shortcuts import render_to_response
+from django.template.context import RequestContext
+from django.http import HttpResponseRedirect
+from Actividades.forms import ActividadForm
+from Actividades.models import Actividad
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+
+
+def nueva_actividad(request):
+    """
+    Crea un nuevo actividad
+    """
+    user=request.user
+    #if not user.is_staff:
+     #   return HttpResponseRedirect('/sinpermiso')
+    if request.method=='POST':
+        actividad_form = ActividadForm(data=request.POST)
+
+
+        # If the two forms are valid...
+        if actividad_form.is_valid():
+            # Guarda el Usuarios en la bd
+            actividad_form.clean()
+            nombre = actividad_form.cleaned_data['nombre']
+            fecha_inicio = actividad_form.cleaned_data['fechaInicio']
+            fechafin=actividad_form.cleaned_data['fechaFin']
+            flujo =  actividad_form.cleaned_data['flujo']
+            secuencia = actividad_form.cleaned_data['secuencia']
+
+
+
+
+            actividad = Actividad()
+            actividad.nombre=nombre
+            actividad.flujo=flujo
+            actividad.fecha_creacion=today()
+            actividad.fechaInicio=fecha_inicio
+            actividad.fechaFin=fechafin
+            actividad.estado='PROGRAMADO'
+            actividad.secuencia = secuencia
+            actividad.save()
+            messages.success(request, 'actividad CREADO CON EXITO!')
+
+
+            #aux = Rol.objects.filter(nombre='Leader').count()
+            #===================================================================
+            # if aux == 0:
+            #    rol= crearRolLeader()
+            # else:
+            #     rol = Rol.objects.get(nombre='Leader')
+            # rol_user=RolUser()
+            # rol_user.rol = rol
+            # rol_user.actividad = actividad
+            # rol_user.user = user
+            # rol_user.save()
+            #===================================================================
+            return HttpResponseRedirect('/actividad/miactividad/'+str(actividad.id))
+    else:
+        actividad_form= ActividadForm(request.POST)
+    return render_to_response('HtmlActividad/nueva_actividad.html',{'formulario':actividad_form,'user':user},
+                              context_instance=RequestContext(request))

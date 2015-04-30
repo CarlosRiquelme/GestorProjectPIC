@@ -1,7 +1,7 @@
 from django.db import models
 from Flujo.models import Flujo
 
-FLUJO_ESTADOS = (
+ACTIVIDAD_ESTADOS = (
     ('PROGRAMADO', 'PROGRAMADO'),
     ('INICIADO', 'INICIADO'),
     ('FINALIZADO', 'FINALIZADO'),
@@ -14,7 +14,7 @@ class Actividad(models.Model):
     fecha_creacion= models.DateTimeField(auto_now=True)
     fechaInicio = models.DateField('Fecha de Inicio')
     fechaFin = models.DateField('Fecha de Fin')
-    estado=models.CharField(choices=FLUJO_ESTADOS,default='PROGRAMADO',max_length=30)
+    estado=models.CharField(choices=ACTIVIDAD_ESTADOS,default='PROGRAMADO',max_length=30)
     secuencia=models.IntegerField(null=True)
 
     def __unicode__(self):

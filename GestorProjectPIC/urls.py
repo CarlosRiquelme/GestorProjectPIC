@@ -46,5 +46,14 @@ urlpatterns = patterns('',
     url(r'^rol/modificar/(?P<id_rol>\d+)/$', 'PIC.views.modificar_rol'),
     url(r'^rol/consultar/(?P<id_rol>\d+)/$', 'PIC.views.consultar_roles'),
     url(r'^rol/eliminar/(?P<id_rol>.*)/$', 'PIC.views.eliminar_rol'),
+
+
+
+#FLUJOS
+    url(r'^flujo/nuevo/$','Flujo.views.nuevo_flujo'),
+
+
+#ACTIVIDADES
+    url(r'^actividad/nueva/$','Actividades.views.nueva_actividad'),
 )
 

@@ -50,6 +50,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'PIC',
     'AdminProyectos',
+    'Flujo',
+    'Actividades',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
