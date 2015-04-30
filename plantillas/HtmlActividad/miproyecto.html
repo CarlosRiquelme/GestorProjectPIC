@@ -1,0 +1,100 @@
+{% extends 'admin/base_site.html' %}
+
+{% block title %} Proyecto{% endblock %}
+{% block header %}
+ {{ proyecto.nombre }}
+{% endblock %}
+<body onload="iniciar()">
+{% block content %}
+<script>
+$('#id_nombre').attr('required','true')
+$('#id_descripcion').attr('required','true')
+
+
+</script>
+<center>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+  <li class="active"><a href="{% url 'Flujo.views.nuevo_flujo'  %}">Flujo</a></li>
+
+</ul></center>
+<br>
+<!--{% comment %}
+    <a class="btn btn-info" href="{% url 'AdminLineaBase.views.listar_lb' id_proyecto %}">Listar Lineas Base</a>
+    <a class="btn btn-info" href="{% url 'AdminLineaBase.views.nuevo_lb' id_proyecto %}">Nueva Linea Base</a>
+{% endcomment %}!-->
+{% if proyecto.estado == 'EN-ESPERA' %}
+<a class="btn btn-primary" data-toggle="modal" data-target="#myModal"  href="#myModal" >
+       Editar&nbsp;<i class="fa fa-edit"></i></a>
+       
+  <a class="btn btn-success"   data-toggle="modal" data-target="#iniciarProyecto"  href="#iniciarProyecto">
+       Iniciar&nbsp;<i class="fa fa-retweet"></i></a>
+       
+       <br><br>
+       
+  {% endif %}
+  
+    <center>
+        
+
+        <table class="table table-bordered table-striped" >
+
+            <tr><th style="width: 180px" class="navbar-inner">Scrum Master: </th><td style="text-align: center">{{ proyecto.scrumMaster.username }}</td></tr>
+            <tr><th class=  "navbar-inner">Nombre: </th><td  style="text-align: center">{{ proyecto.nombre }}</td></tr>
+            <tr><th class="navbar-inner">Estado: </th><td style="text-align: center">{{ proyecto.get_estado_display }}</td></tr>
+            <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ proyecto.fecha_creacion }}</td></tr>
+            <tr><th class="navbar-inner">Fecha de Inicio: </th><td style="text-align: center">{{ proyecto.fechaInicio }}</td></tr>
+            <tr><th class="navbar-inner">Fecha de Fin: </th><td style="text-align: center">{{ proyecto.fechaFin }}</td></tr>>
+            <tr><th class="navbar-inner">Descripcion: </th><td style="text-align: center">{{ proyecto.descripcion }}</td></tr>
+        </table>
+{##}
+{#                <a class="btn btn-info" {% if not proyecto.estado %} disabled {% endif %} href="{% url 'AdminProyectos.views.editar_proyecto' proyecto.id_proyecto %}">Editar</a>#}
+{##}
+{#                <input type="submit" {% if not proyecto.estado %} disabled {% endif %} value="Iniciar Proyecto" class="btn btn-info">#}
+    </center>
+     
+    <form method="post">{% csrf_token %}
+    
+	<!-- Modal -->
+	<div class="modal fade" id="myModal"   style="top: 5%" role="dialog"  data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="false">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel"><b>Editar Proyecto</b></h4>
+	      </div>
+	      <div class="modal-body">
+	         	<table class="table-striped">
+	         	
+	         	{{ formulario.as_table }}
+	         	</table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
+	        <button type="submit" class="btn btn-primary">Aceptar <i class="fa fa-check"></i></button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    </form>
+    
+    <!-- Modal -->
+	<div class="modal fade" id="iniciarProyecto" tabindex="-1"  style="top: 30%" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel"><b>Atención</b></h4>
+	      </div>
+	      <div class="modal-body">
+	         	Una vez iniciado el proyecto no podrá modificar la cantidad de Fases del proyecto.
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
+	        <a href="/proyecto/iniciar/{{proyecto.id}}" class="btn btn-primary">Iniciar <i class="fa fa-check"></i></a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+{% endblock %}
+</body>
