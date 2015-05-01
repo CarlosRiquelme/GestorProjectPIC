@@ -77,6 +77,8 @@ urlpatterns = patterns('',
      #url(r'^userstory/eliminar/(?P<id_userstory>\d+)/$','UserStory.views.eliminar_userstory'),
      url(r'^userstory/misuserstorys/(?P<id_proyecto>\d+)/$','UserStory.views.mis_userstorys'),
      url(r'^userstory/miuserstory/(?P<id_userstory>\d+)/$','UserStory.views.mi_userstory'),
+     url(r'^userstory/miuserstory_creado/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_creado',name='mi_userstory_creado'),
+    url(r'^userstory/miuserstory/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.asignar_userstory_a_actividad'),
 
 )
 

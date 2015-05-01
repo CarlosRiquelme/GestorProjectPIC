@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
+from Actividades.models import Actividad
 from UserStory.forms import UserStoryForm, UserStoryFormEdit
 from UserStory.models import UserStory
 from django.contrib import messages
@@ -121,7 +122,24 @@ def mi_userstory(request, id_userstory):
 
     return render_to_response('HtmlUserStory/miuserstory.html',
                 { 'userstory':userstory }, RequestContext(request))
-# def asinar_userstory_a_actividad(request,id_actividad,id_proyecto):
-#     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+
+def lista_userstory_creado(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+     actividad=Actividad.objects.get(pk=id_actividad)
+
+     return render_to_response('HtmlUserStory/userstory_creado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_actividad':id_actividad,'actividad':actividad})
+def asignar_userstory_a_actividad(request,id_proyecto ,id_actividad, id_userstory ):
+    userstory=UserStory.objects.get(pk=id_userstory)
+
+    userstory.actividad_id=id_actividad
+    userstory.estado='TODO'
+    userstory.save()
+    messages.success(request, 'USER STORY ASIGNADO A UNA ACTIVIDAD CORRECTAMENTE!')
+    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+
+
+
+
 
 
