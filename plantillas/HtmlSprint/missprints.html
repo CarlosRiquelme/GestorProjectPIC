@@ -1,0 +1,29 @@
+{% extends 'admin/base_site.html' %}%}
+
+{% block titulo %}Sprints{% endblock %}
+{% block extra_head %}
+
+{% endblock %}
+{% block content %}
+
+
+    <br>
+    <center><h1>Mis Sprints</h1></center>
+    <br><br>
+    <center>
+
+        <table class="table" style="width: 500px">
+        {% for p in sprints %}
+                    <tr>
+                      <td>
+                      <li>   <a href="{% url 'Sprint.views.mi_sprint' p.id %}">  {{ p.nombre }}</a></li>
+
+                      </td>
+
+                    </tr>
+
+        {% endfor %}
+
+    </table>
+        </center>
+{% endblock %}

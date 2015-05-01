@@ -1,0 +1,29 @@
+{% extends 'admin/base_site.html' %}%}
+
+{% block titulo %}UserStory{% endblock %}
+{% block extra_head %}
+
+{% endblock %}
+{% block content %}
+
+
+    <br>
+    <center><h1>Mis UserStorys</h1></center>
+    <br><br>
+    <center>
+
+        <table class="table" style="width: 500px">
+        {% for p in userstorys %}
+                    <tr>
+                      <td>
+                      <li>   <a href="{% url 'UserStory.views.mi_userstory' p.id %}">  {{ p.nombre }}</a></li>
+
+                      </td>
+
+                    </tr>
+
+        {% endfor %}
+
+    </table>
+        </center>
+{% endblock %}
