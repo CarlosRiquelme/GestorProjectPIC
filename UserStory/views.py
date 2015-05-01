@@ -138,8 +138,26 @@ def asignar_userstory_a_actividad(request,id_proyecto ,id_actividad, id_userstor
     messages.success(request, 'USER STORY ASIGNADO A UNA ACTIVIDAD CORRECTAMENTE!')
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 
+def lista_userstory_todo(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
+     actividad=Actividad.objects.get(pk=id_actividad)
 
+     return render_to_response('HtmlUserStory/userstory_todo.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_actividad':id_actividad,'actividad':actividad})
 
+def lista_userstory_doing(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
+     actividad=Actividad.objects.get(pk=id_actividad)
+
+     return render_to_response('HtmlUserStory/userstory_doing.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_actividad':id_actividad,'actividad':actividad})
+
+def lista_userstory_done(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
+     actividad=Actividad.objects.get(pk=id_actividad)
+
+     return render_to_response('HtmlUserStory/userstory_done.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_actividad':id_actividad,'actividad':actividad})
 
 
 

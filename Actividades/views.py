@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from Actividades.forms import ActividadForm
 from Actividades.models import Actividad
 from django.contrib import messages
+from UserStory.models import UserStory
 from Flujo.models import Flujo
 from AdminProyectos.models import Proyecto
 from django.contrib.auth.decorators import login_required
@@ -71,3 +72,11 @@ def mis_actividades(request, id_proyecto):
 
 
     return render_to_response('HtmlActividad/misactividades.html',{'actividades':actividades, 'id_proyecto':id_proyecto})
+
+
+def ver_estados(request, id_proyecto, id_actividad):
+    actividad=Actividad.objects.get(pk=id_actividad)
+
+    return render_to_response('HtmlActividad/estados.html',{ 'id_proyecto':id_proyecto, 'id_actividad':id_actividad,
+                                                             'actividad':actividad})
+
