@@ -16,6 +16,7 @@ $('#id_descripcion').attr('required','true')
     {% if proyecto.estado == 'EN-DESARROLLO'%}
      <li class="active"><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
      <li class="active"><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
+    <li class="active"><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
     {% endif %}
 </ul>
 </center>
@@ -30,28 +31,28 @@ $('#id_descripcion').attr('required','true')
        
   <a class="btn btn-success"     href="{% url 'Flujo.views.nuevo_flujo' id_proyecto  %}">
        Crear Flujo&nbsp;</a>
-       
-       <br><br>
-       
   {% endif %}
-  
+
+       
+
+{% if proyecto.estado == 'EN-DESARROLLO' %}
+<a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">
+       Crear UserStory&nbsp;</a>
+  {% endif %}
+  <br><br>
     <center>
         
 
-        <table class="table table-bordered table-striped" >
+        <table class="table table-bordered table-striped">
 
             <tr><th style="width: 180px" class="navbar-inner">Scrum Master: </th><td style="text-align: center">{{ proyecto.scrumMaster.username }}</td></tr>
             <tr><th class=  "navbar-inner">Nombre: </th><td  style="text-align: center">{{ proyecto.nombre }}</td></tr>
             <tr><th class="navbar-inner">Estado: </th><td style="text-align: center">{{ proyecto.get_estado_display }}</td></tr>
             <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ proyecto.fecha_creacion }}</td></tr>
             <tr><th class="navbar-inner">Fecha de Inicio: </th><td style="text-align: center">{{ proyecto.fechaInicio }}</td></tr>
-            <tr><th class="navbar-inner">Fecha de Fin: </th><td style="text-align: center">{{ proyecto.fechaFin }}</td></tr>>
+            <tr><th class="navbar-inner">Fecha de Fin: </th><td style="text-align: center">{{ proyecto.fechaFin }}</td></tr>
             <tr><th class="navbar-inner">Descripcion: </th><td style="text-align: center">{{ proyecto.descripcion }}</td></tr>
         </table>
-{##}
-{#                <a class="btn btn-info" {% if not proyecto.estado %} disabled {% endif %} href="{% url 'AdminProyectos.views.editar_proyecto' proyecto.id_proyecto %}">Editar</a>#}
-{##}
-{#                <input type="submit" {% if not proyecto.estado %} disabled {% endif %} value="Iniciar Proyecto" class="btn btn-info">#}
     </center>
      
     <form method="post">{% csrf_token %}

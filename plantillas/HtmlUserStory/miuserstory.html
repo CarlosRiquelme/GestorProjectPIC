@@ -1,0 +1,32 @@
+{% extends 'admin/base_site.html' %}
+
+{% block title %}UserStory{% endblock %}
+
+
+{% block content %}
+
+
+
+
+
+
+
+    <center>
+
+
+        <table class="table table-bordered table-striped" >
+
+            <tr><th style="width: 180px" class="navbar-inner">Nombre: </th><td style="text-align: center">{{ userstory.nombre }}</td></tr>
+            <tr><th class="navbar-inner">Descripcion: </th><td style="text-align: center">{{ userstory.descripcion }}</td></tr>
+            <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ userstory.fecha_creacion }}</td></tr>
+            <tr><th class="navbar-inner">Fecha de Inicio: </th><td style="text-align: center">{{ userstory.fechaInicio }}</td></tr>
+            <tr><th class="navbar-inner">Fecha Fin: </th><td style="text-align: center">{{ userstory.fechaFin }}</td></tr>
+            <tr><th class="navbar-inner">Estado: </th><td style="text-align: center">{{ userstory.estado }}</td></tr>
+            <tr><th class="navbar-inner">Actividad: </th><td style="text-align: center">{{ userstory.actividad }}</td></tr>
+            <tr><th class="navbar-inner">Tiempo Trabajo (Hs): </th><td style="text-align: center">{{ userstory.tiempo_trabajado }}</td></tr>
+            <tr><th class="navbar-inner">Porcentaje (%): </th><td style="text-align: center">{{ userstory.porcentaje }}</td></tr>
+        </table>
+    </center>
+
+
+{% endblock %}

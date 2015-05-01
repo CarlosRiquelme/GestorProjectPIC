@@ -11,10 +11,34 @@
     <br><br>
     <center>
 
-        <table class="table" style="width: 500px">
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >FECHA DE CREACION</th>
+        <th >FECHA DE INICIO</th>
+        <th >FECHA DE FINALIZACION</th>
+
+        <th  style="width: 10%">ASIGNAR</th>
+        <th  style="width: 10%">VER U_S ASIGNADOS</th>
         {% for p in actividades %}
-                    <tr>
+    <tr>
 	     <td><em><a href="{% url 'Actividades.views.mi_actividad' p.id %}">{{p.nombre}}</a></em></td>
+         <td><em>{{p.fecha_creacion}}</em></td>
+         <td><em>{{p.fechaInicio}}</em></td>
+         <td><em>{{p.fechaFin}}</em></td>
+
+        <td>
+            <div class="input-group">
+                <a class="btn btn-primary" href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">UserStory <i class="fa fa-edit"></i></a>
+        </div>
+        <td>
+            <div class="input-group">
+                <a class="btn btn-success" href="#">UserStory <i class="fa fa-edit"></i></a>
+        </div>
+
+
+        </td>
+
 
 
 	</tr>

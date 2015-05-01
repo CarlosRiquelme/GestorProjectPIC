@@ -1,4 +1,4 @@
- # coding=UTF-8
+# coding=UTF-8
 from mx.DateTime.DateTime import today
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -29,10 +29,11 @@ def nuevo_proyecto(request):
             proyecto_form.clean()
             nombre = proyecto_form.cleaned_data['nombre']
             fecha_inicio = proyecto_form.cleaned_data['fechaInicio']
-            fechafin=proyecto_form.cleaned_data['fechaFin']
             descripcion =  proyecto_form.cleaned_data['descripcion']
             scrumMaster = proyecto_form.cleaned_data['scrumMaster']
             fechafin=proyecto_form.cleaned_data['fechaFin']
+
+
 
 
 
@@ -47,19 +48,6 @@ def nuevo_proyecto(request):
             proyecto.save()
             messages.success(request, 'PROYECTO CREADO CON EXITO!')
                         
-
-            #aux = Rol.objects.filter(nombre='Leader').count()
-            #===================================================================
-            # if aux == 0:
-            #    rol= crearRolLeader()
-            # else:
-            #     rol = Rol.objects.get(nombre='Leader')
-            # rol_user=RolUser()
-            # rol_user.rol = rol
-            # rol_user.proyecto = proyecto
-            # rol_user.user = user
-            # rol_user.save()
-            #===================================================================
             return HttpResponseRedirect('/proyecto/miproyecto/'+str(proyecto.id))
     else:
         proyecto_form= ProyectoForm(request.POST)
@@ -78,15 +66,6 @@ def editar_proyecto(request, id_proyecto):
  
     proyecto= Proyecto.objects.get(pk=id_proyecto)
     user=request.user
-    #get_roles=RolUser.objects.filter(user=user,proyecto=proyecto)
- #==============================================================================
- #    if get_roles.count() == 0:
- #        return HttpResponseRedirect('/sinpermiso')
- #    for r in get_roles:
- #        if not r.rol.permisos.AdminProyecto:
- #            return HttpResponseRedirect('/sinpermiso')
- # 
- #==============================================================================
     if request.method=='POST':
         formulario= ProyectoFormEdit(request.POST,instance=proyecto)
         if formulario.is_valid():
@@ -113,16 +92,6 @@ def proyectos(request):
 def eliminar_proyecto(request, id_proyecto):
     proyecto= Proyecto.objects.get(pk=id_proyecto)
     user=request.user
- #==============================================================================
- #    #get_roles=RolUser.objects.filter(user=user,proyecto=proyecto)
- #    if get_roles.count() == 0:
- #        return HttpResponseRedirect('/sinpermiso')
- # 
- #    for r in get_roles:
- #        if not r.rol.permisos.delete_project:
- #            return HttpResponseRedirect('/sinpermiso')
- # 
- #==============================================================================
     nombre=proyecto.nombre
     proyecto.delete()
     
