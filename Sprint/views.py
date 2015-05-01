@@ -9,6 +9,7 @@ from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from Sprint.forms import SprintForm,SprintFormEdit
 from Sprint.models import Sprint
+from UserStory.models import UserStory
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -25,6 +26,7 @@ def nuevo_sprint(request):
         sprint_form = SprintForm(data=request.POST)
 
 
+
         # If the two forms are valid...
         if sprint_form.is_valid():
             # Guarda el Usuarios en la bd
@@ -37,11 +39,16 @@ def nuevo_sprint(request):
 
 
             sprint = Sprint()
+
+
+            for var in UserStory.objects.filter(sprint= sprint.id):
+                suma = ++var.tiempo_trabajado
+
             sprint.nombre=nombre
             sprint.fechaInicio=fechaInicio
             sprint.fechaFin=fechaFin
             sprint.fecha_creacion=today()
-            sprint.tiempo_acumulado=tiempo_acumulado
+            sprint.tiempo_acumulado=suma
             sprint.save()
             messages.success(request, 'SPRINT CREADO CON EXITO!')
 

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.forms.widgets import TextInput
 from django.db import models
 from AdminProyectos.models import Proyecto
-from UserStory.models import UserStory
+from UserStory.models import UserStory,US_PRIORIDAD,US_ESTADOS
 from Sprint.models import Sprint
 from Actividades.models import Actividad
 from django.contrib.admin import widgets
@@ -16,7 +16,18 @@ class UserStoryForm(forms.ModelForm):
     """
     Atributos que el usuario deber completar para la creacion
     de un nuevo UserStory
+
     """
+    US_PRIORIDAD = (
+    ('BAJA', 'BAJA'),
+    ('MEDIA', 'MEDIA'),
+    ('ALTA', 'ALTA'),
+    )
+    US_ESTADOS = (
+    ('TODO', 'TODO'),
+    ('DOING', 'DOING'),
+    ('DONE', 'DONE'),
+    )
 
     #leader=forms.CharField(widget=TextInput(attrs={'readonly':'readonly'}),required=False)
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
@@ -30,10 +41,11 @@ class UserStoryForm(forms.ModelForm):
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Finalizacion del User Story'} )
     #rol_usuario = models.ManyToManyField(Usuario_Rol, related_name='proyectos')
-    estado=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3'}),
-                                help_text="Maximo 30 caracteres",max_length=120,label="Estado")
-    prioridad=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3'}),
-                                help_text="Maximo 30 caracteres",max_length=120,label="Prioridad")
+    estado=forms.MultipleChoiceField(required=False,widget=forms.CheckboxSelectMultiple, choices=US_ESTADOS)
+    #prioridad=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3'}),
+                               # help_text="Maximo 30 caracteres",max_length=120,label="Prioridad")
+    prioridad=forms.MultipleChoiceField(required=False,widget=forms.CheckboxSelectMultiple, choices=US_PRIORIDAD)
+
     sprint= forms.ModelChoiceField(queryset= Sprint.objects.all())
     actividad=forms.ModelChoiceField(queryset= Actividad.objects.all())
     tiempo_trabajado = forms.IntegerField(label="Tiempo Trabajado(hs)")
