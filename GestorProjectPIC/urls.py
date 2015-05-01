@@ -50,10 +50,12 @@ urlpatterns = patterns('',
 
 
 #FLUJOS
-    url(r'^flujo/nuevo/$','Flujo.views.nuevo_flujo'),
-
+    url(r'^flujo/nuevo/(?P<id_proyecto>\d+)/$','Flujo.views.nuevo_flujo'),
+    url(r'^flujo/miflujo/(?P<id_proyecto>\d+)/$','Flujo.views.mi_flujo'),
 
 #ACTIVIDADES
-    url(r'^actividad/nueva/$','Actividades.views.nueva_actividad'),
+    url(r'^actividad/nueva/(?P<id_flujo>\d+)/$','Actividades.views.nueva_actividad'),
+    url(r'^actividad/miactividad/(?P<id_actividad>\d+)/$','Actividades.views.mi_actividad'),
+    url(r'^actividad/misactividades/(?P<id_proyecto>\d+)/$','Actividades.views.mis_actividades'),
 )
 

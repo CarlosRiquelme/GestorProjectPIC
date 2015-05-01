@@ -19,7 +19,6 @@ class ActividadForm(forms.ModelForm):
     #leader=forms.CharField(widget=TextInput(attrs={'readonly':'readonly'}),required=False)
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre de la Actividad",)
-    flujo=forms.ModelChoiceField(queryset=Flujo.objects.all())
     fechaInicio = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Inicio del proyecto'} )
@@ -31,7 +30,7 @@ class ActividadForm(forms.ModelForm):
 
     class Meta:
         model = Actividad
-        fields = ['nombre','flujo','fechaInicio','fechaFin','secuencia']
+        fields = ['nombre','fechaInicio','fechaFin','secuencia']
 
 
     def save(self, commit=True):

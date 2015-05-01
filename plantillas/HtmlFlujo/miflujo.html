@@ -1,0 +1,45 @@
+{% extends 'admin/base_site.html' %}
+
+
+
+{% block content %}
+<center><h1>{{ flujo.proyecto.nombre }}</h1></center>
+
+<center>
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+  <li class="active"><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
+    {% if flujo.estado == 'CREADO' %}
+     <li class="active"><a href="#">Actividades</a></li>
+    {% endif %}
+</ul></center>
+<br>
+<!--{% comment %}
+    <a class="btn btn-info" href="{% url 'AdminLineaBase.views.listar_lb' id_proyecto %}">Listar Lineas Base</a>
+    <a class="btn btn-info" href="{% url 'AdminLineaBase.views.nuevo_lb' id_proyecto %}">Nueva Linea Base</a>
+{% endcomment %}!-->
+{% if flujo.estado == 'CREADO' %}
+<a class="btn btn-primary" data-toggle="modal" data-target="#myModal"  href="#myModal" >
+       Editar&nbsp;<i class="fa fa-edit"></i></a>
+
+  <a class="btn btn-success"     href="{% url 'Actividades.views.nueva_actividad' flujo.id %}">
+       Crear Actividades&nbsp;</a>
+
+       <br><br>
+
+  {% endif %}
+
+    <center>
+
+
+        <table class="table table-bordered table-striped" >
+
+            <tr><th style="width: 180px" class="navbar-inner">Nombre: </th><td style="text-align: center">{{ flujo.nombre }}</td></tr>
+            <tr><th class="navbar-inner">Proyecto: </th><td style="text-align: center">{{ flujo.proyecto.nombre }}</td></tr>
+            <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ flujo.fecha_creacion }}</td></tr>
+            <tr><th class="navbar-inner">Cantidad de Actividades: </th><td style="text-align: center">{{ flujo.cantidad_de_actividades }}</td></tr>
+        </table>
+    </center>
+{% endblock %}
+</body>

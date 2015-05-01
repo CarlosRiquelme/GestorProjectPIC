@@ -9,7 +9,7 @@ from AdminProyectos.forms import ProyectoForm, ProyectoFormEdit
 from AdminProyectos.models import Proyecto
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from Flujo.models import Flujo
 
 
 def nuevo_proyecto(request):
@@ -66,22 +66,6 @@ def nuevo_proyecto(request):
     return render_to_response('HtmlProyecto/nuevoproyecto.html',{'formulario':proyecto_form,'user':user},
                               context_instance=RequestContext(request))
 
-#===============================================================================
-# def crearRolLeader():
-#     permiso=Permisos()
-#     permiso.AdminFase=True
-#     permiso.AdminItem=True
-#     permiso.AdminRol=True
-#     permiso.AdminProyecto=True
-#     permiso.AdminUser=True
-#     permiso.save()
-#     rol=Rol()
-#     rol.nombre='Leader'
-#     rol.permisos=permiso
-#     rol.descripcion='Este rol tiene permiso absoluto sobre un proyecto'
-#     rol.save()
-#     return rol
-#===============================================================================
 
 def iniciar_proyecto(request, id_proyecto):
     proyecto= Proyecto.objects.get(pk=id_proyecto)
@@ -116,7 +100,7 @@ def editar_proyecto(request, id_proyecto):
                               context_instance=RequestContext(request))
 
 
-@login_required(login_url='/ingresar')
+
 def proyectos(request):
     proyecto = Proyecto.objects.all()
 
@@ -149,26 +133,18 @@ def eliminar_proyecto(request, id_proyecto):
     return render_to_response('HtmlProyecto/eliminarproyecto.html',{'proyecto':proyecto},
                               context_instance=RequestContext(request))
 def mis_proyectos(request):
-    #query= "select p.nombre, p.id_proyecto from proyectos p right join rol_user r on r.proyecto_id = p.id_proyecto where r.user_id ="+str(request.user.id)
+
     proyectos_list=Proyecto.objects.all()
-    #proyectos_list=execute_query(query)
-    
-    #proyectos_list= Proyecto.objects.raw(query)
+
     return render_to_response('HtmlProyecto/misproyectos.html',{'proyectos':proyectos_list})
 
 
 def mi_proyecto(request, id_proyecto):
  
     proyecto= Proyecto.objects.get(pk=id_proyecto)
+    if proyecto.estado == 'EN-DESARROLLO' :
+        flujo=Flujo.objects.get(proyecto=id_proyecto)
     user=request.user
-    #get_roles=RolUser.objects.filter(user=user,proyecto=proyecto)
-    #===========================================================================
-    # if get_roles.count() == 0:
-    #     return HttpResponseRedirect('/sinpermiso')
-    # for r in get_roles:
-    #     if not r.rol.permisos.AdminProyecto:
-    #         return HttpResponseRedirect('/sinpermiso')
-    #===========================================================================
     if request.method=='POST':
         formulario= ProyectoFormEdit(request.POST,instance=proyecto)
         if formulario.is_valid():
@@ -178,10 +154,18 @@ def mi_proyecto(request, id_proyecto):
     else:
         formulario= ProyectoFormEdit(instance=proyecto)
 
-    return render_to_response('HtmlProyecto/miproyecto.html',
+
+    if proyecto.estado == 'EN-DESARROLLO' :
+        return render_to_response('HtmlProyecto/miproyecto.html',
+                                  {'formulario':formulario,'proyecto':proyecto,
+                                   'id_proyecto':id_proyecto,'user':proyecto.scrumMaster,
+                                   'flujo':flujo},context_instance=RequestContext(request))
+    else:
+        return render_to_response('HtmlProyecto/miproyecto.html',
                 {'formulario':formulario,'proyecto':proyecto,
                  'id_proyecto':id_proyecto,'user':proyecto.scrumMaster},
                               context_instance=RequestContext(request))
+
 
 def colaboradores(request, id_proyecto):
     #===========================================================================

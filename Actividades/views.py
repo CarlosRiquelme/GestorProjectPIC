@@ -8,11 +8,13 @@ from django.http import HttpResponseRedirect
 from Actividades.forms import ActividadForm
 from Actividades.models import Actividad
 from django.contrib import messages
+from Flujo.models import Flujo
+from AdminProyectos.models import Proyecto
 from django.contrib.auth.decorators import login_required
 
 
 
-def nueva_actividad(request):
+def nueva_actividad(request, id_flujo):
     """
     Crea un nuevo actividad
     """
@@ -30,7 +32,6 @@ def nueva_actividad(request):
             nombre = actividad_form.cleaned_data['nombre']
             fecha_inicio = actividad_form.cleaned_data['fechaInicio']
             fechafin=actividad_form.cleaned_data['fechaFin']
-            flujo =  actividad_form.cleaned_data['flujo']
             secuencia = actividad_form.cleaned_data['secuencia']
 
 
@@ -38,7 +39,7 @@ def nueva_actividad(request):
 
             actividad = Actividad()
             actividad.nombre=nombre
-            actividad.flujo=flujo
+            actividad.flujo_id=id_flujo
             actividad.fecha_creacion=today()
             actividad.fechaInicio=fecha_inicio
             actividad.fechaFin=fechafin
@@ -47,21 +48,26 @@ def nueva_actividad(request):
             actividad.save()
             messages.success(request, 'actividad CREADO CON EXITO!')
 
-
-            #aux = Rol.objects.filter(nombre='Leader').count()
-            #===================================================================
-            # if aux == 0:
-            #    rol= crearRolLeader()
-            # else:
-            #     rol = Rol.objects.get(nombre='Leader')
-            # rol_user=RolUser()
-            # rol_user.rol = rol
-            # rol_user.actividad = actividad
-            # rol_user.user = user
-            # rol_user.save()
-            #===================================================================
             return HttpResponseRedirect('/actividad/miactividad/'+str(actividad.id))
     else:
         actividad_form= ActividadForm(request.POST)
     return render_to_response('HtmlActividad/nueva_actividad.html',{'formulario':actividad_form,'user':user},
                               context_instance=RequestContext(request))
+
+
+def mi_actividad(request, id_actividad):
+
+    actividad= Actividad.objects.get(pk=id_actividad)
+    user=request.user
+
+    return render_to_response('HtmlActividad/miactividad.html',
+                { 'actividad':actividad}, RequestContext(request))
+
+
+
+def mis_actividades(request, id_proyecto):
+
+    actividades=Actividad.objects.filter(flujo__proyecto_id=id_proyecto)
+
+
+    return render_to_response('HtmlActividad/misactividades.html',{'actividades':actividades, 'id_proyecto':id_proyecto})

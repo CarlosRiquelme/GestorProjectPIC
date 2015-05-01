@@ -54,7 +54,7 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
     </thead>
     {% for dato in proyecto %}
     <tr>
-	    <td><em>{{dato.nombre}}</em></td>
+	     <td><em><a href="{% url 'AdminProyectos.views.mi_proyecto' dato.id %}">{{dato.nombre}}</a></em></td>
         <td >{{dato.scrumMaster}}</td>
         <td>{{dato.estado}}</td>
         <td>{{ dato.fecha_creacion }}</td>

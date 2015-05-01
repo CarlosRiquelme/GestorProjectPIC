@@ -1,0 +1,26 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+
+    <br>
+    <center><h1>Mis Actividades</h1></center>
+    <br><br>
+    <center>
+
+        <table class="table" style="width: 500px">
+        {% for p in actividades %}
+                    <tr>
+	     <td><em><a href="{% url 'Actividades.views.mi_actividad' p.id %}">{{p.nombre}}</a></em></td>
+
+
+	</tr>
+
+        {% endfor %}
+
+    </table>
+        </center>
+{% endblock %}
