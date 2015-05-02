@@ -11,10 +11,11 @@ from Sprint.forms import SprintForm,SprintFormEdit
 from Sprint.models import Sprint
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from Flujo.models import Flujo
+from UserStory.models import UserStory
 
 
-
-def nuevo_sprint(request):
+def nuevo_sprint(request, id_flujo):
     """
     Crea un nuevo sprint
     """
@@ -42,13 +43,15 @@ def nuevo_sprint(request):
             sprint.fechaFin=fechaFin
             sprint.fecha_creacion=today()
             sprint.tiempo_acumulado=tiempo_acumulado
+            sprint.flujo_id=id_flujo
+            sprint.estado='ABIERTO'
             sprint.save()
             messages.success(request, 'SPRINT CREADO CON EXITO!')
 
             return HttpResponseRedirect('/sprint/misprint/'+str(sprint.id))
     else:
         sprint_form= SprintForm(request.POST)
-    return render_to_response('HtmlSprint/nuevosprint.html',{'formulario':sprint_form,'user':user},
+    return render_to_response('HtmlSprint/nuevosprint.html',{'formulario':sprint_form,'user':user,'id_flujo':id_flujo},
                               context_instance=RequestContext(request))
 
 
@@ -100,27 +103,21 @@ def eliminar_sprint(request, id_sprint):
 
     return render_to_response('HtmlSprint/eliminarsprint.html',{'sprint':sprint},
                               context_instance=RequestContext(request))
-def mis_sprints(request):
+def mis_sprints(request,id_proyecto):
 
-    sprints_list=Sprint.objects.all()
+    sprints=Sprint.objects.filter(flujo__proyecto_id=id_proyecto)
+    flujo=Flujo.objects.get(proyecto_id=id_proyecto)
 
 
 
-    return render_to_response('HtmlSprint/missprints.html',{'sprints':sprints_list})
+    return render_to_response('HtmlSprint/missprints.html',{'sprints':sprints,'id_proyecto':id_proyecto,
+                                                            'flujo':flujo})
 
 
 def mi_sprint(request, id_sprint):
 
     sprint= Sprint.objects.get(pk=id_sprint)
     user=request.user
-    #get_roles=RolUser.objects.filter(user=user,proyecto=proyecto)
-    #===========================================================================
-    # if get_roles.count() == 0:
-    #     return HttpResponseRedirect('/sinpermiso')
-    # for r in get_roles:
-    #     if not r.rol.permisos.AdminProyecto:
-    #         return HttpResponseRedirect('/sinpermiso')
-    #===========================================================================
     if request.method=='POST':
         formulario= SprintFormEdit(request.POST,instance=sprint)
         if formulario.is_valid():
@@ -134,6 +131,18 @@ def mi_sprint(request, id_sprint):
                 {'formulario':formulario,'sprint':sprint,
                  'id_proyecto':id_sprint},
                               context_instance=RequestContext(request))
+
+def cerrar_sprint(request, id_sprint):
+    userstory=UserStory.objects.filter(sprint_id=id_sprint)
+    sprint=Sprint.objects.get(pk=id_sprint)
+    suma=0
+    for us in userstory:
+        suma=suma+us.tiempo_estimado
+    sprint.tiempo_acumulado=suma
+    sprint.estado='CERRADO'
+    sprint.save()
+    messages.success(request, 'SPRINT CERRADO CON EXITO!')
+    return HttpResponseRedirect('/sprint/misprint/'+str(sprint.id))
 
 
 

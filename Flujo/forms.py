@@ -4,6 +4,7 @@ from django.http import request
 
 from django.contrib.auth.models import User
 from django.forms.widgets import TextInput
+from Flujo.models import Flujo
 from django.db import models
 from AdminProyectos.models import Proyecto
 from django.contrib.admin import widgets
@@ -26,5 +27,5 @@ class FlujoForm(forms.ModelForm):
     #coste_total=forms.IntegerField(label="Coste Total")
 
     class Meta:
-        model = Proyecto
+        model = Flujo
         fields = ['nombre','cantidad_de_actividades']

@@ -1,14 +1,12 @@
 {% extends 'admin/base_site.html' %}
 
 {% block title %}Nuevo Proyecto{% endblock %}
-{% block header %}
-	NUEVO PROYECTO
-{% endblock %}
+
 
 {% block content %}
 
 
-
+<h1>Nuevo Comentario</h1>
 
 
 
@@ -17,7 +15,7 @@
 		{{formulario.nombre.error}}
 		<table class="table-striped">{{formulario.as_table}}</table>
 	<br>
-	<a class="btn btn-default" href="/userstorys/"> <i class="fa fa-backward"></i> Volver</a>
+	<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
 		<button class="btn btn-primary" type='submit' >Guardar <i class="fa fa-save"></i></button>
 
 

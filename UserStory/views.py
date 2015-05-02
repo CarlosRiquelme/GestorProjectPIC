@@ -9,6 +9,7 @@ from Actividades.models import Actividad
 from UserStory.forms import UserStoryForm, UserStoryFormEdit
 from UserStory.models import UserStory
 from django.contrib import messages
+from Sprint.models import Sprint
 from django.contrib.auth.decorators import login_required
 
 
@@ -159,5 +160,19 @@ def lista_userstory_done(request,id_proyecto, id_actividad):
      return render_to_response('HtmlUserStory/userstory_done.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
                                                                        'id_actividad':id_actividad,'actividad':actividad})
 
+def lista_userstory_no_creado(request,id_proyecto, id_sprint):
+     userstorys=UserStory.objects.filter(actividad_id=id_sprint)
+     sprint=Sprint.objects.get(pk=id_sprint)
+
+     return render_to_response('HtmlUserStory/userstory_no_creado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_sprint':id_sprint,'sprint':sprint})
+
+def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
+    userstory=UserStory.objects.get(pk=id_userstory)
+
+    userstory.sprint_id=id_sprint
+    userstory.save()
+    messages.success(request, 'USER STORY ASIGNADO A UNA SPRINT CORRECTAMENTE!')
+    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 
 

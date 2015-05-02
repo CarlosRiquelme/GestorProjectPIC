@@ -32,12 +32,14 @@ class UserStoryForm(forms.ModelForm):
                                 help_text="Maximo 30 caracteres",max_length=10,label="Prioridad")
     tiempo_trabajado = forms.IntegerField(label="Tiempo Trabajado(hs)")
     porcentaje = forms.IntegerField(label="Porcentaje(%)")
+    tiempo_estimado = forms.IntegerField(label="Tiempo Estimado(hs)",
+                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
 
 
 
     class Meta:
         model = UserStory
-        fields = ['nombre','descripcion','fechaInicio','fechaFin','prioridad','tiempo_trabajado','porcentaje']
+        fields = ['nombre','descripcion','fechaInicio','fechaFin','prioridad','tiempo_trabajado','porcentaje','tiempo_estimado']
         
 
 
@@ -50,18 +52,13 @@ class UserStoryFormEdit(forms.ModelForm):
     de un nuevo UserStory
     """
 
-    #leader=forms.CharField(widget=TextInput(attrs={'readonly':'readonly'}),required=False)
+
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control','required':'required'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del UserStory",)
     
     descripcion=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3','required':'required'}),
                                 help_text="Maximo 120 caracteres",max_length=300,label="Descripcion")
-    #leader=forms.ModelChoiceField(queryset=User.objects.all())
-    #fecha_creacion=forms.DateTimeField()
-    # complejidad=forms.IntegerField(label="Complejidad")
 
-    #estado=forms.BooleanField(label="Estado")
-    #coste_total=forms.IntegerField(label="Coste Total")
 
     class Meta:
         model = UserStory

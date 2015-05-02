@@ -69,9 +69,11 @@ def mi_actividad(request, id_actividad):
 def mis_actividades(request, id_proyecto):
 
     actividades=Actividad.objects.filter(flujo__proyecto_id=id_proyecto)
+    flujo=Flujo.objects.get(proyecto_id=id_proyecto)
 
 
-    return render_to_response('HtmlActividad/misactividades.html',{'actividades':actividades, 'id_proyecto':id_proyecto})
+    return render_to_response('HtmlActividad/misactividades.html',{'actividades':actividades, 'id_proyecto':id_proyecto,
+                                                                   'flujo':flujo})
 
 
 def ver_estados(request, id_proyecto, id_actividad):

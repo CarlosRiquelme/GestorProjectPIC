@@ -28,7 +28,8 @@ class SprintForm(forms.ModelForm):
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Finalizacion del Sprint'} )
 
-    tiempo_acumulado = forms.IntegerField()
+    tiempo_acumulado =  forms.IntegerField(label="Tiempo Acumulado(hs)",
+                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
 
 
     class Meta:
