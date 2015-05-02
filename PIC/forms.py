@@ -61,3 +61,4 @@ class EditUserForm(forms.ModelForm):
 class GroupForm(forms.ModelForm):
        class Meta:
             model = Group
+            fields = "__all__"
