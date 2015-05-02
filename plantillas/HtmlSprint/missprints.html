@@ -1,29 +1,65 @@
 {% extends 'admin/base_site.html' %}%}
 
-{% block titulo %}Sprints{% endblock %}
-{% block extra_head %}
 
-{% endblock %}
+
+
 {% block content %}
 
-
-    <br>
-    <center><h1>Mis Sprints</h1></center>
-    <br><br>
+    <center><h1>Mis Sprints </h1></center>
+<center>
+<ul class="nav nav-tabs">
+  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+     <li ><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
+     <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
+    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
+    <li class="active"><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+</ul>
+</center>
+<br>
+    <a class="btn btn-success"     href="{% url 'Sprint.views.nuevo_sprint' flujo.id %}">
+       Crear Sprint&nbsp;</a>
+<br>
     <center>
 
-        <table class="table" style="width: 500px">
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th>ESTADO</th>
+        <th >FECHA DE CREACION</th>
+        <th >FECHA DE INICIO</th>
+
+
+
+        <th  style="width: 10%">ASIGNAR</th>
+        <th  style="width: 10%">ESTADOS</th>
+        <th  style="width: 10%">ACCION</th>
         {% for p in sprints %}
-                    <tr>
-                      <td>
-                      <li>   <a href="{% url 'Sprint.views.mi_sprint' p.id %}">  {{ p.nombre }}</a></li>
 
-                      </td>
+    <tr>
+	     <td><em><a href="{% url 'Sprint.views.mi_sprint' p.id %}">{{p.nombre}}</a></em></td>
+         <td><em>{{p.estado}}</em></td>
+         <td><em>{{p.fecha_creacion}}</em></td>
+         <td><em>{{p.fechaInicio}}</em></td>
+         <td><em>{{p.fechaFin}}</em></td>
 
-                    </tr>
+        <td>
+            <div class="input-group">
+                <a class="btn btn-primary" href="{% url 'UserStory.views.lista_userstory_no_creado' id_proyecto p.id %}">UserStory</a>
+        </div>
+        {% if p.estado == 'ABIERTO' %}
+        <td>
+            <div class="input-group">
+                <a class="btn btn-success" href="{% url 'Sprint.views.cerrar_sprint'  p.id %}">CERRAR</a>
+            </div>
+        </td>
+        {% endif %}
+
+	</tr>
+
 
         {% endfor %}
 
     </table>
         </center>
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

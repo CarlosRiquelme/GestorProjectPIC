@@ -72,7 +72,7 @@
                 </a>
               {% endblock branding %}
               {% block filters %}{% endblock filters %}
-              {% render_menu_app_list %}
+               {# {% render_menu_app_list %} #}<!-- Exploto cuando cree vista de actividad por eso esta comentado -->
      <!-- MENU PRINCIPAL AGREGAR LOS LINK AQUI -->
                 <!-- USUARIOS-->
                 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Usuarios</a></li>
@@ -96,36 +96,19 @@
                 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Proyectos</a></li>
                 <ul>
                     <li><a href="{% url 'AdminProyectos.views.proyectos' %}">Listar</a></li>
-                    <li><a href="/proyecto/nuevo">Agregar</a></li>
 
                 </ul>
 
                 <!--FLUJO-->
-                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Flujos</a></li>
-                <ul>
-                    <li><a href="/flujo/nuevo">Agregar</a></li>
+
 
                 </ul>
                 <!--USER STORY-->
-                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> UserStorys</a></li>
-                <ul>
-                    <li><a href="{% url 'UserStory.views.userstorys' %}">Listar</a></li>
-                    <li><a href="/userstory/nuevo">Agregar</a></li>
 
-                </ul>
                 <!--SPRINT-->
-                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Sprints</a></li>
-                <ul>
-                    <li><a href="{% url 'Sprint.views.sprints' %}">Listar</a></li>
-                    <li><a href="/sprint/nuevo">Agregar</a></li>
 
-                </ul>
                 <!--ACTIVIDADES-->
-                  <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Actividades</a></li>
-                <ul>
-                    <li><a href="/actividad/nueva">Agregar</a></li>
 
-                </ul>
 
 
 

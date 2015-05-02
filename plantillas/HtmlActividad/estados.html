@@ -1,0 +1,48 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+
+    <br>
+    <center><h1>Mis Estados de la Actividad {{actividad.nombre}}</h1></center>
+    <br><br>
+    <center>
+
+        <table class="table table-striped" style="width: 100%">
+    <thead>
+        <th >ESTADO</th>
+        <th  style="width: 50%">USER STORY ASOCIADOS</th>
+
+    <tr>
+	     <td><em>TODO</em></td>
+        <td>
+            <div class="input-group">
+                <a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_todo' id_proyecto id_actividad %}">VER</a>
+            </div>
+        </td>
+	</tr>
+    <tr>
+	     <td><em>DOING</em></td>
+        <td>
+            <div class="input-group">
+                <a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_doing' id_proyecto id_actividad %}">VER</a>
+            </div>
+        </td>
+	</tr>
+    <tr>
+	     <td><em>DONE</em></td>
+        <td>
+            <div class="input-group">
+                <a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_done' id_proyecto id_actividad %}">VER</a>
+            </div>
+        </td>
+	</tr>
+
+
+    </table>
+        </center>
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}

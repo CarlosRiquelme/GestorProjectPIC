@@ -1,0 +1,41 @@
+{% extends 'admin/base_site.html' %}
+
+
+
+{% block content %}
+<center><h1>{{ flujo.proyecto.nombre }}</h1></center>
+
+<center>
+
+<ul class="nav nav-tabs">
+    <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+  <li class="active"><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
+    {% if flujo.estado == 'CREADO' %}
+     <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
+    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
+    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+    {% endif %}
+</ul>
+</center>
+<br>
+
+{% if flujo.estado == 'CREADO' %}
+  <a class="btn btn-success"     href="{% url 'Actividades.views.nueva_actividad' flujo.id %}">
+       Crear Actividades&nbsp;</a>
+  {% endif %}
+
+<br>
+<br>
+    <center>
+
+
+        <table class="table table-bordered table-striped" >
+
+            <tr><th style="width: 180px" class="navbar-inner">Nombre: </th><td style="text-align: center">{{ flujo.nombre }}</td></tr>
+            <tr><th class="navbar-inner">Proyecto: </th><td style="text-align: center">{{ flujo.proyecto.nombre }}</td></tr>
+            <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ flujo.fecha_creacion }}</td></tr>
+            <tr><th class="navbar-inner">Cantidad de Actividades: </th><td style="text-align: center">{{ flujo.cantidad_de_actividades }}</td></tr>
+        </table>
+    </center>
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}

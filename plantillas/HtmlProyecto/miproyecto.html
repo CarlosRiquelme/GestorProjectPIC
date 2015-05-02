@@ -1,11 +1,9 @@
 {% extends 'admin/base_site.html' %}
 
-{% block title %} Proyecto{% endblock %}
-{% block header %}
- {{ proyecto.nombre }}
-{% endblock %}
+
 <body onload="iniciar()">
 {% block content %}
+<center><h1>{{ proyecto.nombre }}</h1></center>
 <script>
 $('#id_nombre').attr('required','true')
 $('#id_descripcion').attr('required','true')
@@ -15,9 +13,14 @@ $('#id_descripcion').attr('required','true')
 <center>
 <ul class="nav nav-tabs">
   <li class="active"><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-
-
-</ul></center>
+    {% if proyecto.estado == 'EN-DESARROLLO'%}
+     <li ><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
+     <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
+    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
+    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+    {% endif %}
+</ul>
+</center>
 <br>
 <!--{% comment %}
     <a class="btn btn-info" href="{% url 'AdminLineaBase.views.listar_lb' id_proyecto %}">Listar Lineas Base</a>
@@ -27,30 +30,28 @@ $('#id_descripcion').attr('required','true')
 <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"  href="#myModal" >
        Editar&nbsp;<i class="fa fa-edit"></i></a>
        
-  <a class="btn btn-success"   data-toggle="modal" data-target="#iniciarProyecto"  href="#iniciarProyecto">
-       Iniciar&nbsp;<i class="fa fa-retweet"></i></a>
-       
-       <br><br>
-       
+  <a class="btn btn-success"     href="{% url 'Flujo.views.nuevo_flujo' id_proyecto  %}">
+       Crear Flujo&nbsp;</a>
   {% endif %}
-  
+
+       
+
+
+
+
     <center>
         
 
-        <table class="table table-bordered table-striped" >
+        <table class="table table-bordered table-striped">
 
-            <tr><th style="width: 180px" class="navbar-inner">Leader: </th><td style="text-align: center">{{ proyecto.scrumMaster.username }}</td></tr>
+            <tr><th style="width: 180px" class="navbar-inner">Scrum Master: </th><td style="text-align: center">{{ proyecto.scrumMaster.username }}</td></tr>
             <tr><th class=  "navbar-inner">Nombre: </th><td  style="text-align: center">{{ proyecto.nombre }}</td></tr>
             <tr><th class="navbar-inner">Estado: </th><td style="text-align: center">{{ proyecto.get_estado_display }}</td></tr>
             <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ proyecto.fecha_creacion }}</td></tr>
             <tr><th class="navbar-inner">Fecha de Inicio: </th><td style="text-align: center">{{ proyecto.fechaInicio }}</td></tr>
-            <tr><th class="navbar-inner">Fecha de Fin: </th><td style="text-align: center">{{ proyecto.fechaFin }}</td></tr>>
+            <tr><th class="navbar-inner">Fecha de Fin: </th><td style="text-align: center">{{ proyecto.fechaFin }}</td></tr>
             <tr><th class="navbar-inner">Descripcion: </th><td style="text-align: center">{{ proyecto.descripcion }}</td></tr>
         </table>
-{##}
-{#                <a class="btn btn-info" {% if not proyecto.estado %} disabled {% endif %} href="{% url 'AdminProyectos.views.editar_proyecto' proyecto.id_proyecto %}">Editar</a>#}
-{##}
-{#                <input type="submit" {% if not proyecto.estado %} disabled {% endif %} value="Iniciar Proyecto" class="btn btn-info">#}
     </center>
      
     <form method="post">{% csrf_token %}
@@ -61,7 +62,7 @@ $('#id_descripcion').attr('required','true')
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel"><b>Editar Proyecto</b></h4>
+	        <h4 class="modal-title" id="myModalLabel"><b>Crear Flujo</b></h4>
 	      </div>
 	      <div class="modal-body">
 	         	<table class="table-striped">
@@ -96,5 +97,6 @@ $('#id_descripcion').attr('required','true')
 	    </div>
 	  </div>
 	</div>
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}
 </body>

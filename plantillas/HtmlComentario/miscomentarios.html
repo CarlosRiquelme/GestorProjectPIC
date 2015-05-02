@@ -1,0 +1,38 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+    <center><h1>Listado de Comentarios del User Story {{userstory.nombre}} </h1></center>
+
+    <center>
+
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >TITULO</th>
+        <th >FECHA DE CREACION</th>
+        <th >HORA TRABAJADA</th>
+    </thead>
+
+        {% for p in comentarios %}
+
+     <tr>
+	     <td><em><a href="{% url 'Comentario.views.mi_comentario' p.id %}">{{p.titulo}}</a></em></td>
+         <td><em>{{p.fecha_creacion}}</em></td>
+         <td><em>{{p.hora_trabajada}}</em></td>
+
+
+
+	</tr>
+
+
+        {% endfor %}
+
+    </table>
+        </center>
+
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}
+

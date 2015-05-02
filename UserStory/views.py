@@ -5,14 +5,16 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
-from UserStory.forms import UserStoryForm,UserStoryFormEdit
+from Actividades.models import Actividad
+from UserStory.forms import UserStoryForm, UserStoryFormEdit
 from UserStory.models import UserStory
 from django.contrib import messages
+from Sprint.models import Sprint
 from django.contrib.auth.decorators import login_required
 
 
 
-def nuevo_userstory(request):
+def nuevo_userstory(request, id_proyecto):
     """
     Crea un nuevo userstory
     """
@@ -33,62 +35,36 @@ def nuevo_userstory(request):
             fechafin=userstory_form.cleaned_data['fechaFin']
             tiempo_trabajado=userstory_form.cleaned_data['tiempo_trabajado']
             porcentaje=userstory_form.cleaned_data['porcentaje']
-            sprint=userstory_form.cleaned_data['sprint']
-            estado=userstory_form.cleaned_data['estado']
-            actividad=userstory_form.cleaned_data['actividad']
+            prioridad=userstory_form.cleaned_data['prioridad']
+            tiempo_estimado=userstory_form.cleaned_data['tiempo_estimado']
 
 
 
 
             userstory = UserStory()
             userstory.nombre=nombre
+            userstory.descripcion = descripcion
+            userstory.fecha_creacion=today()
             userstory.fechaInicio=fecha_inicio
             userstory.fechaFin=fechafin
-            userstory.fecha_creacion=today()
-            userstory.estado=estado
-            userstory.descripcion = descripcion
+            userstory.estado='CREADO'
+            userstory.prioridad=prioridad
             userstory.tiempo_trabajado=tiempo_trabajado
             userstory.porcentaje=porcentaje
-            userstory.sprint=sprint
-            userstory.actividad=actividad
+            userstory.proyecto_id=id_proyecto
+            userstory.tiempo_estimado=tiempo_estimado
             userstory.save()
             messages.success(request, 'USER STORY CREADO CON EXITO!')
                         
 
-            #aux = Rol.objects.filter(nombre='Leader').count()
-            #===================================================================
-            # if aux == 0:
-            #    rol= crearRolLeader()
-            # else:
-            #     rol = Rol.objects.get(nombre='Leader')
-            # rol_user=RolUser()
-            # rol_user.rol = rol
-            # rol_user.proyecto = proyecto
-            # rol_user.user = user
-            # rol_user.save()
-            #===================================================================
+
             return HttpResponseRedirect('/userstory/miuserstory/'+str(userstory.id))
     else:
         userstory_form= UserStoryForm(request.POST)
-    return render_to_response('HtmlUserStory/nuevouserstory.html',{'formulario':userstory_form,'user':user},
+    return render_to_response('HtmlUserStory/nuevouserstory.html',{'formulario':userstory_form,'user':user,
+                                                                   'id_proyecto':id_proyecto},
                               context_instance=RequestContext(request))
 
-#===============================================================================
-# def crearRolLeader():
-#     permiso=Permisos()
-#     permiso.AdminFase=True
-#     permiso.AdminItem=True
-#     permiso.AdminRol=True
-#     permiso.AdminProyecto=True
-#     permiso.AdminUser=True
-#     permiso.save()
-#     rol=Rol()
-#     rol.nombre='Leader'
-#     rol.permisos=permiso
-#     rol.descripcion='Este rol tiene permiso absoluto sobre un proyecto'
-#     rol.save()
-#     return rol
-#===============================================================================
 
 def iniciar_userstory(request, id_userstory):
     userstory= UserStory.objects.get(pk=id_userstory)
@@ -101,15 +77,6 @@ def editar_userstory(request, id_userstory):
  
     userstory= UserStory.objects.get(pk=id_userstory)
     user=request.user
-    #get_roles=RolUser.objects.filter(user=user,proyecto=proyecto)
- #==============================================================================
- #    if get_roles.count() == 0:
- #        return HttpResponseRedirect('/sinpermiso')
- #    for r in get_roles:
- #        if not r.rol.permisos.AdminProyecto:
- #            return HttpResponseRedirect('/sinpermiso')
- # 
- #==============================================================================
     if request.method=='POST':
         formulario= UserStoryFormEdit(request.POST,instance=userstory)
         if formulario.is_valid():
@@ -123,7 +90,7 @@ def editar_userstory(request, id_userstory):
                               context_instance=RequestContext(request))
 
 
-@login_required(login_url='/ingresar')
+
 def userstorys(request):
     userstory = UserStory.objects.all()
 
@@ -136,16 +103,6 @@ def userstorys(request):
 def eliminar_userstory(request, id_userstory):
     userstory= UserStory.objects.get(pk=id_userstory)
     user=request.user
- #==============================================================================
- #    #get_roles=RolUser.objects.filter(user=user,proyecto=proyecto)
- #    if get_roles.count() == 0:
- #        return HttpResponseRedirect('/sinpermiso')
- # 
- #    for r in get_roles:
- #        if not r.rol.permisos.delete_project:
- #            return HttpResponseRedirect('/sinpermiso')
- # 
- #==============================================================================
     nombre=userstory.nombre
     userstory.delete()
     
@@ -155,39 +112,69 @@ def eliminar_userstory(request, id_userstory):
  
     return render_to_response('HtmlUserStory/eliminaruserstory.html',{'userstory':userstory},
                               context_instance=RequestContext(request))
-def mis_userstorys(request):
-    #query= "select p.nombre, p.id_proyecto from proyectos p right join rol_user r on r.proyecto_id = p.id_proyecto where r.user_id ="+str(request.user.id)
-    userstorys_list=UserStory.objects.all()
-    #proyectos_list=execute_query(query)
-    
-    #proyectos_list= Proyecto.objects.raw(query)
-    return render_to_response('HtmlUserStory/misuserstorys.html',{'userstorys':userstorys_list})
+def mis_userstorys(request, id_proyecto):
+    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+
+    return render_to_response('HtmlUserStory/misuserstorys.html',{'userstorys':userstorys,'id_proyecto':id_proyecto})
 
 
 def mi_userstory(request, id_userstory):
- 
+
     userstory= UserStory.objects.get(pk=id_userstory)
     user=request.user
-    #get_roles=RolUser.objects.filter(user=user,proyecto=proyecto)
-    #===========================================================================
-    # if get_roles.count() == 0:
-    #     return HttpResponseRedirect('/sinpermiso')
-    # for r in get_roles:
-    #     if not r.rol.permisos.AdminProyecto:
-    #         return HttpResponseRedirect('/sinpermiso')
-    #===========================================================================
-    if request.method=='POST':
-        formulario= UserStoryFormEdit(request.POST,instance=userstory)
-        if formulario.is_valid():
-            userstory= formulario.save()
-            userstory.save()
-            return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
-    else:
-        formulario= UserStoryFormEdit(instance=userstory)
 
     return render_to_response('HtmlUserStory/miuserstory.html',
-                {'formulario':formulario,'userstory':userstory,
-                 'id_userstory':id_userstory},
-                              context_instance=RequestContext(request))
+                { 'userstory':userstory }, RequestContext(request))
+
+def lista_userstory_creado(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+     actividad=Actividad.objects.get(pk=id_actividad)
+
+     return render_to_response('HtmlUserStory/userstory_creado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_actividad':id_actividad,'actividad':actividad})
+def asignar_userstory_a_actividad(request,id_proyecto ,id_actividad, id_userstory ):
+    userstory=UserStory.objects.get(pk=id_userstory)
+
+    userstory.actividad_id=id_actividad
+    userstory.estado='TODO'
+    userstory.save()
+    messages.success(request, 'USER STORY ASIGNADO A UNA ACTIVIDAD CORRECTAMENTE!')
+    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+
+def lista_userstory_todo(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
+     actividad=Actividad.objects.get(pk=id_actividad)
+
+     return render_to_response('HtmlUserStory/userstory_todo.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_actividad':id_actividad,'actividad':actividad})
+
+def lista_userstory_doing(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
+     actividad=Actividad.objects.get(pk=id_actividad)
+
+     return render_to_response('HtmlUserStory/userstory_doing.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_actividad':id_actividad,'actividad':actividad})
+
+def lista_userstory_done(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
+     actividad=Actividad.objects.get(pk=id_actividad)
+
+     return render_to_response('HtmlUserStory/userstory_done.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_actividad':id_actividad,'actividad':actividad})
+
+def lista_userstory_no_creado(request,id_proyecto, id_sprint):
+     userstorys=UserStory.objects.filter(actividad_id=id_sprint)
+     sprint=Sprint.objects.get(pk=id_sprint)
+
+     return render_to_response('HtmlUserStory/userstory_no_creado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_sprint':id_sprint,'sprint':sprint})
+
+def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
+    userstory=UserStory.objects.get(pk=id_userstory)
+
+    userstory.sprint_id=id_sprint
+    userstory.save()
+    messages.success(request, 'USER STORY ASIGNADO A UNA SPRINT CORRECTAMENTE!')
+    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 
 

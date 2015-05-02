@@ -54,22 +54,25 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
     </thead>
     {% for dato in proyecto %}
     <tr>
-	    <td><em>{{dato.nombre}}</em></td>
+	     <td><em><a href="{% url 'AdminProyectos.views.mi_proyecto' dato.id %}">{{dato.nombre}}</a></em></td>
         <td >{{dato.scrumMaster}}</td>
         <td>{{dato.estado}}</td>
         <td>{{ dato.fecha_creacion }}</td>
         <td>{{ dato.fechaInicio}}</td>
         <td>{{ dato.fechaFin }}</td>
-     
+
+        {% if dato.estado == 'EN-ESPERA'%}
         <td> 
         <div class="input-group">  
         <a class="btn btn-primary" href="{% url 'AdminProyectos.views.editar_proyecto' dato.id %}">Editar <i class="fa fa-edit"></i></a>
-       &nbsp; <a class="btn btn-danger" data-toggle="modal" data-target="#myModal"  onclick="$('#delete-id').val({{ dato.id }})" href="#myModal" >
-       Eliminar&nbsp;<i class="fa fa-ban"></i></a>
+       &nbsp; <a class="btn btn-danger"  href="{% url 'AdminProyectos.views.eliminar_proyecto' dato.id %}" > Eliminar&nbsp;<i class="fa fa-ban"></i></a>
         </div>
-        
-       
         </td>
+        {% endif %}
+        {% if dato.estado != 'EN-ESPERA'%}
+         <td></td>
+
+        {% endif %}
 	</tr>
 	{% endfor %}
  </table>

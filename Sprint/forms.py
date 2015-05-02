@@ -15,32 +15,27 @@ class SprintForm(forms.ModelForm):
     de un nuevo pSprint
     """
 
-    #leader=forms.CharField(widget=TextInput(attrs={'readonly':'readonly'}),required=False)
+
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del Sprint",)
-    fecha_creacion = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
-                                     required=True, help_text='* Ingrese en formato anho-mes-dia',
-                                     error_messages={'required': 'Ingrese una fecha de Inicio del Sprint'} )
+
 
     fechaInicio = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Inicio del Sprint'} )
+
     fechaFin = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Finalizacion del Sprint'} )
-    tiempo_acumulado = forms.IntegerField()
-    #rol_usuario = models.ManyToManyField(Usuario_Rol, related_name='proyectos')
+
+    tiempo_acumulado =  forms.IntegerField(label="Tiempo Acumulado(hs)",
+                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
+
 
     class Meta:
         model = Sprint
-        fields = ['nombre','fecha_creacion','fechaInicio','fechaFin','tiempo_acumulado']
+        fields = ['nombre','fechaInicio','fechaFin','tiempo_acumulado']
 
-
-    def save(self, commit=True):
-        sprint = super(SprintForm, self).save(commit=False)
-        if commit:
-            sprint.save()
-        return sprint
 
 
 

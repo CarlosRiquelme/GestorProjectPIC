@@ -1,29 +1,58 @@
 {% extends 'admin/base_site.html' %}%}
 
-{% block titulo %}UserStory{% endblock %}
-{% block extra_head %}
 
-{% endblock %}
+
+
 {% block content %}
 
+    <center><h1>Listado de Todos los User Story</h1></center>
+<center>
+<ul class="nav nav-tabs">
+  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+     <li ><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
+     <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
+    <li class="active"><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
+    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+</ul>
+</center>
+<br>
+ <a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">
+       Crear UserStory&nbsp;</a>
 
-    <br>
-    <center><h1>Mis UserStorys</h1></center>
-    <br><br>
     <center>
 
-        <table class="table" style="width: 500px">
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >ESTADO</th>
+        <th >FECHA DE CREACION</th>
+        <th >FECHA DE INICIO</th>
+        <th >FECHA DE FINALIZACION</th>
+        <th >PRIORIDAD</th>
+        <th >SPRINT</th>
+        <th >ACTIVIDAD</th>
+    </thead>
+
         {% for p in userstorys %}
-                    <tr>
-                      <td>
-                      <li>   <a href="{% url 'UserStory.views.mi_userstory' p.id %}">  {{ p.nombre }}</a></li>
 
-                      </td>
+     <tr>
+	     <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
+         <td><em>{{p.estado}}</em></td>
+         <td><em>{{p.fecha_creacion}}</em></td>
+         <td><em>{{p.fechaInicio}}</em></td>
+         <td><em>{{p.fechaFin}}</em></td>
+         <td><em>{{p.prioridad}}</em></td>
+         <td><em>{{p.sprint.nombre}}</em></td>
+         <td><em>{{p.actividad}}</em></td>
 
-                    </tr>
+
+	</tr>
+
 
         {% endfor %}
 
     </table>
         </center>
+
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

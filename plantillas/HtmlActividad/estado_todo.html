@@ -1,0 +1,51 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+
+    <br>
+    <center><h1>Mis Actividades </h1></center>
+    <br><br>
+    <center>
+
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >DESCRIPCION</th>
+        <th >TIEMPO ESTIMADO</th>
+        <th >TIEMPO TRABAJADO</th>
+
+        <th  style="width: 20%">AGREGAR COMENTARIO</th>
+        <th  style="width: 10%">CAMBIAR ALGO</th>
+        {% for p in userstory %}
+    <tr>
+	     <td><em>>{{p.nombre}}</em></td>
+         <td><em>{{p.descripcion}}</em></td>
+         <td><em>NADA</em></td>
+         <td><em>{{p.tiempo_trabajado}</em></td>
+
+        <td>
+            <div class="input-group">
+                <a class="btn btn-primary" href="{% url 'UserStory.views.lista_userstory_creado' id_proyecto p.id %}">UserStory</a>
+        </div>
+        <td>
+            <div class="input-group">
+                <a class="btn btn-success" href="{% url 'Actividades.views.ver_estados' id_proyecto p.id %}">VER</a>
+        </div>
+
+
+        </td>
+
+
+
+	</tr>
+
+        {% endfor %}
+
+    </table>
+        </center>
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}

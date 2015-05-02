@@ -57,6 +57,7 @@ class EditUserForm(forms.ModelForm):
            user.save()
         return user
 
+
 class GroupForm(forms.ModelForm):
        class Meta:
             model = Group

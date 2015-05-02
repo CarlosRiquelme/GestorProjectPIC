@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     'Sprint',
     'UserStory',
     'Actividades',
+    'Comentario',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
@@ -126,3 +127,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT= os.path.join(BASE_DIR,'media')
