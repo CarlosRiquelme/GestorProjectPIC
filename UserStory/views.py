@@ -36,6 +36,7 @@ def nuevo_userstory(request, id_proyecto):
             tiempo_trabajado=userstory_form.cleaned_data['tiempo_trabajado']
             porcentaje=userstory_form.cleaned_data['porcentaje']
             prioridad=userstory_form.cleaned_data['prioridad']
+            tiempo_estimado=userstory_form.cleaned_data['tiempo_estimado']
 
 
 
@@ -51,6 +52,7 @@ def nuevo_userstory(request, id_proyecto):
             userstory.tiempo_trabajado=tiempo_trabajado
             userstory.porcentaje=porcentaje
             userstory.proyecto_id=id_proyecto
+            userstory.tiempo_estimado=tiempo_estimado
             userstory.save()
             messages.success(request, 'USER STORY CREADO CON EXITO!')
                         

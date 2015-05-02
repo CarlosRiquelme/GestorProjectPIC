@@ -23,11 +23,6 @@ class ComentarioForm(forms.ModelForm):
     descripcion = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3'}),
                                 help_text="Maximo 120 caracteres",max_length=120,label="Descripcion")
 
-    adjunto= forms.FileField(widget=FileInput(attrs={'class': 'form-control'}),
-        label='Select a file',
-        help_text='max. 42 megabytes'
-    )
-
     porcentaje=forms.IntegerField(label="Porcentaje de Trabajo Realizado",
                    widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
 
@@ -37,4 +32,4 @@ class ComentarioForm(forms.ModelForm):
 
     class Meta:
         model = Comentario
-        fields = ['titulo','descripcion','adjunto','hora_trabajada','porcentaje']
+        fields = ['titulo','descripcion','hora_trabajada','porcentaje']

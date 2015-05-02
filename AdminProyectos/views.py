@@ -75,7 +75,7 @@ def editar_proyecto(request, id_proyecto):
     else:
         formulario= ProyectoFormEdit(instance=proyecto)
     return render_to_response('HtmlProyecto/editarproyecto.html',
-                {'formulario':formulario,'id_proyecto':id_proyecto,'user':proyecto.leader},
+                {'formulario':formulario,'id_proyecto':id_proyecto,'user':proyecto.scrumMaster},
                               context_instance=RequestContext(request))
 
 

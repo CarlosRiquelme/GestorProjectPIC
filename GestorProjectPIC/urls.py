@@ -88,5 +88,7 @@ urlpatterns = patterns('',
 #COMENTARIOS
 
      url(r'^comentario/nuevo/(?P<id_userstory>\d+)/$','Comentario.views.nuevo_comentario'),
+     url(r'^comentario/micomentario/(?P<id_comentario>\d+)/$','Comentario.views.mi_comentario'),
+     url(r'^comentario/miscomentarios/(?P<id_userstory>\d+)/$','Comentario.views.mis_comentarios'),
 )
 

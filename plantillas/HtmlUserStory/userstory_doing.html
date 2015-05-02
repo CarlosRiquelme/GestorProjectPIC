@@ -30,12 +30,13 @@
 
         <td>
             <div class="input-group">
-                <a class="btn btn-primary" href="#">COMENTARIO</a>
-        </div>
+                <a class="btn btn-primary" href="{% url 'Comentario.views.nuevo_comentario' p.id %}">COMENTARIO</a>
+            </div>
+        </td>
         <td>
             <div class="input-group">
-                <a class="btn btn-success" href="#">ALGO</a>
-        </div>
+                <a class="btn btn-success" href="{% url 'Comentario.views.mis_comentarios' p.id %}">COMENTARIOS</a>
+            </div>
 
 
         </td>

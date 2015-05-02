@@ -22,6 +22,7 @@ def nuevo_comentario(request, id_userstory):
     if request.method=='POST':
         comentario_form = ComentarioForm(data=request.POST)
         userstoty=UserStory.objects.get(pk=id_userstory)
+        suma=0
 
         # If the two forms are valid...
         if comentario_form.is_valid():
@@ -29,7 +30,6 @@ def nuevo_comentario(request, id_userstory):
             comentario_form.clean()
             titulo= comentario_form.cleaned_data['titulo']
             descripcion =  comentario_form.cleaned_data['descripcion']
-            adjunto = comentario_form.cleaned_data['adjunto']
             hora_trabajada=comentario_form.cleaned_data['hora_trabajada']
             porcentaje=comentario_form.cleaned_data['porcentaje']
 
@@ -38,11 +38,10 @@ def nuevo_comentario(request, id_userstory):
 
 
             comentario = Comentario()
-            suma=userstoty.tiempo_trabajado+comentario.hora_trabajada
+            suma=userstoty.tiempo_trabajado+hora_trabajada
             if suma <= userstoty.tiempo_estimado:
                 comentario.titulo=titulo
                 comentario.descripcion=descripcion
-                comentario.adjunto=adjunto
                 comentario.fecha_creacion=today()
                 comentario.userstory_id=id_userstory
                 comentario.porcentaje=porcentaje
@@ -53,9 +52,9 @@ def nuevo_comentario(request, id_userstory):
                 userstoty.save()
                 messages.success(request, 'Comentario CREADO CON EXITO!')
                 return HttpResponseRedirect('/comentario/micomentario/'+str(comentario.id))
-            else:
+        else:
                 messages.success(request, 'Sobre paso la hora planificada FAVOR contacte con el SCRUM MASTER')
-                return HttpResponseRedirect('proyectos/')
+                return HttpResponseRedirect('/proyectos/')
 
     else:
         comentario_form= ComentarioForm(request.POST)
@@ -63,4 +62,20 @@ def nuevo_comentario(request, id_userstory):
                                                                      'id_userstory':id_userstory},
                               context_instance=RequestContext(request))
 
+
+
+def mi_comentario(request, id_comentario):
+
+    comentario= Comentario.objects.get(pk=id_comentario)
+    user=request.user
+
+    return render_to_response('HtmlComentario/micomentario.html',
+                { 'comentario':comentario }, RequestContext(request))
+
+def mis_comentarios(request, id_userstory):
+    comentarios=Comentario.objects.filter(userstory_id=id_userstory)
+    userstory=UserStory.objects.get(pk=id_userstory)
+
+    return render_to_response('HtmlComentario/miscomentarios.html',{'comentarios':comentarios,'id_userstory':id_userstory,
+                                                                  'userstory':userstory})
 
