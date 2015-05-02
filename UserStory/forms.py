@@ -17,6 +17,11 @@ class UserStoryForm(forms.ModelForm):
     Atributos que el usuario deber completar para la creacion
     de un nuevo UserStory
     """
+    US_PRIORIDAD = (
+    ('BAJA', 'BAJA'),
+    ('MEDIA', 'MEDIA'),
+    ('ALTA', 'ALTA'),
+)
 
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del User Story",)

@@ -26,6 +26,7 @@ class Migration(migrations.Migration):
                 ('prioridad', models.CharField(default=b'BAJA', max_length=30, null=True, choices=[(b'BAJA', b'BAJA'), (b'MEDIA', b'MEDIA'), (b'ALTA', b'ALTA')])),
                 ('tiempo_trabajado', models.IntegerField(null=True)),
                 ('porcentaje', models.IntegerField(null=True)),
+                ('tiempo_estimado', models.IntegerField(null=True)),
                 ('actividad', models.ForeignKey(to='Actividades.Actividad', null=True)),
                 ('proyecto', models.ForeignKey(to='AdminProyectos.Proyecto', null=True)),
                 ('sprint', models.ForeignKey(to='Sprint.Sprint', null=True)),

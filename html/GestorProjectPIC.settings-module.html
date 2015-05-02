@@ -101,6 +101,20 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="PATH"></a><span class="summary-name">PATH</span> = <code title="'/home/pfigueredo/GestorProjectPIC'"><code class="variable-quote">'</code><code class="variable-string">/home/pfigueredo/GestorProjectPIC</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ADMIN_MEDIA_PREFIX"></a><span class="summary-name">ADMIN_MEDIA_PREFIX</span> = <code title="'/media/'"><code class="variable-quote">'</code><code class="variable-string">/media/</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="TEMPLATE_DEBUG"></a><span class="summary-name">TEMPLATE_DEBUG</span> = <code title="True">True</code>
     </td>
   </tr>
@@ -136,28 +150,28 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="EMAIL_HOST_USER"></a><span class="summary-name">EMAIL_HOST_USER</span> = <code title="'paofigue@gmail.com'"><code class="variable-quote">'</code><code class="variable-string">paofigue@gmail.com</code><code class="variable-quote">'</code></code>
+        <a name="EMAIL_HOST_USER"></a><span class="summary-name">EMAIL_HOST_USER</span> = <code title="'gestorprojectpic@gmail.com'"><code class="variable-quote">'</code><code class="variable-string">gestorprojectpic@gmail.com</code><code class="variable-quote">'</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="EMAIL_HOST_PASSWORD"></a><span class="summary-name">EMAIL_HOST_PASSWORD</span> = <code title="'informatica'"><code class="variable-quote">'</code><code class="variable-string">informatica</code><code class="variable-quote">'</code></code>
+        <a name="EMAIL_HOST_PASSWORD"></a><span class="summary-name">EMAIL_HOST_PASSWORD</span> = <code title="'paolaivantato'"><code class="variable-quote">'</code><code class="variable-string">paolaivantato</code><code class="variable-quote">'</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="DEFAULT_FROM_EMAIL"></a><span class="summary-name">DEFAULT_FROM_EMAIL</span> = <code title="'paofigue@gmail.com'"><code class="variable-quote">'</code><code class="variable-string">paofigue@gmail.com</code><code class="variable-quote">'</code></code>
+        <a name="DEFAULT_FROM_EMAIL"></a><span class="summary-name">DEFAULT_FROM_EMAIL</span> = <code title="'gestorprojectpic@gmail'"><code class="variable-quote">'</code><code class="variable-string">gestorprojectpic@gmail</code><code class="variable-quote">'</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="SERVER_EMAIL"></a><span class="summary-name">SERVER_EMAIL</span> = <code title="'paofigue@gmail.com'"><code class="variable-quote">'</code><code class="variable-string">paofigue@gmail.com</code><code class="variable-quote">'</code></code>
+        <a name="SERVER_EMAIL"></a><span class="summary-name">SERVER_EMAIL</span> = <code title="'gestorprojectpic@gmail'"><code class="variable-quote">'</code><code class="variable-string">gestorprojectpic@gmail</code><code class="variable-quote">'</code></code>
     </td>
   </tr>
 <tr>
@@ -171,14 +185,36 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="GestorProjectPIC.settings-module.html#INSTALLED_APPS" class="summary-name">INSTALLED_APPS</a> = <code title="('django_admin_bootstrapped',
+        <a href="GestorProjectPIC.settings-module.html#INSTALLED_APPS" class="summary-name">INSTALLED_APPS</a> = <code title="('bootstrap_admin',
  'django.contrib.admin',
  'django.contrib.auth',
  'django.contrib.contenttypes',
  'django.contrib.sessions',
  'django.contrib.messages',
  'django.contrib.staticfiles',
- 'PIC')"><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">django_admin_bootstrapped</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">django.contrib</code><code class="variable-ellipsis">...</code></code>
+ 'django.contrib.admindocs',
+..."><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">bootstrap_admin</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">django.contrib.admin</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="GestorProjectPIC.settings-module.html#TEMPLATE_CONTEXT_PROCESSORS" class="summary-name">TEMPLATE_CONTEXT_PROCESSORS</a> = <code title="('django.contrib.auth.context_processors.auth',
+ 'django.core.context_processors.debug',
+ 'django.core.context_processors.i18n',
+ 'django.core.context_processors.media',
+ 'django.core.context_processors.static',
+ 'django.core.context_processors.tz',
+ 'django.contrib.messages.context_processors.messages',
+ 'django.core.context_processors.request')"><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">django.contrib.auth.context_pr</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BOOTSTRAP_ADMIN_SIDEBAR_MENU"></a><span class="summary-name">BOOTSTRAP_ADMIN_SIDEBAR_MENU</span> = <code title="True">True</code>
     </td>
   </tr>
 <tr>
@@ -283,6 +319,20 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="MEDIA_URL"></a><span class="summary-name">MEDIA_URL</span> = <code title="'/media/'"><code class="variable-quote">'</code><code class="variable-string">/media/</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="MEDIA_ROOT"></a><span class="summary-name">MEDIA_ROOT</span> = <code title="'/home/toshiba/git/GestorProjectPIC/media'"><code class="variable-quote">'</code><code class="variable-string">/home/toshiba/git/GestorProjectPIC/media</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'GestorProjectPIC'"><code class="variable-quote">'</code><code class="variable-string">GestorProjectPIC</code><code class="variable-quote">'</code></code>
     </td>
   </tr>
@@ -317,14 +367,40 @@
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">django_admin_bootstrapped</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">bootstrap_admin</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">django.contrib.admin</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">django.contrib.auth</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">django.contrib.contenttypes</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">django.contrib.sessions</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">django.contrib.messages</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">django.contrib.staticfiles</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">PIC</code><code class="variable-quote">'</code><code class="variable-group">)</code>
+ <code class="variable-quote">'</code><code class="variable-string">django.contrib.admindocs</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="TEMPLATE_CONTEXT_PROCESSORS"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">TEMPLATE_CONTEXT_PROCESSORS</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">django.contrib.auth.context_processors.auth</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">django.core.context_processors.debug</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">django.core.context_processors.i18n</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">django.core.context_processors.media</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">django.core.context_processors.static</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">django.core.context_processors.tz</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">django.contrib.messages.context_processors.messages</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">django.core.context_processors.request</code><code class="variable-quote">'</code><code class="variable-group">)</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -404,7 +480,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat Mar 28 07:05:12 2015
+    Generated by Epydoc 3.0.1 on Sat May  2 08:23:12 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
