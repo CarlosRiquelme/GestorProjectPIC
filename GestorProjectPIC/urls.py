@@ -38,8 +38,8 @@ urlpatterns = patterns('',
      url(r'^proyecto/miproyecto/(?P<id_proyecto>\d+)/$','AdminProyectos.views.mi_proyecto'),
      url(r'^proyecto/usuarios/(?P<id_proyecto>\d+)/$','AdminProyectos.views.listar_usuario_proyecto'),
      url(r'^proyecto/nousuarios/(?P<id_proyecto>\d+)/$','AdminProyectos.views.listar_usuarios_para_asignar_proyecto'),
-     url(r'^proyecto/usuarios/asignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)$','AdminProyectos.views.asignar_usuario_proyecto'),
-
+     url(r'^proyecto/usuarios/asignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','AdminProyectos.views.asignar_usuario_proyecto'),
+    url(r'^proyecto/usuarios/desasignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','AdminProyectos.views.desasignar_usuario_proyecto'),
 
 #ROLES
 

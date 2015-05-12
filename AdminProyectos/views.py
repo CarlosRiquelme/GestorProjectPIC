@@ -1,6 +1,6 @@
 # coding=UTF-8
 from mx.DateTime.DateTime import today
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
@@ -163,8 +163,32 @@ def asignar_usuario_proyecto(request, id_proyecto,id_user):
     return HttpResponseRedirect('/proyecto/usuarios/'+str(id_proyecto))
 
 def listar_usuarios_para_asignar_proyecto(request, id_proyecto):
+    lista=[]
+    usuarioproyecto=RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
     usuarios=User.objects.all()
-
-    return render_to_response('HtmlProyecto/usuarios_asignar_proyecto.html',{'usuarios':usuarios,
+    for user in usuarios:
+        ban=1
+        for user2 in usuarioproyecto:
+            if user2.usuario.id == user.id: #si existe un usurio ya en tabla no quiero
+                ban=0
+        if ban == 1:
+            lista.append(user)
+    return render_to_response('HtmlProyecto/usuarios_asignar_proyecto.html',{'lista':lista,'usuarioproyecto':usuarioproyecto,
                                                                              'id_proyecto':id_proyecto},
                               context_instance=RequestContext(request))
+
+def desasignar_usuario_proyecto(request, id_proyecto,id_user):
+
+    usuarioproyecto=RolUsuarioProyecto.objects.get(usuario_id=id_user, proyecto_id=id_proyecto)
+    usuarioproyecto.delete()
+    messages.success(request, 'USUARIO DESASIGNADO AL PROYECTO CORRECTAMENTE!')
+    return HttpResponseRedirect('/proyecto/usuarios/'+str(id_proyecto))
+
+def listar_roles_para_asignar_usuario(request, id_proyecto):
+    roles=Group.objects.all()
+    usuarioproyecto=RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+
+    return render_to_response('HtmlProyecto/usuarios_asignar_proyecto.html',{'roles':roles,'usuarioproyecto':usuarioproyecto,
+                                                                             'id_proyecto':id_proyecto},
+                              context_instance=RequestContext(request))
+
