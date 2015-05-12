@@ -10,6 +10,7 @@ from AdminProyectos.models import Proyecto
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from Flujo.models import Flujo
+from PIC.models import RolUsuarioProyecto
 
 
 def nuevo_proyecto(request):
@@ -145,3 +146,25 @@ def colaboradores(request, id_proyecto):
                               {'roles_user':'',#rol_user,
                                'id_proyecto':id_proyecto, 'roles':'',#roles
                                })
+def listar_usuario_proyecto(request, id_proyecto):
+    usuarioproyecto=RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+
+    return render_to_response('HtmlProyecto/lista_usuario_proyecto.html',{'usuarioproyecto':usuarioproyecto,
+                                                                          'id_proyecto':id_proyecto, 'proyecto':proyecto},
+                              context_instance=RequestContext(request))
+def asignar_usuario_proyecto(request, id_proyecto,id_user):
+
+    usuarioproyecto=RolUsuarioProyecto()
+    usuarioproyecto.proyecto_id=id_proyecto
+    usuarioproyecto.usuario_id=id_user
+    usuarioproyecto.save()
+    messages.success(request, 'USUARIO ASIGNADO AL PROYECTO CORRECTAMENTE!')
+    return HttpResponseRedirect('/proyecto/usuarios/'+str(id_proyecto))
+
+def listar_usuarios_para_asignar_proyecto(request, id_proyecto):
+    usuarios=User.objects.all()
+
+    return render_to_response('HtmlProyecto/usuarios_asignar_proyecto.html',{'usuarios':usuarios,
+                                                                             'id_proyecto':id_proyecto},
+                              context_instance=RequestContext(request))

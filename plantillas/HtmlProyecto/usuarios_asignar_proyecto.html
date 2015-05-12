@@ -1,0 +1,40 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n admin_urls admin_static admin_modify %}
+
+{% block content %}
+
+<h1>Lista de Usuarios Activos del Sistema</h1>
+
+
+
+</table>
+
+ <table class="table table-bordered table-condensed table-striped" >
+    <thead>
+        <th >USERNAME</th>
+        <th >EMAIL</th>
+        <th >NOMBRE</th>
+        <th >APELLIDO</th>
+{#        <th >Rol</th>#}
+        <th >ACCIÓN</th>
+    </thead>
+    {% for dato in usuarios %}
+     {% if dato.is_active %}
+    <tr>
+	    <td >{{dato.username|capfirst}}</td>
+        <td><em>{{dato.email}}</em></td>
+        <td>{{ dato.first_name }}</td>
+        <td>{{ dato.last_name }}</td>
+        <td>
+          <a  class="btn btn-primary" href="{% url 'AdminProyectos.views.asignar_usuario_proyecto' id_proyecto dato.id  %}">Asignar <i class="fa fa-edit"></i></a>
+        </td>
+
+	</tr>
+     {% endif %}
+	{% endfor %}
+ </table>
+
+
+<br><br><br>
+
+{% endblock %}
