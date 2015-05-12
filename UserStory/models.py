@@ -28,6 +28,7 @@ class UserStory(models.Model):
     tiempo_trabajado = models.IntegerField(null=True)
     porcentaje = models.IntegerField(null=True)
     proyecto=models.ForeignKey(Proyecto, null=True)
+    tiempo_estimado=models.IntegerField(null=True)
 
     def __unicode__(self):
         return self.nombre

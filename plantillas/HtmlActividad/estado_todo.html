@@ -7,7 +7,7 @@
 
 
     <br>
-    <center><h1>Actividad {{actividad.nombre}} estado "DONE" </h1></center>
+    <center><h1>Mis Actividades </h1></center>
     <br><br>
     <center>
 
@@ -18,30 +18,31 @@
         <th >TIEMPO ESTIMADO</th>
         <th >TIEMPO TRABAJADO</th>
 
-        <th  style="width: 20%">AGREGAR</th>
+        <th  style="width: 20%">AGREGAR COMENTARIO</th>
         <th  style="width: 10%">CAMBIAR ALGO</th>
-        {% for p in userstorys %}
-            {% if p.estado == 'DONE' %}
+        {% for p in userstory %}
     <tr>
-	     <td><em>{{p.nombre}}</em></td>
+	     <td><em>>{{p.nombre}}</em></td>
          <td><em>{{p.descripcion}}</em></td>
          <td><em>NADA</em></td>
-         <td><em>{{p.tiempo_trabajado}}</em></td>
+         <td><em>{{p.tiempo_trabajado}</em></td>
 
         <td>
             <div class="input-group">
-                <a class="btn btn-primary" href="{% url 'Comentario.views.nuevo_comentario' p.id %}">COMENTARIO</a>
-            </div>
-        </td>
+                <a class="btn btn-primary" href="{% url 'UserStory.views.lista_userstory_creado' id_proyecto p.id %}">UserStory</a>
+        </div>
         <td>
             <div class="input-group">
-                <a class="btn btn-success" href="{% url 'Comentario.views.mis_comentarios' p.id %}">COMENTARIOS</a>
-            </div>
+                <a class="btn btn-success" href="{% url 'Actividades.views.ver_estados' id_proyecto p.id %}">VER</a>
+        </div>
 
 
         </td>
+
+
+
 	</tr>
-            {% endif%}
+
         {% endfor %}
 
     </table>

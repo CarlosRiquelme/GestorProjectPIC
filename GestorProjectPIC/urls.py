@@ -61,13 +61,14 @@ urlpatterns = patterns('',
     url(r'^actividad/misactividades/estados/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','Actividades.views.ver_estados'),
 
  #SPRINT
-     url(r'^sprint/nuevo$','Sprint.views.nuevo_sprint'),
+     url(r'^sprint/nuevo/(?P<id_flujo>\d+)/$','Sprint.views.nuevo_sprint'),
      url(r'^sprints/$', 'Sprint.views.sprints'),
      url(r'^sprint/editar/(?P<id_sprint>\d+)/$','Sprint.views.editar_sprint'),
      url(r'^sprint/iniciar/(?P<id_sprint>\d+)/$','Sprint.views.iniciar_sprint'),
      url(r'^sprint/eliminar/(?P<id_sprint>\d+)/$','Sprint.views.eliminar_sprint'),
-     url(r'^sprint/missprints/$','Sprint.views.mis_sprints'),
+     url(r'^sprint/missprints/(?P<id_proyecto>\d+)/$','Sprint.views.mis_sprints'),
      url(r'^sprint/misprint/(?P<id_sprint>\d+)/$','Sprint.views.mi_sprint'),
+     url(r'^sprint/cerrar/(?P<id_sprint>\d+)/$','Sprint.views.cerrar_sprint'),
 
 #USERSTORY
      url(r'^userstory/nuevo/(?P<id_proyecto>\d+)/$','UserStory.views.nuevo_userstory'),
@@ -78,9 +79,16 @@ urlpatterns = patterns('',
      url(r'^userstory/misuserstorys/(?P<id_proyecto>\d+)/$','UserStory.views.mis_userstorys'),
      url(r'^userstory/miuserstory/(?P<id_userstory>\d+)/$','UserStory.views.mi_userstory'),
      url(r'^userstory/miuserstory_creado/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_creado',name='mi_userstory_creado'),
-     url(r'^userstory/miuserstory/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.asignar_userstory_a_actividad'),
+     url(r'^userstory/miuserstory/actividad/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.asignar_userstory_a_actividad'),
      url(r'^userstory/miuserstory_todo/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_todo'),
      url(r'^userstory/miuserstory_doing/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_doing'),
-    url(r'^userstory/miuserstory_done/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_done')
+     url(r'^userstory/miuserstory_done/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_done'),
+     url(r'^userstory/miuserstory_no_creado/(?P<id_proyecto>\d+)/(?P<id_sprint>\d+)/$','UserStory.views.lista_userstory_no_creado'),
+     url(r'^userstory/miuserstory/sprint/(?P<id_proyecto>\d+)/(?P<id_sprint>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.asignar_userstory_a_sprint'),
+#COMENTARIOS
+
+     url(r'^comentario/nuevo/(?P<id_userstory>\d+)/$','Comentario.views.nuevo_comentario'),
+     url(r'^comentario/micomentario/(?P<id_comentario>\d+)/$','Comentario.views.mi_comentario'),
+     url(r'^comentario/miscomentarios/(?P<id_userstory>\d+)/$','Comentario.views.mis_comentarios'),
 )
 

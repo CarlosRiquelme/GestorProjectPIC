@@ -14,9 +14,10 @@ $('#id_descripcion').attr('required','true')
 <ul class="nav nav-tabs">
   <li class="active"><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     {% if proyecto.estado == 'EN-DESARROLLO'%}
-     <li class="active"><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
-     <li class="active"><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
-    <li class="active"><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
+     <li ><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
+     <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
+    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
+    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
     {% endif %}
 </ul>
 </center>
@@ -35,11 +36,9 @@ $('#id_descripcion').attr('required','true')
 
        
 
-{% if proyecto.estado == 'EN-DESARROLLO' %}
-<a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">
-       Crear UserStory&nbsp;</a>
-  {% endif %}
-  <br><br>
+
+
+
     <center>
         
 
@@ -98,5 +97,6 @@ $('#id_descripcion').attr('required','true')
 	    </div>
 	  </div>
 	</div>
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}
 </body>

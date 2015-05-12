@@ -6,10 +6,10 @@
 {% block content %}
 
 
+<h1>Nuevo Comentario</h1>
 
-<h1>Nueva Actividad</h1>
-     
-      
+
+
 
 	<form id='formulario' method='post' action=''>{% csrf_token %}
 		{{formulario.nombre.error}}
@@ -17,7 +17,7 @@
 	<br>
 	<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
 		<button class="btn btn-primary" type='submit' >Guardar <i class="fa fa-save"></i></button>
-	
+
 
 	</form>
 {% endblock %}

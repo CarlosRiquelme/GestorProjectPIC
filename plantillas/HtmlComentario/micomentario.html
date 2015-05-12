@@ -1,0 +1,28 @@
+{% extends 'admin/base_site.html' %}
+
+{% block title %}comentario{% endblock %}
+
+
+{% block content %}
+
+
+
+
+
+
+
+    <center>
+
+
+        <table class="table table-bordered table-striped" >
+
+            <tr><th style="width: 180px" class="navbar-inner">Titulo: </th><td style="text-align: center">{{ comentario.titulo }}</td></tr>
+            <tr><th class="navbar-inner">Descripcion: </th><td style="text-align: center">{{ comentario.descripcion }}</td></tr>
+            <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ comentario.fecha_creacion }}</td></tr>
+            <tr><th class="navbar-inner">UserStory: </th><td style="text-align: center">{{ comentario.userstory.nombre }}</td></tr>
+            <tr><th class="navbar-inner">Hora Trabajada: </th><td style="text-align: center">{{ comentario.hora_trabajada}}</td></tr>
+        </table>
+    </center>
+
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}
