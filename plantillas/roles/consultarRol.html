@@ -4,13 +4,22 @@
 
 {% block content %}
 <div class="content-secondary">
-	<p><h4>Id: <span class="label label-primary">{{ rol.id }}</span></h4></p>
-	<p><h4>ROL: <span class="label label-primary">{{ rol.name }}</span></h4></p>
-    <br>
-    <h4> Permisos: </h4>
-    {% for permiso in permisos %}
+
+<h1> Roles </h1>
+
+    <table class="table table-bordered table-striped">
+    <tr><th style="width: 180px" class="navbar-inner">Id: </th><td style="text-align: center">{{ rol.id }}</td></tr>
+    <tr><th class=  "navbar-inner">Rol: </th><td  style="text-align: center">{{ rol.name }}</td></tr>
+    <tr><th class="navbar-inner">Permiso: </th><td style="text-align: center"> {% for permiso in permisos %}
 
             <li> {{ permiso.name }} </li>{% endfor %}
+ </td></tr>
+
+    </table>
+
+
+
+
 
 
 
