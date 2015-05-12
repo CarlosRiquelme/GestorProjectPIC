@@ -18,14 +18,15 @@ $('#id_descripcion').attr('required','true')
      <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
     <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
     <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
     {% endif %}
 </ul>
 </center>
 <br>
-<!--{% comment %}
-    <a class="btn btn-info" href="{% url 'AdminLineaBase.views.listar_lb' id_proyecto %}">Listar Lineas Base</a>
-    <a class="btn btn-info" href="{% url 'AdminLineaBase.views.nuevo_lb' id_proyecto %}">Nueva Linea Base</a>
-{% endcomment %}!-->
+<a class="btn btn-info" href="{% url 'AdminProyectos.views.nuevo_proyecto'  %}">
+Asignar Usuario a Proyecto<i class="fa fa-plus"></i></a>
+<br>
+<br>
 {% if proyecto.estado == 'EN-ESPERA' %}
 <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"  href="#myModal" >
        Editar&nbsp;<i class="fa fa-edit"></i></a>
