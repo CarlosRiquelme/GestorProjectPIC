@@ -2,6 +2,7 @@ from django.db import models
 from Sprint.models import Sprint
 from Actividades.models import Actividad
 from AdminProyectos.models import Proyecto
+from django.contrib.auth.models import User
 # Create your models here.
 US_ESTADOS = (
     ('CREADO', 'CREADO'),
@@ -29,6 +30,7 @@ class UserStory(models.Model):
     porcentaje = models.IntegerField(null=True)
     proyecto=models.ForeignKey(Proyecto, null=True)
     tiempo_estimado=models.IntegerField(null=True)
+    usuario=models.ForeignKey(User, null=True)
 
     def __unicode__(self):
         return self.nombre
