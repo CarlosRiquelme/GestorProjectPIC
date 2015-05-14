@@ -177,4 +177,11 @@ def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
     messages.success(request, 'USER STORY ASIGNADO A UNA SPRINT CORRECTAMENTE!')
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 
+def asignar_userstory_a_user(request,id_proyecto ,id_user, id_userstory ):
+    userstory=UserStory.objects.get(pk=id_userstory)
+
+    userstory.usuario=id_user
+    userstory.save()
+    messages.success(request, 'USER STORY ASIGNADO A UNA USUARIO CORRECTAMENTE!')
+    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 

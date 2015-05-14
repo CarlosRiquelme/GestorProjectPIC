@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('fechaInicio', models.DateField(verbose_name=b'Fecha de Inicio')),
                 ('fechaFin', models.DateField(verbose_name=b'Fecha de Fin')),
                 ('estado', models.CharField(default=b'CREADO', max_length=30, choices=[(b'CREADO', b'CREADO'), (b'TODO', b'TODO'), (b'DOING', b'DOING'), (b'DONE', b'DONE')])),
-                ('prioridad', models.CharField(default=b'BAJA', max_length=30, null=True, choices=[(b'BAJA', b'BAJA'), (b'MEDIA', b'MEDIA'), (b'ALTA', b'ALTA')])),
+                ('prioridad', models.CharField(max_length=30, null=True)),
                 ('tiempo_trabajado', models.IntegerField(null=True)),
                 ('porcentaje', models.IntegerField(null=True)),
                 ('tiempo_estimado', models.IntegerField(null=True)),

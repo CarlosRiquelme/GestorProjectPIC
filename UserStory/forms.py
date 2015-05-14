@@ -33,8 +33,9 @@ class UserStoryForm(forms.ModelForm):
     fechaFin = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Finalizacion del User Story'} )
-    prioridad=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','rows':'3'}),
-                                help_text="Maximo 30 caracteres",max_length=10,label="Prioridad")
+    #prioridad=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','rows':'3'}),
+    #                            help_text="Maximo 30 caracteres",max_length=10,label="Prioridad")
+    prioridad=forms.MultipleChoiceField(required=False,widget=forms.CheckboxSelectMultiple, choices=US_PRIORIDAD)
     tiempo_trabajado = forms.IntegerField(label="Tiempo Trabajado(hs)")
     porcentaje = forms.IntegerField(label="Porcentaje(%)")
     tiempo_estimado = forms.IntegerField(label="Tiempo Estimado(hs)",
