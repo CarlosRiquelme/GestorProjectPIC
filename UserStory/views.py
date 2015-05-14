@@ -12,7 +12,7 @@ from django.contrib import messages
 from Sprint.models import Sprint
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-
+from datetime import datetime, date, time, timedelta
 
 def nuevo_userstory(request, id_proyecto):
     """
@@ -198,5 +198,15 @@ def lista_userstory_creado_para_asignar_usuario(request,id_proyecto, id_user):
 
      return render_to_response('HtmlUserStory/asignar_usuario_userstory.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
                                                                        'usuario':usuario})
-
+def cambiar_estado_todo(request, id_proyecto):
+    lista=[]
+    ahora = date.today()
+    #fecha=today.strftime("%Y/%m/%d")
+    userstory=UserStory.objects.filter(proyecto_id=id_proyecto)
+    for objeto in userstory:
+        if objeto.fechaInicio <= ahora and objeto.estado == 'CREADO':
+            objeto.estado= 'TODO'
+            objeto.save()
+            lista.append(objeto)
+    return render_to_response('HtmlUserStory/cambiar_estado_todo.html',{'lista':lista})
 

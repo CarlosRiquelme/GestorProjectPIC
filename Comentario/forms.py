@@ -1,10 +1,11 @@
 from django import forms
+from django.forms import ModelForm
 from django.core.context_processors import request
 from django.http import request
 
 from django.contrib.auth.models import User
 from django.forms.widgets import TextInput, FileInput
-from Comentario.models import Comentario
+from Comentario.models import Comentario, Document
 from django.db import models
 from AdminProyectos.models import Proyecto
 from UserStory.models import UserStory
@@ -29,7 +30,17 @@ class ComentarioForm(forms.ModelForm):
     hora_trabajada=forms.IntegerField(label="Hora Trabajadas",
                    widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'1','max':'10'}))
 
-
     class Meta:
         model = Comentario
         fields = ['titulo','descripcion','hora_trabajada','porcentaje']
+
+
+
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        exclude = ['comentario']
+
+
