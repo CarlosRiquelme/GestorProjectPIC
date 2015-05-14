@@ -36,8 +36,10 @@ urlpatterns = patterns('',
      url(r'^proyecto/eliminar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.eliminar_proyecto'),
      url(r'^proyecto/misproyectos/$','AdminProyectos.views.mis_proyectos'),
      url(r'^proyecto/miproyecto/(?P<id_proyecto>\d+)/$','AdminProyectos.views.mi_proyecto'),
-     url(r'^proyecto/colaboradores/(?P<id_proyecto>\d+)/$','AdminProyectos.views.colaboradores'),
-
+     url(r'^proyecto/usuarios/(?P<id_proyecto>\d+)/$','AdminProyectos.views.listar_usuario_proyecto'),
+     url(r'^proyecto/nousuarios/(?P<id_proyecto>\d+)/$','AdminProyectos.views.listar_usuarios_para_asignar_proyecto'),
+     url(r'^proyecto/usuarios/asignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','AdminProyectos.views.asignar_usuario_proyecto'),
+    url(r'^proyecto/usuarios/desasignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','AdminProyectos.views.desasignar_usuario_proyecto'),
 
 #ROLES
 
@@ -85,6 +87,8 @@ urlpatterns = patterns('',
      url(r'^userstory/miuserstory_done/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_done'),
      url(r'^userstory/miuserstory_no_creado/(?P<id_proyecto>\d+)/(?P<id_sprint>\d+)/$','UserStory.views.lista_userstory_no_creado'),
      url(r'^userstory/miuserstory/sprint/(?P<id_proyecto>\d+)/(?P<id_sprint>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.asignar_userstory_a_sprint'),
+     url(r'^usuario/userstory/lista/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','UserStory.views.lista_userstory_creado_para_asignar_usuario'),
+     url(r'^usuario/userstory/asignar/(?P<id_userstory>\d+)/(?P<id_user>\d+)/$','UserStory.views.asignar_usuario_userstory'),
 #COMENTARIOS
 
      url(r'^comentario/nuevo/(?P<id_userstory>\d+)/$','Comentario.views.nuevo_comentario'),

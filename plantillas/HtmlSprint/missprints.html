@@ -13,6 +13,7 @@
      <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
     <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
     <li class="active"><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
 </ul>
 </center>
 <br>
@@ -61,5 +62,5 @@
 
     </table>
         </center>
-<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

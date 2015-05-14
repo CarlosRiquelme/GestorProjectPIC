@@ -14,24 +14,27 @@ Nuevo Rol <i class="fa fa-plus"></i></a>
 	<div class="panel-group" id="accordion">
 
 	<br>
-		{% if lista_roles %}
-			{% for rol in lista_roles %}
-                 {% if rol.name %}
-            <div class="panel panel-default">
-				    <div class="panel-heading">
-				      <h4 class="panel-title">
-				          <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ rol.id }}">
-				          	{{ rol.name }}
-				          </a>
-                          <a href="/rol/consultar/{{ rol.id }}/"><button type="button" class="btn btn-default btn-sm">Consultar</button></a>
-                          <a href="/rol/modificar/{{ rol.id }}/"><button type="button" class="btn btn-primary btn-sm">Modificar</button></a>
-                          <a href="/rol/eliminar/{{ rol.id }}/"><button type="button" class="btn btn-danger btn-sm">Eliminar</button></a>
-				      </h4>
-				    </div>
-	</div>
+    <table class="table table-striped" style="width: 100%">
+        <thead>
+            <th >Rol</th>
+            <th  style="width: 20%">ACCION</th>
+            <th  style="width: 20%">ACCION</th>
+        </thead>
+        <tr>
+		    {% if lista_roles %}
+			    {% for rol in lista_roles %}
+                     {% if rol.name %}
+
+
+				          <td><a href="/rol/consultar/{{ rol.id }}/">{{ rol.name }}</a></td>
+                          <td><a href="/rol/modificar/{{ rol.id }}/"><button type="button" class="btn btn-primary btn-sm">Modificar</button></a></td>
+                          <td><a href="/rol/eliminar/{{ rol.id }}/"><button type="button" class="btn btn-danger btn-sm">Eliminar</button></a></td>
+        </tr>
+	</table>
 				{% endif %}
 			{% endfor %}
 		{% endif %}
+
 	</div>
 	</div>
 {% endblock %}

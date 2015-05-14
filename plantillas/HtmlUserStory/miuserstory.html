@@ -17,6 +17,10 @@
         <table class="table table-bordered table-striped" >
 
             <tr><th style="width: 180px" class="navbar-inner">Nombre: </th><td style="text-align: center">{{ userstory.nombre }}</td></tr>
+            {% if userstory.usuario != NULL %}
+            <tr><th style="width: 180px" class="navbar-inner">Desarrollado por: </th><td style="text-align: center">{{ userstory.usuario }}</td></tr>
+            {% endif %}
+
             <tr><th class="navbar-inner">Descripcion: </th><td style="text-align: center">{{ userstory.descripcion }}</td></tr>
             <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ userstory.fecha_creacion }}</td></tr>
             <tr><th class="navbar-inner">Fecha de Inicio: </th><td style="text-align: center">{{ userstory.fechaInicio }}</td></tr>

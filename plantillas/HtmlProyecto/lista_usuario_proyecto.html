@@ -1,0 +1,61 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+    <center><h1>Usuarios Asignado a {{proyecto.nombre}}</h1></center>
+<center>
+<ul class="nav nav-tabs">
+  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+     <li ><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
+     <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
+    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
+    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+    <li class="active"><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
+</ul>
+</center>
+<br>
+<a class="btn btn-success"     href="{% url 'AdminProyectos.views.listar_usuarios_para_asignar_proyecto' id_proyecto %}">
+       Agregar Usuarios&nbsp;</a>
+    <center>
+
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >APELLIDO</th>
+        <th >ROL</th>
+
+        <th  style="width: 10%">ACCION</th>
+        <th  style="width: 10%">USER STORY</th>
+
+        {% for p in usuarioproyecto %}
+    <tr>
+	     <td><em>{{p.usuario.first_name}}</em></td>
+         <td><em>{{p.usuario.last_name}}</em></td>
+         <td><em>{{p.rol}}</em></td>
+
+        <td>
+            <div class="input-group">
+                <a class="btn btn-primary" href="{% url 'AdminProyectos.views.desasignar_usuario_proyecto' id_proyecto p.usuario_id %}">Desasignar</a>
+        </div>
+        <td>
+            <div class="input-group">
+                <a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_creado_para_asignar_usuario' id_proyecto p.usuario_id %}">Asignar</a>
+        </div>
+
+
+        </td>
+
+
+
+	</tr>
+
+        {% endfor %}
+
+    </table>
+        </center>
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+
+{% endblock %}

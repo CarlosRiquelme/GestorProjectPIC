@@ -11,7 +11,7 @@ from UserStory.models import UserStory
 from django.contrib import messages
 from Sprint.models import Sprint
 from django.contrib.auth.decorators import login_required
-
+from django.core.mail import send_mail
 
 
 def nuevo_userstory(request, id_proyecto):
@@ -177,11 +177,26 @@ def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
     messages.success(request, 'USER STORY ASIGNADO A UNA SPRINT CORRECTAMENTE!')
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 
-def asignar_userstory_a_user(request,id_proyecto ,id_user, id_userstory ):
+def asignar_usuario_userstory(request, id_userstory, id_user):
     userstory=UserStory.objects.get(pk=id_userstory)
-
-    userstory.usuario=id_user
+    usuario=User.objects.get(pk=id_user)
+    userstory.usuario_id=id_user
     userstory.save()
-    messages.success(request, 'USER STORY ASIGNADO A UNA USUARIO CORRECTAMENTE!')
+    messages.success(request, 'USER STORY ASIGNADO USUARIO Al USERSTORY CORRECTAMENTE!')
+
+    # if(usuario.email != 'NULL'):
+    #     send_mail('Se le asigno un User Story','Fue asignado a un user story',usuario.email)
+
+
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+
+
+def lista_userstory_creado_para_asignar_usuario(request,id_proyecto, id_user):
+     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+     usuario=User.objects.get(pk=id_user)
+
+
+     return render_to_response('HtmlUserStory/asignar_usuario_userstory.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'usuario':usuario})
+
 

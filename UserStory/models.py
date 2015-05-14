@@ -23,14 +23,14 @@ class UserStory(models.Model):
     fechaInicio = models.DateField('Fecha de Inicio')
     fechaFin = models.DateField('Fecha de Fin')
     estado=models.CharField(choices=US_ESTADOS,default='CREADO',max_length=30)
-    prioridad=models.CharField(max_length=30, null=True)
+    prioridad=models.CharField(choices=US_PRIORIDAD,default='BAJA',max_length=30)
     sprint=models.ForeignKey(Sprint, unique=False, null=True)
     actividad=models.ForeignKey(Actividad, unique=False, null=True)
     tiempo_trabajado = models.IntegerField(null=True)
     porcentaje = models.IntegerField(null=True)
     proyecto=models.ForeignKey(Proyecto, null=True)
     tiempo_estimado=models.IntegerField(null=True)
-    usuario=models.OneToOneField(User,primary_key=True)
+    usuario=models.ForeignKey(User, null=True)
 
     def __unicode__(self):
         return self.nombre

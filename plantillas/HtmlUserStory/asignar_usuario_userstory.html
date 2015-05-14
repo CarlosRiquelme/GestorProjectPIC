@@ -1,0 +1,53 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n admin_urls admin_static admin_modify %}
+
+{% block content %}
+<h1>Lista de User Story del Proyecto sin Asignacion</h1>
+<h2>Usuario {{usuario}}</h2>
+
+
+</table>
+
+ <table class="table table-bordered table-condensed table-striped" >
+    <thead>
+        <th >NOMBRE</th>
+        <th >DESARROLLADOR</th>
+        <th >ESTADO</th>
+        <th >FECHA DE CREACION</th>
+        <th >FECHA DE INICIO</th>
+        <th >FECHA DE FINALIZACION</th>
+        <th >PRIORIDAD</th>
+
+        <th  style="width: 20%">ASIGNAR A</th>
+    </thead>
+    {% for dato in userstorys %}
+      {% if dato.estado ==  'CREADO' and dato.usuario != usuario  %}
+             <tr>
+	            <td >{{dato.nombre}}</td>
+                <td >{{dato.usuario}}</td>
+                <td><em>{{dato.estado}}</em></td>
+                <td>{{ dato.fecha_creacion }}</td>
+                <td>{{ dato.fechaInicio }}</td>
+                <td>{{ dato.fechaFin }}</td>
+                <td>{{ dato.prioridad }}</td>
+                 {% if dato.usuario == NULL  %}
+                <td>
+                <a  class="btn btn-primary" href="{% url 'UserStory.views.asignar_usuario_userstory' dato.id usuario.id %}">Asignar</a>
+                </td>
+                 {% endif %}
+                 {% if dato.usuario != NULL  %}
+                <td>
+                <a  class="btn btn-primary" href="{% url 'UserStory.views.asignar_usuario_userstory' dato.id usuario.id %}">Re-Asignar</a>
+                </td>
+                 {% endif %}
+	        </tr>
+      {% endif %}
+    {% endfor %}
+
+
+ </table>
+
+
+<br><br><br>
+
+{% endblock %}

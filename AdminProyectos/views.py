@@ -1,6 +1,6 @@
 # coding=UTF-8
 from mx.DateTime.DateTime import today
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
@@ -10,6 +10,7 @@ from AdminProyectos.models import Proyecto
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from Flujo.models import Flujo
+from PIC.models import RolUsuarioProyecto
 
 
 def nuevo_proyecto(request):
@@ -145,3 +146,49 @@ def colaboradores(request, id_proyecto):
                               {'roles_user':'',#rol_user,
                                'id_proyecto':id_proyecto, 'roles':'',#roles
                                })
+def listar_usuario_proyecto(request, id_proyecto):
+    usuarioproyecto=RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+
+    return render_to_response('HtmlProyecto/lista_usuario_proyecto.html',{'usuarioproyecto':usuarioproyecto,
+                                                                          'id_proyecto':id_proyecto, 'proyecto':proyecto},
+                              context_instance=RequestContext(request))
+def asignar_usuario_proyecto(request, id_proyecto,id_user):
+
+    usuarioproyecto=RolUsuarioProyecto()
+    usuarioproyecto.proyecto_id=id_proyecto
+    usuarioproyecto.usuario_id=id_user
+    usuarioproyecto.save()
+    messages.success(request, 'USUARIO ASIGNADO AL PROYECTO CORRECTAMENTE!')
+    return HttpResponseRedirect('/proyecto/usuarios/'+str(id_proyecto))
+
+def listar_usuarios_para_asignar_proyecto(request, id_proyecto):
+    lista=[]
+    usuarioproyecto=RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+    usuarios=User.objects.all()
+    for user in usuarios:
+        ban=1
+        for user2 in usuarioproyecto:
+            if user2.usuario.id == user.id: #si existe un usurio ya en tabla no quiero
+                ban=0
+        if ban == 1:
+            lista.append(user)
+    return render_to_response('HtmlProyecto/usuarios_asignar_proyecto.html',{'lista':lista,'usuarioproyecto':usuarioproyecto,
+                                                                             'id_proyecto':id_proyecto},
+                              context_instance=RequestContext(request))
+
+def desasignar_usuario_proyecto(request, id_proyecto,id_user):
+
+    usuarioproyecto=RolUsuarioProyecto.objects.get(usuario_id=id_user, proyecto_id=id_proyecto)
+    usuarioproyecto.delete()
+    messages.success(request, 'USUARIO DESASIGNADO AL PROYECTO CORRECTAMENTE!')
+    return HttpResponseRedirect('/proyecto/usuarios/'+str(id_proyecto))
+
+def listar_roles_para_asignar_usuario(request, id_proyecto):
+    roles=Group.objects.all()
+    usuarioproyecto=RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+
+    return render_to_response('HtmlProyecto/usuarios_asignar_proyecto.html',{'roles':roles,'usuarioproyecto':usuarioproyecto,
+                                                                             'id_proyecto':id_proyecto},
+                              context_instance=RequestContext(request))
+
