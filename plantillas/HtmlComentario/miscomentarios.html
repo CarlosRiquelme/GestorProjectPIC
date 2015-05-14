@@ -14,6 +14,8 @@
         <th >TITULO</th>
         <th >FECHA DE CREACION</th>
         <th >HORA TRABAJADA</th>
+        <th >POSEE ARCHIVO </th>
+        <th >ADJUNTAR</th>
     </thead>
 
         {% for p in comentarios %}
@@ -22,6 +24,12 @@
 	     <td><em><a href="{% url 'Comentario.views.mi_comentario' p.id %}">{{p.titulo}}</a></em></td>
          <td><em>{{p.fecha_creacion}}</em></td>
          <td><em>{{p.hora_trabajada}}</em></td>
+         <td><em>{{p.adjunto}}</em></td>
+         <td>
+            <div class="input-group">
+                <a class="btn btn-primary" href="{% url 'Comentario.views.list' p.id %}">Archivo</a>
+            </div>
+        <td>
 
 
 

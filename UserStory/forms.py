@@ -42,6 +42,12 @@ class UserStoryForm(forms.ModelForm):
                    widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
 
 
+    def clean(self):
+        cleaned_data = super(UserStoryForm, self).clean()
+        fechaFin= cleaned_data.get("fechaFin")
+        fechaInicio=cleaned_data.get("fechaInicio")
+        if fechaFin <= fechaInicio:
+            raise forms.ValidationError("La Fecha de Finalizacion no puede ser Menor que la de Inicio")
 
     class Meta:
         model = UserStory
@@ -72,6 +78,4 @@ class UserStoryFormEdit(forms.ModelForm):
 
     def save(self, commit=True):
         userstory = super(UserStoryFormEdit, self).save(commit=True)
-        # if commit:
-        #    proyecto.save()
         return userstory

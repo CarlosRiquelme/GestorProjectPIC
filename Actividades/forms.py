@@ -27,6 +27,12 @@ class ActividadForm(forms.ModelForm):
                                      error_messages={'required': 'Ingrese una fecha de Finalizacion del proyecto'} )
     secuencia=forms.IntegerField(label="Numero de la  Actividad",help_text="Maximo 10 Actividades",
                    widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'1','max':'10'}))
+    def clean(self):
+        cleaned_data = super(ActividadForm, self).clean()
+        fechaFin= cleaned_data.get("fechaFin")
+        fechaInicio=cleaned_data.get("fechaInicio")
+        if fechaFin <= fechaInicio:
+            raise forms.ValidationError("La Fecha de Finalizacion no puede ser Menor que la de Inicio")
 
     class Meta:
         model = Actividad
