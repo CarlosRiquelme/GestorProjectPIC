@@ -10,6 +10,7 @@ from UserStory.forms import UserStoryForm, UserStoryFormEdit
 from UserStory.models import UserStory
 from django.contrib import messages
 from Sprint.models import Sprint
+from Comentario.models import Comentario
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 
@@ -199,4 +200,23 @@ def lista_userstory_creado_para_asignar_usuario(request,id_proyecto, id_user):
      return render_to_response('HtmlUserStory/asignar_usuario_userstory.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
                                                                        'usuario':usuario})
 
-
+def reasignar_userstory(request,id_proyecto,id_user,id_sprint,id_comentario,id_userstory,id_flujo):
+    userstory=UserStory.get(pk=id_userstory)
+    userstorys=UserStory.objects.filter(sprint_id=id_sprint)
+    comentarios=Comentario.objects.filter(userstory_id=id_userstory)
+    resta=0
+    if userstory.tiempo_trabajado>userstory.tiempo_estimado:
+        if userstory.porcentaje<100:
+            resta=userstory.tiempo_trabajado-userstory.tiempo_estimado
+    resta2=0
+    total=0
+    for us in userstorys:
+        if us.porcentaje==100:
+            if us.tiempo_trabajado<us.tiempo_estimado:
+                resta2=us.tiempo_estimado-us.tiempo_trabajado
+                total=total+resta2
+    if resta<resta2:
+        messages.success(request, 'Sobra tiempo en su sprint, puede continuar con su tarea')
+    else:
+        messages.success(request, 'No tiene mas tiempo el sprint, se reasignara, creando un nuevo sprint')
+        return HttpResponseRedirect('/sprint/nuevo/'+str(id_flujo))

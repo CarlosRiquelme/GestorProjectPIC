@@ -52,8 +52,8 @@ def nuevo_comentario(request, id_userstory):
                 userstoty.save()
                 messages.success(request, 'Comentario CREADO CON EXITO!')
                 return HttpResponseRedirect('/comentario/micomentario/'+str(comentario.id))
-        else:
-                messages.success(request, 'Sobre paso la hora planificada FAVOR contacte con el SCRUM MASTER')
+            else:
+                messages.success(request, 'Sobrepaso la hora planificada, se reasignara la tarea')
                 return HttpResponseRedirect('/proyectos/')
 
     else:
