@@ -1,0 +1,53 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+
+    <br>
+    <center><h1>Lista de User Story </h1></center>
+    <br><br>
+
+    <center>
+
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >ESTADO</th>
+        <th >FECHA DE CREACION</th>
+        <th >FECHA DE INICIO</th>
+        <th >FECHA DE FINALIZACION</th>
+        <th >PRIORIDAD</th>
+        <th >SPRINT</th>
+        <th >TIEMPO TRABAJADO</th>
+
+        <th  style="width: 20%">ASIGNAR  SPRINT</th>
+    </thead>
+            {% if userstory.estado == 'REASIGNAR' %}
+                <tr>
+                    <td><em>{{userstory.estado}}</em></td>
+                    <td><em>{{userstory.fecha_creacion}}</em></td>
+                    <td><em>{{userstory.fechaInicio}}</em></td>
+                    <td><em>{{userstory.fechaFin}}</em></td>
+                    <td><em>{{userstory.prioridad}}</em></td>
+                    <td><em>{{userstory.sprint.nombre}}</em></td>
+                    <td><em>{{userstory.tiempo_trabajado}}</em></td>
+                {% if userstory.sprint == NULL %}
+                    <td>
+                        <div class="input-group"><a class="btn btn-success" href="{% url 'UserStory.views.asignar_userstory_a_sprint' id_proyecto id_sprint userstory.id  %}">{{sprint.nombre}} <i class="fa fa-edit"></i></a>
+                        </div>
+                    </td>
+                {% endif%}
+
+	            </tr>
+
+            {% endif%}
+
+
+    </table>
+        </center>
+
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}

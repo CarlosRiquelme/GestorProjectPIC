@@ -54,7 +54,7 @@ def nuevo_comentario(request, id_userstory):
                 messages.success(request, 'Comentario CREADO CON EXITO!')
                 return HttpResponseRedirect('/comentario/micomentario/'+str(comentario.id))
             else:
-                userstory.estado='TODO'
+                userstory.estado='REASIGNAR'
                 userstory.tiempo_trabajado=suma
                 userstory.porcentaje=porcentaje
                 userstory.save()
