@@ -1,0 +1,50 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+
+    <br>
+    <center><h1>User Story para reasignar </h1></center>
+    <br><br>
+    <center>
+
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >DESCRIPCION</th>
+        <th >TIEMPO ESTIMADO</th>
+        <th >TIEMPO TRABAJADO</th>
+        <th >PROYECTO</th>
+        <th >SPRINT</th>
+
+        <th  style="width: 20%">AGREGAR</th>
+        <th  style="width: 10%">CAMBIAR ALGO</th>
+
+            <tr>
+
+	            <td><em>{{userstory.nombre}}</em></td>
+                <td><em>{{userstory.descripcion}}</em></td>
+                <td><em>{{userstory.tiempo_estimado}}</em></td>
+                <td><em>{{userstory.tiempo_trabajado}}</em></td>
+                <td><em>{{userstory.proyecto_id}}</em></td>
+                <td><em>{{userstory.sprint_id}}</em></td>
+
+            <td>
+                <div class="input-group">
+                    <a class="btn btn-primary" href="{% url 'UserStory.views.reasignar_userstory' userstory.proyecto_id userstory.sprint_id userstory.id %}">REASIGNAR</a>
+                </div>
+            </td>
+            <td>
+                <div class="input-group">
+                    <a class="btn btn-success" href="{% url 'Comentario.views.mis_comentarios' userstory.id %}">COMENTARIOS</a>
+                </div>
+            </td>
+	        </tr>
+
+    </table>
+        </center>
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}

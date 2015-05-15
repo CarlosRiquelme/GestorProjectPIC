@@ -212,7 +212,7 @@ def cambiar_estado_todo(request, id_proyecto):
     return render_to_response('HtmlUserStory/cambiar_estado_todo.html',{'lista':lista})
 
 
-def reasignar_userstory(request,id_proyecto,id_user,id_sprint,id_comentario,id_userstory,id_flujo):
+def reasignar_userstory(request,id_proyecto,id_sprint,id_userstory):
     userstory=UserStory.get(pk=id_userstory)
     userstorys=UserStory.objects.filter(sprint_id=id_sprint)
     comentarios=Comentario.objects.filter(userstory_id=id_userstory)
@@ -231,4 +231,4 @@ def reasignar_userstory(request,id_proyecto,id_user,id_sprint,id_comentario,id_u
         messages.success(request, 'Sobra tiempo en su sprint, puede continuar con su tarea')
     else:
         messages.success(request, 'No tiene mas tiempo el sprint, se reasignara, creando un nuevo sprint')
-        return HttpResponseRedirect('/sprint/nuevo/'+str(id_flujo))
+        return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))

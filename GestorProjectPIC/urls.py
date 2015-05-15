@@ -86,6 +86,8 @@ urlpatterns = patterns('',
      url(r'^usuario/userstory/lista/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','UserStory.views.lista_userstory_creado_para_asignar_usuario'),
      url(r'^usuario/userstory/asignar/(?P<id_userstory>\d+)/(?P<id_user>\d+)/$','UserStory.views.asignar_usuario_userstory'),
      url(r'^userstory/actualizado/(?P<id_proyecto>\d+)/$','UserStory.views.cambiar_estado_todo'),
+    url(r'^userstory/reasignar/(?P<id_proyecto>\d+)/(?P<id_sprint>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.reasignar_userstory'),
+
 #COMENTARIOS
 
      url(r'^comentario/nuevo/(?P<id_userstory>\d+)/$','Comentario.views.nuevo_comentario'),

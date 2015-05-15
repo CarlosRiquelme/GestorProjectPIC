@@ -23,6 +23,9 @@ def nuevo_comentario(request, id_userstory):
     if request.method=='POST':
         comentario_form = ComentarioForm(data=request.POST)
         userstory=UserStory.objects.get(pk=id_userstory)
+        userstorys=UserStory.objects.filter(pk=id_userstory)
+        id_proyecto=userstory.proyecto_id
+        id_sprint=userstory.sprint_id
         suma=0
 
         # If the two forms are valid...
@@ -51,8 +54,12 @@ def nuevo_comentario(request, id_userstory):
                 messages.success(request, 'Comentario CREADO CON EXITO!')
                 return HttpResponseRedirect('/comentario/micomentario/'+str(comentario.id))
             else:
-                messages.success(request, 'Sobre paso la hora planificada FAVOR contacte con el SCRUM MASTER')
-                return HttpResponseRedirect('/proyectos/')
+                userstory.estado='TODO'
+                userstory.tiempo_trabajado=suma
+                userstory.porcentaje=porcentaje
+                userstory.save()
+                messages.success(request, 'Sobre paso la hora planificada,se reasignara')
+                return render_to_response('HtmlComentario/reasignacion.html',{'userstory':userstory,'id_proyecto':id_proyecto,'id_sprint':id_sprint,'id_userstory':id_userstory})
 
     else:
         comentario_form= ComentarioForm(request.POST)
