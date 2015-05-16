@@ -173,6 +173,13 @@ def lista_userstory_done(request,id_proyecto, id_actividad):
      return render_to_response('HtmlUserStory/userstory_done.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
                                                                        'id_actividad':id_actividad,'actividad':actividad})
 
+def lista_userstory_reasignarActividad(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+     actividad=Actividad.objects.get(pk=id_actividad)
+
+     return render_to_response('HtmlUserStory/userstory_reasignarActividad.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_actividad':id_actividad,'actividad':actividad})
+
 def lista_userstory_no_creado(request,id_proyecto, id_sprint):
      userstorys=UserStory.objects.filter(actividad_id=id_sprint)
      sprint=Sprint.objects.get(pk=id_sprint)
