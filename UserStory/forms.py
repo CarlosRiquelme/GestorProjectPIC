@@ -17,6 +17,11 @@ class UserStoryForm(forms.ModelForm):
     Atributos que el usuario deber completar para la creacion
     de un nuevo UserStory
     """
+    US_PRIORIDAD = (
+    ('BAJA', 'BAJA'),
+    ('MEDIA', 'MEDIA'),
+    ('ALTA', 'ALTA'),
+)
 
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del User Story",)
@@ -28,14 +33,21 @@ class UserStoryForm(forms.ModelForm):
     fechaFin = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Finalizacion del User Story'} )
-    prioridad=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','rows':'3'}),
-                                help_text="Maximo 30 caracteres",max_length=10,label="Prioridad")
+    #prioridad=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','rows':'3'}),
+    #                            help_text="Maximo 30 caracteres",max_length=10,label="Prioridad")
+    prioridad=forms.MultipleChoiceField(required=False,widget=forms.CheckboxSelectMultiple, choices=US_PRIORIDAD)
     tiempo_trabajado = forms.IntegerField(label="Tiempo Trabajado(hs)")
     porcentaje = forms.IntegerField(label="Porcentaje(%)")
     tiempo_estimado = forms.IntegerField(label="Tiempo Estimado(hs)",
                    widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
 
 
+    def clean(self):
+        cleaned_data = super(UserStoryForm, self).clean()
+        fechaFin= cleaned_data.get("fechaFin")
+        fechaInicio=cleaned_data.get("fechaInicio")
+        if fechaFin <= fechaInicio:
+            raise forms.ValidationError("La Fecha de Finalizacion no puede ser Menor que la de Inicio")
 
     class Meta:
         model = UserStory
@@ -66,6 +78,4 @@ class UserStoryFormEdit(forms.ModelForm):
 
     def save(self, commit=True):
         userstory = super(UserStoryFormEdit, self).save(commit=True)
-        # if commit:
-        #    proyecto.save()
         return userstory

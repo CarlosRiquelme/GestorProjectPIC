@@ -13,6 +13,7 @@
      <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
     <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
     <li class="active"><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
 </ul>
 </center>
 <br>
@@ -29,10 +30,9 @@
         <th >FECHA DE INICIO</th>
 
 
-
         <th  style="width: 10%">ASIGNAR</th>
         <th  style="width: 10%">ESTADOS</th>
-        <th  style="width: 10%">ACCION</th>
+
         {% for p in sprints %}
 
     <tr>
@@ -40,7 +40,7 @@
          <td><em>{{p.estado}}</em></td>
          <td><em>{{p.fecha_creacion}}</em></td>
          <td><em>{{p.fechaInicio}}</em></td>
-         <td><em>{{p.fechaFin}}</em></td>
+
 
         <td>
             <div class="input-group">

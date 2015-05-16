@@ -7,7 +7,6 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Flujo', '0001_initial'),
     ]
 
     operations = [
@@ -21,7 +20,6 @@ class Migration(migrations.Migration):
                 ('fechaFin', models.DateField(verbose_name=b'Fecha de Fin')),
                 ('estado', models.CharField(default=b'PROGRAMADO', max_length=30, choices=[(b'PROGRAMADO', b'PROGRAMADO'), (b'INICIADO', b'INICIADO'), (b'FINALIZADO', b'FINALIZADO')])),
                 ('secuencia', models.IntegerField(null=True)),
-                ('flujo', models.ForeignKey(to='Flujo.Flujo', null=True)),
             ],
             options={
             },

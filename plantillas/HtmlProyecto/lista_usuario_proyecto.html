@@ -28,7 +28,8 @@
         <th >ROL</th>
 
         <th  style="width: 10%">ACCION</th>
-        <th  style="width: 10%">ESTADOS</th>
+        <th  style="width: 10%">USER STORY</th>
+
         {% for p in usuarioproyecto %}
     <tr>
 	     <td><em>{{p.usuario.first_name}}</em></td>
@@ -37,11 +38,11 @@
 
         <td>
             <div class="input-group">
-                <a class="btn btn-primary" href="#">Desasignar</a>
+                <a class="btn btn-primary" href="{% url 'AdminProyectos.views.desasignar_usuario_proyecto' id_proyecto p.usuario_id %}">Desasignar</a>
         </div>
         <td>
             <div class="input-group">
-                <a class="btn btn-success" href="#">VER</a>
+                <a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_creado_para_asignar_usuario' id_proyecto p.usuario_id %}">Asignar</a>
         </div>
 
 

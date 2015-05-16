@@ -1,0 +1,18 @@
+[
+{"pk": 1, "model": "AdminProyectos.Proyecto", "fields": {"nombre": "proyecto01", "descripcion": "caceres", "scrumMaster": "1", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "fechaInicio": "2015-09-07", "fechaFin": "2016-09-07", "estado": "EN-DESARROLLO"}},
+{"pk": 2, "model": "AdminProyectos.Proyecto", "fields": {"nombre": "proyecto02", "descripcion": "caceres", "scrumMaster": "1", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "fechaInicio": "2015-09-07", "fechaFin": "2016-09-07", "estado": "EN-DESARROLLO"}},
+
+{"pk": 1, "model": "Flujo.Flujo", "fields": {"nombre": "fl01", "proyecto": "1", "cantidad_de_actividades": "2", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "estado": "CREADO"}},
+{"pk": 2, "model": "Flujo.Flujo", "fields": {"nombre": "fl02", "proyecto": "2", "cantidad_de_actividades": "2", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "estado": "CREADO"}},
+
+{"pk": 1, "model": "Actividades.Actividad", "fields": {"nombre": "a1", "flujo": "1", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "fechaInicio": "2015-09-07", "fechaFin": "2016-09-07", "estado": "PROGRAMADO", "secuencia": "1"}},
+{"pk": 2, "model": "Actividades.Actividad", "fields": {"nombre": "a2", "flujo": "1", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "fechaInicio": "2015-09-07", "fechaFin": "2016-09-07", "estado": "PROGRAMADO", "secuencia": "2"}},
+
+{"pk": 1, "model": "UserStory.UserStory", "fields": {"nombre": "us 01", "descripcion": "descripcion01", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "fechaInicio": "2015-09-07", "fechaFin": "2016-09-07", "estado": "CREADO", "prioridad": "BAJA", "sprint": "1", "actividad": "1", "tiempo_trabajado": "0", "porcentaje": "0", "proyecto": "1", "tiempo_estimado": "8"}},
+{"pk": 2, "model": "UserStory.UserStory", "fields": {"nombre": "us 02", "descripcion": "descripcion02", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "fechaInicio": "2015-09-07", "fechaFin": "2016-09-07", "estado": "CREADO", "prioridad": "BAJA", "sprint": "1", "actividad": "1", "tiempo_trabajado": "0", "porcentaje": "0", "proyecto": "1", "tiempo_estimado": "8"}},
+{"pk": 3, "model": "UserStory.UserStory", "fields": {"nombre": "us 03", "descripcion": "descripcion03", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "fechaInicio": "2015-09-07", "fechaFin": "2016-09-07", "estado": "CREADO", "prioridad": "BAJA", "sprint": "1", "actividad": "1", "tiempo_trabajado": "0", "porcentaje": "0", "proyecto": "1", "tiempo_estimado": "8"}},
+
+
+{"pk": 1, "model": "Sprint.Sprint", "fields": {"nombre": "us 01", "fecha_creacion": "2015-04-30 23:55:36.092752-04", "fechaInicio": "2015-09-07", "fechaFin": "2016-09-07", "tiempo_acumulado": "24", "flujo": "1", "estado": "ABIERTO"}}
+
+]

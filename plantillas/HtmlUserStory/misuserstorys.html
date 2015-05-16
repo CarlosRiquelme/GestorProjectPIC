@@ -13,12 +13,14 @@
      <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
     <li class="active"><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
     <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
 </ul>
 </center>
 <br>
  <a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">
        Crear UserStory&nbsp;</a>
-
+<a class="btn btn-warning"     href="{% url 'UserStory.views.cambiar_estado_todo' id_proyecto  %}">
+       Actualizar&nbsp;</a>
     <center>
 
         <table class="table table-striped" style="width: 100%">

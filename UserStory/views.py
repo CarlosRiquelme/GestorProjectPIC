@@ -10,9 +10,11 @@ from UserStory.forms import UserStoryForm, UserStoryFormEdit
 from UserStory.models import UserStory
 from django.contrib import messages
 from Sprint.models import Sprint
+from Comentario.models import Comentario
 from django.contrib.auth.decorators import login_required
-
-
+from django.core.mail import send_mail
+from datetime import datetime, date, time, timedelta
+from django.template.loader import render_to_string
 
 def nuevo_userstory(request, id_proyecto):
     """
@@ -132,6 +134,15 @@ def lista_userstory_creado(request,id_proyecto, id_actividad):
 
      return render_to_response('HtmlUserStory/userstory_creado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
                                                                        'id_actividad':id_actividad,'actividad':actividad})
+def lista_userstory_reasignar(request,id_proyecto, id_actividad):
+     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
+     for us in userstorys:
+         id_sprint=us.sprint_id
+         sprint=Sprint.objects.get(pk=id_sprint)
+
+     return render_to_response('HtmlUserStory/userstory_reasignado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'id_sprint':id_sprint,'sprint':sprint})
+
 def asignar_userstory_a_actividad(request,id_proyecto ,id_actividad, id_userstory ):
     userstory=UserStory.objects.get(pk=id_userstory)
 
@@ -177,4 +188,64 @@ def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
     messages.success(request, 'USER STORY ASIGNADO A UNA SPRINT CORRECTAMENTE!')
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 
+def asignar_usuario_userstory(request, id_userstory, id_user):
+    userstory=UserStory.objects.get(pk=id_userstory)
+    usuario=User.objects.get(pk=id_user)
+    userstory.usuario_id=id_user
+    userstory.save()
+    messages.success(request, 'USER STORY ASIGNADO USUARIO Al USERSTORY CORRECTAMENTE!')
 
+    if(usuario.email != 'NULL'):
+        email=usuario.email
+        nombre=userstory.nombre
+        proyectos=userstory.proyecto
+        descripcion=userstory.descripcion
+        proyecto=proyectos.nombre
+        html_content = 'Fue asignado a un User Story '+nombre+' que trata sobre '+descripcion+' del proyecto '+proyecto
+        send_mail('Asignacion User Story',html_content , 'gestorprojectpic@gmail.com',['paofigue@gmail.com'], fail_silently=False)
+
+
+    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+
+
+def lista_userstory_creado_para_asignar_usuario(request,id_proyecto, id_user):
+     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+     usuario=User.objects.get(pk=id_user)
+
+
+     return render_to_response('HtmlUserStory/asignar_usuario_userstory.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
+                                                                       'usuario':usuario})
+def cambiar_estado_todo(request, id_proyecto):
+    lista=[]
+    ahora = date.today()
+    #fecha=today.strftime("%Y/%m/%d")
+    userstory=UserStory.objects.filter(proyecto_id=id_proyecto)
+    for objeto in userstory:
+        if objeto.fechaInicio <= ahora and objeto.estado == 'CREADO':
+            objeto.estado= 'TODO'
+            objeto.save()
+            lista.append(objeto)
+    return render_to_response('HtmlUserStory/cambiar_estado_todo.html',{'lista':lista})
+
+
+def reasignar_userstory(request,id_proyecto,id_sprint,id_userstory):
+    userstory=UserStory.objects.get(pk=id_userstory)
+    userstorys=UserStory.objects.filter(sprint_id=id_sprint)
+    comentarios=Comentario.objects.filter(userstory_id=id_userstory)
+    sprint=Sprint.objects.get(pk=id_sprint)
+    resta=0
+    if userstory.tiempo_trabajado>userstory.tiempo_estimado:
+        if userstory.porcentaje<100:
+            resta=userstory.tiempo_trabajado-userstory.tiempo_estimado
+    resta2=0
+    total=0
+    for us in userstorys:
+        if us.porcentaje==100:
+            if us.tiempo_trabajado<us.tiempo_estimado:
+                resta2=us.tiempo_estimado-us.tiempo_trabajado
+                total=total+resta2
+    if resta<resta2:
+        messages.success(request, 'Sobra tiempo en su sprint, puede continuar con su tarea')
+    else:
+        messages.success(request, 'No tiene mas tiempo el sprint, se reasignara, creando un nuevo sprint')
+        return render_to_response('HtmlUserStory/reasignarUS.html',{'userstorys':userstory,'id_proyecto':id_proyecto,'id_sprint':id_sprint,'sprint':sprint})

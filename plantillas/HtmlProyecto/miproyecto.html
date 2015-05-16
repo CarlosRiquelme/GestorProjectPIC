@@ -22,10 +22,7 @@ $('#id_descripcion').attr('required','true')
     {% endif %}
 </ul>
 </center>
-<br>
-<a class="btn btn-info" href="{% url 'AdminProyectos.views.nuevo_proyecto'  %}">
-Asignar Usuario a Proyecto<i class="fa fa-plus"></i></a>
-<br>
+
 <br>
 {% if proyecto.estado == 'EN-ESPERA' %}
 <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"  href="#myModal" >
