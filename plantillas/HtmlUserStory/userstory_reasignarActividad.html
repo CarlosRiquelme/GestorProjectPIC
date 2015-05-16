@@ -1,0 +1,55 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+
+    <br>
+    <center><h1>User Story sin Actividad</h1></center>
+    <br><br>
+
+    <center>
+
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >ESTADO</th>
+        <th >FECHA DE CREACION</th>
+        <th >FECHA DE INICIO</th>
+        <th >FECHA DE FINALIZACION</th>
+        <th >PRIORIDAD</th>
+        <th >SPRINT</th>
+        <th >TIEMPO TRABAJADO</th>
+
+        <th  style="width: 20%">ASIGNAR  ACTIVIDAD</th>
+    </thead>
+
+        {% for p in userstorys %}
+            {% if p.estado == 'REASIGNAR' %}
+     <tr>
+	     <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
+         <td><em>{{p.estado}}</em></td>
+         <td><em>{{p.fecha_creacion}}</em></td>
+         <td><em>{{p.fechaInicio}}</em></td>
+         <td><em>{{p.fechaFin}}</em></td>
+         <td><em>{{p.prioridad}}</em></td>
+         <td><em>{{p.sprint.nombre}}</em></td>
+         <td><em>{{p.tiempo_trabajado}}</em></td>
+         <td>
+            <div class="input-group">
+                <a class="btn btn-success" href="{% url 'UserStory.views.asignar_userstory_a_actividad' id_proyecto id_actividad p.id  %}">{{actividad.nombre}} <i class="fa fa-edit"></i></a>
+            </div>
+         </td>
+
+	</tr>
+
+            {% endif%}
+        {% endfor %}
+
+    </table>
+        </center>
+
+<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}
