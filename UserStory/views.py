@@ -14,6 +14,7 @@ from Comentario.models import Comentario
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from datetime import datetime, date, time, timedelta
+from django.template.loader import render_to_string
 
 def nuevo_userstory(request, id_proyecto):
     """
@@ -194,8 +195,14 @@ def asignar_usuario_userstory(request, id_userstory, id_user):
     userstory.save()
     messages.success(request, 'USER STORY ASIGNADO USUARIO Al USERSTORY CORRECTAMENTE!')
 
-    # if(usuario.email != 'NULL'):
-    #     send_mail('Se le asigno un User Story','Fue asignado a un user story',usuario.email)
+    if(usuario.email != 'NULL'):
+        email=usuario.email
+        nombre=userstory.nombre
+        proyectos=userstory.proyecto
+        descripcion=userstory.descripcion
+        proyecto=proyectos.nombre
+        html_content = 'Fue asignado a un User Story '+nombre+' que trata sobre '+descripcion+' del proyecto '+proyecto
+        send_mail('Asignacion User Story',html_content , 'gestorprojectpic@gmail.com',['paofigue@gmail.com'], fail_silently=False)
 
 
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
