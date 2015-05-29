@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 
 
-def nueva_actividad(request, id_flujo):
+def nueva_actividad(request, id_proyecto):
     """
     Crea un nuevo actividad
     """
@@ -31,8 +31,6 @@ def nueva_actividad(request, id_flujo):
             # Guarda el Usuarios en la bd
             actividad_form.clean()
             nombre = actividad_form.cleaned_data['nombre']
-            fecha_inicio = actividad_form.cleaned_data['fechaInicio']
-            fechafin=actividad_form.cleaned_data['fechaFin']
             secuencia = actividad_form.cleaned_data['secuencia']
 
 
@@ -40,11 +38,8 @@ def nueva_actividad(request, id_flujo):
 
             actividad = Actividad()
             actividad.nombre=nombre
-            actividad.flujo_id=id_flujo
+            actividad.proyecto_id=id_proyecto
             actividad.fecha_creacion=today()
-            actividad.fechaInicio=fecha_inicio
-            actividad.fechaFin=fechafin
-            actividad.estado='PROGRAMADO'
             actividad.secuencia = secuencia
             actividad.save()
             messages.success(request, 'actividad CREADO CON EXITO!')
@@ -52,7 +47,7 @@ def nueva_actividad(request, id_flujo):
             return HttpResponseRedirect('/actividad/miactividad/'+str(actividad.id))
     else:
         actividad_form= ActividadForm(request.POST)
-    return render_to_response('HtmlActividad/nueva_actividad.html',{'formulario':actividad_form,'user':user},
+    return render_to_response('HtmlActividad/nueva_actividad.html',{'formulario':actividad_form,'user':user,'id_proyecto':id_proyecto},
                               context_instance=RequestContext(request))
 
 
@@ -62,18 +57,19 @@ def mi_actividad(request, id_actividad):
     user=request.user
 
     return render_to_response('HtmlActividad/miactividad.html',
-                { 'actividad':actividad}, RequestContext(request))
+                { 'actividad':actividad, 'user':user}, RequestContext(request))
 
 
 
 def mis_actividades(request, id_proyecto):
 
-    actividades=Actividad.objects.filter(flujo__proyecto_id=id_proyecto)
-    flujo=Flujo.objects.get(proyecto_id=id_proyecto)
+    actividades=Actividad.objects.filter(proyecto_id=id_proyecto)
+    user=request.user
+
 
 
     return render_to_response('HtmlActividad/misactividades.html',{'actividades':actividades, 'id_proyecto':id_proyecto,
-                                                                   'flujo':flujo})
+                                                                   'user':user})
 
 
 def ver_estados(request, id_proyecto, id_actividad):

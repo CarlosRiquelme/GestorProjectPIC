@@ -11,11 +11,10 @@ from Sprint.forms import SprintForm,SprintFormEdit
 from Sprint.models import Sprint
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from Flujo.models import Flujo
 from UserStory.models import UserStory
 
 
-def nuevo_sprint(request, id_flujo):
+def nuevo_sprint(request, id_proyecto):
     """
     Crea un nuevo sprint
     """
@@ -31,19 +30,15 @@ def nuevo_sprint(request, id_flujo):
             # Guarda el Usuarios en la bd
             sprint_form.clean()
             nombre = sprint_form.cleaned_data['nombre']
-            fechaInicio = sprint_form.cleaned_data['fechaInicio']
-            fechaFin=sprint_form.cleaned_data['fechaFin']
-            tiempo_acumulado =  sprint_form.cleaned_data['tiempo_acumulado']
-
+            secuencia=sprint_form.cleaned_data['secuencia']
 
 
             sprint = Sprint()
             sprint.nombre=nombre
-            sprint.fechaInicio=fechaInicio
-            sprint.fechaFin=fechaFin
+            sprint.secuencia=secuencia
             sprint.fecha_creacion=today()
-            sprint.tiempo_acumulado=tiempo_acumulado
-            sprint.flujo_id=id_flujo
+            sprint.tiempo_acumulado = 0
+            sprint.proyecto_id=id_proyecto
             sprint.estado='ABIERTO'
             sprint.save()
             messages.success(request, 'SPRINT CREADO CON EXITO!')
@@ -51,7 +46,7 @@ def nuevo_sprint(request, id_flujo):
             return HttpResponseRedirect('/sprint/misprint/'+str(sprint.id))
     else:
         sprint_form= SprintForm(request.POST)
-    return render_to_response('HtmlSprint/nuevosprint.html',{'formulario':sprint_form,'user':user,'id_flujo':id_flujo},
+    return render_to_response('HtmlSprint/nuevosprint.html',{'formulario':sprint_form,'user':user,'id_proyecto':id_proyecto},
                               context_instance=RequestContext(request))
 
 
@@ -105,13 +100,12 @@ def eliminar_sprint(request, id_sprint):
                               context_instance=RequestContext(request))
 def mis_sprints(request,id_proyecto):
 
-    sprints=Sprint.objects.filter(flujo__proyecto_id=id_proyecto)
-    flujo=Flujo.objects.get(proyecto_id=id_proyecto)
+    sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
 
 
 
-    return render_to_response('HtmlSprint/missprints.html',{'sprints':sprints,'id_proyecto':id_proyecto,
-                                                            'flujo':flujo})
+
+    return render_to_response('HtmlSprint/missprints.html',{'sprints':sprints,'id_proyecto':id_proyecto})
 
 
 def mi_sprint(request, id_sprint):

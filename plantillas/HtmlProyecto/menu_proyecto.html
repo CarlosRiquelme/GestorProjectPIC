@@ -1,0 +1,26 @@
+{% extends 'admin/base_site.html' %}%}
+
+{% block titulo %}Proyectos{% endblock %}
+{% block extra_head %}
+
+{% endblock %}
+{% block content %}
+<h1>Menu Principal de Proyectos</h1>
+
+{% if user.esAdmin %}
+<td>
+<a  class="btn btn-info" href="{% url 'AdminProyectos.views.iniciar_proyecto'  %}">
+Actualizar </a>
+</td>
+<br><br>
+{% endif %}
+<div class="panel panel-info">
+  <div class="panel-body">
+     <h3 class="panel-title">Bienvenido {{user}}</h3>
+  </div>
+
+  <div class="panel-footer"><a class="btn btn-primary" href="{% url 'AdminProyectos.views.proyectos' user.id%}">Mis Proyectos</a></div>
+
+</div>
+
+{% endblock %}

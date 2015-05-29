@@ -3,7 +3,7 @@
 
 <body onload="iniciar()">
 {% block content %}
-<center><h1>{{ proyecto.nombre }}</h1></center>
+<center><h1>{{user}}-{{ proyecto.nombre }}</h1></center>
 <script>
 $('#id_nombre').attr('required','true')
 $('#id_descripcion').attr('required','true')
@@ -13,8 +13,7 @@ $('#id_descripcion').attr('required','true')
 <center>
 <ul class="nav nav-tabs">
   <li class="active"><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-    {% if proyecto.estado == 'EN-DESARROLLO'%}
-     <li ><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
+    {% if proyecto.estado == 'EN-ESPERA'%}
      <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
     <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
     <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
@@ -23,13 +22,21 @@ $('#id_descripcion').attr('required','true')
 </ul>
 </center>
 
+{% if permiso.rol.name == 'ScrumMaster'%}
+<td>
+<a  class="btn btn-info" href="{% url 'AdminProyectos.views.nuevo_proyecto'  %}">
+Nuevo Proyecto <i class="fa fa-plus"></i></a>
+
+
+</td>
+{% endif %}
+
 <br>
 {% if proyecto.estado == 'EN-ESPERA' %}
 <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"  href="#myModal" >
        Editar&nbsp;<i class="fa fa-edit"></i></a>
        
-  <a class="btn btn-success"     href="{% url 'Flujo.views.nuevo_flujo' id_proyecto  %}">
-       Crear Flujo&nbsp;</a>
+
   {% endif %}
 
        
@@ -95,6 +102,6 @@ $('#id_descripcion').attr('required','true')
 	    </div>
 	  </div>
 	</div>
-<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.proyectos' user.id %}"> Volver</a>
 {% endblock %}
 </body>

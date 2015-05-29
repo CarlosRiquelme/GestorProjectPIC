@@ -17,13 +17,11 @@
         <table class="table table-bordered table-striped" >
 
             <tr><th style="width: 180px" class="navbar-inner">Nombre: </th><td style="text-align: center">{{ actividad.nombre }}</td></tr>
-            <tr><th class="navbar-inner">Proyecto: </th><td style="text-align: center">{{ actividad.flujo.nombre }}</td></tr>
+            <tr><th class="navbar-inner">Proyecto: </th><td style="text-align: center">{{ actividad.proyecto.nombre }}</td></tr>
             <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ actividad.fecha_creacion }}</td></tr>
-            <tr><th class="navbar-inner">Fecha de Inicio: </th><td style="text-align: center">{{ actividad.fechaInicio }}</td></tr>
-            <tr><th class="navbar-inner">Fecha Fin: </th><td style="text-align: center">{{ actividad.fechaFin }}</td></tr>
             <tr><th class="navbar-inner">Numero de Secuencia: </th><td style="text-align: center">{{ actividad.secuencia }}</td></tr>
         </table>
     </center>
 
-<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+<a class="btn btn-default" href="{% url 'Actividades.views.mis_actividades' actividad.proyecto.id %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

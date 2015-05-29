@@ -1,7 +1,23 @@
 from django.test import TestCase
 from AdminProyectos.models import Proyecto
-
+from django.contrib.auth.models import User, Group
+from django.test import Client
 # Create your tests here.
+
+class TestLista(TestCase):
+
+
+    def test_listaProyecto(self):
+        proyecto=Proyecto.objects.create(nombre='PROYECTO1',descripcion='hola', fecha_creacion='2015-05-15 21:03:31-04',
+                                         fechaInicio='2015-05-16',fechaFin='2015-06-16', estado='EN-ESPERA')
+        #usuario=User.objects.create(username='admin',password='admin')
+        usuario=Client()
+        resp=usuario.get('/proyectos/')
+        self.assertEqual(resp.status_code, 200)
+        print "\n Lista Proyecto "
+
+
+
 
 class TestProyecto(TestCase):
 	def setUp(self):

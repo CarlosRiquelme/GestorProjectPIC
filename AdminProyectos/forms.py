@@ -15,7 +15,6 @@ class ProyectoForm(forms.ModelForm):
     de un nuevo proyecto
     """
 
-    #leader=forms.CharField(widget=TextInput(attrs={'readonly':'readonly'}),required=False)
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del Proyecto",)
     descripcion=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3'}),
@@ -27,7 +26,6 @@ class ProyectoForm(forms.ModelForm):
     fechaFin = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Finalizacion del proyecto'} )
-    #rol_usuario = models.ManyToManyField(Usuario_Rol, related_name='proyectos')
 
     class Meta:
         model = Proyecto

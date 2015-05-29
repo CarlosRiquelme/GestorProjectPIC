@@ -20,11 +20,7 @@
             {% if userstory.usuario != NULL %}
             <tr><th style="width: 180px" class="navbar-inner">Desarrollado por: </th><td style="text-align: center">{{ userstory.usuario }}</td></tr>
             {% endif %}
-
             <tr><th class="navbar-inner">Descripcion: </th><td style="text-align: center">{{ userstory.descripcion }}</td></tr>
-            <tr><th class="navbar-inner">Fecha de Creacion: </th><td style="text-align: center">{{ userstory.fecha_creacion }}</td></tr>
-            <tr><th class="navbar-inner">Fecha de Inicio: </th><td style="text-align: center">{{ userstory.fechaInicio }}</td></tr>
-            <tr><th class="navbar-inner">Fecha Fin: </th><td style="text-align: center">{{ userstory.fechaFin }}</td></tr>
             <tr><th class="navbar-inner">Estado: </th><td style="text-align: center">{{ userstory.estado }}</td></tr>
             <tr><th class="navbar-inner">Actividad: </th><td style="text-align: center">{{ userstory.actividad }}</td></tr>
             <tr><th class="navbar-inner">Tiempo Trabajo (Hs): </th><td style="text-align: center">{{ userstory.tiempo_trabajado }}</td></tr>
@@ -33,5 +29,5 @@
         </table>
     </center>
 
-<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+<a class="btn btn-default" href="{% url 'UserStory.views.mis_userstorys' userstory.proyecto.id %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

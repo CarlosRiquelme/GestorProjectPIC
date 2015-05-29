@@ -9,7 +9,6 @@
 <center>
 <ul class="nav nav-tabs">
   <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-     <li ><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
      <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
     <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
     <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
@@ -40,9 +39,13 @@
             <div class="input-group">
                 <a class="btn btn-primary" href="{% url 'AdminProyectos.views.desasignar_usuario_proyecto' id_proyecto p.usuario_id %}">Desasignar</a>
         </div>
+        </td>
+
+
         <td>
             <div class="input-group">
                 <a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_creado_para_asignar_usuario' id_proyecto p.usuario_id %}">Asignar</a>
+
         </div>
 
 

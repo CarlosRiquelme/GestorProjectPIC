@@ -1,6 +1,6 @@
 {% extends 'admin/base_site.html' %}
 
-{% block title %}Nuevo Proyecto{% endblock %}
+{% block title %}Nuevo User Story{% endblock %}
 {% block header %}
 	NUEVO PROYECTO
 {% endblock %}
@@ -17,7 +17,7 @@
 		{{formulario.nombre.error}}
 		<table class="table-striped">{{formulario.as_table}}</table>
 	<br>
-	<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+	<a class="btn btn-default" href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 		<button class="btn btn-primary" type='submit' >Guardar <i class="fa fa-save"></i></button>
 
 

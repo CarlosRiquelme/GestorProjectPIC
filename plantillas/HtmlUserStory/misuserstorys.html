@@ -9,7 +9,6 @@
 <center>
 <ul class="nav nav-tabs">
   <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-     <li ><a href="{% url 'Flujo.views.mi_flujo' id_proyecto %}">Flujo</a></li>
      <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
     <li class="active"><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
     <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
@@ -19,8 +18,7 @@
 <br>
  <a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">
        Crear UserStory&nbsp;</a>
-<a class="btn btn-warning"     href="{% url 'UserStory.views.cambiar_estado_todo' id_proyecto  %}">
-       Actualizar&nbsp;</a>
+
     <center>
 
         <table class="table table-striped" style="width: 100%">
@@ -28,8 +26,8 @@
         <th >NOMBRE</th>
         <th >ESTADO</th>
         <th >FECHA DE CREACION</th>
-        <th >FECHA DE INICIO</th>
-        <th >FECHA DE FINALIZACION</th>
+        <th>TIEMPO ESTIMADO</th>
+        <th>TIEMPO TRABAJADO</th>
         <th >PRIORIDAD</th>
         <th >SPRINT</th>
         <th >ACTIVIDAD</th>
@@ -41,8 +39,8 @@
 	     <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
          <td><em>{{p.estado}}</em></td>
          <td><em>{{p.fecha_creacion}}</em></td>
-         <td><em>{{p.fechaInicio}}</em></td>
-         <td><em>{{p.fechaFin}}</em></td>
+         <td><em>{{p.tiempo_estimado}}</em></td>
+         <td><em>{{p.tiempo_trabajado}}</em></td>
          <td><em>{{p.prioridad}}</em></td>
          <td><em>{{p.sprint.nombre}}</em></td>
          <td><em>{{p.actividad}}</em></td>
@@ -56,5 +54,5 @@
     </table>
         </center>
 
-<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.proyectos' user.id %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

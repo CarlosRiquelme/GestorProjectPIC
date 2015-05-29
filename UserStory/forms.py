@@ -27,31 +27,15 @@ class UserStoryForm(forms.ModelForm):
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del User Story",)
     descripcion=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3'}),
                                 help_text="Maximo 120 caracteres",max_length=120,label="Descripcion")
-    fechaInicio = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
-                                     required=True, help_text='* Ingrese en formato anho-mes-dia',
-                                     error_messages={'required': 'Ingrese una fecha de Inicio del User Story'} )
-    fechaFin = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
-                                     required=True, help_text='* Ingrese en formato anho-mes-dia',
-                                     error_messages={'required': 'Ingrese una fecha de Finalizacion del User Story'} )
-    #prioridad=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','rows':'3'}),
-    #                            help_text="Maximo 30 caracteres",max_length=10,label="Prioridad")
-    prioridad=forms.MultipleChoiceField(required=False,widget=forms.CheckboxSelectMultiple, choices=US_PRIORIDAD)
-    tiempo_trabajado = forms.IntegerField(label="Tiempo Trabajado(hs)")
-    porcentaje = forms.IntegerField(label="Porcentaje(%)")
+    prioridad=forms.MultipleChoiceField(widget=forms.SelectMultiple, choices=US_PRIORIDAD)
     tiempo_estimado = forms.IntegerField(label="Tiempo Estimado(hs)",
                    widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
 
 
-    def clean(self):
-        cleaned_data = super(UserStoryForm, self).clean()
-        fechaFin= cleaned_data.get("fechaFin")
-        fechaInicio=cleaned_data.get("fechaInicio")
-        if fechaFin <= fechaInicio:
-            raise forms.ValidationError("La Fecha de Finalizacion no puede ser Menor que la de Inicio")
 
     class Meta:
         model = UserStory
-        fields = ['nombre','descripcion','fechaInicio','fechaFin','prioridad','tiempo_trabajado','porcentaje','tiempo_estimado']
+        fields = ['nombre','descripcion','prioridad','tiempo_estimado']
         
 
 

@@ -19,28 +19,13 @@ class SprintForm(forms.ModelForm):
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del Sprint",)
 
+    secuencia=forms.IntegerField(label="Nro de Secuencia",
+                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'30'}))
 
-    fechaInicio = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
-                                     required=True, help_text='* Ingrese en formato anho-mes-dia',
-                                     error_messages={'required': 'Ingrese una fecha de Inicio del Sprint'} )
-
-    fechaFin = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
-                                     required=True, help_text='* Ingrese en formato anho-mes-dia',
-                                     error_messages={'required': 'Ingrese una fecha de Finalizacion del Sprint'} )
-
-    tiempo_acumulado =  forms.IntegerField(label="Tiempo Acumulado(hs)",
-                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
-
-    def clean(self):
-        cleaned_data = super(SprintForm, self).clean()
-        fechaFin= cleaned_data.get("fechaFin")
-        fechaInicio=cleaned_data.get("fechaInicio")
-        if fechaFin <= fechaInicio:
-            raise forms.ValidationError("La Fecha de Finalizacion no puede ser Menor que la de Inicio")
 
     class Meta:
         model = Sprint
-        fields = ['nombre','fechaInicio','fechaFin','tiempo_acumulado']
+        fields = ['nombre']
 
 
 

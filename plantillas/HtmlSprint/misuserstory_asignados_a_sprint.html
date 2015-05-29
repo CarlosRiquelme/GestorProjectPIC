@@ -7,7 +7,7 @@
 
 
     <br>
-    <center><h1>User Story sin Actividad</h1></center>
+    <center><h1>Lista de User Story </h1></center>
     <br><br>
 
     <center>
@@ -19,30 +19,34 @@
         <th >FECHA DE CREACION</th>
         <th >PRIORIDAD</th>
         <th >SPRINT</th>
+        <th >TIEMPO ESTIMADO</th>
         <th >TIEMPO TRABAJADO</th>
 
-        <th  style="width: 20%">ASIGNAR  ACTIVIDAD</th>
+
+        <th  style="width: 20%">ASIGNAR  SPRINT</th>
     </thead>
 
-        {% for p in userstorys %}
-          {% if p.actividad == NULL%}
-            {% if p.estado == 'CREADO' or p.estado == 'TODO'%}
+        {% for p in lista %}
+
      <tr>
 	     <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
          <td><em>{{p.estado}}</em></td>
          <td><em>{{p.fecha_creacion}}</em></td>
          <td><em>{{p.prioridad}}</em></td>
          <td><em>{{p.sprint.nombre}}</em></td>
+         <td><em>{{p.tiempo_estimado}}</em></td>
          <td><em>{{p.tiempo_trabajado}}</em></td>
+
+         {% if p.sprint == NULL %}
          <td>
             <div class="input-group">
-                <a class="btn btn-success" href="{% url 'UserStory.views.asignar_userstory_a_actividad' id_proyecto id_actividad p.id  %}">{{actividad.nombre}} <i class="fa fa-edit"></i></a>
+                <a class="btn btn-success" href="{% url 'UserStory.views.asignar_userstory_a_sprint' id_proyecto id_sprint p.id  %}">{{sprint.nombre}} <i class="fa fa-edit"></i></a>
             </div>
          </td>
+         {% endif%}
 
 	</tr>
 
-            {% endif%}
             {% endif%}
         {% endfor %}
 

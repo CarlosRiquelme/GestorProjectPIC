@@ -32,27 +32,17 @@ def nuevo_userstory(request, id_proyecto):
             # Guarda el Usuarios en la bd
             userstory_form.clean()
             nombre = userstory_form.cleaned_data['nombre']
-            fecha_inicio = userstory_form.cleaned_data['fechaInicio']
             descripcion =  userstory_form.cleaned_data['descripcion']
-            fechafin=userstory_form.cleaned_data['fechaFin']
-            tiempo_trabajado=userstory_form.cleaned_data['tiempo_trabajado']
-            porcentaje=userstory_form.cleaned_data['porcentaje']
             prioridad=userstory_form.cleaned_data['prioridad']
             tiempo_estimado=userstory_form.cleaned_data['tiempo_estimado']
-
-
-
-
             userstory = UserStory()
             userstory.nombre=nombre
             userstory.descripcion = descripcion
             userstory.fecha_creacion=today()
-            userstory.fechaInicio=fecha_inicio
-            userstory.fechaFin=fechafin
             userstory.estado='CREADO'
             userstory.prioridad=prioridad
-            userstory.tiempo_trabajado=tiempo_trabajado
-            userstory.porcentaje=porcentaje
+            userstory.tiempo_trabajado=0
+            userstory.porcentaje=0
             userstory.proyecto_id=id_proyecto
             userstory.tiempo_estimado=tiempo_estimado
             userstory.save()
@@ -116,8 +106,9 @@ def eliminar_userstory(request, id_userstory):
                               context_instance=RequestContext(request))
 def mis_userstorys(request, id_proyecto):
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
-
-    return render_to_response('HtmlUserStory/misuserstorys.html',{'userstorys':userstorys,'id_proyecto':id_proyecto})
+    user=request.user
+    return render_to_response('HtmlUserStory/misuserstorys.html',{'userstorys':userstorys,
+                                                                  'id_proyecto':id_proyecto,'user':user})
 
 
 def mi_userstory(request, id_userstory):
@@ -138,7 +129,8 @@ def lista_userstory_reasignar(request,id_proyecto, id_actividad):
      userstorys=UserStory.objects.filter(actividad_id=id_actividad)
      for us in userstorys:
          id_sprint=us.sprint_id
-         sprint=Sprint.objects.get(pk=id_sprint)
+         if id_sprint != '':
+            sprint=Sprint.objects.get(pk=id_sprint)
 
      return render_to_response('HtmlUserStory/userstory_reasignado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
                                                                        'id_sprint':id_sprint,'sprint':sprint})
@@ -147,7 +139,6 @@ def asignar_userstory_a_actividad(request,id_proyecto ,id_actividad, id_userstor
     userstory=UserStory.objects.get(pk=id_userstory)
 
     userstory.actividad_id=id_actividad
-    userstory.estado='TODO'
     userstory.save()
     messages.success(request, 'USER STORY ASIGNADO A UNA ACTIVIDAD CORRECTAMENTE!')
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
@@ -181,7 +172,7 @@ def lista_userstory_reasignarActividad(request,id_proyecto, id_actividad):
                                                                        'id_actividad':id_actividad,'actividad':actividad})
 
 def lista_userstory_no_creado(request,id_proyecto, id_sprint):
-     userstorys=UserStory.objects.filter(actividad_id=id_sprint)
+     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
      sprint=Sprint.objects.get(pk=id_sprint)
 
      return render_to_response('HtmlUserStory/userstory_no_creado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
@@ -189,10 +180,35 @@ def lista_userstory_no_creado(request,id_proyecto, id_sprint):
 
 def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
     userstory=UserStory.objects.get(pk=id_userstory)
-
+    sprint=Sprint.objects.get(pk=id_sprint)
+    valor=sprint.tiempo_acumulado
+    if (valor < userstory.tiempo_estimado):
+        sprint.tiempo_acumulado=userstory.tiempo_estimado
     userstory.sprint_id=id_sprint
+    sprint.save()
     userstory.save()
     messages.success(request, 'USER STORY ASIGNADO A UNA SPRINT CORRECTAMENTE!')
+    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+
+def lista_userstory_relacionado_a_sprint(request,id_sprint):
+    userstory=UserStory.objects.filter(sprint_id=id_sprint)
+    sprint=Sprint.objects.get(pk=id_sprint)
+    return render_to_response('HtmlSprint/lista_userstory_sprint.html',{'userstory':userstory,'sprint':sprint,
+                                                                       'id_sprint':id_sprint})
+
+def desasinar_userstory_a_sprint(request, id_userstory,id_sprint):
+    userstory=UserStory.objects.get(pk=id_userstory)
+    userstory.sprint_id=''
+    userstory.save()
+    userstory2=UserStory.objects.filter(sprint_id=id_sprint)
+    valor=0
+    sprint=Sprint.objects.get(pk=id_sprint)
+    for dato in userstory2:
+        if dato.tiempo_estimado > valor:
+            valor=dato.tiempo_estimado
+    sprint.tiempo_acumulado=valor
+    sprint.save()
+    messages.success(request, 'USER STORY DESASIGNADO A UNA SPRINT CORRECTAMENTE!')
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 
 def asignar_usuario_userstory(request, id_userstory, id_user):
@@ -208,9 +224,10 @@ def asignar_usuario_userstory(request, id_userstory, id_user):
         proyectos=userstory.proyecto
         descripcion=userstory.descripcion
         proyecto=proyectos.nombre
-        html_content = 'Fue asignado a un User Story '+nombre+' que trata sobre '+descripcion+' del proyecto '+proyecto
-        send_mail('Asignacion User Story',html_content , 'gestorprojectpic@gmail.com',['paofigue@gmail.com'], fail_silently=False)
-
+        html_content = 'Fue asignado a un User Story "'+nombre+'" que trata sobre  '+descripcion+'  del proyecto '+proyecto
+        send_mail('Asignacion User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+    else:
+        messages.success(request, 'El Usuario No Posee email, para notificarle, pero igual fue asignado!')
 
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 

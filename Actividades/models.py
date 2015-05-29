@@ -1,20 +1,13 @@
 from django.db import models
 from Flujo.models import Flujo
+from AdminProyectos.models import Proyecto
 
-ACTIVIDAD_ESTADOS = (
-    ('PROGRAMADO', 'PROGRAMADO'),
-    ('INICIADO', 'INICIADO'),
-    ('FINALIZADO', 'FINALIZADO'),
-)
 
 
 class Actividad(models.Model):
     nombre = models.CharField(max_length=30, unique=True)
-    flujo=models.ForeignKey(Flujo, unique=False, null=True)
+    proyecto=models.ForeignKey(Proyecto, unique=False, null=True)
     fecha_creacion= models.DateTimeField(auto_now=True)
-    fechaInicio = models.DateField('Fecha de Inicio')
-    fechaFin = models.DateField('Fecha de Fin')
-    estado=models.CharField(choices=ACTIVIDAD_ESTADOS,default='PROGRAMADO',max_length=30)
     secuencia=models.IntegerField(null=True)
 
     def __unicode__(self):
