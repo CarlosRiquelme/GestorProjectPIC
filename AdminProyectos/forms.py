@@ -23,20 +23,12 @@ class ProyectoForm(forms.ModelForm):
     fechaInicio = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Inicio del proyecto'} )
-    fechaFin = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
-                                     required=True, help_text='* Ingrese en formato anho-mes-dia',
-                                     error_messages={'required': 'Ingrese una fecha de Finalizacion del proyecto'} )
 
     class Meta:
         model = Proyecto
-        fields = ['nombre','descripcion','scrumMaster','fechaInicio','fechaFin']
+        fields = ['nombre','descripcion','scrumMaster','fechaInicio']
 
-    def clean(self):
-        cleaned_data = super(ProyectoForm, self).clean()
-        fechaFin= cleaned_data.get("fechaFin")
-        fechaInicio=cleaned_data.get("fechaInicio")
-        if fechaFin <= fechaInicio:
-            raise forms.ValidationError("La Fecha de Finalizacion no puede ser Menor que la de Inicio")
+
 
 
     def save(self, commit=True):

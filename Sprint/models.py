@@ -10,6 +10,8 @@ SPRINT_ESTADOS = (
 class Sprint(models.Model):
     nombre = models.CharField(max_length=30, unique=True)
     fecha_creacion= models.DateTimeField(auto_now=True)
+    fechaInicio=models.DateField(null=True)
+    fechaInicio=models.DateField(null=True)
     tiempo_acumulado = models.IntegerField(null=True,default=0)
     proyecto=models.ForeignKey(Proyecto, null=True)
     estado=models.CharField(choices=SPRINT_ESTADOS,default='ABIERTO',max_length=30)

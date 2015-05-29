@@ -23,7 +23,6 @@ def nuevo_comentario(request, id_userstory):
     if request.method=='POST':
         comentario_form = ComentarioForm(data=request.POST)
         userstory=UserStory.objects.get(pk=id_userstory)
-        userstorys=UserStory.objects.filter(pk=id_userstory)
         id_proyecto=userstory.proyecto_id
         id_sprint=userstory.sprint_id
         suma=0
@@ -37,9 +36,9 @@ def nuevo_comentario(request, id_userstory):
             hora_trabajada=comentario_form.cleaned_data['hora_trabajada']
             porcentaje=comentario_form.cleaned_data['porcentaje']
 
-            comentario = Comentario()
             suma=userstory.tiempo_trabajado+hora_trabajada
             if suma <= userstory.tiempo_estimado:
+                comentario = Comentario()
                 comentario.titulo=titulo
                 comentario.descripcion=descripcion
                 comentario.fecha_creacion=today()

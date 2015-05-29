@@ -15,11 +15,13 @@ class RegistrationForm(forms.ModelForm):
                                 label="Password")
     password2 = forms.CharField(widget=PasswordInput(attrs={'class': 'form-control'}),
                                 label="Password (again)")
+
+    is_staff = forms.BooleanField(required=False, label='Is Staff')
     #is_staff=forms.BooleanField(widget=CheckboxInput(attrs={'class': 'form'}),label="Es Leader?",required=False)
 
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','email', 'password1', 'password2']
+        fields = ['username','first_name','last_name','email', 'password1', 'password2','is_staff']
 
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()

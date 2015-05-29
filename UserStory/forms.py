@@ -21,6 +21,7 @@ class UserStoryForm(forms.ModelForm):
     ('BAJA', 'BAJA'),
     ('MEDIA', 'MEDIA'),
     ('ALTA', 'ALTA'),
+
 )
 
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),

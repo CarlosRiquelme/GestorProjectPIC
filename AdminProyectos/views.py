@@ -39,13 +39,11 @@ def nuevo_proyecto(request):
             fecha_inicio = proyecto_form.cleaned_data['fechaInicio']
             descripcion =  proyecto_form.cleaned_data['descripcion']
             scrumMaster = proyecto_form.cleaned_data['scrumMaster']
-            fechafin=proyecto_form.cleaned_data['fechaFin']
 
             proyecto = Proyecto()
             proyecto.nombre=nombre
             proyecto.scrumMaster=scrumMaster
             proyecto.fechaInicio=fecha_inicio
-            proyecto.fechaFin=fechafin
             proyecto.fecha_creacion=today()
             proyecto.estado='EN-ESPERA'
             proyecto.descripcion = descripcion
@@ -94,15 +92,19 @@ def iniciar_proyecto(request):
             estimacion_proyecto.proyecto_id=objeto.id
             estimacion_proyecto.save()
             for dato in sprint:
+                sprint1=Sprint.objects.get(pk=dato.id)
                 estimacion_sprint=Estimacion_Sprint()
                 estimacion_sprint.proyecto_estimacion_id=estimacion_proyecto.id
                 estimacion_sprint.sprint_id=dato.id
                 estimacion_sprint.fechaInicio=fecha1
+                sprint1.fechaInicio=fecha1
                 dias= dato.tiempo_acumulado/8
                 fecha2=fecha_calcular(fecha1,dias)
                 estimacion_sprint.fechaFin=fecha2
                 fecha1=fecha_calcular(fecha2,1)
+                sprint1.fechFin=fecha2
                 estimacion_sprint.duracion=dato.tiempo_acumulado
+                sprint1.save()
                 estimacion_sprint.save()
             estimacion_proyecto=Estimacion_Proyecto.objects.get(proyecto_id=objeto.id)
             estimacion_proyecto.fechaFin=fecha2
