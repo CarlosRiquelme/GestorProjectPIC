@@ -1,0 +1,21 @@
+{% extends 'admin/base_site.html' %}%}
+
+{% block titulo %}Proyectos{% endblock %}
+{% block extra_head %}
+
+{% endblock %}
+{% block content %}
+<h1>UserStorys que necesitan aprovacion</h1>
+
+
+<div class="panel panel-info">
+  <div class="panel-body">
+     <h3 class="panel-title">Bienvenido Scrum Master {{user}}</h3>
+  </div>
+
+  <div class="panel-footer"><a class="btn btn-primary" href="{% url 'ProyectoDesarrollo.views.lista_reasignar_userstory_a_actividad' id_proyecto%}">ACTIVIDADES</a></div>
+  <div class="panel-footer"><a class="btn btn-primary" href="{% url 'ProyectoDesarrollo.views.lista_reasignar_userstory_a_sprint' id_proyecto%}">SPRINT</a></div>
+
+</div>
+
+{% endblock %}

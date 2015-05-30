@@ -16,8 +16,10 @@
 </ul>
 </center>
 <br>
+{% if proyecto.estado == 'EN-ESPERA'%}
 <a class="btn btn-success"     href="{% url 'Actividades.views.nueva_actividad' id_proyecto %}">
        Crear Actividades&nbsp;</a>
+{% endif %}
     <center>
 
         <table class="table table-striped" style="width: 100%">
@@ -25,8 +27,9 @@
         <th >NOMBRE</th>
         <th >FECHA DE CREACION</th>
         <th>SECUENCIA</th>
-
+         {% if proyecto.estado == 'EN-ESPERA'%}
         <th  style="width: 10%">ASIGNAR</th>
+        {% endif %}
         <th  style="width: 10%">ESTADOS</th>
         {% for p in actividades %}
     <tr>
@@ -35,11 +38,13 @@
         <td><em>{{p.secuencia}}</em></td>
 
 
-
+        {% if proyecto.estado == 'EN-ESPERA'%}
         <td>
             <div class="input-group">
                 <a class="btn btn-primary" href="{% url 'UserStory.views.lista_userstory_creado' id_proyecto p.id %}">UserStory</a>
-        </div>
+            </div>
+        </td>
+        {% endif %}
         <td>
             <div class="input-group">
                 <a class="btn btn-success" href="{% url 'Actividades.views.ver_estados' id_proyecto p.id %}">VER</a>

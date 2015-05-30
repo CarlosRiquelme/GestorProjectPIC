@@ -7,15 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Actividades', '0001_initial'),
-        ('Flujo', '0001_initial'),
+        ('Comentario', '0002_auto_20150529_1743'),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='actividad',
-            name='flujo',
-            field=models.ForeignKey(to='Flujo.Flujo', null=True),
+        migrations.AlterField(
+            model_name='document',
+            name='docfile',
+            field=models.FileField(upload_to=b''),
             preserve_default=True,
         ),
     ]

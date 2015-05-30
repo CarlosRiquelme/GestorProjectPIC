@@ -7,14 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('UserStory', '0001_initial'),
+        ('Sprint', '0003_sprint_fechafin'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='userstory',
-            name='prioridad',
-            field=models.CharField(max_length=30),
+            model_name='sprint',
+            name='estado',
+            field=models.CharField(default=b'EN-ESPERA', max_length=30, choices=[(b'EN-ESPERA', b'EN-ESPERA'), (b'ABIERTO', b'ABIERTO'), (b'CERRADO', b'CERRADO')]),
             preserve_default=True,
         ),
     ]

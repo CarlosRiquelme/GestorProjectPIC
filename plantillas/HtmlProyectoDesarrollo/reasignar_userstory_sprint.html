@@ -1,0 +1,37 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+    <center><h1>Lista de UserStory para Re-asignar a un Sprint </h1></center>
+
+
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >Sprint</th>
+        <th>ESTADO</th>
+        <th  style="width: 10%">RE-ASIGNAR</th>
+
+
+        {% for p in userstorys %}
+
+    <tr>
+	     <td>{{p.nombre}}</td>
+         <td>{{p.sprint}}</td>
+         <td>{{p.estado}}</td>
+        <td>
+            <div class="input-group">
+                <a class="btn btn-primary" href="{% url 'ProyectoDesarrollo.views.reasignar_userstory_a_sprint' id_proyecto p.id %}">ACTIVIDAD</a>
+        </div>
+	</tr>
+
+
+        {% endfor %}
+
+    </table>
+        </center>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}

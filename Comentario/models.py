@@ -15,13 +15,14 @@ class Comentario(models.Model):
     descripcion = models.CharField(max_length=120,null=True)
     userstory=models.ForeignKey(UserStory,unique=False, null=True)
     fecha_creacion= models.DateTimeField(auto_now=True)
-    porcentaje=models.IntegerField(null=True)
+    porcentaje_actividad=models.IntegerField(null=True)
     hora_trabajada=models.IntegerField(null=True)
+    porcentaje_userstory=models.FloatField(null=True)
     adjunto=models.NullBooleanField()
     def __unicode__(self):
         return self.titulo
 
 class Document(models.Model):
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
+    docfile = models.FileField(upload_to='')
     comentario=models.ForeignKey(Comentario)
 

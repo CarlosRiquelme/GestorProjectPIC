@@ -9,6 +9,10 @@ US_ESTADOS = (
     ('TODO', 'TODO'),
     ('DOING', 'DOING'),
     ('DONE', 'DONE'),
+    ('REASIGNAR_SPRINT', 'REASIGNAR_SPRINT'),
+    ('REASIGNAR_ACTIVIDAD', 'REASIGNAR_ACTIVIDAD'),
+    ('FINALIZADO', 'FINALIZADO'),
+    ('CANCELADO', 'CANCELADO'),
 )
 US_PRIORIDAD = (
     ('BAJA', 'BAJA'),
@@ -26,10 +30,14 @@ class UserStory(models.Model):
     sprint=models.ForeignKey(Sprint, unique=False, null=True)
     actividad=models.ForeignKey(Actividad, unique=False, null=True)
     tiempo_trabajado = models.IntegerField(null=True)
-    porcentaje = models.IntegerField(null=True)
+    porcentaje = models.FloatField(null=True)
     proyecto=models.ForeignKey(Proyecto, null=True)
     tiempo_estimado=models.IntegerField(null=True)
     usuario=models.ForeignKey(User, null=True)
+    nro_sprint=models.IntegerField(null=True)
+    nro_actividad=models.IntegerField(null=True)
+    porcentaje_actividad=models.FloatField(null=True)
+
 
     def __unicode__(self):
         return self.nombre

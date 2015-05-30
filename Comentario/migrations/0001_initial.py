@@ -7,6 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('UserStory', '0001_initial'),
     ]
 
     operations = [
@@ -20,6 +21,7 @@ class Migration(migrations.Migration):
                 ('porcentaje', models.IntegerField(null=True)),
                 ('hora_trabajada', models.IntegerField(null=True)),
                 ('adjunto', models.NullBooleanField()),
+                ('userstory', models.ForeignKey(to='UserStory.UserStory', null=True)),
             ],
             options={
             },

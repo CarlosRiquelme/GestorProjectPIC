@@ -1,0 +1,441 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+    <center><h1>Sprints del Proyecto {{proyecto.nombre}} </h1></center>
+<center>
+<ul class="nav nav-tabs">
+    {% if proyecto.estado == 'EN-DESARROLLO'%}
+  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+     <li class="active"><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
+    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
+    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
+    {% endif %}
+</ul>
+</center>
+<br>
+
+<br>
+   <div class="container">
+    {% for dato in sprints %}
+        <li>{{dato.nombre}}</li>
+       <!-- ############## 0% #############!-->
+       {% if dato.porcentaje_actual == 0.0 %}
+       <p3>Sprint Estimado</p3>
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual == 0.0 %}
+       <p3>Sprint Hecho</p3>
+        <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+       <!-- ############## 0%  5% #############!-->
+
+       {% if dato.porcentaje_actual <= 5.0 and dato.porcentaje_actual > 0.0 %}
+        <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:5%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 5.0 and dato.porcentaje_hecho_actual > 0.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:5%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+       <!-- ############## 5%  10% #############!-->
+
+       {% if dato.porcentaje_actual <= 10.0 and dato.porcentaje_actual > 5.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:10%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 10.0 and dato.porcentaje_hecho_actual > 5.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:10%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+       <!-- ############## 10%  15% #############!-->
+
+       {% if dato.porcentaje_actual <= 15.0 and dato.porcentaje_actual > 10.0 %}
+       <p3>Sprint Estimado</p3>
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:15%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 15.0 and dato.porcentaje_hecho_actual > 10.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:15%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+       <!-- ############## 15%  20% #############!-->
+
+       {% if dato.porcentaje_actual <= 20.0 and dato.porcentaje_actual > 15.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:20%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 20.0 and dato.porcentaje_hecho_actual > 15.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:20%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+       <!-- ############## 20%  25% #############!-->
+
+       {% if dato.porcentaje_actual <= 25.0 and dato.porcentaje_actual > 20.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:25%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 25.0 and dato.porcentaje_hecho_actual > 20.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:25%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+       <!-- ############## 25%  30% #############!-->
+
+       {% if dato.porcentaje_actual <= 30.0 and dato.porcentaje_actual > 25.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:30%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 30.0 and dato.porcentaje_hecho_actual > 25.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:30%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+       <!-- ############## 30%  35-% #############!-->
+
+       {% if dato.porcentaje_actual <= 35.0 and dato.porcentaje_actual > 30.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:35%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 35.0 and dato.porcentaje_hecho_actual > 30.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:35%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+       <!-- ############## 35%  40% #############!-->
+
+       {% if dato.porcentaje_actual <= 40.0 and dato.porcentaje_actual > 35.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 40.0 and dato.porcentaje_hecho_actual > 35.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+       <!-- ############## 40%  45% #############!-->
+
+       {% if dato.porcentaje_actual <= 45.0 and dato.porcentaje_actual > 40.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:45%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 45.0 and dato.porcentaje_hecho_actual > 40.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:45%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+       <!-- ############## 45%  50% #############!-->
+
+       {% if dato.porcentaje_actual <= 50.0 and dato.porcentaje_actual > 45.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 50.0 and dato.porcentaje_hecho_actual > 45.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+       <!-- ############## 50%  55% #############!-->
+
+       {% if dato.porcentaje_actual <= 55.0 and dato.porcentaje_actual > 50.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:55%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 55.0 and dato.porcentaje_hecho_actual > 50.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:55%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+       <!-- ############## 55%  60% #############!-->
+
+       {% if dato.porcentaje_actual <= 60.0 and dato.porcentaje_actual > 55.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:60%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 60.0 and dato.porcentaje_hecho_actual > 55.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:60%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+              <!-- ############## 60%  65% #############!-->
+
+       {% if dato.porcentaje_actual <= 65.0 and dato.porcentaje_actual > 60.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:65%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 65.0 and dato.porcentaje_hecho_actual > 60.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:65%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+
+              <!-- ############## 65%  70% #############!-->
+
+       {% if dato.porcentaje_actual <= 70.0 and dato.porcentaje_actual > 65.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 70.0 and dato.porcentaje_hecho_actual > 65.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+       <!-- ############## 70%  75% #############!-->
+
+       {% if dato.porcentaje_actual <= 75.0 and dato.porcentaje_actual > 70.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:75%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 75.0 and dato.porcentaje_hecho_actual > 70.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:75%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+       <!-- ############## 75%  80% #############!-->
+
+       {% if dato.porcentaje_actual <= 80.0 and dato.porcentaje_actual > 75.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:80%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 80.0 and dato.porcentaje_hecho_actual > 75.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:80%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+       <!-- ############## 80%  85% #############!-->
+
+       {% if dato.porcentaje_actual <= 85.0 and dato.porcentaje_actual > 80.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:85%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 85.0 and dato.porcentaje_hecho_actual > 80.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:85%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+
+       <!-- ############## 85%  90% #############!-->
+
+       {% if dato.porcentaje_actual <= 90.0 and dato.porcentaje_actual > 85.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:90%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 90.0 and dato.porcentaje_hecho_actual > 85.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:90%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+       <!-- ############## 90%  95% #############!-->
+
+       {% if dato.porcentaje_actual <= 95.0 and dato.porcentaje_actual > 90.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:95%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 95.0 and dato.porcentaje_hecho_actual > 90.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:95%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+       <!-- ############## 95%  100% #############!-->
+
+       {% if dato.porcentaje_actual <= 100.0 and dato.porcentaje_actual > 95.0 %}
+       <p3>Sprint Estimado</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+            {{dato.porcentaje_actual}}%
+            </div>
+        </div>
+       {% endif %}
+       {% if dato.porcentaje_hecho_actual <= 100.0 and dato.porcentaje_hecho_actual > 95.0 %}
+       <p3>Sprint Hecho</p3>
+       <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+            {{dato.porcentaje_hecho_actual}}%
+           </div>
+        </div>
+        {% endif %}
+
+
+     {% endfor%}
+    </div>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+    <center><h1>Kanban del Proyecto {{proyecto.nombre}} </h1></center>
+<center>
+<ul class="nav nav-tabs">
+    {% if proyecto.estado == 'EN-DESARROLLO'%}
+  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+     <li class="active"><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
+    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
+    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
+    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
+    {% endif %}
+</ul>
+</center>
+<br>
+
+<br>
+    <center>
+
+        <table class="table table-striped" style="width: 100%">
+        {% for p in actividades %}
+
+    <tr>
+	     <td>{{p.nombre}}</td>
+
+            {% for dato in userstorys  %}
+              {% if dato.actividad.id == p.id %}
+                <tr>
+
+                    <td>
+                        <div class="input-group">
+                            <a class="btn btn-primary" href="{% url 'UserStory.views.mi_userstory' dato.id %}">{{dato.nombre}}</a>
+                        </div>
+                    <td>
+
+                        <a>{{dato.estado}}</a>
+                    </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+
+	</tr>
+
+
+        {% endfor %}
+
+    </table>
+        </center>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}

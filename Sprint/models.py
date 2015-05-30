@@ -11,11 +11,16 @@ class Sprint(models.Model):
     nombre = models.CharField(max_length=30, unique=True)
     fecha_creacion= models.DateTimeField(auto_now=True)
     fechaInicio=models.DateField(null=True)
-    fechaInicio=models.DateField(null=True)
+    fechaFin=models.DateField(null=True)
     tiempo_acumulado = models.IntegerField(null=True,default=0)
     proyecto=models.ForeignKey(Proyecto, null=True)
-    estado=models.CharField(choices=SPRINT_ESTADOS,default='ABIERTO',max_length=30)
+    estado=models.CharField(choices=SPRINT_ESTADOS,default='EN-ESPERA',max_length=30)
     secuencia=models.IntegerField()
+    dias_duracion=models.IntegerField(null=True)
+    cantidad_userstory=models.IntegerField(null=True)
+    porcentaje_actual=models.FloatField(null=True)
+    porcentaje_hecho_actual=models.FloatField(null=True)
+    dia_trancurrido=models.IntegerField(null=True)
 
     def __unicode__(self):
         return self.nombre

@@ -1,52 +1,53 @@
 {% extends 'admin/base_site.html' %}
 
 
-<body onload="iniciar()">
+
 {% block content %}
 <center><h1>{{user}}-{{ proyecto.nombre }}</h1></center>
-<script>
-$('#id_nombre').attr('required','true')
-$('#id_descripcion').attr('required','true')
 
-
-</script>
 <center>
 <ul class="nav nav-tabs">
   <li class="active"><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+    {% if permiso.rol.name == 'ScrumMaster' or permiso.rol.name == 'Equipo'%}
+    <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
+    {% endif %}
     {% if proyecto.estado == 'EN-ESPERA'%}
-     <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
     <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
     <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
     <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
     {% endif %}
+    {% if proyecto.estado == 'EN-DESARROLLO'%}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint2</a></li>
+     {% endif %}
+    {% if permiso.rol.name == 'ScrumMaster'%}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.scrumMaster' id_proyecto %}">ScrumMaster</a></li>
+    {% endif %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
+
+
 </ul>
 </center>
 
 {% if permiso.rol.name == 'ScrumMaster'%}
 <td>
-<a  class="btn btn-info" href="{% url 'AdminProyectos.views.nuevo_proyecto'  %}">
-Nuevo Proyecto <i class="fa fa-plus"></i></a>
+    <br>
+<p3>Solo al finalizar el dia</p3>
+<a  class="btn btn-info" href="{% url 'ProyectoDesarrollo.views.analizar_sprint' id_proyecto %}">
+Analisis de Sprint <i class="fa fa-plus"></i></a>
 
 
 </td>
 {% endif %}
-
+<br>
 <br>
 {% if proyecto.estado == 'EN-ESPERA' %}
 <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"  href="#myModal" >
        Editar&nbsp;<i class="fa fa-edit"></i></a>
-       
-
-  {% endif %}
-
-       
-
-
-
+{% endif %}
 
     <center>
         
-
         <table class="table table-bordered table-striped">
 
             <tr><th style="width: 180px" class="navbar-inner">Scrum Master: </th><td style="text-align: center">{{ proyecto.scrumMaster.username }}</td></tr>
@@ -59,49 +60,7 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         </table>
     </center>
      
-    <form method="post">{% csrf_token %}
-    
-	<!-- Modal -->
-	<div class="modal fade" id="myModal"   style="top: 5%" role="dialog"  data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="false">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel"><b>Crear Flujo</b></h4>
-	      </div>
-	      <div class="modal-body">
-	         	<table class="table-striped">
-	         	
-	         	{{ formulario.as_table }}
-	         	</table>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
-	        <button type="submit" class="btn btn-primary">Aceptar <i class="fa fa-check"></i></button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-    </form>
-    
-    <!-- Modal -->
-	<div class="modal fade" id="iniciarProyecto" tabindex="-1"  style="top: 30%" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel"><b>Atención</b></h4>
-	      </div>
-	      <div class="modal-body">
-	         	Una vez iniciado el proyecto no podrá modificar la cantidad de Fases del proyecto.
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
-	        <a href="/proyecto/iniciar/{{proyecto.id}}" class="btn btn-primary">Iniciar <i class="fa fa-check"></i></a>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+
 <a class="btn btn-default" href="{% url 'AdminProyectos.views.proyectos' user.id %}"> Volver</a>
 {% endblock %}
 </body>

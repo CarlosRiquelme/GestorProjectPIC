@@ -10,9 +10,9 @@ from Comentario.forms import ComentarioForm, DocumentForm
 from django.contrib import messages
 from UserStory.models import UserStory
 from django.contrib.auth.decorators import login_required
-from Flujo.models import Flujo
+from AdminProyectos.models import Proyecto
 from django.core.urlresolvers import reverse
-
+from django.core.mail import send_mail
 
 def nuevo_comentario(request, id_userstory):
     """
@@ -25,6 +25,8 @@ def nuevo_comentario(request, id_userstory):
         userstory=UserStory.objects.get(pk=id_userstory)
         id_proyecto=userstory.proyecto_id
         id_sprint=userstory.sprint_id
+        proyecto=Proyecto.objects.get(pk=id_proyecto)
+        user=request.user
         suma=0
 
         # If the two forms are valid...
@@ -33,32 +35,62 @@ def nuevo_comentario(request, id_userstory):
             comentario_form.clean()
             titulo= comentario_form.cleaned_data['titulo']
             descripcion =  comentario_form.cleaned_data['descripcion']
-            hora_trabajada=comentario_form.cleaned_data['hora_trabajada']
-            porcentaje=comentario_form.cleaned_data['porcentaje']
+            porcentaje_actividad=comentario_form.cleaned_data['porcentaje_actividad']
 
-            suma=userstory.tiempo_trabajado+hora_trabajada
-            if suma <= userstory.tiempo_estimado:
+            if porcentaje_actividad == 100:
                 comentario = Comentario()
                 comentario.titulo=titulo
                 comentario.descripcion=descripcion
                 comentario.fecha_creacion=today()
                 comentario.userstory_id=id_userstory
-                comentario.porcentaje=porcentaje
-                comentario.hora_trabajada=hora_trabajada
+                comentario.porcentaje_actividad=porcentaje_actividad
                 comentario.save()
-                userstory.estado='DOING'
-                userstory.tiempo_trabajado=suma
-                userstory.porcentaje=porcentaje
-                userstory.save()
+
+                html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  "' +userstory.nombre+ '" donde da como Finalizada la Actividad"' \
+                           +userstory.actividad.nombre
+                send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+
+                html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde dio como Finalizada la actividad "' +userstory.actividad.nombre+ \
+                               'Se le ha notificado al ScrumMaster espere que le reasigne a una nueva Actividad'
+                send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
+
+                userstory.porcentaje+=userstory.porcentaje_actividad
+                if userstory.porcentaje > 100.0:
+                    userstory.porcentaje=100.0
+                if userstory.porcentaje <= 100.0 and userstory.porcentaje >= 99.0:
+                    userstory.estado='FINALIZADO'
+                    html_content = 'El Usuario   "'+userstory.usuario.username+'"  a finalizado su userstory  "' +userstory.nombre
+                    send_mail('Finalizacion de UserStory',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+
+                    html_content = 'A Finalizado el "'+userstory.nombre+'" pasa a revision al ScrumMaster "'
+                    send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
+                    userstory.save()
+                else:
+                    userstory.estado='DONE'
+                    userstory.save()
                 messages.success(request, 'Comentario CREADO CON EXITO!')
                 return HttpResponseRedirect('/comentario/micomentario/'+str(comentario.id))
             else:
-                userstory.estado='REASIGNAR'
-                userstory.tiempo_trabajado=suma
-                userstory.porcentaje=porcentaje
+                comentario = Comentario()
+                comentario.titulo=titulo
+                comentario.descripcion=descripcion
+                comentario.fecha_creacion=today()
+                comentario.userstory_id=id_userstory
+                comentario.porcentaje_actividad=porcentaje_actividad
+                comentario.save()
+
+                html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  "' +userstory.nombre+ '" donde  aun no termina la Actividad"'
+
+                send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+
+                html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde no a terminado aun la actividad "'
+
+                send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
+
+                messages.success(request, 'Agrego Correctamente su Comentario')
+                userstory.estado='DOING'
                 userstory.save()
-                messages.success(request, 'Sobre paso la hora planificada,se reasignara')
-                return render_to_response('HtmlComentario/reasignacion.html',{'userstory':userstory,'id_proyecto':id_proyecto,'id_sprint':id_sprint,'id_userstory':id_userstory})
+                return HttpResponseRedirect('/comentario/micomentario/'+str(comentario.id))
 
     else:
         comentario_form= ComentarioForm(request.POST)

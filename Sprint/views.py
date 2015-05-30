@@ -39,7 +39,7 @@ def nuevo_sprint(request, id_proyecto):
             sprint.fecha_creacion=today()
             sprint.tiempo_acumulado = 0
             sprint.proyecto_id=id_proyecto
-            sprint.estado='ABIERTO'
+            sprint.estado='EN-ESPERA'
             sprint.save()
             messages.success(request, 'SPRINT CREADO CON EXITO!')
 

@@ -45,3 +45,12 @@ def esScrumMaster(self,request):
                 return True
     return False
 User.add_to_class('esScrumMaster',esScrumMaster)
+
+def esEquipo(self,request):
+    rol='Equipo'
+    for grupo in self.groups.all():
+        print grupo
+        if grupo.name == rol:
+                return True
+    return False
+User.add_to_class('esEquipo',esEquipo)

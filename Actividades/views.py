@@ -65,11 +65,12 @@ def mis_actividades(request, id_proyecto):
 
     actividades=Actividad.objects.filter(proyecto_id=id_proyecto)
     user=request.user
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
 
 
 
     return render_to_response('HtmlActividad/misactividades.html',{'actividades':actividades, 'id_proyecto':id_proyecto,
-                                                                   'user':user})
+                                                                   'user':user,'proyecto':proyecto})
 
 
 def ver_estados(request, id_proyecto, id_actividad):
