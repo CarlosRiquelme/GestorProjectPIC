@@ -5,8 +5,9 @@
 
 {% block content %}
 
-    <center><h1>Listado de Comentarios del User Story {{userstory.nombre}} </h1></center>
-
+<h2>Listado de Comentarios del User Story "{{userstory.nombre}}" </h2>
+<br>
+<a  class="btn btn-success" href="{% url 'Comentario.views.nuevo_comentario' id_userstory %}">Nuevo Comentario</a>
     <center>
 
         <table class="table table-striped" style="width: 100%">
@@ -30,10 +31,7 @@
                 <a class="btn btn-primary" href="{% url 'Comentario.views.list' p.id %}">Archivo</a>
             </div>
         <td>
-
-
-
-	</tr>
+     </tr>
 
 
         {% endfor %}
@@ -41,6 +39,6 @@
     </table>
         </center>
 
-<a class="btn btn-default" href="/proyectos/"> <i class="fa fa-backward"></i> Volver</a>
+<a class="btn btn-default" href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}
 

@@ -24,12 +24,12 @@ class ComentarioForm(forms.ModelForm):
     descripcion = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3'}),
                                 help_text="Maximo 120 caracteres",max_length=120,label="Descripcion")
 
-    porcentaje_actividad=forms.IntegerField(label="Porcentaje Desarrollado de la Actividad",
-                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
+    hora_trabajada=forms.IntegerField(label="Hora Trabajada",
+                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'1','max':'16'}))
 
     class Meta:
         model = Comentario
-        fields = ['titulo','descripcion','porcentaje_actividad']
+        fields = ['titulo','descripcion','hora_trabajada']
 
 
 

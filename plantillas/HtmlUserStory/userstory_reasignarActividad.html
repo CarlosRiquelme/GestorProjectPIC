@@ -27,7 +27,6 @@
     </thead>
 
         {% for p in userstorys %}
-            {% if p.estado == 'REASIGNAR' %}
      <tr>
 	     <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
          <td><em>{{p.estado}}</em></td>

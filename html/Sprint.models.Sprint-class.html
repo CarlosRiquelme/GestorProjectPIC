@@ -64,7 +64,9 @@ django.db.models.base.Model --+
 
 <hr />
 <p>Sprint(id, nombre, fecha_creacion, fechaInicio, fechaFin, 
-  tiempo_acumulado, flujo_id, estado)</p>
+  tiempo_acumulado, proyecto_id, estado, secuencia, dias_duracion, 
+  cantidad_userstory, porcentaje_actual, porcentaje_hecho_actual, 
+  dia_trancurrido)</p>
 
 <!-- ==================== NESTED CLASSES ==================== -->
 <a name="section-NestedClasses"></a>
@@ -154,75 +156,7 @@ django.db.models.base.Model --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="get_next_by_fechaFin"></a><span class="summary-sig-name">get_next_by_fechaFin</span>(<span class="summary-sig-arg">*moreargs</span>,
-        <span class="summary-sig-arg">**morekwargs</span>)</span></td>
-          <td align="right" valign="top">
-            
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="get_next_by_fechaInicio"></a><span class="summary-sig-name">get_next_by_fechaInicio</span>(<span class="summary-sig-arg">*moreargs</span>,
-        <span class="summary-sig-arg">**morekwargs</span>)</span></td>
-          <td align="right" valign="top">
-            
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
           <td><span class="summary-sig"><a name="get_next_by_fecha_creacion"></a><span class="summary-sig-name">get_next_by_fecha_creacion</span>(<span class="summary-sig-arg">*moreargs</span>,
-        <span class="summary-sig-arg">**morekwargs</span>)</span></td>
-          <td align="right" valign="top">
-            
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="get_previous_by_fechaFin"></a><span class="summary-sig-name">get_previous_by_fechaFin</span>(<span class="summary-sig-arg">*moreargs</span>,
-        <span class="summary-sig-arg">**morekwargs</span>)</span></td>
-          <td align="right" valign="top">
-            
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="get_previous_by_fechaInicio"></a><span class="summary-sig-name">get_previous_by_fechaInicio</span>(<span class="summary-sig-arg">*moreargs</span>,
         <span class="summary-sig-arg">**morekwargs</span>)</span></td>
           <td align="right" valign="top">
             
@@ -389,14 +323,14 @@ django.db.models.base.Model --+
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="fechaInicio"></a><span class="summary-name">fechaInicio</span> = <code title="models.DateField('Fecha de Inicio')">models.DateField('Fecha de Inicio')</code>
+        <a name="fechaInicio"></a><span class="summary-name">fechaInicio</span> = <code title="models.DateField(null= True)">models.DateField(null= True)</code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="fechaFin"></a><span class="summary-name">fechaFin</span> = <code title="models.DateField('Fecha de Fin')">models.DateField('Fecha de Fin')</code>
+        <a name="fechaFin"></a><span class="summary-name">fechaFin</span> = <code title="models.DateField(null= True)">models.DateField(null= True)</code>
     </td>
   </tr>
 <tr>
@@ -410,29 +344,71 @@ django.db.models.base.Model --+
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="flujo"></a><span class="summary-name">flujo</span> = <code title="models.ForeignKey(Flujo, null= True)">models.ForeignKey(Flujo, null= True)</code>
+        <a name="proyecto"></a><span class="summary-name">proyecto</span> = <code title="models.ForeignKey(Proyecto, null= True)">models.ForeignKey(Proyecto, null= True)</code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.models.Sprint-class.html#estado" class="summary-name">estado</a> = <code title="models.CharField(choices= SPRINT_ESTADOS, default= 'ABIERTO', max_leng\
-th= 30)">models.CharField(choices= SPRINT_ESTADOS, default= 'A<code class="variable-ellipsis">...</code></code>
+        <a href="Sprint.models.Sprint-class.html#estado" class="summary-name">estado</a> = <code title="models.CharField(choices= SPRINT_ESTADOS, default= 'EN-ESPERA', max_le\
+ngth= 30)">models.CharField(choices= SPRINT_ESTADOS, default= 'E<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="secuencia"></a><span class="summary-name">secuencia</span> = <code title="models.IntegerField()">models.IntegerField()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="dias_duracion"></a><span class="summary-name">dias_duracion</span> = <code title="models.IntegerField(null= True)">models.IntegerField(null= True)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="cantidad_userstory"></a><span class="summary-name">cantidad_userstory</span> = <code title="models.IntegerField(null= True)">models.IntegerField(null= True)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="porcentaje_actual"></a><span class="summary-name">porcentaje_actual</span> = <code title="models.FloatField(null= True)">models.FloatField(null= True)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="porcentaje_hecho_actual"></a><span class="summary-name">porcentaje_hecho_actual</span> = <code title="models.FloatField(null= True)">models.FloatField(null= True)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="dia_trancurrido"></a><span class="summary-name">dia_trancurrido</span> = <code title="models.IntegerField(null= True)">models.IntegerField(null= True)</code>
     </td>
   </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.models.Sprint-class.html#_base_manager" class="summary-name" onclick="show_private();">_base_manager</a> = <code title="&lt;django.db.models.manager.Manager object at 0x7f6c9f4e3a50&gt;">&lt;django.db.models.manager.Manager object at 0x<code class="variable-ellipsis">...</code></code>
+        <a href="Sprint.models.Sprint-class.html#_base_manager" class="summary-name" onclick="show_private();">_base_manager</a> = <code title="&lt;django.db.models.manager.Manager object at 0x7ff8ae211090&gt;">&lt;django.db.models.manager.Manager object at 0x<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.models.Sprint-class.html#_default_manager" class="summary-name" onclick="show_private();">_default_manager</a> = <code title="&lt;django.db.models.manager.Manager object at 0x7f6c9f4e3a50&gt;">&lt;django.db.models.manager.Manager object at<code class="variable-ellipsis">...</code></code>
+        <a href="Sprint.models.Sprint-class.html#_default_manager" class="summary-name" onclick="show_private();">_default_manager</a> = <code title="&lt;django.db.models.manager.Manager object at 0x7ff8ae211090&gt;">&lt;django.db.models.manager.Manager object at<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr class="private">
@@ -446,8 +422,16 @@ th= 30)">models.CharField(choices= SPRINT_ESTADOS, default= 'A<code class="varia
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a href="Sprint.models.Sprint-class.html#estimacion_sprint_set" class="summary-name">estimacion_sprint_set</a> = <code title="&lt;django.db.models.fields.related.ForeignRelatedObjectsDescriptor objec\
+t at 0x7ff8ae211a10&gt;">&lt;django.db.models.fields.related.Forei<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a href="Sprint.models.Sprint-class.html#userstory_set" class="summary-name">userstory_set</a> = <code title="&lt;django.db.models.fields.related.ForeignRelatedObjectsDescriptor objec\
-t at 0x7f6c9f474790&gt;">&lt;django.db.models.fields.related.ForeignRelate<code class="variable-ellipsis">...</code></code>
+t at 0x7ff8ae219d10&gt;">&lt;django.db.models.fields.related.ForeignRelate<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
   <tr>
@@ -516,8 +500,8 @@ t at 0x7f6c9f474790&gt;">&lt;django.db.models.fields.related.ForeignRelate<code 
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-models.CharField(choices= SPRINT_ESTADOS, default= 'ABIERTO', max_leng<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-th= 30)
+models.CharField(choices= SPRINT_ESTADOS, default= 'EN-ESPERA', max_le<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ngth= 30)
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -535,7 +519,7 @@ th= 30)
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-&lt;django.db.models.manager.Manager object at 0x7f6c9f4e3a50&gt;
+&lt;django.db.models.manager.Manager object at 0x7ff8ae211090&gt;
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -553,7 +537,26 @@ th= 30)
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-&lt;django.db.models.manager.Manager object at 0x7f6c9f4e3a50&gt;
+&lt;django.db.models.manager.Manager object at 0x7ff8ae211090&gt;
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="estimacion_sprint_set"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">estimacion_sprint_set</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;django.db.models.fields.related.ForeignRelatedObjectsDescriptor objec<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+t at 0x7ff8ae211a10&gt;
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -572,7 +575,7 @@ th= 30)
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
 &lt;django.db.models.fields.related.ForeignRelatedObjectsDescriptor objec<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-t at 0x7f6c9f474790&gt;
+t at 0x7ff8ae219d10&gt;
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -602,7 +605,7 @@ t at 0x7f6c9f474790&gt;
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May  2 08:23:12 2015
+    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

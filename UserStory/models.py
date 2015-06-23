@@ -13,6 +13,11 @@ US_ESTADOS = (
     ('REASIGNAR_ACTIVIDAD', 'REASIGNAR_ACTIVIDAD'),
     ('FINALIZADO', 'FINALIZADO'),
     ('CANCELADO', 'CANCELADO'),
+    ('REVISAR_TIEMPO','REVISAR_TIEMPO'),
+    ('REVISAR','REVISAR'),
+    ('REVISAR_E','REVISAR_E'),
+    ('REVISAR_FIN_AC','REVISAR_FIN_AC'),
+
 )
 US_PRIORIDAD = (
     ('BAJA', 'BAJA'),
@@ -30,6 +35,7 @@ class UserStory(models.Model):
     sprint=models.ForeignKey(Sprint, unique=False, null=True)
     actividad=models.ForeignKey(Actividad, unique=False, null=True)
     tiempo_trabajado = models.IntegerField(null=True)
+    suma_trabajadas=models.IntegerField(null=True)
     porcentaje = models.FloatField(null=True)
     proyecto=models.ForeignKey(Proyecto, null=True)
     tiempo_estimado=models.IntegerField(null=True)

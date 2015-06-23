@@ -1,0 +1,28 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+{% block content %}
+<h1>Menu Cliente</h1>
+<h3>Bienvenido "{{user}}"</h3>
+<center>
+<ul class="nav nav-tabs">
+  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+    <li class="active"><a href="{% url 'UserStory.views.menu_cliente' id_proyecto %}">Cliente</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint2</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
+
+
+</ul>
+</center>
+
+<div class="panel panel-info">
+  <div class="panel-body">
+     <h3 class="panel-title">User Story</h3>
+  </div>
+
+  <div class="panel-footer"><a class="btn btn-primary" href="{% url 'UserStory.views.cliente_crear_userstory' id_proyecto %}">Crear</a></div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'admin/base_site.html' %}
+
+{% block title %}Nuevo User Story{% endblock %}
+
+
+{% block content %}
+
+	<form id='formulario' method='post' action=''>{% csrf_token %}
+		{{formulario.nombre.error}}
+		<table class="table-striped">{{formulario2.as_table}}</table>
+	<br>
+		<button class="btn btn-primary" type='submit' >Enviar<i class="fa fa-save"></i></button>
+	</form>
+{% endblock %}

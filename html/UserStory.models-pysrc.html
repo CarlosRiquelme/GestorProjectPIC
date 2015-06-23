@@ -53,11 +53,12 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="UserStory.models-module.html">Module UserStory.models</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">db</tt> <tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module Actividades.models=Actividades.models-module.html,Module AdminProyectos.models=AdminProyectos.models-module.html,Module Comentario.models=Comentario.models-module.html,Module Flujo.models=Flujo.models-module.html,Module PIC.models=PIC.models-module.html,Module Sprint.models=Sprint.models-module.html,Module UserStory.models=UserStory.models-module.html"><a title="Actividades.models
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">db</tt> <tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module Actividades.models=Actividades.models-module.html,Module AdminProyectos.models=AdminProyectos.models-module.html,Module Comentario.models=Comentario.models-module.html,Module Flujo.models=Flujo.models-module.html,Module PIC.models=PIC.models-module.html,Module ProyectoDesarrollo.models=ProyectoDesarrollo.models-module.html,Module Sprint.models=Sprint.models-module.html,Module UserStory.models=UserStory.models-module.html"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
 UserStory.models" class="py-name" href="#" onclick="return doclink('link-0', 'models', 'link-0');">models</a></tt> </tt>
 <a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-1" class="py-name" targets="Package Sprint=Sprint-module.html,Class Sprint.models.Sprint=Sprint.models.Sprint-class.html"><a title="Sprint
@@ -66,6 +67,7 @@ AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
 UserStory.models" class="py-name" href="#" onclick="return doclink('link-2', 'models', 'link-0');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name"><a title="Sprint
 Sprint.models.Sprint" class="py-name" href="#" onclick="return doclink('link-3', 'Sprint', 'link-1');">Sprint</a></tt> </tt>
@@ -74,6 +76,7 @@ AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
 UserStory.models" class="py-name" href="#" onclick="return doclink('link-5', 'models', 'link-0');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-6" class="py-name" targets="Class Actividades.models.Actividad=Actividades.models.Actividad-class.html"><a title="Actividades.models.Actividad" class="py-name" href="#" onclick="return doclink('link-6', 'Actividad', 'link-6');">Actividad</a></tt> </tt>
 <a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-7" class="py-name" targets="Package AdminProyectos=AdminProyectos-module.html"><a title="AdminProyectos" class="py-name" href="#" onclick="return doclink('link-7', 'AdminProyectos', 'link-7');">AdminProyectos</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="Actividades.models
@@ -81,23 +84,38 @@ AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
 UserStory.models" class="py-name" href="#" onclick="return doclink('link-8', 'models', 'link-0');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name" targets="Class AdminProyectos.models.Proyecto=AdminProyectos.models.Proyecto-class.html"><a title="AdminProyectos.models.Proyecto" class="py-name" href="#" onclick="return doclink('link-9', 'Proyecto', 'link-9');">Proyecto</a></tt> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># Create your models here.</tt> </tt>
-<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt id="link-10" class="py-name" targets="Variable UserStory.models.US_ESTADOS=UserStory.models-module.html#US_ESTADOS"><a title="UserStory.models.US_ESTADOS" class="py-name" href="#" onclick="return doclink('link-10', 'US_ESTADOS', 'link-10');">US_ESTADOS</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt> </tt>
-<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'CREADO'</tt><tt class="py-op">,</tt> <tt class="py-string">'CREADO'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'TODO'</tt><tt class="py-op">,</tt> <tt class="py-string">'TODO'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
-<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'DOING'</tt><tt class="py-op">,</tt> <tt class="py-string">'DOING'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
-<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'DONE'</tt><tt class="py-op">,</tt> <tt class="py-string">'DONE'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
-<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-op">)</tt> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt id="link-11" class="py-name" targets="Variable UserStory.models.US_PRIORIDAD=UserStory.models-module.html#US_PRIORIDAD"><a title="UserStory.models.US_PRIORIDAD" class="py-name" href="#" onclick="return doclink('link-11', 'US_PRIORIDAD', 'link-11');">US_PRIORIDAD</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'BAJA'</tt><tt class="py-op">,</tt> <tt class="py-string">'BAJA'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'MEDIA'</tt><tt class="py-op">,</tt> <tt class="py-string">'MEDIA'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'ALTA'</tt><tt class="py-op">,</tt> <tt class="py-string">'ALTA'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt class="py-name">auth</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="Actividades.models
+AdminProyectos.models
+Comentario.models
+Flujo.models
+PIC.models
+ProyectoDesarrollo.models
+Sprint.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-10', 'models', 'link-0');">models</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">User</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># Create your models here.</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt id="link-11" class="py-name" targets="Variable UserStory.models.US_ESTADOS=UserStory.models-module.html#US_ESTADOS"><a title="UserStory.models.US_ESTADOS" class="py-name" href="#" onclick="return doclink('link-11', 'US_ESTADOS', 'link-11');">US_ESTADOS</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'CREADO'</tt><tt class="py-op">,</tt> <tt class="py-string">'CREADO'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'TODO'</tt><tt class="py-op">,</tt> <tt class="py-string">'TODO'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'DOING'</tt><tt class="py-op">,</tt> <tt class="py-string">'DOING'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'DONE'</tt><tt class="py-op">,</tt> <tt class="py-string">'DONE'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'REASIGNAR_SPRINT'</tt><tt class="py-op">,</tt> <tt class="py-string">'REASIGNAR_SPRINT'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'REASIGNAR_ACTIVIDAD'</tt><tt class="py-op">,</tt> <tt class="py-string">'REASIGNAR_ACTIVIDAD'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'FINALIZADO'</tt><tt class="py-op">,</tt> <tt class="py-string">'FINALIZADO'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'CANCELADO'</tt><tt class="py-op">,</tt> <tt class="py-string">'CANCELADO'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
 <a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-op">)</tt> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
-<a name="UserStory"></a><div id="UserStory-def"><a name="L18"></a><tt class="py-lineno">18</tt> <a class="py-toggle" href="#" id="UserStory-toggle" onclick="return toggle('UserStory');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="UserStory.models.UserStory-class.html">UserStory</a><tt class="py-op">(</tt><tt class="py-base-class">models</tt><tt class="py-op">.</tt><tt class="py-base-class">Model</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="UserStory-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="UserStory-expanded"><a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">    <tt id="link-12" class="py-name" targets="Variable Actividades.forms.ActividadForm.nombre=Actividades.forms.ActividadForm-class.html#nombre,Variable Actividades.models.Actividad.nombre=Actividades.models.Actividad-class.html#nombre,Variable AdminProyectos.forms.ProyectoForm.nombre=AdminProyectos.forms.ProyectoForm-class.html#nombre,Variable AdminProyectos.forms.ProyectoFormEdit.nombre=AdminProyectos.forms.ProyectoFormEdit-class.html#nombre,Variable AdminProyectos.models.Proyecto.nombre=AdminProyectos.models.Proyecto-class.html#nombre,Variable Flujo.forms.FlujoForm.nombre=Flujo.forms.FlujoForm-class.html#nombre,Variable Flujo.models.Flujo.nombre=Flujo.models.Flujo-class.html#nombre,Variable Sprint.forms.SprintForm.nombre=Sprint.forms.SprintForm-class.html#nombre,Variable Sprint.forms.SprintFormEdit.nombre=Sprint.forms.SprintFormEdit-class.html#nombre,Variable Sprint.models.Sprint.nombre=Sprint.models.Sprint-class.html#nombre,Variable UserStory.forms.UserStoryForm.nombre=UserStory.forms.UserStoryForm-class.html#nombre,Variable UserStory.forms.UserStoryFormEdit.nombre=UserStory.forms.UserStoryFormEdit-class.html#nombre,Variable UserStory.models.UserStory.nombre=UserStory.models.UserStory-class.html#nombre"><a title="Actividades.forms.ActividadForm.nombre
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt id="link-12" class="py-name" targets="Variable UserStory.forms.UserStoryForm.US_PRIORIDAD=UserStory.forms.UserStoryForm-class.html#US_PRIORIDAD,Variable UserStory.models.US_PRIORIDAD=UserStory.models-module.html#US_PRIORIDAD"><a title="UserStory.forms.UserStoryForm.US_PRIORIDAD
+UserStory.models.US_PRIORIDAD" class="py-name" href="#" onclick="return doclink('link-12', 'US_PRIORIDAD', 'link-12');">US_PRIORIDAD</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'BAJA'</tt><tt class="py-op">,</tt> <tt class="py-string">'BAJA'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'MEDIA'</tt><tt class="py-op">,</tt> <tt class="py-string">'MEDIA'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'ALTA'</tt><tt class="py-op">,</tt> <tt class="py-string">'ALTA'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">'SUPER-ALTA'</tt><tt class="py-op">,</tt> <tt class="py-string">'SUPER-ALTA'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-op">)</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"> </tt>
+<a name="UserStory"></a><div id="UserStory-def"><a name="L24"></a><tt class="py-lineno">24</tt> <a class="py-toggle" href="#" id="UserStory-toggle" onclick="return toggle('UserStory');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="UserStory.models.UserStory-class.html">UserStory</a><tt class="py-op">(</tt><tt class="py-base-class">models</tt><tt class="py-op">.</tt><tt class="py-base-class">Model</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UserStory-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="UserStory-expanded"><a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">    <tt id="link-13" class="py-name" targets="Variable Actividades.forms.ActividadForm.nombre=Actividades.forms.ActividadForm-class.html#nombre,Variable Actividades.models.Actividad.nombre=Actividades.models.Actividad-class.html#nombre,Variable AdminProyectos.forms.ProyectoForm.nombre=AdminProyectos.forms.ProyectoForm-class.html#nombre,Variable AdminProyectos.forms.ProyectoFormEdit.nombre=AdminProyectos.forms.ProyectoFormEdit-class.html#nombre,Variable AdminProyectos.models.Proyecto.nombre=AdminProyectos.models.Proyecto-class.html#nombre,Variable Flujo.forms.FlujoForm.nombre=Flujo.forms.FlujoForm-class.html#nombre,Variable Flujo.models.Flujo.nombre=Flujo.models.Flujo-class.html#nombre,Variable Sprint.forms.SprintForm.nombre=Sprint.forms.SprintForm-class.html#nombre,Variable Sprint.forms.SprintFormEdit.nombre=Sprint.forms.SprintFormEdit-class.html#nombre,Variable Sprint.models.Sprint.nombre=Sprint.models.Sprint-class.html#nombre,Variable UserStory.forms.UserStoryForm.nombre=UserStory.forms.UserStoryForm-class.html#nombre,Variable UserStory.forms.UserStoryFormEdit.nombre=UserStory.forms.UserStoryFormEdit-class.html#nombre,Variable UserStory.models.UserStory.nombre=UserStory.models.UserStory-class.html#nombre"><a title="Actividades.forms.ActividadForm.nombre
 Actividades.models.Actividad.nombre
 AdminProyectos.forms.ProyectoForm.nombre
 AdminProyectos.forms.ProyectoFormEdit.nombre
@@ -109,138 +127,157 @@ Sprint.forms.SprintFormEdit.nombre
 Sprint.models.Sprint.nombre
 UserStory.forms.UserStoryForm.nombre
 UserStory.forms.UserStoryFormEdit.nombre
-UserStory.models.UserStory.nombre" class="py-name" href="#" onclick="return doclink('link-12', 'nombre', 'link-12');">nombre</a></tt> <tt class="py-op">=</tt> <tt id="link-13" class="py-name"><a title="Actividades.models
+UserStory.models.UserStory.nombre" class="py-name" href="#" onclick="return doclink('link-13', 'nombre', 'link-13');">nombre</a></tt> <tt class="py-op">=</tt> <tt id="link-14" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-13', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">30</tt><tt class="py-op">,</tt> <tt class="py-name">unique</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">    <tt id="link-14" class="py-name" targets="Variable AdminProyectos.forms.ProyectoForm.descripcion=AdminProyectos.forms.ProyectoForm-class.html#descripcion,Variable AdminProyectos.forms.ProyectoFormEdit.descripcion=AdminProyectos.forms.ProyectoFormEdit-class.html#descripcion,Variable AdminProyectos.models.Proyecto.descripcion=AdminProyectos.models.Proyecto-class.html#descripcion,Variable Comentario.forms.ComentarioForm.descripcion=Comentario.forms.ComentarioForm-class.html#descripcion,Variable Comentario.models.Comentario.descripcion=Comentario.models.Comentario-class.html#descripcion,Variable UserStory.forms.UserStoryForm.descripcion=UserStory.forms.UserStoryForm-class.html#descripcion,Variable UserStory.forms.UserStoryFormEdit.descripcion=UserStory.forms.UserStoryFormEdit-class.html#descripcion,Variable UserStory.models.UserStory.descripcion=UserStory.models.UserStory-class.html#descripcion"><a title="AdminProyectos.forms.ProyectoForm.descripcion
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-14', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">30</tt><tt class="py-op">,</tt> <tt class="py-name">unique</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">    <tt id="link-15" class="py-name" targets="Variable AdminProyectos.forms.ProyectoForm.descripcion=AdminProyectos.forms.ProyectoForm-class.html#descripcion,Variable AdminProyectos.forms.ProyectoFormEdit.descripcion=AdminProyectos.forms.ProyectoFormEdit-class.html#descripcion,Variable AdminProyectos.models.Proyecto.descripcion=AdminProyectos.models.Proyecto-class.html#descripcion,Variable Comentario.forms.ComentarioForm.descripcion=Comentario.forms.ComentarioForm-class.html#descripcion,Variable Comentario.models.Comentario.descripcion=Comentario.models.Comentario-class.html#descripcion,Variable UserStory.forms.UserStoryForm.descripcion=UserStory.forms.UserStoryForm-class.html#descripcion,Variable UserStory.forms.UserStoryFormEdit.descripcion=UserStory.forms.UserStoryFormEdit-class.html#descripcion,Variable UserStory.models.UserStory.descripcion=UserStory.models.UserStory-class.html#descripcion"><a title="AdminProyectos.forms.ProyectoForm.descripcion
 AdminProyectos.forms.ProyectoFormEdit.descripcion
 AdminProyectos.models.Proyecto.descripcion
 Comentario.forms.ComentarioForm.descripcion
 Comentario.models.Comentario.descripcion
 UserStory.forms.UserStoryForm.descripcion
 UserStory.forms.UserStoryFormEdit.descripcion
-UserStory.models.UserStory.descripcion" class="py-name" href="#" onclick="return doclink('link-14', 'descripcion', 'link-14');">descripcion</a></tt> <tt class="py-op">=</tt> <tt id="link-15" class="py-name"><a title="Actividades.models
+UserStory.models.UserStory.descripcion" class="py-name" href="#" onclick="return doclink('link-15', 'descripcion', 'link-15');">descripcion</a></tt> <tt class="py-op">=</tt> <tt id="link-16" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-15', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">150</tt><tt class="py-op">)</tt> </tt>
-<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">    <tt id="link-16" class="py-name" targets="Variable Actividades.models.Actividad.fecha_creacion=Actividades.models.Actividad-class.html#fecha_creacion,Variable AdminProyectos.models.Proyecto.fecha_creacion=AdminProyectos.models.Proyecto-class.html#fecha_creacion,Variable Comentario.models.Comentario.fecha_creacion=Comentario.models.Comentario-class.html#fecha_creacion,Variable Flujo.models.Flujo.fecha_creacion=Flujo.models.Flujo-class.html#fecha_creacion,Variable Sprint.models.Sprint.fecha_creacion=Sprint.models.Sprint-class.html#fecha_creacion,Variable UserStory.models.UserStory.fecha_creacion=UserStory.models.UserStory-class.html#fecha_creacion"><a title="Actividades.models.Actividad.fecha_creacion
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-16', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">150</tt><tt class="py-op">)</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">    <tt id="link-17" class="py-name" targets="Variable Actividades.models.Actividad.fecha_creacion=Actividades.models.Actividad-class.html#fecha_creacion,Variable AdminProyectos.models.Proyecto.fecha_creacion=AdminProyectos.models.Proyecto-class.html#fecha_creacion,Variable Comentario.models.Comentario.fecha_creacion=Comentario.models.Comentario-class.html#fecha_creacion,Variable Flujo.models.Flujo.fecha_creacion=Flujo.models.Flujo-class.html#fecha_creacion,Variable Sprint.models.Sprint.fecha_creacion=Sprint.models.Sprint-class.html#fecha_creacion,Variable UserStory.models.UserStory.fecha_creacion=UserStory.models.UserStory-class.html#fecha_creacion"><a title="Actividades.models.Actividad.fecha_creacion
 AdminProyectos.models.Proyecto.fecha_creacion
 Comentario.models.Comentario.fecha_creacion
 Flujo.models.Flujo.fecha_creacion
 Sprint.models.Sprint.fecha_creacion
-UserStory.models.UserStory.fecha_creacion" class="py-name" href="#" onclick="return doclink('link-16', 'fecha_creacion', 'link-16');">fecha_creacion</a></tt><tt class="py-op">=</tt> <tt id="link-17" class="py-name"><a title="Actividades.models
+UserStory.models.UserStory.fecha_creacion" class="py-name" href="#" onclick="return doclink('link-17', 'fecha_creacion', 'link-17');">fecha_creacion</a></tt><tt class="py-op">=</tt> <tt id="link-18" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-17', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">DateTimeField</tt><tt class="py-op">(</tt><tt class="py-name">auto_now</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
-<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">    <tt id="link-18" class="py-name" targets="Variable Actividades.forms.ActividadForm.fechaInicio=Actividades.forms.ActividadForm-class.html#fechaInicio,Variable Actividades.models.Actividad.fechaInicio=Actividades.models.Actividad-class.html#fechaInicio,Variable AdminProyectos.forms.ProyectoForm.fechaInicio=AdminProyectos.forms.ProyectoForm-class.html#fechaInicio,Variable AdminProyectos.models.Proyecto.fechaInicio=AdminProyectos.models.Proyecto-class.html#fechaInicio,Variable Sprint.forms.SprintForm.fechaInicio=Sprint.forms.SprintForm-class.html#fechaInicio,Variable Sprint.models.Sprint.fechaInicio=Sprint.models.Sprint-class.html#fechaInicio,Variable UserStory.forms.UserStoryForm.fechaInicio=UserStory.forms.UserStoryForm-class.html#fechaInicio,Variable UserStory.models.UserStory.fechaInicio=UserStory.models.UserStory-class.html#fechaInicio"><a title="Actividades.forms.ActividadForm.fechaInicio
-Actividades.models.Actividad.fechaInicio
-AdminProyectos.forms.ProyectoForm.fechaInicio
-AdminProyectos.models.Proyecto.fechaInicio
-Sprint.forms.SprintForm.fechaInicio
-Sprint.models.Sprint.fechaInicio
-UserStory.forms.UserStoryForm.fechaInicio
-UserStory.models.UserStory.fechaInicio" class="py-name" href="#" onclick="return doclink('link-18', 'fechaInicio', 'link-18');">fechaInicio</a></tt> <tt class="py-op">=</tt> <tt id="link-19" class="py-name"><a title="Actividades.models
-AdminProyectos.models
-Comentario.models
-Flujo.models
-PIC.models
-Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-19', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">DateField</tt><tt class="py-op">(</tt><tt class="py-string">'Fecha de Inicio'</tt><tt class="py-op">)</tt> </tt>
-<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">    <tt id="link-20" class="py-name" targets="Variable Actividades.forms.ActividadForm.fechaFin=Actividades.forms.ActividadForm-class.html#fechaFin,Variable Actividades.models.Actividad.fechaFin=Actividades.models.Actividad-class.html#fechaFin,Variable AdminProyectos.forms.ProyectoForm.fechaFin=AdminProyectos.forms.ProyectoForm-class.html#fechaFin,Variable AdminProyectos.models.Proyecto.fechaFin=AdminProyectos.models.Proyecto-class.html#fechaFin,Variable Sprint.forms.SprintForm.fechaFin=Sprint.forms.SprintForm-class.html#fechaFin,Variable Sprint.models.Sprint.fechaFin=Sprint.models.Sprint-class.html#fechaFin,Variable UserStory.forms.UserStoryForm.fechaFin=UserStory.forms.UserStoryForm-class.html#fechaFin,Variable UserStory.models.UserStory.fechaFin=UserStory.models.UserStory-class.html#fechaFin"><a title="Actividades.forms.ActividadForm.fechaFin
-Actividades.models.Actividad.fechaFin
-AdminProyectos.forms.ProyectoForm.fechaFin
-AdminProyectos.models.Proyecto.fechaFin
-Sprint.forms.SprintForm.fechaFin
-Sprint.models.Sprint.fechaFin
-UserStory.forms.UserStoryForm.fechaFin
-UserStory.models.UserStory.fechaFin" class="py-name" href="#" onclick="return doclink('link-20', 'fechaFin', 'link-20');">fechaFin</a></tt> <tt class="py-op">=</tt> <tt id="link-21" class="py-name"><a title="Actividades.models
-AdminProyectos.models
-Comentario.models
-Flujo.models
-PIC.models
-Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-21', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">DateField</tt><tt class="py-op">(</tt><tt class="py-string">'Fecha de Fin'</tt><tt class="py-op">)</tt> </tt>
-<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">    <tt id="link-22" class="py-name" targets="Variable Actividades.models.Actividad.estado=Actividades.models.Actividad-class.html#estado,Variable AdminProyectos.models.Proyecto.estado=AdminProyectos.models.Proyecto-class.html#estado,Variable Flujo.models.Flujo.estado=Flujo.models.Flujo-class.html#estado,Variable Sprint.models.Sprint.estado=Sprint.models.Sprint-class.html#estado,Variable UserStory.models.UserStory.estado=UserStory.models.UserStory-class.html#estado"><a title="Actividades.models.Actividad.estado
-AdminProyectos.models.Proyecto.estado
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-18', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">DateTimeField</tt><tt class="py-op">(</tt><tt class="py-name">auto_now</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">    <tt id="link-19" class="py-name" targets="Variable AdminProyectos.models.Proyecto.estado=AdminProyectos.models.Proyecto-class.html#estado,Variable Flujo.models.Flujo.estado=Flujo.models.Flujo-class.html#estado,Variable Sprint.models.Sprint.estado=Sprint.models.Sprint-class.html#estado,Variable UserStory.models.UserStory.estado=UserStory.models.UserStory-class.html#estado"><a title="AdminProyectos.models.Proyecto.estado
 Flujo.models.Flujo.estado
 Sprint.models.Sprint.estado
-UserStory.models.UserStory.estado" class="py-name" href="#" onclick="return doclink('link-22', 'estado', 'link-22');">estado</a></tt><tt class="py-op">=</tt><tt id="link-23" class="py-name"><a title="Actividades.models
+UserStory.models.UserStory.estado" class="py-name" href="#" onclick="return doclink('link-19', 'estado', 'link-19');">estado</a></tt><tt class="py-op">=</tt><tt id="link-20" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-23', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">choices</tt><tt class="py-op">=</tt><tt id="link-24" class="py-name"><a title="UserStory.models.US_ESTADOS" class="py-name" href="#" onclick="return doclink('link-24', 'US_ESTADOS', 'link-10');">US_ESTADOS</a></tt><tt class="py-op">,</tt><tt class="py-name">default</tt><tt class="py-op">=</tt><tt class="py-string">'CREADO'</tt><tt class="py-op">,</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">30</tt><tt class="py-op">)</tt> </tt>
-<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">    <tt id="link-25" class="py-name" targets="Variable UserStory.forms.UserStoryForm.prioridad=UserStory.forms.UserStoryForm-class.html#prioridad,Variable UserStory.models.UserStory.prioridad=UserStory.models.UserStory-class.html#prioridad"><a title="UserStory.forms.UserStoryForm.prioridad
-UserStory.models.UserStory.prioridad" class="py-name" href="#" onclick="return doclink('link-25', 'prioridad', 'link-25');">prioridad</a></tt><tt class="py-op">=</tt><tt id="link-26" class="py-name"><a title="Actividades.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-20', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">choices</tt><tt class="py-op">=</tt><tt id="link-21" class="py-name"><a title="UserStory.models.US_ESTADOS" class="py-name" href="#" onclick="return doclink('link-21', 'US_ESTADOS', 'link-11');">US_ESTADOS</a></tt><tt class="py-op">,</tt><tt class="py-name">default</tt><tt class="py-op">=</tt><tt class="py-string">'CREADO'</tt><tt class="py-op">,</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">30</tt><tt class="py-op">)</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">    <tt id="link-22" class="py-name" targets="Variable UserStory.forms.UserStoryForm.prioridad=UserStory.forms.UserStoryForm-class.html#prioridad,Variable UserStory.models.UserStory.prioridad=UserStory.models.UserStory-class.html#prioridad"><a title="UserStory.forms.UserStoryForm.prioridad
+UserStory.models.UserStory.prioridad" class="py-name" href="#" onclick="return doclink('link-22', 'prioridad', 'link-22');">prioridad</a></tt><tt class="py-op">=</tt><tt id="link-23" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-26', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">choices</tt><tt class="py-op">=</tt><tt id="link-27" class="py-name"><a title="UserStory.models.US_PRIORIDAD" class="py-name" href="#" onclick="return doclink('link-27', 'US_PRIORIDAD', 'link-11');">US_PRIORIDAD</a></tt><tt class="py-op">,</tt><tt class="py-name">default</tt><tt class="py-op">=</tt><tt class="py-string">'BAJA'</tt><tt class="py-op">,</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">30</tt><tt class="py-op">)</tt> </tt>
-<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">    <tt id="link-28" class="py-name" targets="Variable UserStory.models.UserStory.sprint=UserStory.models.UserStory-class.html#sprint"><a title="UserStory.models.UserStory.sprint" class="py-name" href="#" onclick="return doclink('link-28', 'sprint', 'link-28');">sprint</a></tt><tt class="py-op">=</tt><tt id="link-29" class="py-name"><a title="Actividades.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-23', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">30</tt><tt class="py-op">)</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">    <tt id="link-24" class="py-name" targets="Variable Sprint.models.Estimacion_Sprint.sprint=Sprint.models.Estimacion_Sprint-class.html#sprint,Variable UserStory.models.UserStory.sprint=UserStory.models.UserStory-class.html#sprint"><a title="Sprint.models.Estimacion_Sprint.sprint
+UserStory.models.UserStory.sprint" class="py-name" href="#" onclick="return doclink('link-24', 'sprint', 'link-24');">sprint</a></tt><tt class="py-op">=</tt><tt id="link-25" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-29', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt id="link-30" class="py-name"><a title="Sprint
-Sprint.models.Sprint" class="py-name" href="#" onclick="return doclink('link-30', 'Sprint', 'link-1');">Sprint</a></tt><tt class="py-op">,</tt> <tt class="py-name">unique</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
-<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">    <tt id="link-31" class="py-name" targets="Variable UserStory.models.UserStory.actividad=UserStory.models.UserStory-class.html#actividad"><a title="UserStory.models.UserStory.actividad" class="py-name" href="#" onclick="return doclink('link-31', 'actividad', 'link-31');">actividad</a></tt><tt class="py-op">=</tt><tt id="link-32" class="py-name"><a title="Actividades.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-25', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt id="link-26" class="py-name"><a title="Sprint
+Sprint.models.Sprint" class="py-name" href="#" onclick="return doclink('link-26', 'Sprint', 'link-1');">Sprint</a></tt><tt class="py-op">,</tt> <tt class="py-name">unique</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt id="link-27" class="py-name" targets="Variable UserStory.models.UserStory.actividad=UserStory.models.UserStory-class.html#actividad"><a title="UserStory.models.UserStory.actividad" class="py-name" href="#" onclick="return doclink('link-27', 'actividad', 'link-27');">actividad</a></tt><tt class="py-op">=</tt><tt id="link-28" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-32', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt id="link-33" class="py-name"><a title="Actividades.models.Actividad" class="py-name" href="#" onclick="return doclink('link-33', 'Actividad', 'link-6');">Actividad</a></tt><tt class="py-op">,</tt> <tt class="py-name">unique</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
-<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">    <tt id="link-34" class="py-name" targets="Variable UserStory.forms.UserStoryForm.tiempo_trabajado=UserStory.forms.UserStoryForm-class.html#tiempo_trabajado,Variable UserStory.models.UserStory.tiempo_trabajado=UserStory.models.UserStory-class.html#tiempo_trabajado"><a title="UserStory.forms.UserStoryForm.tiempo_trabajado
-UserStory.models.UserStory.tiempo_trabajado" class="py-name" href="#" onclick="return doclink('link-34', 'tiempo_trabajado', 'link-34');">tiempo_trabajado</a></tt> <tt class="py-op">=</tt> <tt id="link-35" class="py-name"><a title="Actividades.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-28', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt id="link-29" class="py-name"><a title="Actividades.models.Actividad" class="py-name" href="#" onclick="return doclink('link-29', 'Actividad', 'link-6');">Actividad</a></tt><tt class="py-op">,</tt> <tt class="py-name">unique</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">    <tt id="link-30" class="py-name" targets="Variable UserStory.models.UserStory.tiempo_trabajado=UserStory.models.UserStory-class.html#tiempo_trabajado"><a title="UserStory.models.UserStory.tiempo_trabajado" class="py-name" href="#" onclick="return doclink('link-30', 'tiempo_trabajado', 'link-30');">tiempo_trabajado</a></tt> <tt class="py-op">=</tt> <tt id="link-31" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-35', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">IntegerField</tt><tt class="py-op">(</tt><tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
-<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">    <tt id="link-36" class="py-name" targets="Variable Comentario.forms.ComentarioForm.porcentaje=Comentario.forms.ComentarioForm-class.html#porcentaje,Variable Comentario.models.Comentario.porcentaje=Comentario.models.Comentario-class.html#porcentaje,Variable UserStory.forms.UserStoryForm.porcentaje=UserStory.forms.UserStoryForm-class.html#porcentaje,Variable UserStory.models.UserStory.porcentaje=UserStory.models.UserStory-class.html#porcentaje"><a title="Comentario.forms.ComentarioForm.porcentaje
-Comentario.models.Comentario.porcentaje
-UserStory.forms.UserStoryForm.porcentaje
-UserStory.models.UserStory.porcentaje" class="py-name" href="#" onclick="return doclink('link-36', 'porcentaje', 'link-36');">porcentaje</a></tt> <tt class="py-op">=</tt> <tt id="link-37" class="py-name"><a title="Actividades.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-31', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">IntegerField</tt><tt class="py-op">(</tt><tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">    <tt id="link-32" class="py-name" targets="Variable UserStory.models.UserStory.porcentaje=UserStory.models.UserStory-class.html#porcentaje"><a title="UserStory.models.UserStory.porcentaje" class="py-name" href="#" onclick="return doclink('link-32', 'porcentaje', 'link-32');">porcentaje</a></tt> <tt class="py-op">=</tt> <tt id="link-33" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-37', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">IntegerField</tt><tt class="py-op">(</tt><tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">    <tt id="link-38" class="py-name" targets="Variable Flujo.models.Flujo.proyecto=Flujo.models.Flujo-class.html#proyecto,Variable UserStory.models.UserStory.proyecto=UserStory.models.UserStory-class.html#proyecto"><a title="Flujo.models.Flujo.proyecto
-UserStory.models.UserStory.proyecto" class="py-name" href="#" onclick="return doclink('link-38', 'proyecto', 'link-38');">proyecto</a></tt><tt class="py-op">=</tt><tt id="link-39" class="py-name"><a title="Actividades.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-33', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">FloatField</tt><tt class="py-op">(</tt><tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">    <tt id="link-34" class="py-name" targets="Variable Actividades.models.Actividad.proyecto=Actividades.models.Actividad-class.html#proyecto,Variable Flujo.models.Flujo.proyecto=Flujo.models.Flujo-class.html#proyecto,Variable PIC.models.RolUsuarioProyecto.proyecto=PIC.models.RolUsuarioProyecto-class.html#proyecto,Variable Sprint.models.Estimacion_Proyecto.proyecto=Sprint.models.Estimacion_Proyecto-class.html#proyecto,Variable Sprint.models.Sprint.proyecto=Sprint.models.Sprint-class.html#proyecto,Variable UserStory.models.UserStory.proyecto=UserStory.models.UserStory-class.html#proyecto"><a title="Actividades.models.Actividad.proyecto
+Flujo.models.Flujo.proyecto
+PIC.models.RolUsuarioProyecto.proyecto
+Sprint.models.Estimacion_Proyecto.proyecto
+Sprint.models.Sprint.proyecto
+UserStory.models.UserStory.proyecto" class="py-name" href="#" onclick="return doclink('link-34', 'proyecto', 'link-34');">proyecto</a></tt><tt class="py-op">=</tt><tt id="link-35" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-39', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt id="link-40" class="py-name"><a title="AdminProyectos.models.Proyecto" class="py-name" href="#" onclick="return doclink('link-40', 'Proyecto', 'link-9');">Proyecto</a></tt><tt class="py-op">,</tt> <tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt id="link-41" class="py-name" targets="Variable UserStory.forms.UserStoryForm.tiempo_estimado=UserStory.forms.UserStoryForm-class.html#tiempo_estimado,Variable UserStory.models.UserStory.tiempo_estimado=UserStory.models.UserStory-class.html#tiempo_estimado"><a title="UserStory.forms.UserStoryForm.tiempo_estimado
-UserStory.models.UserStory.tiempo_estimado" class="py-name" href="#" onclick="return doclink('link-41', 'tiempo_estimado', 'link-41');">tiempo_estimado</a></tt><tt class="py-op">=</tt><tt id="link-42" class="py-name"><a title="Actividades.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-35', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt id="link-36" class="py-name"><a title="AdminProyectos.models.Proyecto" class="py-name" href="#" onclick="return doclink('link-36', 'Proyecto', 'link-9');">Proyecto</a></tt><tt class="py-op">,</tt> <tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">    <tt id="link-37" class="py-name" targets="Variable UserStory.forms.UserStoryForm.tiempo_estimado=UserStory.forms.UserStoryForm-class.html#tiempo_estimado,Variable UserStory.models.UserStory.tiempo_estimado=UserStory.models.UserStory-class.html#tiempo_estimado"><a title="UserStory.forms.UserStoryForm.tiempo_estimado
+UserStory.models.UserStory.tiempo_estimado" class="py-name" href="#" onclick="return doclink('link-37', 'tiempo_estimado', 'link-37');">tiempo_estimado</a></tt><tt class="py-op">=</tt><tt id="link-38" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
 Flujo.models
 PIC.models
+ProyectoDesarrollo.models
+Sprint.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-38', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">IntegerField</tt><tt class="py-op">(</tt><tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">    <tt id="link-39" class="py-name" targets="Variable PIC.models.RolUsuarioProyecto.usuario=PIC.models.RolUsuarioProyecto-class.html#usuario,Variable UserStory.models.UserStory.usuario=UserStory.models.UserStory-class.html#usuario"><a title="PIC.models.RolUsuarioProyecto.usuario
+UserStory.models.UserStory.usuario" class="py-name" href="#" onclick="return doclink('link-39', 'usuario', 'link-39');">usuario</a></tt><tt class="py-op">=</tt><tt id="link-40" class="py-name"><a title="Actividades.models
+AdminProyectos.models
+Comentario.models
+Flujo.models
+PIC.models
+ProyectoDesarrollo.models
+Sprint.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-40', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt class="py-name">User</tt><tt class="py-op">,</tt> <tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt id="link-41" class="py-name" targets="Variable UserStory.models.UserStory.nro_sprint=UserStory.models.UserStory-class.html#nro_sprint"><a title="UserStory.models.UserStory.nro_sprint" class="py-name" href="#" onclick="return doclink('link-41', 'nro_sprint', 'link-41');">nro_sprint</a></tt><tt class="py-op">=</tt><tt id="link-42" class="py-name"><a title="Actividades.models
+AdminProyectos.models
+Comentario.models
+Flujo.models
+PIC.models
+ProyectoDesarrollo.models
 Sprint.models
 UserStory.models" class="py-name" href="#" onclick="return doclink('link-42', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">IntegerField</tt><tt class="py-op">(</tt><tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
-<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
-<a name="UserStory.__unicode__"></a><div id="UserStory.__unicode__-def"><a name="L33"></a><tt class="py-lineno">33</tt> <a class="py-toggle" href="#" id="UserStory.__unicode__-toggle" onclick="return toggle('UserStory.__unicode__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="UserStory.models.UserStory-class.html#__unicode__">__unicode__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="UserStory.__unicode__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="UserStory.__unicode__-expanded"><a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-43" class="py-name"><a title="Actividades.forms.ActividadForm.nombre
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">    <tt id="link-43" class="py-name" targets="Variable UserStory.models.UserStory.nro_actividad=UserStory.models.UserStory-class.html#nro_actividad"><a title="UserStory.models.UserStory.nro_actividad" class="py-name" href="#" onclick="return doclink('link-43', 'nro_actividad', 'link-43');">nro_actividad</a></tt><tt class="py-op">=</tt><tt id="link-44" class="py-name"><a title="Actividades.models
+AdminProyectos.models
+Comentario.models
+Flujo.models
+PIC.models
+ProyectoDesarrollo.models
+Sprint.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-44', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">IntegerField</tt><tt class="py-op">(</tt><tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">    <tt id="link-45" class="py-name" targets="Variable Comentario.forms.ComentarioForm.porcentaje_actividad=Comentario.forms.ComentarioForm-class.html#porcentaje_actividad,Variable Comentario.models.Comentario.porcentaje_actividad=Comentario.models.Comentario-class.html#porcentaje_actividad,Variable UserStory.models.UserStory.porcentaje_actividad=UserStory.models.UserStory-class.html#porcentaje_actividad"><a title="Comentario.forms.ComentarioForm.porcentaje_actividad
+Comentario.models.Comentario.porcentaje_actividad
+UserStory.models.UserStory.porcentaje_actividad" class="py-name" href="#" onclick="return doclink('link-45', 'porcentaje_actividad', 'link-45');">porcentaje_actividad</a></tt><tt class="py-op">=</tt><tt id="link-46" class="py-name"><a title="Actividades.models
+AdminProyectos.models
+Comentario.models
+Flujo.models
+PIC.models
+ProyectoDesarrollo.models
+Sprint.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-46', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">FloatField</tt><tt class="py-op">(</tt><tt class="py-name">null</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
+<a name="UserStory.__unicode__"></a><div id="UserStory.__unicode__-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="UserStory.__unicode__-toggle" onclick="return toggle('UserStory.__unicode__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="UserStory.models.UserStory-class.html#__unicode__">__unicode__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UserStory.__unicode__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="UserStory.__unicode__-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-47" class="py-name"><a title="Actividades.forms.ActividadForm.nombre
 Actividades.models.Actividad.nombre
 AdminProyectos.forms.ProyectoForm.nombre
 AdminProyectos.forms.ProyectoFormEdit.nombre
@@ -252,8 +289,8 @@ Sprint.forms.SprintFormEdit.nombre
 Sprint.models.Sprint.nombre
 UserStory.forms.UserStoryForm.nombre
 UserStory.forms.UserStoryFormEdit.nombre
-UserStory.models.UserStory.nombre" class="py-name" href="#" onclick="return doclink('link-43', 'nombre', 'link-12');">nombre</a></tt> </tt>
-</div></div><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+UserStory.models.UserStory.nombre" class="py-name" href="#" onclick="return doclink('link-47', 'nombre', 'link-13');">nombre</a></tt> </tt>
+</div></div><a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -283,7 +320,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May  2 08:23:12 2015
+    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

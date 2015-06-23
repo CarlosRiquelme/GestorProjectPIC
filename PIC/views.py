@@ -171,3 +171,16 @@ def modificar_rol (request , id_rol):
 
     return render_to_response('roles/modificarRol.html',{ 'rol': rol_form, 'dato': rol}, context_instance=RequestContext(request))
 
+
+def lista_usuario_para_rol(request,id_rol):
+    usuarios=User.objects.filter(is_active='TRUE')
+    rol=Group.objects.get(pk=id_rol)
+    return render_to_response('roles/lista_usuario_asignar_Rol.html',{ 'usuarios': usuarios, 'id_rol': id_rol,'rol':rol}, context_instance=RequestContext(request))
+
+def asignar_rol_usuario(request,id_rol,id_user):
+    user=User.objects.get(pk=id_user)
+    rol=Group.objects.get(pk=id_rol)
+    user.group.add(rol)
+    messages.success(request, 'Se le asigno el ROl al Usuario')
+
+    return HttpResponseRedirect('/rol/listar/')

@@ -1,0 +1,29 @@
+{% extends 'admin/base_site.html' %}%}
+
+{% block content %}
+
+<h3>Lista de los User Storys Creado por el Cliente</h3>
+<br>
+    <center>
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >FECHA DE CREACION</th>
+        <th >PRIORIDAD</th>
+        <th>ACCION</th>
+    </thead>
+        {% for p in userstorys %}
+             <tr>
+	             <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
+                 <td><em>{{p.fecha_creacion}}</em></td>
+                 <td><em>{{p.prioridad}}</em></td>
+                <td> <div class="input-group">
+                    <a class="btn btn-primary" href="{% url 'UserStory.views.editar_userstory' p.id %}">Editar <i class="fa fa-edit"></i></a>
+                     </div>
+                </td>
+	        </tr>
+        {% endfor %}
+    </table>
+</center>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+{% endblock %}

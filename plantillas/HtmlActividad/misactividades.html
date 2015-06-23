@@ -1,20 +1,7 @@
 {% extends 'admin/base_site.html' %}%}
-
-
-
-
 {% block content %}
 
     <center><h1>Mis Actividades </h1></center>
-<center>
-<ul class="nav nav-tabs">
-  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-     <li class="active"><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
-    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
-    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
-    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
-</ul>
-</center>
 <br>
 {% if proyecto.estado == 'EN-ESPERA'%}
 <a class="btn btn-success"     href="{% url 'Actividades.views.nueva_actividad' id_proyecto %}">
@@ -27,24 +14,12 @@
         <th >NOMBRE</th>
         <th >FECHA DE CREACION</th>
         <th>SECUENCIA</th>
-         {% if proyecto.estado == 'EN-ESPERA'%}
-        <th  style="width: 10%">ASIGNAR</th>
-        {% endif %}
         <th  style="width: 10%">ESTADOS</th>
         {% for p in actividades %}
     <tr>
 	     <td><em><a href="{% url 'Actividades.views.mi_actividad' p.id %}">{{p.nombre}}</a></em></td>
          <td><em>{{p.fecha_creacion}}</em></td>
         <td><em>{{p.secuencia}}</em></td>
-
-
-        {% if proyecto.estado == 'EN-ESPERA'%}
-        <td>
-            <div class="input-group">
-                <a class="btn btn-primary" href="{% url 'UserStory.views.lista_userstory_creado' id_proyecto p.id %}">UserStory</a>
-            </div>
-        </td>
-        {% endif %}
         <td>
             <div class="input-group">
                 <a class="btn btn-success" href="{% url 'Actividades.views.ver_estados' id_proyecto p.id %}">VER</a>
@@ -61,6 +36,6 @@
 
     </table>
         </center>
-<a class="btn btn-default" href="{% url 'AdminProyectos.views.proyectos' user.id %}"> <i class="fa fa-backward"></i> Volver</a>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 
 {% endblock %}

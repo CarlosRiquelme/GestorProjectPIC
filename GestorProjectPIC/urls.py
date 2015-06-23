@@ -20,6 +20,8 @@ urlpatterns = patterns('',
 
 
 
+    url(r'^usuario/lista/asignar/rol/(?P<id_rol>\d+)/$','PIC.views.lista_usuario_para_rol'),
+    url(r'^usuario/asignar/rol/(?P<id_rol>\d+)//(?P<id_user>\d+)$','PIC.views.asignar_rol_usuario'),
     url(r'^usuario/nuevo/$', 'PIC.views.nuevo_usuario'),
     url(r'^usuarios/$','PIC.views.usuarios'),
     url(r'^usuario/eliminar/(?P<id_user>\d+)/$','PIC.views.desactivar_usuario'),
@@ -40,7 +42,10 @@ urlpatterns = patterns('',
      url(r'^proyecto/usuarios/(?P<id_proyecto>\d+)/$','AdminProyectos.views.listar_usuario_proyecto'),
      url(r'^proyecto/nousuarios/(?P<id_proyecto>\d+)/$','AdminProyectos.views.listar_usuarios_para_asignar_proyecto'),
      url(r'^proyecto/usuarios/asignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','AdminProyectos.views.asignar_usuario_proyecto'),
-    url(r'^proyecto/usuarios/desasignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','AdminProyectos.views.desasignar_usuario_proyecto'),
+     url(r'^proyecto/usuarios/desasignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','AdminProyectos.views.desasignar_usuario_proyecto'),
+     url(r'^proyecto/sin/finalizar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.finalizar_proyecto'),
+
+
 
 #ROLES
 
@@ -77,6 +82,7 @@ urlpatterns = patterns('',
 
 #USERSTORY
      url(r'^userstory/nuevo/(?P<id_proyecto>\d+)/$','UserStory.views.nuevo_userstory'),
+     url(r'^userstory/editar/(?P<id_userstory>\d+)/$','UserStory.views.editar_userstory'),
      url(r'^userstory/misuserstorys/(?P<id_proyecto>\d+)/$','UserStory.views.mis_userstorys'),
      url(r'^userstory/miuserstory/(?P<id_userstory>\d+)/$','UserStory.views.mi_userstory'),
      url(r'^userstory/miuserstory_creado/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_creado',name='mi_userstory_creado'),
@@ -110,8 +116,25 @@ urlpatterns = patterns('',
      url(r'^userstory/actividad/reasignar/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','ProyectoDesarrollo.views.reasignar_userstory_a_actividad'),
      url(r'^userstory/lista/sprint/reasignar/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.lista_reasignar_userstory_a_sprint'),
      url(r'^userstory/sprint/reasignar/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','ProyectoDesarrollo.views.reasignar_userstory_a_sprint'),
-     url(r'^userstory/cancelar/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','ProyectoDesarrollo.views.cancelar_userstory'),
+
      url(r'^proyecto/scrum_master/administracion/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.scrumMaster'),
      url(r'^proyecto/burndowncharts/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.Burndowncharts'),
+
+
+#ADMINISTRACION DEL SCRUM MASTER
+    url(r'^proyecto/scrumMaster/(?P<id_proyecto>\d+)/$','AdminProyectos.views.scrum_master_vista'),
+    url(r'^proyecto/scrumMaster/cliente/us/(?P<id_proyecto>\d+)/$','UserStory.views.listar_us_cliente'),
+    url(r'^proyecto/scrumMaster/revision/us/(?P<id_proyecto>\d+)/$','UserStory.views.userstorys_revisar'),
+    url(r'^userstory/cancelar/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.cancelar_userstory'),
+    url(r'^userstory/lista/cancelar/(?P<id_proyecto>\d+)/$','UserStory.views.lista_userstory_cancelar'),
+    url(r'^userstory/descancelar/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.descancelar_userstory'),
+#CLIENTE
+    url(r'^proyecto/cliente/menu/(?P<id_proyecto>\d+)/$','UserStory.views.menu_cliente'),
+    url(r'^proyecto/cliente/nuevouserstory/(?P<id_proyecto>\d+)/$','UserStory.views.cliente_crear_userstory'),
+
+#EQUIPO
+    url(r'^proyecto/equipo/userstorys/(?P<id_proyecto>\d+)/$','UserStory.views.lista_userstory_usuario'),
+    url(r'^proyecto/equipo/userstorys/finalizar/actividad/(?P<id_userstory>\d+)/$','UserStory.views.fin_de_una_actividad_de_un_us'),
+
 
 )

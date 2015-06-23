@@ -1,0 +1,86 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+<h2>NO PUEDE FINALIZAR AUN EL PROYECTO "{{proyecto.nombre}}"</h2>
+<h3>Aun hay datos sin finalizar</h3>
+<br>
+{% if ban == 'FALSE' and ban2 == 'TRUE' %}
+<h4>Lista de User Storys Sin Finalizar</h4>
+    <table class="table table-striped" style="width: 100%">
+    <thead>
+        <th >NOMBRE</th>
+        <th >ESTADO</th>
+    </thead>
+    {% for dato in userstorys %}
+    <tr>
+	     <td>{{dato.nombre}}</td>
+        <td>{{dato.estado}}</td>
+
+	</tr>
+	{% endfor %}
+ </table>
+{% endif %}
+
+{% if ban == 'TRUE' and ban2 == 'FALSE' %}
+<h4>Lista de Sprint Sin Finalizar</h4>
+    <table class="table table-striped" style="width: 100%">
+    <thead>
+        <th >NOMBRE</th>
+        <th >ESTADO</th>
+    </thead>
+    {% for dato in sprints %}
+    <tr>
+	     <td>{{dato.nombre}}</td>
+        <td>{{dato.estado}}</td>
+	</tr>
+	{% endfor %}
+ </table>
+{% endif %}
+
+
+{% if ban == 'FALSE' and ban2 == 'FALSE' %}
+<h4>Lista de Sprint Sin Finalizar</h4>
+    <table class="table table-striped" style="width: 100%">
+    <thead>
+        <th >NOMBRE</th>
+        <th >ESTADO</th>
+    </thead>
+    {% for dato in sprints %}
+    <tr>
+	     <td>{{dato.nombre}}</td>
+        <td>{{dato.estado}}</td>
+	</tr>
+	{% endfor %}
+     </table>
+
+<h4>Lista de User Storys Sin Finalizar</h4>
+    <table class="table table-striped" style="width: 100%">
+    <thead>
+        <th >NOMBRE</th>
+        <th >ESTADO</th>
+    </thead>
+    {% for dato in userstorys %}
+    <tr>
+	     <td>{{dato.nombre}}</td>
+        <td>{{dato.estado}}</td>
+
+	</tr>
+	{% endfor %}
+ </table>
+
+{% endif %}
+
+
+
+
+
+
+
+
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+
+{% endblock %}

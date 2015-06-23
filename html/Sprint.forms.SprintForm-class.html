@@ -196,58 +196,34 @@ print&quot;,)">forms.CharField(widget= TextInput(attrs= {'class': 'f<code class=
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.forms.SprintForm-class.html#fechaInicio" class="summary-name">fechaInicio</a> = <code title="forms.DateField(input_formats= ['%Y-%m-%d'], widget= widgets.AdminDate\
-Widget, required= True, help_text= '* Ingrese en formato anho-mes-dia'\
-, error_messages= {'required': 'Ingrese una fecha de Inicio del Sprint\
-'})">forms.DateField(input_formats= ['%Y-%m-%d'], wid<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="Sprint.forms.SprintForm-class.html#fechaFin" class="summary-name">fechaFin</a> = <code title="forms.DateField(input_formats= ['%Y-%m-%d'], widget= widgets.AdminDate\
-Widget, required= True, help_text= '* Ingrese en formato anho-mes-dia'\
-, error_messages= {'required': 'Ingrese una fecha de Finalizacion del \
-Sprint'})">forms.DateField(input_formats= ['%Y-%m-%d'], widget<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="Sprint.forms.SprintForm-class.html#tiempo_acumulado" class="summary-name">tiempo_acumulado</a> = <code title="forms.IntegerField(label= &quot;Tiempo Acumulado(hs)&quot;, widget= forms.TextIn\
-put(attrs= {'class': 'form-control', 'type': 'number', 'min': '0', 'ma\
-x': '100'}))">forms.IntegerField(label= &quot;Tiempo Acumulado<code class="variable-ellipsis">...</code></code>
+        <a href="Sprint.forms.SprintForm-class.html#secuencia" class="summary-name">secuencia</a> = <code title="forms.IntegerField(label= &quot;Nro de Secuencia&quot;, widget= forms.TextInput(\
+attrs= {'class': 'form-control', 'type': 'number', 'min': '0', 'max': \
+'30'}))">forms.IntegerField(label= &quot;Nro de Secuencia&quot;, widg<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.forms.SprintForm-class.html#_meta" class="summary-name" onclick="show_private();">_meta</a> = <code title="&lt;django.forms.models.ModelFormOptions object at 0x7f6c9f305390&gt;">&lt;django.forms.models.ModelFormOptions object at 0x7f6c<code class="variable-ellipsis">...</code></code>
+        <a href="Sprint.forms.SprintForm-class.html#_meta" class="summary-name" onclick="show_private();">_meta</a> = <code title="&lt;django.forms.models.ModelFormOptions object at 0x7ff8ae1421d0&gt;">&lt;django.forms.models.ModelFormOptions object at 0x7ff8<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.forms.SprintForm-class.html#base_fields" class="summary-name">base_fields</a> = <code title="OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7f6\
-c9f2f8fd0&gt;), ('fechaInicio', &lt;django.forms.fields.DateField object at \
-0x7f6c9f3050d0&gt;), ('fechaFin', &lt;django.forms.fields.DateField object a\
-t 0x7f6c9f305150&gt;), ('tiempo_acumulado', &lt;django.forms.fields.IntegerF\
-ield object at 0x7f6c9f305210&gt;)])">OrderedDict([('nombre', &lt;django.forms.fields.Cha<code class="variable-ellipsis">...</code></code>
+        <a href="Sprint.forms.SprintForm-class.html#base_fields" class="summary-name">base_fields</a> = <code title="OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7ff\
+8ae138f90&gt;), ('secuencia', &lt;django.forms.fields.IntegerField object at\
+ 0x7ff8ae1420d0&gt;)])">OrderedDict([('nombre', &lt;django.forms.fields.Cha<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.forms.SprintForm-class.html#declared_fields" class="summary-name">declared_fields</a> = <code title="OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7f6\
-c9f2f8fd0&gt;), ('fechaInicio', &lt;django.forms.fields.DateField object at \
-0x7f6c9f3050d0&gt;), ('fechaFin', &lt;django.forms.fields.DateField object a\
-t 0x7f6c9f305150&gt;), ('tiempo_acumulado', &lt;django.forms.fields.IntegerF\
-ield object at 0x7f6c9f305210&gt;)])">OrderedDict([('nombre', &lt;django.forms.fields<code class="variable-ellipsis">...</code></code>
+        <a href="Sprint.forms.SprintForm-class.html#declared_fields" class="summary-name">declared_fields</a> = <code title="OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7ff\
+8ae138f90&gt;), ('secuencia', &lt;django.forms.fields.IntegerField object at\
+ 0x7ff8ae1420d0&gt;)])">OrderedDict([('nombre', &lt;django.forms.fields<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 </table>
@@ -327,63 +303,21 @@ print&quot;,)
   </dl>
 </td></tr></table>
 </div>
-<a name="fechaInicio"></a>
+<a name="secuencia"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">fechaInicio</h3>
+  <h3 class="epydoc">secuencia</h3>
   
   <dl class="fields">
   </dl>
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-forms.DateField(input_formats= ['%Y-%m-%d'], widget= widgets.AdminDate<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-Widget, required= True, help_text= '* Ingrese en formato anho-mes-dia'<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-, error_messages= {'required': 'Ingrese una fecha de Inicio del Sprint<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-'})
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="fechaFin"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">fechaFin</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-forms.DateField(input_formats= ['%Y-%m-%d'], widget= widgets.AdminDate<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-Widget, required= True, help_text= '* Ingrese en formato anho-mes-dia'<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-, error_messages= {'required': 'Ingrese una fecha de Finalizacion del <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-Sprint'})
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="tiempo_acumulado"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">tiempo_acumulado</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-forms.IntegerField(label= &quot;Tiempo Acumulado(hs)&quot;, widget= forms.TextIn<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-put(attrs= {'class': 'form-control', 'type': 'number', 'min': '0', 'ma<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-x': '100'}))
+forms.IntegerField(label= &quot;Nro de Secuencia&quot;, widget= forms.TextInput(<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+attrs= {'class': 'form-control', 'type': 'number', 'min': '0', 'max': <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+'30'}))
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -401,7 +335,7 @@ x': '100'}))
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-&lt;django.forms.models.ModelFormOptions object at 0x7f6c9f305390&gt;
+&lt;django.forms.models.ModelFormOptions object at 0x7ff8ae1421d0&gt;
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -419,11 +353,9 @@ x': '100'}))
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7f6<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-c9f2f8fd0&gt;), ('fechaInicio', &lt;django.forms.fields.DateField object at <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-0x7f6c9f3050d0&gt;), ('fechaFin', &lt;django.forms.fields.DateField object a<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-t 0x7f6c9f305150&gt;), ('tiempo_acumulado', &lt;django.forms.fields.IntegerF<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-ield object at 0x7f6c9f305210&gt;)])
+OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7ff<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+8ae138f90&gt;), ('secuencia', &lt;django.forms.fields.IntegerField object at<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ 0x7ff8ae1420d0&gt;)])
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -441,11 +373,9 @@ ield object at 0x7f6c9f305210&gt;)])
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7f6<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-c9f2f8fd0&gt;), ('fechaInicio', &lt;django.forms.fields.DateField object at <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-0x7f6c9f3050d0&gt;), ('fechaFin', &lt;django.forms.fields.DateField object a<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-t 0x7f6c9f305150&gt;), ('tiempo_acumulado', &lt;django.forms.fields.IntegerF<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-ield object at 0x7f6c9f305210&gt;)])
+OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7ff<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+8ae138f90&gt;), ('secuencia', &lt;django.forms.fields.IntegerField object at<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ 0x7ff8ae1420d0&gt;)])
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -509,7 +439,7 @@ ield object at 0x7f6c9f305210&gt;)])
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May  2 08:23:12 2015
+    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -9,7 +9,6 @@ from Actividades.forms import ActividadForm
 from Actividades.models import Actividad
 from django.contrib import messages
 from UserStory.models import UserStory
-from Flujo.models import Flujo
 from AdminProyectos.models import Proyecto
 from django.contrib.auth.decorators import login_required
 

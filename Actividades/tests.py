@@ -8,7 +8,7 @@ class TestActividad(TestCase):
 		print "\n TEST Actividad Existe"
 		print "\nBuscar Actividad Creado"
 		#Actividad.objects.create(nombre='Actividad')
-		dato={'nombre':'Actividad', 'flujo':'f1', 'fechaCreacion':'2015-04-09', 'fechaInicio':'2015-04-09','fechaFin':'2015-04-09','secuencia':'2', 'estado':'ok'}
+		dato={'nombre':'Actividad',  'fechaCreacion':'2015-04-09', 'fechaInicio':'2015-04-09','fechaFin':'2015-04-09','secuencia':'2', 'estado':'ok'}
 	def test_traet(self):
 		valido=True
 		#valido=Flujo.objects.filter(nombre='flujo1').exists()
@@ -24,7 +24,7 @@ class TestActividadNO(TestCase):
 		print "\n TEST Actividad no Existe"
 		print "\nBuscar Actividad Creada"
 		#Actividad.objects.create(nombre='Actividad')
-		dato={'nombre':'Actividad1', 'flujo':'f1', 'fechaCreacion':'2015-04-09', 'fechaInicio':'2015-04-09','fechaFin':'2015-04-09','secuencia':'2', 'estado':'ok'}
+		dato={'nombre':'Actividad1', 'fechaCreacion':'2015-04-09', 'fechaInicio':'2015-04-09','fechaFin':'2015-04-09','secuencia':'2', 'estado':'ok'}
 	def test_traet(self):
 		valido=False
 		#valido=Flujo.objects.filter(nombre='flujo23').exists()

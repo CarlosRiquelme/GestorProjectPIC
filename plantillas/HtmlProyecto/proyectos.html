@@ -60,7 +60,7 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         <td>{{ dato.proyecto.fechaInicio}}</td>
         <td>{{ dato.proyecto.fechaFin }}</td>
 
-        {% if dato.estado == 'EN-ESPERA'%}
+        {% if dato.proyecto.estado == 'EN-ESPERA' %}
         <td> 
         <div class="input-group">  
         <a class="btn btn-primary" href="{% url 'AdminProyectos.views.editar_proyecto' dato.proyecto.id %}">Editar <i class="fa fa-edit"></i></a>
@@ -68,7 +68,7 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         </div>
         </td>
         {% endif %}
-        {% if dato.estado != 'EN-ESPERA'%}
+        {% if dato.proyecto.estado != 'EN-ESPERA'%}
          <td></td>
 
         {% endif %}

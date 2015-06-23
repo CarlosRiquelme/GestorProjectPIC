@@ -1,0 +1,53 @@
+{% extends 'admin/base_site.html' %}%}
+
+{% block content %}
+<h3> Lista de sus User Storys </h3>
+<h3>Bienvenido "{{user}}"</h3>
+<center>
+<ul class="nav nav-tabs">
+    <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+    <li class="active" ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint2</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
+
+
+</ul>
+</center>
+<br>
+    <center>
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >PRIORIDAD</th>
+        <th >ACTIVIDAD</th>
+        <th >SPRINT</th>
+        <th >TIEMPO ESTIMADO</th>
+        <th >TIEMPO TRABAJADO</th>
+        <th>ACCION</th>
+    </thead>
+        {% for p in userstorys %}
+             <tr>
+	             <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
+                 <td><em>{{p.prioridad}}</em></td>
+                 <td><em>{{p.actividad}}</em></td>
+                 <td><em>{{p.sprint}}</em></td>
+                 <td><em>{{p.tiempo_estimado}}</em></td>
+                 <td><em>{{p.tiempo_trabajado}}</em></td>
+                 {% if p.estado == 'CANCELADO' %}
+                 <td> <div class="input-group">
+                    <a class="btn btn-info btn-md" href="{% url 'UserStory.views.descancelar_userstory' id_proyecto p.id  %}">DES-CANCELAR<i class="fa fa-edit"></i></a>
+                     </div>
+                 </td>
+                 {% endif %}
+                 {% if p.estado != 'CANCELADO' %}
+                 <td> <div class="input-group">
+                    <a class="btn btn-warning btn-md" href="{% url 'UserStory.views.cancelar_userstory' id_proyecto p.id  %}">CANCELAR<i class="fa fa-edit"></i></a>
+                     </div>
+                 </td>
+                 {% endif %}
+	        </tr>
+        {% endfor %}
+    </table>
+</center>
+{% endblock %}

@@ -1,16 +1,9 @@
 {% extends 'admin/base_site.html' %}
 
 {% block title %}Editar UserStory{% endblock %}
-{% block header %}
-EDITAR USERSTORY
-{% endblock %}
+
 {% block content %}
-
-
-
-    <center>
-
-
+<h3> Modificar USERSTORY creado por el Cliente </h3>
 
 	<form id='formulario' method='post' action=''>{% csrf_token %}
 		<table class="table table-striped" style="width: 50%">
@@ -20,5 +13,5 @@ EDITAR USERSTORY
 		<button class="btn btn-primary" type='submit' >Guardar <i class="fa fa-save"></i></button>
 
 	</form>
-    </center>
+
 {% endblock %}

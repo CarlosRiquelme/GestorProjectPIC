@@ -15,13 +15,15 @@ from django.core.mail import send_mail
 from datetime import datetime, date, time, timedelta
 from django.template.loader import render_to_string
 from Sprint.models import Estimacion_Proyecto, Estimacion_Sprint
-from matplotlib import pylab
-from pylab import *
-import PIL
-import PIL.Image
-import StringIO
+#from matplotlib import pylab
+#import matplotlib.pyplot
+#from pylab import *
+#import PIL
+#import PIL.Image
+#import StringIO
 from django.template import RequestContext, loader
 from django.http import HttpResponse
+from Sprint.models import Sprint_En_Proceso,Dias_de_un_Sprint
 
 def kanban(request,id_proyecto):
     actividades=Actividad.objects.filter(proyecto_id=id_proyecto).order_by("secuencia")
@@ -35,73 +37,76 @@ def kanban(request,id_proyecto):
 
 
 def analizar_sprint(request, id_proyecto):
-
+    """
+    Se analiza el sprint en la fecha actual se guardan los datos de los user story del sprint hasta la fecha
+    si hay mas de una consulta por dia solo se registra uno por dia
+    :param request:
+    :param id_proyecto:
+    :return:
+    """
     sprint=Sprint.objects.get(proyecto_id=id_proyecto ,estado='ABIERTO')
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
+    sprint_fechas=Dias_de_un_Sprint.objects.filter(sprint_id=sprint.id)
     ultimo_sprint=0
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
     for dato in sprints:
         if dato.secuencia > ultimo_sprint:
             ultimo_sprint=dato.secuencia
-    if sprint.dias_duracion >= 1:
-        sprint.dias_duracion=sprint.dias_duracion-1
-        sprint.dia_trancurrido=sprint.dia_trancurrido+1
-        suma=0.0
-        resultado=0.0
-        fraccion=0.0
-        contador=0
-        userstorys=UserStory.objects.filter(sprint_id=sprint.id)
-        numerador=8*sprint.dia_trancurrido
-        for dato in userstorys:
-            denominador=dato.tiempo_estimado
-            if denominador >= numerador:
-                contador+=1
-                fraccion=numerador/denominador
-                suma+=fraccion
-        resultado=(suma/contador)*100
-        sprint.porcentaje_actual=resultado
-        suma=0.0
-        resultado=0.0
-        contador=0
-        for dato in userstorys:
-            suma+=dato.porcentaje
-            contador+=1
-        resultado=(suma/contador)
-        sprint.porcentaje_hecho_actual=resultado
-        if sprint.dias_duracion == 0:
+
+    fecha_actual_sprint=date.today()
+    userstorys=UserStory.objects.filter(sprint_id=sprint.id)
+    suma=0
+    for dato2 in userstorys:
+        suma+=dato2.tiempo_trabajado
+    for dato in sprint_fechas:
+        sprint_en_proceso1=Sprint_En_Proceso.objects.get(fecha=fecha_actual_sprint)
+        if fecha_actual_sprint == dato.fecha:
+            if sprint_en_proceso1 == 'NULL':
+                sprint_en_proceso=Sprint_En_Proceso()
+                sprint_en_proceso.sprint_id=sprint.id
+                sprint_en_proceso.fecha=fecha_actual_sprint
+                sprint_en_proceso.horas_acumulada=suma
+                sprint_en_proceso.save()
+            else:
+                sprint_en_proceso1.horas_acumulada=suma
+                sprint_en_proceso1.save()
+    if fecha_actual_sprint == sprint.fechaFin:
+        hora=time.strftime("%X")
+        hora2= '19:00:00'
+        if hora < hora2:
+            print "Horaaaaaaaaaaaaaa " + hora
+        else:
             sprint.estado='CERRADO'
             id_sprint=sprint.id
             siguiente=sprint.secuencia+1
             sprint.save()
-            proyecto=Proyecto.objects.get(pk=id_proyecto)
             html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado un Sprint Favor Fijarce si han terminados todos su user story"'
             send_mail('Finalizacion de Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
-
             userstory2=UserStory.objects.filter(sprint_id=id_sprint)
+            ban=0
             for dato in userstory2:
-                if dato.porcentaje < 100:
+                if dato.estado != 'DONE' and dato.estado != 'FINALIZADO' and dato.estado != 'CANCELADO' :
                     dato.estado='REASIGNAR_SPRINT'
-                    valor=100-dato.porcentaje
-                    tiempo=0.0
-                    tiempo_nuevo=0
-                    tiempo=dato.tiempo_estimado*(valor/100)
-                    tiempo=tiempo//8
-                    tiempo_nuevo-=int(tiempo)
-                    tiempo_nuevo+=1
-                    dato.tiempo_estimado=tiempo_nuevo*8
                     dato.save()
+                    ban=1
             if siguiente <= ultimo_sprint:
                 sprint2=Sprint.objects.get(proyecto_id=id_proyecto, secuencia=siguiente)
                 sprint2.estado='ABIERTO'
                 sprint2.save()
             else:
-                #ACA SE CIERRA EL PROYECTO YA NO HAY MAS SPRINT EN LA LISTA POR ENDE TERMINA EL PROYECTO
-                html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado todos sus Sprint   "'
-                send_mail('Finalizacion de todos sus Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
-                print "hacer algo como cerrar proyecto notificar scrumMaster"
+                if ban == 1:
+                    html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado todos sus Sprint, pero quedan aun user storys sin concluir  "'
+                    send_mail('Finalizacion de todos sus Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                    proyecto.estado='REVISAR'
+                if ban == 0:
+                    html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado todos sus Sprint. Y sus user story estan todos Finalizados.   "'
+                    send_mail('Finalizacion de todos sus Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                    proyecto.estado='REVISAR'
 
 
-        else:
-            sprint.save()
+
+
+
     return HttpResponseRedirect('/proyecto/miproyecto/'+str(id_proyecto))
 
 def visualizar_sprint_en_desarrollo(request,id_proyecto):
@@ -113,21 +118,50 @@ def visualizar_sprint_en_desarrollo(request,id_proyecto):
 
 
 def lista_reasignar_userstory_a_actividad(request,id_proyecto):
-    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,estado='DONE')
+    """
+    Lista los user story que el SM debe aprobar y reasignar a la siguiente actividad
+    :param request:
+    :param id_proyecto:
+    :return:
+    """
+    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,estado='REVISAR_FIN_AC')
     proyecto=Proyecto.objects.get(pk=id_proyecto)
 
     return render_to_response('HtmlProyectoDesarrollo/reasignar_userstory_actividad.html',{'userstorys':userstorys,
                                                                                'id_proyecto':id_proyecto,
+
                                                                                'proyecto':proyecto})
 def reasignar_userstory_a_actividad(request,id_proyecto,id_userstory):
+
+    """
+    Reasigna el  User Story a la siguiente actividad
+    :param request:
+    :param id_proyecto:
+    :param id_userstory:
+    :return:
+    """
     userstory=UserStory.objects.get(pk=id_userstory)
-    secuencia2=userstory.actividad.secuencia+1
-    actividad=Actividad.objects.get(proyecto_id=id_proyecto,secuencia=secuencia2)
-    userstory.actividad_id=actividad.id
-    userstory.estado='TODO'
-    userstory.save()
-    messages.success(request, 'UserStory Reasignado a la Actividad Siguiente')
-    return HttpResponseRedirect('/userstory/lista/actividad/reasignar/'+str(id_proyecto))
+    actividad=Actividad.objects.filter(proyecto_id=id_proyecto)
+    ultima_actividad=0
+    secuencia2=0
+    valor=0
+    valor=userstory.actividad.secuencia
+    for dato in actividad:
+        if dato.secuencia > ultima_actividad:
+            ultima_actividad=dato.secuencia
+
+    if valor < ultima_actividad:
+        secuencia2=valor+1
+        actividad=Actividad.objects.get(proyecto_id=id_proyecto,secuencia=secuencia2)
+        userstory.actividad_id=actividad.id
+        userstory.estado='TODO'
+        userstory.save()
+        messages.success(request, 'UserStory Reasignado a la Actividad Siguiente')
+        return HttpResponseRedirect('/userstory/lista/actividad/reasignar/'+str(id_proyecto))
+    else:
+        messages.success(request, 'El User Story ya se encuentra en la ultima Actividad del Proyecto')
+        messages.success(request, 'NO se pueder reasignar la Actividad')
+        return HttpResponseRedirect('/proyecto/scrumMaster/'+str(id_proyecto))
 
 def lista_reasignar_userstory_a_sprint(request,id_proyecto):
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,estado='REASIGNAR_SPRINT')
@@ -145,12 +179,7 @@ def reasignar_userstory_a_sprint(request,id_proyecto,id_userstory):
     messages.success(request, 'UserStory Reasignado al Sprint Siguiente')
     return HttpResponseRedirect('/userstory/lista/sprint/reasignar/'+str(id_proyecto))
 
-def cancelar_userstory(request,id_proyecto,id_userstory):
-    userstory=UserStory.objects.get(pk=id_userstory)
-    userstory.estado='CANCELADO'
-    userstory.save()
-    messages.success(request, 'UserStory CANCELADO!!!')
-    return HttpResponseRedirect('/userstory/lista/actividad/reasignar/'+str(id_proyecto))
+
 
 def scrumMaster(request, id_proyecto):
     user=request.user

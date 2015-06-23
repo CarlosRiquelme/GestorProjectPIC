@@ -75,6 +75,7 @@
                {# {% render_menu_app_list %} #}<!-- Exploto cuando cree vista de actividad por eso esta comentado -->
      <!-- MENU PRINCIPAL AGREGAR LOS LINK AQUI -->
                 <!-- USUARIOS-->
+                {% if user.esAdmin %}
                 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Usuarios</a></li>
                 <ul>
                     <li><a href="/usuarios">Listar</a></li>
@@ -91,7 +92,7 @@
                     <li><a href="/rol/crear">Agregar</a></li>
 
                 </ul>
-
+                {% endif %}
                 <!--PROYECTO -->
 
                 <ul class="nav nav-pills nav-stacked">

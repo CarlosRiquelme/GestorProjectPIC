@@ -13,6 +13,7 @@ class Sprint(models.Model):
     fechaInicio=models.DateField(null=True)
     fechaFin=models.DateField(null=True)
     tiempo_acumulado = models.IntegerField(null=True,default=0)
+    suma_tiempo_usestory=models.IntegerField(null=True, default=0)
     proyecto=models.ForeignKey(Proyecto, null=True)
     estado=models.CharField(choices=SPRINT_ESTADOS,default='EN-ESPERA',max_length=30)
     secuencia=models.IntegerField()
@@ -39,3 +40,18 @@ class Estimacion_Sprint(models.Model):
     fechaFin=models.DateField(null=True)
     duracion=models.IntegerField()
     proyecto_estimacion=models.ForeignKey(Estimacion_Proyecto)
+
+class Sprint_En_Proceso(models.Model):
+    sprint=models.ForeignKey(Sprint)
+    fecha=models.DateField(null=True)
+    horas_acumulada=models.IntegerField(null=True)
+
+class Proyecto_En_Proceso(models.Model):
+    proyecto=models.ForeignKey(Proyecto)
+    fecha=models.DateField(null=True)
+    horas_acumulada_sprint=models.IntegerField(null=True)
+
+class Dias_de_un_Sprint(models.Model):
+    sprint=models.ForeignKey(Sprint)
+    dia=models.IntegerField(null=True)
+    fecha=models.DateField(null=True)

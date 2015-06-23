@@ -9,7 +9,6 @@ from AdminProyectos.forms import ProyectoForm, ProyectoFormEdit
 from AdminProyectos.models import Proyecto
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from Flujo.models import Flujo
 from PIC.models import RolUsuarioProyecto
 from mx.DateTime.DateTime import today
 from datetime import datetime, date, time, timedelta
@@ -19,7 +18,8 @@ from PIC.models import RolUsuarioProyecto
 from Sprint.models import Sprint, Estimacion_Proyecto, Estimacion_Sprint
 from UserStory.models import UserStory
 from Actividades.models import Actividad
-
+from Sprint.models import Dias_de_un_Sprint
+import time
 @login_required(login_url='/admin/login/')
 def nuevo_proyecto(request):
     """
@@ -115,6 +115,13 @@ def iniciar_proyecto(request):
                 estimacion_sprint.fechaInicio=fecha1
                 sprint1.fechaInicio=fecha1
                 dias= dato.tiempo_acumulado/8
+                for dato2 in dias:
+                    dias_sprint=Dias_de_un_Sprint()
+                    fecha3=fecha_calcular(fecha1,dato2)
+                    dias_sprint.dia=dato2
+                    dias_sprint.fecha=fecha3
+                    dias_sprint.sprint_id=dato.id
+                    dias_sprint.save()
                 fecha2=fecha_calcular(fecha1,dias)
                 estimacion_sprint.fechaFin=fecha2
                 fecha1=fecha_calcular(fecha2,1)
@@ -195,26 +202,12 @@ def mi_proyecto(request, id_proyecto):
     user=request.user
     permiso=RolUsuarioProyecto.objects.get(usuario_id=user, proyecto_id=id_proyecto)
 
-    if request.method=='POST':
-        formulario= ProyectoFormEdit(request.POST,instance=proyecto)
-        if formulario.is_valid():
-            proyecto= formulario.save()
-            proyecto.save()
-            return HttpResponseRedirect('/proyecto/miproyecto/'+str(id_proyecto))
-    else:
-        formulario= ProyectoFormEdit(instance=proyecto)
 
-
-    if proyecto.estado == 'EN-DESARROLLO' :
-        return render_to_response('HtmlProyecto/miproyecto.html',
-                                  {'formulario':formulario,'proyecto':proyecto,
+    return render_to_response('HtmlProyecto/miproyecto.html',
+                                  {'proyecto':proyecto,
                                    'id_proyecto':id_proyecto,'user':user,
                                    'permiso':permiso},context_instance=RequestContext(request))
-    else:
-        return render_to_response('HtmlProyecto/miproyecto.html',
-                {'formulario':formulario,'proyecto':proyecto,
-                 'id_proyecto':id_proyecto,'user':proyecto.scrumMaster},
-                              context_instance=RequestContext(request))
+
 
 @login_required(login_url='/admin/login/')
 def listar_usuario_proyecto(request, id_proyecto):
@@ -285,3 +278,54 @@ def fecha_calcular(start, days, holidays=(), workdays=(MON,TUE,WED,THU,FRI)):
         while result in holidays or result.weekday() not in workdays:
             result += timedelta(days=1)
     return result
+
+@login_required(login_url='/admin/login/')
+def scrum_master_vista(request, id_proyecto):
+    """
+    Vista de Administracion del ScrumMaster del Proyecto donde crea/modidifica/elimina/verifica/aprueba/habilita
+    user story , sprint, usuarios,
+    :param request:
+    :param id_proyecto:
+    :return:
+    """
+    user=request.user
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+    return render_to_response('HtmlProyecto/scrumMaster.html',{'user':user,'proyecto':proyecto,
+                                                                             'id_proyecto':id_proyecto},
+                              context_instance=RequestContext(request))
+
+def finalizar_proyecto(request, id_proyecto):
+    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+    sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+    ban='TRUE'
+    ban2='TRUE'
+    lista_userstory=[]
+    lista_sprints=[]
+    for dato in userstorys:
+        if dato.estado != 'FINALIZADO' and dato.estado != 'CANCELADO':
+            ban='FALSE'
+            lista_userstory.append(dato)
+    for dato in sprints:
+        if dato.estado != 'CERRADO':
+            ban2='FALSE'
+            lista_sprints.append(dato)
+
+    if ban == 'TRUE' and ban2 == 'TRUE':
+        proyecto.estado='FINALIZADO'
+        ahora = date.today()
+        html_content = 'EL PROYECTO A FINALIZADO'+proyecto.nombre+' ' 'Descripcion:'+proyecto.descripcion+' ''Fecha de Finalizacion :'+ahora
+        send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+        proyecto.save()
+        messages.success(request, 'A FINALIZADO CORRECTAMENTE EL PROYECTO!')
+        return HttpResponseRedirect('/proyecto/scrumMaster/'+str(id_proyecto))
+
+    else:
+        return render_to_response('HtmlProyecto/lista_sprint_us_sin_finalizar.html',{'proyecto':proyecto,
+                                                               'id_proyecto':id_proyecto,
+                                                               'sprints':lista_sprints,
+                                                               'userstorys':lista_userstory,
+                                                               'ban':ban,
+                                                               'ban2':ban2},
+                              context_instance=RequestContext(request))
+

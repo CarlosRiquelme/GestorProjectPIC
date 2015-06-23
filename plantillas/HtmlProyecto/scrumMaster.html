@@ -1,0 +1,113 @@
+{% extends 'admin/base_site.html' %}%}
+
+{% block titulo %}Proyectos{% endblock %}
+{% block extra_head %}
+
+{% endblock %}
+{% block content %}
+
+<div class="container">
+  <h2>Administracion Scrum Master</h2>
+    <h3>Bienvenido {{user}}</h3>
+
+<center>
+<ul class="nav nav-tabs">
+    <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+    <li class="active"><a href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}">ScrumMaster</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
+</ul>
+</center>
+<br>
+   {% if proyecto.estado != 'FINALIZADO'%}
+   <a  class="btn btn-info" href="{% url 'AdminProyectos.views.finalizar_proyecto' id_proyecto %}">
+Finalizar Proyecto </a>
+    {% endif %}
+
+<br><br><br>
+  <div class="panel-group" id="accordion">
+   {% if proyecto.estado != 'FINALIZADO'%}
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Revision de Cambios</a>
+        </h4>
+      </div>
+      <div id="collapse5" class="panel-collapse collapse">
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'UserStory.views.listar_us_cliente' id_proyecto %}">User Story Cliente</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'UserStory.views.userstorys_revisar' id_proyecto %}">User Story Equipo</a></div>
+      </div>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Usuarios del Proyecto</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse ">
+        <div class="panel-footer"><a class="btn btn-link " href="{% url 'AdminProyectos.views.listar_usuarios_para_asignar_proyecto' id_proyecto %}">Agregar</a></div>
+        <div class="panel-footer"><a class="btn btn-link " href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Visualizar</a></div>
+      </div>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-footer"><a class="btn btn-link " href="{% url 'Actividades.views.nueva_actividad' id_proyecto %}">Crear</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Visualizar</a></div>
+
+      </div>
+    </div>
+
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">User Story</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">Crear</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">Visualizar</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'UserStory.views.lista_userstory_cancelar' id_proyecto %}">Cancelar-Descancelar</a></div>
+      </div>
+    </div>
+
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Sprint</a>
+        </h4>
+      </div>
+      <div id="collapse4" class="panel-collapse collapse">
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'Sprint.views.nuevo_sprint' id_proyecto %}">Crear</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Visualizar</a></div>
+      </div>
+    </div>
+
+      {% endif %}
+
+      <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Reportes</a>
+        </h4>
+      </div>
+      <div id="collapse6" class="panel-collapse collapse">
+        <div class="panel-footer"><a class="btn btn-link" href=#">Reporte1</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href=#>Reporte2</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+{% endblock %}

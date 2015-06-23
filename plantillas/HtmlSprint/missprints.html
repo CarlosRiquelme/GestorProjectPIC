@@ -6,15 +6,6 @@
 {% block content %}
 
     <center><h1>Mis Sprints </h1></center>
-<center>
-<ul class="nav nav-tabs">
-  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-     <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
-    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
-    <li class="active"><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
-    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
-</ul>
-</center>
 <br>
     <a class="btn btn-success"     href="{% url 'Sprint.views.nuevo_sprint' id_proyecto %}">
        Crear Sprint&nbsp;</a>
@@ -56,5 +47,5 @@
 
     </table>
         </center>
-<a class="btn btn-default" href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

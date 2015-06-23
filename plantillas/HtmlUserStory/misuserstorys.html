@@ -5,16 +5,7 @@
 
 {% block content %}
 
-    <center><h1>Listado de Todos los User Story</h1></center>
-<center>
-<ul class="nav nav-tabs">
-  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-     <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
-    <li class="active"><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
-    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
-    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
-</ul>
-</center>
+<h2>Listado de Todos los User Story</h2>
 <br>
  <a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">
        Crear UserStory&nbsp;</a>
@@ -35,24 +26,18 @@
 
         {% for p in userstorys %}
 
-     <tr>
-	     <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
-         <td><em>{{p.estado}}</em></td>
-         <td><em>{{p.fecha_creacion}}</em></td>
-         <td><em>{{p.tiempo_estimado}}</em></td>
-         <td><em>{{p.tiempo_trabajado}}</em></td>
-         <td><em>{{p.prioridad}}</em></td>
-         <td><em>{{p.sprint.nombre}}</em></td>
-         <td><em>{{p.actividad}}</em></td>
-
-
-	</tr>
-
-
+             <tr>
+	             <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
+                 <td><em>{{p.estado}}</em></td>
+                 <td><em>{{p.fecha_creacion}}</em></td>
+                 <td><em>{{p.tiempo_estimado}}</em></td>
+                 <td><em>{{p.tiempo_trabajado}}</em></td>
+                 <td><em>{{p.prioridad}}</em></td>
+                 <td><em>{{p.sprint.nombre}}</em></td>
+                 <td><em>{{p.actividad}}</em></td>
+	        </tr>
         {% endfor %}
-
     </table>
-        </center>
-
-<a class="btn btn-default" href="{% url 'AdminProyectos.views.proyectos' user.id %}"> <i class="fa fa-backward"></i> Volver</a>
+</center>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

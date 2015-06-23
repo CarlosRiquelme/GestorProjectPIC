@@ -27,18 +27,6 @@ Nuevo Usuario <i class="fa fa-plus"></i></a>
         <td><em>{{dato.email}}</em></td>
         <td>{{ dato.first_name }}</td>
         <td>{{ dato.last_name }}</td>
-
-{#    for r in roles:#}
-{#        print r.rol.descripcion#}
-{#        print r.user.username#}
-{##}
-{#          <td> {% for r in roles %}#}
-{#              {% if r.user.id == dato.id %}#}
-{#                  <a href="{% url 'PIC.views.ver_rol' r.rol.id_rol %}" target="_blank">{{ r.rol.nombre }}</a>#}
-{#               {% endif %}#}
-{#             {% endfor %}#}
-{#            </td>#}
-
          <td>{{ dato.is_active }}</td>
         <td>
           <a  class="btn btn-primary" href="{% url 'PIC.views.editar_usuario' dato.id %}">Editar <i class="fa fa-edit"></i></a>

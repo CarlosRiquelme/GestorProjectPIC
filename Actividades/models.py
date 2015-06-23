@@ -1,5 +1,4 @@
 from django.db import models
-from Flujo.models import Flujo
 from AdminProyectos.models import Proyecto
 
 

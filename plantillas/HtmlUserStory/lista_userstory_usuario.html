@@ -1,0 +1,65 @@
+{% extends 'admin/base_site.html' %}%}
+
+{% block content %}
+<h3> Lista de sus User Storys </h3>
+<h3>Bienvenido "{{user}}"</h3>
+<center>
+<ul class="nav nav-tabs">
+    <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+    <li class="active" ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint2</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
+
+
+</ul>
+</center>
+<br>
+    <center>
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th >PRIORIDAD</th>
+        <th >ACTIVIDAD</th>
+        <th >SPRINT</th>
+        <th >TIEMPO ESTIMADO</th>
+        <th >TIEMPO TRABAJADO</th>
+        <th>NO INICIADO</th>
+        <th>COMENTARIO</th>
+        <th>ACTIVIDAD</th>
+    </thead>
+        {% for p in userstorys %}
+             <tr>
+	             <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
+                 <td><em>{{p.prioridad}}</em></td>
+                 <td><em>{{p.actividad}}</em></td>
+                 <td><em>{{p.sprint}}</em></td>
+                 <td><em>{{p.tiempo_estimado}}</em></td>
+                 <td><em>{{p.tiempo_trabajado}}</em></td>
+                 {% if p.estado == 'TODO' %}
+                 <td> <div class="input-group">
+                    <a class="btn btn-info btn-md" href="#">Iniciar<i class="fa fa-edit"></i></a>
+                     </div>
+                 </td>
+                 {% endif %}
+                 {% if p.estado == 'DOING' %}
+                 <td><a>INICIADO</a></div></td>
+                 {% endif %}
+                 {% if p.estado != 'TODO' and p.estado != 'DOING' %}
+                 <td></td>
+                 {% endif %}
+                 <td> <div class="input-group">
+                    <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}">Visualizar<i class="fa fa-edit"></i></a>
+                     </div>
+                 </td>
+                 {% if p.estado != 'REVISAR_FIN_AC' %}
+                 <td> <div class="input-group">
+                    <a class="btn btn-warning btn-md" href="{% url 'UserStory.views.fin_de_una_actividad_de_un_us' p.id %}">Finalizar<i class="fa fa-edit"></i></a>
+                     </div>
+                 </td>
+                 {% endif %}
+	        </tr>
+        {% endfor %}
+    </table>
+</center>
+{% endblock %}

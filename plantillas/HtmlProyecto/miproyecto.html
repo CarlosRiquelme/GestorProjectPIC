@@ -3,42 +3,26 @@
 
 
 {% block content %}
-<center><h1>{{user}}-{{ proyecto.nombre }}</h1></center>
+<h2>Datos del Proyecto "{{proyecto.nombre}}"</h2>
+
 
 <center>
 <ul class="nav nav-tabs">
   <li class="active"><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-    {% if permiso.rol.name == 'ScrumMaster' or permiso.rol.name == 'Equipo'%}
-    <li ><a href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Actividad</a></li>
+    {% if permiso.rol.name == 'ScrumMaster' %}
+    <li ><a href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}">ScrumMaster</a></li>
     {% endif %}
-    {% if proyecto.estado == 'EN-ESPERA'%}
-    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
-    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
-    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
-    {% endif %}
-    {% if proyecto.estado == 'EN-DESARROLLO'%}
+    <li ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
+    <li ><a href="{% url 'UserStory.views.menu_cliente' id_proyecto %}">Cliente</a></li>
     <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
     <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint2</a></li>
-     {% endif %}
-    {% if permiso.rol.name == 'ScrumMaster'%}
-    <li ><a href="{% url 'ProyectoDesarrollo.views.scrumMaster' id_proyecto %}">ScrumMaster</a></li>
-    {% endif %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
 
 
 </ul>
 </center>
 
-{% if permiso.rol.name == 'ScrumMaster'%}
-<td>
-    <br>
-<p3>Solo al finalizar el dia</p3>
-<a  class="btn btn-info" href="{% url 'ProyectoDesarrollo.views.analizar_sprint' id_proyecto %}">
-Analisis de Sprint <i class="fa fa-plus"></i></a>
 
-
-</td>
-{% endif %}
 <br>
 <br>
 {% if proyecto.estado == 'EN-ESPERA' %}

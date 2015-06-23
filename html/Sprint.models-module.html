@@ -76,7 +76,26 @@
     </td><td class="summary">
         <a href="Sprint.models.Sprint-class.html" class="summary-name">Sprint</a><br />
       Sprint(id, nombre, fecha_creacion, fechaInicio, fechaFin, 
-        tiempo_acumulado, flujo_id, estado)
+        tiempo_acumulado, proyecto_id, estado, secuencia, dias_duracion, 
+        cantidad_userstory, porcentaje_actual, porcentaje_hecho_actual, 
+        dia_trancurrido)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="Sprint.models.Estimacion_Proyecto-class.html" class="summary-name">Estimacion_Proyecto</a><br />
+      Estimacion_Proyecto(id, proyecto_id, fechaInicio, fechaFin)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="Sprint.models.Estimacion_Sprint-class.html" class="summary-name">Estimacion_Sprint</a><br />
+      Estimacion_Sprint(id, sprint_id, fechaInicio, fechaFin, duracion, 
+        proyecto_estimacion_id)
     </td>
   </tr>
 </table>
@@ -101,7 +120,9 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="SPRINT_ESTADOS"></a><span class="summary-name">SPRINT_ESTADOS</span> = <code title="(('ABIERTO', 'ABIERTO'), ('CERRADO', 'CERRADO'))"><code class="variable-group">(</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">ABIERTO</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ABIERTO</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">CERRADO</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CERRADO</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">)</code></code>
+        <a href="Sprint.models-module.html#SPRINT_ESTADOS" class="summary-name">SPRINT_ESTADOS</a> = <code title="(('EN-ESPERA', 'EN-ESPERA'),
+ ('ABIERTO', 'ABIERTO'),
+ ('CERRADO', 'CERRADO'))"><code class="variable-group">(</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">EN-ESPERA</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">EN-ESPERA</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">ABIERTO</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ABI</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -112,6 +133,45 @@
     </td>
   </tr>
 </table>
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="SPRINT_ESTADOS"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">SPRINT_ESTADOS</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">EN-ESPERA</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">EN-ESPERA</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">ABIERTO</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ABIERTO</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">CERRADO</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CERRADO</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">)</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -135,7 +195,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May  2 08:23:12 2015
+    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
