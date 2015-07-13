@@ -8,7 +8,9 @@
     <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     <li class="active" ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
     <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
-    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint2</a></li>
+    {% if proyecto.estado == 'EN-DESARROLLO' %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
+    {% endif %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
 
 
@@ -36,9 +38,10 @@
                  <td><em>{{p.sprint}}</em></td>
                  <td><em>{{p.tiempo_estimado}}</em></td>
                  <td><em>{{p.tiempo_trabajado}}</em></td>
-                 {% if p.estado == 'TODO' %}
+                 {% if sprint.id == p.sprint.id%}
+                 {% if p.estado == 'TODO'  %}
                  <td> <div class="input-group">
-                    <a class="btn btn-info btn-md" href="#">Iniciar<i class="fa fa-edit"></i></a>
+                    <a class="btn btn-info btn-md" href="{% url 'UserStory.views.iniciar_userstory' p.id %}">Iniciar<i class="fa fa-edit"></i></a>
                      </div>
                  </td>
                  {% endif %}
@@ -52,12 +55,14 @@
                     <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}">Visualizar<i class="fa fa-edit"></i></a>
                      </div>
                  </td>
-                 {% if p.estado != 'REVISAR_FIN_AC' %}
+                 {% if p.estado == 'DOING' or p.estado == 'REVISAR_TIEMPO'  %}
+
                  <td> <div class="input-group">
                     <a class="btn btn-warning btn-md" href="{% url 'UserStory.views.fin_de_una_actividad_de_un_us' p.id %}">Finalizar<i class="fa fa-edit"></i></a>
                      </div>
                  </td>
                  {% endif %}
+                  {% endif %}
 	        </tr>
         {% endfor %}
     </table>

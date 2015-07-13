@@ -5,14 +5,14 @@
 
 {% block content %}
 
-    <center><h1>Lista de UserStory para Re-asignar a un Sprint </h1></center>
+    <center><h1>Lista de UserStory para Re-asignar Tiempo </h1></center>
 
 
         <table class="table table-striped" style="width: 100%">
             <thead>
         <th >NOMBRE</th>
         <th >SPRINT</th>
-        <th  style="width: 10%">RE-ASIGNAR AL SGTE</th>
+        <th  style="width: 10%">RE-ASIGNAR</th>
 
 
         {% for p in userstorys %}
@@ -22,7 +22,7 @@
          <td>{{p.sprint}}</td>
         <td>
             <div class="input-group">
-                <a class="btn btn-primary" href="{% url 'ProyectoDesarrollo.views.reasignar_userstory_a_sprint' id_proyecto p.id %}">Sprint</a>
+                <a class="btn btn-primary" href="{% url 'ProyectoDesarrollo.views.reasignar_userstory_tiempo' id_proyecto p.id %}">Tiempo</a>
         </div>
 	</tr>
 

@@ -93,6 +93,7 @@ def iniciar_proyecto(request):
             estimacion_proyecto.proyecto_id=objeto.id
             estimacion_proyecto.save()
             userstorys=UserStory.objects.filter(proyecto_id=objeto.id)
+            ###################### Ya no se usa dejo por que no molesta #######################
             uno=1
             actividad=Actividad.objects.get(proyecto_id=objeto.id , secuencia=uno)
             actividades=Actividad.objects.filter(proyecto_id=objeto.id)
@@ -101,6 +102,7 @@ def iniciar_proyecto(request):
             for dato in actividades:
                 cantidad_actividades+=1
             peso_actividad=100/cantidad_actividades
+            #############################################################################
             for dato in userstorys:
                 dato.actividad_id=actividad.id
                 dato.porcentaje_actividad=peso_actividad
@@ -115,14 +117,16 @@ def iniciar_proyecto(request):
                 estimacion_sprint.fechaInicio=fecha1
                 sprint1.fechaInicio=fecha1
                 dias= dato.tiempo_acumulado/8
-                for dato2 in dias:
+                contador=0
+                while dias > contador:
+                    contador+=1
                     dias_sprint=Dias_de_un_Sprint()
-                    fecha3=fecha_calcular(fecha1,dato2)
-                    dias_sprint.dia=dato2
+                    fecha3=fecha_calcular(fecha1,contador-1)
+                    dias_sprint.dia=contador
                     dias_sprint.fecha=fecha3
                     dias_sprint.sprint_id=dato.id
                     dias_sprint.save()
-                fecha2=fecha_calcular(fecha1,dias)
+                fecha2=fecha_calcular(fecha1,dias-1)
                 estimacion_sprint.fechaFin=fecha2
                 fecha1=fecha_calcular(fecha2,1)
                 sprint1.fechaFin=fecha2
@@ -314,7 +318,7 @@ def finalizar_proyecto(request, id_proyecto):
     if ban == 'TRUE' and ban2 == 'TRUE':
         proyecto.estado='FINALIZADO'
         ahora = date.today()
-        html_content = 'EL PROYECTO A FINALIZADO'+proyecto.nombre+' ' 'Descripcion:'+proyecto.descripcion+' ''Fecha de Finalizacion :'+ahora
+        html_content = 'EL PROYECTO A FINALIZADO'+proyecto.nombre+' ' 'Descripcion:'+proyecto.descripcion+' ''Fecha de Finalizacion :'+str(ahora)
         send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
         proyecto.save()
         messages.success(request, 'A FINALIZADO CORRECTAMENTE EL PROYECTO!')

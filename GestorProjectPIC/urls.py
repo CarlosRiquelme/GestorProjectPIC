@@ -6,7 +6,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'GestorProjectPIC.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
+    url(r'^files/', include('db_file_storage.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^reset/password_reset/$', 'django.contrib.auth.views.password_reset', name='admin_password_reset'),
     url(r'^reset/password_reset/done/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
@@ -106,7 +106,7 @@ urlpatterns = patterns('',
      url(r'^comentario/micomentario/(?P<id_comentario>\d+)/$','Comentario.views.mi_comentario'),
      url(r'^comentario/miscomentarios/(?P<id_userstory>\d+)/$','Comentario.views.mis_comentarios'),
      url(r'^comentario/adjunto/(?P<id_comentario>\d+)/$','Comentario.views.list'),
-
+     url(r'^comentario/ver/adjunto/(?P<id_comentario>\d+)/$','Comentario.views.ver_archivo'),
 
 #PROYECTO DESARRROLLO
      url(r'^proyecto/kanban/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.kanban'),
@@ -119,6 +119,9 @@ urlpatterns = patterns('',
 
      url(r'^proyecto/scrum_master/administracion/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.scrumMaster'),
      url(r'^proyecto/burndowncharts/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.Burndowncharts'),
+     url(r'^proyecto/us/tiempo/nuevo/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','ProyectoDesarrollo.views.reasignar_userstory_tiempo'),
+     url(r'^proyecto/us/tiempo/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.lista_reasignar_userstory_tiempo'),
+     url(r'^proyecto/aprobacion/us/finalizacion/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.lista_aprobacion_finalizacion'),
 
 
 #ADMINISTRACION DEL SCRUM MASTER
@@ -128,6 +131,8 @@ urlpatterns = patterns('',
     url(r'^userstory/cancelar/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.cancelar_userstory'),
     url(r'^userstory/lista/cancelar/(?P<id_proyecto>\d+)/$','UserStory.views.lista_userstory_cancelar'),
     url(r'^userstory/descancelar/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.descancelar_userstory'),
+    url(r'^userstory/aprobar/finalizacion/(?P<id_userstory>\d+)/$','UserStory.views.aprobar_finalizacion'),
+
 #CLIENTE
     url(r'^proyecto/cliente/menu/(?P<id_proyecto>\d+)/$','UserStory.views.menu_cliente'),
     url(r'^proyecto/cliente/nuevouserstory/(?P<id_proyecto>\d+)/$','UserStory.views.cliente_crear_userstory'),
@@ -135,6 +140,6 @@ urlpatterns = patterns('',
 #EQUIPO
     url(r'^proyecto/equipo/userstorys/(?P<id_proyecto>\d+)/$','UserStory.views.lista_userstory_usuario'),
     url(r'^proyecto/equipo/userstorys/finalizar/actividad/(?P<id_userstory>\d+)/$','UserStory.views.fin_de_una_actividad_de_un_us'),
-
+    url(r'^proyecto/equipo/userstorys/iniciar/(?P<id_userstory>\d+)/$','UserStory.views.iniciar_userstory'),
 
 )

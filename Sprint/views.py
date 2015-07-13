@@ -12,6 +12,7 @@ from Sprint.models import Sprint
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from UserStory.models import UserStory
+from AdminProyectos.models import Proyecto
 
 
 def nuevo_sprint(request, id_proyecto):
@@ -101,11 +102,12 @@ def eliminar_sprint(request, id_sprint):
 def mis_sprints(request,id_proyecto):
 
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
 
 
 
-
-    return render_to_response('HtmlSprint/missprints.html',{'sprints':sprints,'id_proyecto':id_proyecto})
+    return render_to_response('HtmlSprint/missprints.html',{'sprints':sprints,'id_proyecto':id_proyecto,
+                                                            'proyecto':proyecto})
 
 
 def mi_sprint(request, id_sprint):

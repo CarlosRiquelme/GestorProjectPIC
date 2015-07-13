@@ -33,11 +33,24 @@ class ComentarioForm(forms.ModelForm):
 
 
 
+#
+#
+# class DocumentForm(forms.ModelForm):
+#     class Meta:
+#         model = Document
+#         exclude = ['comentario']
+#
+#
 
+
+#.models import Console
+from db_file_storage.form_widgets import DBClearableFileInput
+from django import forms
 
 class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
-        exclude = ['comentario']
-
-
+        exclude = []
+        widgets = {
+            'docfile': DBClearableFileInput
+        }

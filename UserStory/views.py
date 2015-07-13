@@ -348,8 +348,10 @@ def menu_cliente(request, id_proyecto):
     :return:
     """
     user=request.user
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
     return render_to_response('HtmlProyecto/cliente.html',{'user':user,
-                                                                   'id_proyecto':id_proyecto},
+                                                                   'id_proyecto':id_proyecto,
+                                                                   'proyecto':proyecto},
                               context_instance=RequestContext(request))
 @login_required(login_url='/admin/login/')
 def listar_us_cliente(request, id_proyecto):
@@ -371,11 +373,24 @@ def lista_userstory_usuario(request, id_proyecto):
     :param id_proyecto:
     :return:
     """
+    sprint=Sprint.objects.get(proyecto_id=id_proyecto, estado='ABIERTO')
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
     user=request.user
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,usuario_id=user.id)
     return render_to_response('HtmlUserStory/lista_userstory_usuario.html',{'userstorys':userstorys,
-                                                                   'id_proyecto':id_proyecto, 'user':user},
+                                                                   'id_proyecto':id_proyecto, 'user':user,
+                                                                   'proyecto':proyecto,
+                                                                   'sprint':sprint},
                               context_instance=RequestContext(request))
+
+def iniciar_userstory(request, id_userstory):
+    userstory=UserStory.objects.get(pk=id_userstory)
+    id_proyecto=userstory.proyecto.id
+    userstory.estado='DOING'
+    userstory.save()
+    messages.success(request, 'SE HA INICIADO EL USER STORY')
+    return HttpResponseRedirect('/proyecto/equipo/userstorys/'+str(id_proyecto))
+
 @login_required(login_url='/admin/login/')
 def userstorys_revisar(request, id_proyecto):
     """
@@ -398,14 +413,28 @@ def fin_de_una_actividad_de_un_us(request, id_userstory):
     """
     user=request.user
     userstory=UserStory.objects.get(pk=id_userstory)
+    id_proyecto=userstory.proyecto.id
+    actividades=Actividad.objects.filter(proyecto_id=id_proyecto)
+    actividad=userstory.actividad
     usuario=userstory.usuario.username
     proyecto=Proyecto.objects.get(pk=userstory.proyecto_id)
     email=proyecto.scrumMaster.email
-    userstory.estado='REVISAR_FIN_AC'
-    html_content = 'El Usuario "'+usuario+'" a finalizado una Actividad de su User Story, Favor Aprobar User Story'
-    send_mail('Finalizacion de la Actividad de un User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
-    userstory.save()
-    messages.success(request, 'A finalizado la Actividad, Espere la Aprobacion de ScrumMaster')
+    ultima_actividad=0
+    for dato in actividades:
+        if ultima_actividad < dato.secuencia:
+            ultima_actividad=dato.secuencia
+    if actividad.secuencia == ultima_actividad:
+        userstory.estado='REVISAR_FIN'
+        html_content = 'El Usuario "'+usuario+'" a finalizado la ultima Actividad de su User Story, Favor Aprobar User Story'
+        send_mail('Finalizacion de la Ultima de las Actividad de un User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+        userstory.save()
+        messages.success(request, 'A finalizado la Actividad, Espere la Aprobacion de ScrumMaster')
+    else:
+        userstory.estado='REVISAR_FIN_AC'
+        html_content = 'El Usuario "'+usuario+'" a finalizado una Actividad de su User Story, Favor Aprobar User Story'
+        send_mail('Finalizacion de la Actividad de un User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+        userstory.save()
+        messages.success(request, 'A finalizado la Actividad, Espere la Aprobacion de ScrumMaster')
 
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 def lista_userstory_cancelar(request, id_proyecto):
@@ -429,3 +458,21 @@ def descancelar_userstory(request,id_proyecto,id_userstory):
     messages.success(request, 'UserStory DESCANCELADO!!!')
     return HttpResponseRedirect('/userstory/lista/cancelar/'+str(id_proyecto))
 
+def aprobar_finalizacion(request,id_userstory):
+    userstory=UserStory.objects.get(pk=id_userstory)
+    usuario=userstory.usuario.username
+    email=userstory.usuario.email
+    id_proyecto=userstory.proyecto.id
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+    userstory.estado='FINALIZADO'
+
+    html_content = 'A sido aprobada la finalizacion de su User Story "'+userstory.nombre+'" del Proyecto '+proyecto.nombre+ ' por el Scrum Master ' +proyecto.scrumMaster.username
+    send_mail('Aprobacion de Finalizacion de su User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+
+    html_content = 'Aprobo la finalizacion de su User Story "'+userstory.nombre+'" del Proyecto '+proyecto.nombre+ ' asignado al usuario ' +usuario
+    send_mail('Aprobacion de Finalizacion de User Story',html_content , 'gestorprojectpic@gmail.com',[proyecto.scrumMaster.email], fail_silently=False)
+
+    userstory.save()
+    messages.success(request, 'A aprobado correctamente el USER STORY')
+
+    return HttpResponseRedirect('/proyecto/aprobacion/us/finalizacion/'+str(id_proyecto))

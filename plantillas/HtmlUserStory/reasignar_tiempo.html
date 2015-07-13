@@ -1,0 +1,16 @@
+{% extends 'admin/base_site.html' %}
+
+
+{% block content %}
+<h3> Asignar Nuevo Tiempo a {{userstory.nombre}}</h3>
+
+	<form id='formulario' method='post' action=''>{% csrf_token %}
+		<table class="table table-striped" style="width: 50%">
+		{{formulario.as_table}}</table>
+		<br>
+		<a class="btn btn-default" href="{% url 'UserStory.views.userstorys_revisar' id_proyecto  %}"> <i class="fa fa-backward"></i> Volver</a>
+		<button class="btn btn-primary" type='submit' >Guardar <i class="fa fa-save"></i></button>
+
+	</form>
+
+{% endblock %}

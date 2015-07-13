@@ -37,7 +37,7 @@ def esAdmin(self):
     return False
 User.add_to_class('esAdmin', esAdmin)
 
-def esScrumMaster(self,request):
+def esScrumMaster(self):
     rol='ScrumMaster'
     for grupo in self.groups.all():
         print grupo

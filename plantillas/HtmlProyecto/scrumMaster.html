@@ -14,6 +14,9 @@
 <ul class="nav nav-tabs">
     <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     <li class="active"><a href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}">ScrumMaster</a></li>
+    {% if proyecto.estado == 'EN-DESARROLLO' %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
+    {% endif %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
     <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
 </ul>
@@ -58,7 +61,9 @@ Finalizar Proyecto </a>
         </h4>
       </div>
       <div id="collapse2" class="panel-collapse collapse">
+          {% if proyecto.estado == 'EN-ESPERA'%}
         <div class="panel-footer"><a class="btn btn-link " href="{% url 'Actividades.views.nueva_actividad' id_proyecto %}">Crear</a></div>
+          {% endif %}
         <div class="panel-footer"><a class="btn btn-link" href="{% url 'Actividades.views.mis_actividades' id_proyecto %}">Visualizar</a></div>
 
       </div>
@@ -86,7 +91,9 @@ Finalizar Proyecto </a>
         </h4>
       </div>
       <div id="collapse4" class="panel-collapse collapse">
+          {% if proyecto.estado == 'EN-ESPERA' %}
         <div class="panel-footer"><a class="btn btn-link" href="{% url 'Sprint.views.nuevo_sprint' id_proyecto %}">Crear</a></div>
+          {% endif %}
         <div class="panel-footer"><a class="btn btn-link" href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Visualizar</a></div>
       </div>
     </div>

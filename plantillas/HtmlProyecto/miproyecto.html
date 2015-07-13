@@ -12,10 +12,16 @@
     {% if permiso.rol.name == 'ScrumMaster' %}
     <li ><a href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}">ScrumMaster</a></li>
     {% endif %}
+    {% if permiso.rol.name == 'Equipo' %}
     <li ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
+    {% endif %}
+    {% if permiso.rol.name == 'Cliente' %}
     <li ><a href="{% url 'UserStory.views.menu_cliente' id_proyecto %}">Cliente</a></li>
+    {% endif %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
-    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint2</a></li>
+    {% if proyecto.estado == 'EN-DESARROLLO' %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
+    {% endif %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
 
 

@@ -6,9 +6,11 @@
 {% block content %}
 
     <center><h1>Mis Sprints </h1></center>
+{% if proyecto.estado == 'EN-ESPERA' %}
 <br>
     <a class="btn btn-success"     href="{% url 'Sprint.views.nuevo_sprint' id_proyecto %}">
        Crear Sprint&nbsp;</a>
+{% endif %}
 <br>
     <center>
 

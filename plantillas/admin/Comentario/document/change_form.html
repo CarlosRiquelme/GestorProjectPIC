@@ -1,0 +1,202 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls admin_static admin_modify %}
+
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
+{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
+
+{% if not is_popup %}
+  {% block breadcrumbs %}
+    <ol class="breadcrumb">
+      <li class="home">
+        <a href="{% url 'admin:index' %}" title="{% trans 'Home' %}"><span class="glyphicon glyphicon-home"></span></a>
+      </li>
+      <li>
+        <a href="{% url 'admin:app_list' app_label=opts.app_label %}">
+          {{ opts.app_config.verbose_name }}
+        </a>
+      </li>
+      <li>
+        {% if has_change_permission %}
+          <a href="{% url opts|admin_urlname:'changelist' %}">
+            {{ opts.verbose_name_plural|capfirst }}
+          </a>
+        {% else  %}
+            {{ opts.verbose_name_plural|capfirst }}
+        {% endif %}
+      </li>
+      <li class="active">
+        {% if add %}{% trans 'Add' %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+      </li>
+    </ol>
+  {% endblock %}
+{% endif %}
+
+{% block content %}
+  <div id="content-main">
+    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %} action="" method="post" id="{{ opts.model_name }}_form" role="form" novalidate>
+    {% csrf_token %}
+      {% block form_top %}{% endblock %}
+
+      {% if is_popup %}
+        <input type="hidden" name="{{ is_popup_var }}" value="1" />
+      {% endif %}
+      {% if to_field %}
+        <input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}" />
+      {% endif %}
+      <div class="col-sm-9 form-fields">
+        <div class="panel panel-default form-panel">
+          <a href="#" class="form-expand">
+            <span class="glyphicon glyphicon-resize-horizontal "></span>
+          </a>
+          <div class="panel-body">
+            {% if errors %}
+              <p class="errornote">
+              {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+              </p>
+              {{ adminform.form.non_field_errors }}
+            {% endif %}
+
+            {% block field_sets %}
+
+            {% for fieldset in adminform %}
+              {% include "admin/includes/fieldset.html" %}
+            {% endfor %}
+            {% endblock %}
+
+            {% block after_field_sets %}{% endblock %}
+
+            {% block inline_field_sets %}
+            {% for inline_admin_formset in inline_admin_formsets %}
+                {% include inline_admin_formset.opts.template %}
+            {% endfor %}
+            {% endblock %}
+
+            {% block after_related_objects %}{% endblock %}
+
+            {% if adminform and add %}
+                <script type="text/javascript">
+                    (function($) {
+                        $(document).ready(function() {
+                            $('form#{{ opts.model_name }}_form :input:visible:enabled:first').focus()
+                        });
+                    })(django.jQuery);
+                </script>
+            {% endif %}
+
+            {# JavaScript for prepopulated fields #}
+            {% prepopulated_fields_js %}
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 form-buttons">
+        <div data-spy="affix" data-offset-top="125">
+
+
+          {% block object-tools %}
+            {% if change %}
+              {% if not is_popup %}
+                <ul class="object-tools btn-group btn-group-justified">
+                  {% block object-tools-items %}
+
+
+                  {% endblock %}
+                </ul>
+              {% endif %}
+            {% endif %}
+          {% endblock %}
+
+          {% block submit_buttons_bottom %}<button type="submit" title="Grabar" class="list-group-item active" name="_save">
+      <span class="glyphicon glyphicon-floppy-disk"></span>
+      <span class="text">Grabar</span>
+    </button>
+
+            {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+   <a title="Eliminar" id="eliminar" class="list-group-item deletelink" href="">
+      <span class="glyphicon glyphicon-trash"></span>
+      <span class="text">Eliminar</span>
+    </a>
+            <a href="" id="volver" class="list-group-item default" style="width:100px">Volver</a>
+
+            {% endblock %}
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+function getUrlParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        }
+    }
+}
+    (function ($) {
+      var c= document.getElementById("id_comentario")
+      c.style.display="none"
+      var id=getUrlParameter("id");
+      {% if not change %}
+     c.options[c.selectedIndex].remove();
+     {% endif %}
+     c.value=id;
+
+
+      //$("#id_comentario").val(getUrlParameter("id"));
+      var id_us=getUrlParameter("id_us")
+      document.getElementById("volver").href="/comentario/miscomentarios/"+id_us
+      document.getElementById("eliminar").href="/admin/Comentario/document/{{original.pk}}/delete/?id_us="+id_us
+
+        var f=document.getElementById("{{ opts.model_name }}_form")
+        //f.action="/comentario/miscomentarios/"+getUrlParameter("id_us")+"/"
+      $(document).ready(function(){
+        $('.vManyToManyRawIdAdminField, .vForeignKeyRawIdAdminField').addClass('form-control');
+        $('.form-row input[type="checkbox"]').closest('li')
+                                             .addClass('checkbox');
+        $('.radiolist li').addClass('radio');
+
+        $('.form-expand').on('click', function () {
+          $form_fields = $('.form-fields');
+          $form_buttons = $('.form-buttons');
+          if ($form_fields.hasClass('expanded')) {
+            // contract form
+            $form_fields.removeClass('col-sm-11 expanded')
+                        .addClass('col-sm-9');
+            $form_buttons.removeClass('col-sm-1 contracted')
+                         .addClass('col-sm-3');
+            $form_buttons.find('.object-tools')
+                         .removeClass('btn-group-vertical')
+                         .addClass('btn-group btn-group-justified');
+          } else {
+            // expand form
+            $form_fields.removeClass('col-sm-9')
+                        .addClass('col-sm-11 expanded');
+            $form_buttons.removeClass('col-sm-3')
+                         .addClass('col-sm-1 contracted');
+            $form_buttons.find('.object-tools')
+                         .addClass('btn-group-vertical')
+                         .removeClass('btn-group btn-group-justified');
+          }
+        });
+      });
+    })(django.jQuery);
+  </script>
+{% endblock js %}

@@ -10,10 +10,11 @@
 <ul class="nav nav-tabs">
     {% if proyecto.estado == 'EN-DESARROLLO'%}
   <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-     <li class="active"><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
-    <li ><a href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">User Story</a></li>
-    <li ><a href="{% url 'Sprint.views.mis_sprints' id_proyecto %}">Sprint</a></li>
-    <li ><a href="{% url 'AdminProyectos.views.listar_usuario_proyecto' id_proyecto %}">Usuarios</a></li>
+    <li class="active"><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
+    {% if proyecto.estado == 'EN-DESARROLLO' %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
+    {% endif %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>>
     {% endif %}
 </ul>
 </center>
@@ -31,16 +32,48 @@
             {% for dato in userstorys  %}
               {% if dato.actividad.id == p.id %}
                 <tr>
+                    {% if dato.estado == 'TODO' or dato.estado == 'DOING' or dato.estado == 'DONE' %}
+                    <td>
+                        <div class="input-group">
+                            <a class="btn btn-primary" href="{% url 'UserStory.views.mi_userstory' dato.id %}">{{dato.nombre}}</a>
+                        </div>
 
+                    <td>
+
+                        <a>{{dato.estado}}</a>
+                    </td>
+                    {% endif %}
+
+                    {% if  dato.estado == 'REVISAR_FIN_AC' %}
                     <td>
                         <div class="input-group">
                             <a class="btn btn-primary" href="{% url 'UserStory.views.mi_userstory' dato.id %}">{{dato.nombre}}</a>
                         </div>
                     <td>
 
+                        <a>DONE</a>
+                    </td>
+
+                </tr>
+             {% endif %}
+
+                </tr>
+              {% endif %}
+            {% endfor %}
+            {% for dato in lista %}
+              {% if dato.us.actividad.id == p.id %}
+                <tr>
+                    {% if dato.estado == 'TODO' or dato.estado == 'DOING' or dato.estado == 'DONE' %}
+                    <td>
+                        <div class="input-group">
+                            <a class="btn btn-primary" href="{% url 'UserStory.views.mi_userstory' dato.id %}">{{dato.us.nombre}}</a>
+                        </div>
+                    <td>
+
                         <a>{{dato.estado}}</a>
                     </td>
-                </tr>
+                    {% endif %}
+
               {% endif %}
             {% endfor %}
 

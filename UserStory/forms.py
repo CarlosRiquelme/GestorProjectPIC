@@ -64,7 +64,7 @@ class UserStoryFormEdit(forms.ModelForm):
 
     class Meta:
         model = UserStory
-        fields = ['nombre','descripcion']
+        fields = ['nombre','descripcion','prioridad','tiempo_estimado']
 
     def save(self, commit=True):
         userstory = super(UserStoryFormEdit, self).save(commit=True)

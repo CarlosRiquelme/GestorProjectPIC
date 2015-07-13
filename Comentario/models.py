@@ -19,10 +19,53 @@ class Comentario(models.Model):
     hora_trabajada=models.IntegerField(null=True)
     porcentaje_userstory=models.FloatField(null=True)
     adjunto=models.NullBooleanField()
+
     def __unicode__(self):
         return self.titulo
 
-class Document(models.Model):
-    docfile = models.FileField(upload_to='')
-    comentario=models.ForeignKey(Comentario)
+    def get_archivo(self):
 
+        docs=Document.objects.filter(comentario=self)
+        if docs.count()>0:
+            return docs[0].docfile
+        else:
+            return None
+
+    def get_archivo_id(self):
+
+        docs=Document.objects.filter(comentario=self)
+        if docs.count()>0:
+            return docs[0].id
+        else:
+            return None
+
+
+from db_file_storage.model_utils import delete_file, delete_file_if_needed
+
+class Document(models.Model):
+    comentario=models.ForeignKey(Comentario)
+    docfile = models.FileField(
+        upload_to='Comentario.Archivo/bytes/filename/mimetype',
+        blank=True,
+        null=True
+    )
+
+    def get_absolute_url(self):
+        return reverse('Document.edit', kwargs={'pk': self.pk})
+
+    def save(self, *args, **kwargs):
+        delete_file_if_needed(self, 'docfile')
+        super(Document, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        super(Document, self).delete(*args, **kwargs)
+        delete_file(self, 'docfile')
+
+
+class Archivo(models.Model):
+    bytes = models.TextField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.filename

@@ -7,7 +7,7 @@
 
 <h2>Listado de Todos los User Story</h2>
 <br>
-{% if  user.esScrumMaster or user.esAdmin %}
+{% if user.esScrumMaster %}
  <a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">
        Crear UserStory&nbsp;</a>
 {% endif %}
@@ -24,9 +24,10 @@
         <th >SPRINT</th>
         <th >ACTIVIDAD</th>
         <th>COMENTARIOS</th>
+        <th>APROBAR</th>
     </thead>
 
-        {% for p in userstorys %}
+        {% for p in lista %}
 
              <tr>
 	             <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
@@ -40,9 +41,12 @@
                  <td> <div class="input-group">
                     <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}" >Ver<i class="fa fa-edit"></i></a></div>
                  </td>
+                 <td> <div class="input-group">
+                    <a class="btn btn-info btn-md" href="{% url 'UserStory.views.aprobar_finalizacion' p.id %}" >FINALIZACION<i class="fa fa-edit"></i></a></div>
+                 </td>
 	        </tr>
         {% endfor %}
     </table>
 </center>
-<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+<a class="btn btn-default" href="{% url 'UserStory.views.userstorys_revisar' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}
