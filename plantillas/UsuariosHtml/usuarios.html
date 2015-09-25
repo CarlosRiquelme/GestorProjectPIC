@@ -3,14 +3,14 @@
 
 {% block content %}
 
-<h1>LISTA DE USUARIOS</h1>
+<h2>LISTA DE USUARIOS</h2>
 <table>
 <a  class="btn btn-info" href="{% url 'PIC.views.nuevo_usuario'  %}">
 Nuevo Usuario <i class="fa fa-plus"></i></a>
 
-
+<br><br>
 </table>
-
+<div class="panel panel-info">
  <table class="table table-bordered table-condensed table-striped" >
     <thead>
         <th >USERNAME</th>
@@ -43,7 +43,7 @@ Nuevo Usuario <i class="fa fa-plus"></i></a>
 	</tr>
 	{% endfor %}
  </table>
-
+</div>
 
 <br><br><br>
 

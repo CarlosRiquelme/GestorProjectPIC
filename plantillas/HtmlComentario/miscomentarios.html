@@ -12,7 +12,7 @@
 {% else %}
     <a  class="btn btn-success" href="{% url 'Comentario.views.nuevo_comentario' id_userstory %}">Nuevo Comentario</a>
 {% endif %}
-<center>
+<div class="panel panel-info">
 
         <table class="table table-striped" style="width: 100%">
             <thead>
@@ -20,7 +20,7 @@
         <th >FECHA DE CREACION</th>
         <th >HORA TRABAJADA</th>
          <th > ARCHIVO </th>
-        {% if not user.esScrumMaster %}
+        {% if not user.esScrumMaster and userstory.estado != 'FINALIZADO' %}
         <th >ADJUNTAR</th>
         {% endif %}
     </thead>
@@ -32,7 +32,7 @@
          <td><em>{{p.fecha_creacion}}</em></td>
          <td><em>{{p.hora_trabajada}}</em></td>
          <td><em> {% if p.get_archivo %}<a href="/files/download/?name={{p.get_archivo}}">{{p.get_archivo}} {% endif %}</em></td>
-         {% if not user.esScrumMaster %}
+         {% if not user.esScrumMaster and userstory.estado != 'FINALIZADO' %}
          <td>
             <div class="input-group">
                 {% if p.get_archivo_id %}
@@ -50,7 +50,23 @@
         {% endfor %}
 
     </table>
-        </center>
+   </div>
+<div class="pagination">
+    <span class="step-links">
+        {% if comentarios.has_previous %}
+            <a href="?page={{ comentarios.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ comentarios.number }} of {{ comentarios.paginator.num_pages }}.
+        </span>
+
+        {% if comentarios.has_next %}
+            <a href="?page={{ comentarios.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+<br>
 
 {% if not user.esScrumMaster %}
 

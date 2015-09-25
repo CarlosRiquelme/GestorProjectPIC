@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Menu Cliente</h1>
 <h3>Bienvenido "{{user}}"</h3>
-<center>
+
 <ul class="nav nav-tabs">
   <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     <li class="active"><a href="{% url 'UserStory.views.menu_cliente' id_proyecto %}">Cliente</a></li>
@@ -16,7 +16,7 @@
 
 
 </ul>
-</center>
+
 
 <div class="panel panel-info">
   <div class="panel-body">

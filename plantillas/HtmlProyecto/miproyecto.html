@@ -6,7 +6,7 @@
 <h2>Datos del Proyecto "{{proyecto.nombre}}"</h2>
 
 
-<center>
+
 <ul class="nav nav-tabs">
   <li class="active"><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     {% if permiso.rol.name == 'ScrumMaster' %}
@@ -18,25 +18,25 @@
     {% if permiso.rol.name == 'Cliente' %}
     <li ><a href="{% url 'UserStory.views.menu_cliente' id_proyecto %}">Cliente</a></li>
     {% endif %}
-    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
-    {% if proyecto.estado == 'EN-DESARROLLO' %}
+
+    {% if proyecto.estado != 'EN-ESPERA' %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
-    {% endif %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
     <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
+    {% endif %}
 
 
 </ul>
-</center>
 
 
-<br>
-<br>
+
+
 {% if proyecto.estado == 'EN-ESPERA' %}
 <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"  href="#myModal" >
        Editar&nbsp;<i class="fa fa-edit"></i></a>
 {% endif %}
 
-    <center>
+ <div class="panel panel-info">
         
         <table class="table table-bordered table-striped">
 
@@ -48,7 +48,7 @@
             <tr><th class="navbar-inner">Fecha de Fin: </th><td style="text-align: center">{{ proyecto.fechaFin }}</td></tr>
             <tr><th class="navbar-inner">Descripcion: </th><td style="text-align: center">{{ proyecto.descripcion }}</td></tr>
         </table>
-    </center>
+    </div>
      
 
 <a class="btn btn-default" href="{% url 'AdminProyectos.views.proyectos' user.id %}"> Volver</a>

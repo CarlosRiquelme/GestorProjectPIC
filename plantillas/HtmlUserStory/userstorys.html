@@ -1,45 +1,15 @@
 {% extends 'admin/base_site.html' %}
 
-
-
-{% block header %}
-
-        USERSTORY
-
-{% endblock %}
 {% block content %}
 
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1"  style="top: 30%" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel"><b>Eliminar UserStory</b></h4>
-      </div>
-      <div class="modal-body">
-         	Esta seguro de que desea eliminar este UserStory?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
-        <button type="button" onclick="redirect()" class="btn btn-primary">Aceptar <i class="fa fa-check"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
-   <table>
-
-
-
+<table>
 <td>
 <a  class="btn btn-info" href="{% url 'UserStory.views.nuevo_userstory'  %}">
-Nuevo Sprint <i class="fa fa-plus"></i></a>
+Nuevo Sprint</a>
 </td>
-   </table>
+</table>
 
+<div class="panel panel-info">
 
  <table class="table table-striped" style="width: 100%">
     <thead>
@@ -75,22 +45,12 @@ Nuevo Sprint <i class="fa fa-plus"></i></a>
         <div class="input-group">
         <a class="btn btn-primary" href="{% url 'UserStory.views.editar_userstory' dato.id %}">Editar <i class="fa fa-edit"></i></a>
        &nbsp; <a class="btn btn-danger" data-toggle="modal" data-target="#myModal"  onclick="$('#delete-id').val({{ dato.id }})" href="#myModal" >
-       Eliminar&nbsp;<i class="fa fa-ban"></i></a>
-        </div>
-
-
+       Eliminar&nbsp;</a>
+            </div>
         </td>
 	</tr>
 	{% endfor %}
  </table>
-<input type="hidden" id="delete-id" value="0">
-
-<script>
-function redirect(){
-var id=$('#delete-id').val()
-window.location.replace("/userstory/eliminar/"+id.toString());
-
-}
-</script>
+</div>
 
 {% endblock %}

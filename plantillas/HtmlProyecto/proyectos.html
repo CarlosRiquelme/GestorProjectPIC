@@ -8,24 +8,6 @@
 
 <h1>Lista de Proyectos del Usuario {{user}}</h1>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1"  style="top: 30%" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel"><b>Eliminar Proyecto</b></h4>
-      </div>
-      <div class="modal-body">
-         	Esta seguro de que desea eliminar este proyecto?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
-        <button type="button" onclick="redirect()" class="btn btn-primary">Aceptar <i class="fa fa-check"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
    <table>
    
 
@@ -34,12 +16,12 @@
 <a  class="btn btn-info" href="{% url 'AdminProyectos.views.nuevo_proyecto'  %}">
 Nuevo Proyecto <i class="fa fa-plus"></i></a>
 
-
+<br><br>
 </td>
 {% endif %}
    </table>
 
-
+<div class="panel panel-info">
  <table class="table table-striped" style="width: 100%">
     <thead>
         <th >NOMBRE</th>
@@ -48,8 +30,9 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         <th >FECHA DE CREACION</th>
         <th >FECHA DE INICIO</th>
         <th >FECHA DE FINALIZACION</th>
-       
+         {% if proyecto.estado == 'EN-ESPERA' %}
         <th  style="width: 20%">ACCION</th>
+        {% endif %}
     </thead>
     {% for dato in usuarioproyecto %}
     <tr>
@@ -64,25 +47,12 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         <td> 
         <div class="input-group">  
         <a class="btn btn-primary" href="{% url 'AdminProyectos.views.editar_proyecto' dato.proyecto.id %}">Editar <i class="fa fa-edit"></i></a>
-       &nbsp; <a class="btn btn-danger"  href="{% url 'AdminProyectos.views.eliminar_proyecto' dato.proyecto.id %}" > Eliminar&nbsp;<i class="fa fa-ban"></i></a>
+       &nbsp; <a class="btn btn-danger"  href="{% url 'AdminProyectos.views.pre_eliminar_proyecto' dato.proyecto.id %}" > Eliminar&nbsp;<i class="fa fa-ban"></i></a>
         </div>
         </td>
-        {% endif %}
-        {% if dato.proyecto.estado != 'EN-ESPERA'%}
-         <td></td>
-
         {% endif %}
 	</tr>
 	{% endfor %}
  </table>
-<input type="hidden" id="delete-id" value="0">
-
-<script>
-function redirect(){ 
-var id=$('#delete-id').val()
-window.location.replace("/proyecto/eliminar/"+id.toString());
-
-}
-</script>
-
+</div>
 {% endblock %}

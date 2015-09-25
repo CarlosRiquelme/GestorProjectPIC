@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>BurnDownChar Proyecto</title>
+
+		<script type="text/javascript" src="/static/librerias/jquery.min.js"></script>
+		<style type="text/css">
+${demo.css}
+		</style>
+		<script type="text/javascript">
+$(function () {
+
+
+    var datos = {{lista3|safe}}
+
+    var datos2 = {{lista2|safe}}
+
+    var datos1 = {{lista1|safe}}
+
+    $('#container').highcharts({
+        title: {
+            text: 'Burn down chart del proyecto',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'GestorPIC',
+            x: -20
+        },
+        xAxis: {
+            title: {
+                text: 'Fecha del inicio del proyecto y las fechas de finalizacion de cada Sprint'
+            },
+
+            categories: datos
+        },
+        yAxis: {
+            title: {
+                text: 'Tiempo (Horas)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: 'hs'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'El Real',
+            data: datos1
+        }, {
+            name: 'El estimado',
+            data: datos2
+        }]
+    });
+});
+		</script>
+	</head>
+	<body>
+<script src="/static/Highcharts-4.1.6/js/highcharts.js"></script>
+<script src="/static/Highcharts-4.1.6/js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>

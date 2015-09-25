@@ -1,0 +1,37 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+
+<div class="container">
+  <h2>Burndowncharts</h2>
+    <ul class="nav nav-tabs">
+    <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+    {% if rol.rol.name == 'ScrumMaster' %}
+    <li ><a href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}">ScrumMaster</a></li>
+    {% endif %}
+    {% if rol.rol.name == 'Equipo' %}
+    <li ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
+    {% endif %}
+    {% if rol.rol.name == 'Cliente' %}
+    <li ><a href="{% url 'UserStory.views.menu_cliente' id_proyecto %}">Cliente</a></li>
+    {% endif %}
+    {% if proyecto.estado != 'EN-ESPERA' %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
+    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
+    <li class="active"><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
+    {% endif %}
+</ul>
+
+<div class="panel panel-info">
+  <div class="panel-body">
+     <h3 class="panel-title">Graficos</h3>
+  </div>
+
+  <div class="panel-footer"><a class="btn btn-link" href="{% url 'AdminProyectos.views.jo3' id_proyecto%}">Proyecto</a></div>
+   {% for object in sprints%}
+    <div class="panel-footer"><a class="btn btn-link" href="{% url 'AdminProyectos.views.jo5' object.id %}">{{object.nombre}}</a></div>
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %}

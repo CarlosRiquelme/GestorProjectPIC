@@ -1,22 +1,11 @@
 {% extends 'admin/base_site.html' %}
-{% block titulo %}Eliminar Sprint{% endblock %}
-{% block encabezado %}
-
-{% endblock %}
 {% block content %}
+<div class="panel panel-info">
     <br>
     <center><h1>Eliminar Sprint</h1></center>
     <br><br>
-    <center>
-    <p>Esta seguro que desea eliminar el sprint {{ sprint.nombre }}<p>
-        </center>
-    <center>
-
-	<form  method='post' action=''>{% csrf_token %}
-
-
-		<input class="btn btn-info" type='submit' name="delete" value='si'/>
-        <input class="btn btn-info" type='submit' name="delete" value='no'/>
-	</form>
-    </center>
+    <p>Esta seguro que desea eliminar el Sprint  "{{ sprint.nombre }}"</p>
+		<a class="btn btn-danger" href="{% url 'Sprint.views.eliminar_sprint' sprint.id %}">Aceptar</a>
+        <a class="btn btn-info" href="{% url 'Sprint.views.mis_sprints' sprint.proyecto_id %}">Cancelar</a>
+</div>
 {% endblock %}

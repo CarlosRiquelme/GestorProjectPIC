@@ -1,17 +1,6 @@
 {% extends 'admin/base_site.html' %}
-
-{% block title %}Editar Proyecto{% endblock %}
-{% block header %}
-EDITAR PROYECTO
-{% endblock %}
 {% block content %}
-
-
-   
-    <center>
-
-           
-
+<h2>Editar Proyecto</h2>
 	<form id='formulario' method='post' action=''>{% csrf_token %}
 		<table class="table table-striped" style="width: 50%">
 		{{formulario.as_table}}</table>
@@ -20,5 +9,4 @@ EDITAR PROYECTO
 		<button class="btn btn-primary" type='submit' >Guardar <i class="fa fa-save"></i></button>
 
 	</form>
-    </center>
 {% endblock %}

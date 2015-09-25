@@ -1,0 +1,29 @@
+{% extends 'admin/base_site.html' %}
+
+
+
+
+{% block content %}
+<h3>{{proyecto.nombre}}</h3>
+  <div class="panel panel-info">
+  <table class="table table-striped" style="width: 49%; float: left; margin-right: 2%;" border="1">
+      <thead>
+        <th >Proyectos</th>
+        <th  style="width: 20%">Asignar Rol a</th>
+      </thead>
+    {% for p in roles %}
+        <tr>
+	        <td><em>{{p.name}}</em></td>
+            <td>
+                <div class="input-group">
+                    <a class="btn btn-primary" href="{% url 'AdminProyectos.views.asignar_usuario_proyecto' id_proyecto id_user p.id%}">{{usuario.username}}</a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+  </table>
+</div>
+
+
+
+{% endblock %}

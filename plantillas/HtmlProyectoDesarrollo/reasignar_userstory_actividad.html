@@ -5,9 +5,9 @@
 
 {% block content %}
 
-    <center><h1>Lista de UserStory para Re-asignar a una Actividad </h1></center>
+    <h2>Lista de UserStory para Re-asignar a una Actividad </h2>
 
-
+<div class="panel panel-info">
         <table class="table table-striped" style="width: 100%">
             <thead>
         <th >NOMBRE</th>
@@ -32,6 +32,6 @@
         {% endfor %}
 
     </table>
-        </center>
+        </div>
 <a class="btn btn-default" href="{% url 'UserStory.views.userstorys_revisar' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

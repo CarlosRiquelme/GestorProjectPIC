@@ -16,9 +16,9 @@
     <li class="active"><a href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}">ScrumMaster</a></li>
     {% if proyecto.estado == 'EN-DESARROLLO' %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
-    {% endif %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
     <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
+    {% endif %}
 </ul>
 </center>
 <br>
@@ -77,7 +77,9 @@ Finalizar Proyecto </a>
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse collapse">
+          {% if proyecto.estado == 'EN-ESPERA'%}
         <div class="panel-footer"><a class="btn btn-link" href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">Crear</a></div>
+          {% endif %}
         <div class="panel-footer"><a class="btn btn-link" href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">Visualizar</a></div>
         <div class="panel-footer"><a class="btn btn-link" href="{% url 'UserStory.views.lista_userstory_cancelar' id_proyecto %}">Cancelar-Descancelar</a></div>
       </div>
@@ -107,8 +109,12 @@ Finalizar Proyecto </a>
         </h4>
       </div>
       <div id="collapse6" class="panel-collapse collapse">
-        <div class="panel-footer"><a class="btn btn-link" href=#">Reporte1</a></div>
-        <div class="panel-footer"><a class="btn btn-link" href=#>Reporte2</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'AdminProyectos.views.reporte01' id_proyecto %}">Cantidad de Trabajo en Curso por el Equipo</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'AdminProyectos.views.reporte02' id_proyecto %}">Cantidad de Trabajo por Usuario Pendiente, en Curso y Finalizados</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'AdminProyectos.views.reporte03' id_proyecto %}">Lista clasificada por orden de prioridad de todas las actividades para completar el proyecto</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'AdminProyectos.views.reporte04' id_proyecto %}">Lista de Tiempo estimado</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'AdminProyectos.views.reporte05' id_proyecto %}">Backlog de Producto</a></div>
+        <div class="panel-footer"><a class="btn btn-link" href="{% url 'AdminProyectos.views.reporte06' id_proyecto %}">Backlog de Sprints</a></div>
       </div>
     </div>
 

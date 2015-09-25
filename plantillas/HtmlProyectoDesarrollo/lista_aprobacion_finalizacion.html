@@ -11,7 +11,7 @@
  <a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">
        Crear UserStory&nbsp;</a>
 {% endif %}
-    <center>
+<div class="panel panel-info">
 
         <table class="table table-striped" style="width: 100%">
             <thead>
@@ -47,6 +47,7 @@
 	        </tr>
         {% endfor %}
     </table>
-</center>
+</div>
+<br>
 <a class="btn btn-default" href="{% url 'UserStory.views.userstorys_revisar' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

@@ -5,34 +5,31 @@
 
 {% block content %}
 
-    <center><h1>Mis Sprints </h1></center>
+<h2>Mis Sprints </h2>
 {% if proyecto.estado == 'EN-ESPERA' %}
 <br>
     <a class="btn btn-success"     href="{% url 'Sprint.views.nuevo_sprint' id_proyecto %}">
        Crear Sprint&nbsp;</a>
 {% endif %}
 <br>
-    <center>
+<div class="panel panel-info">
 
         <table class="table table-striped" style="width: 100%">
             <thead>
         <th >NOMBRE</th>
         <th>DURACION</th>
-
-
-
         <th  style="width: 10%">ASIGNAR</th>
         <th  style="width: 20%">LISTA DE U_S DEL SPRINT</th>
+        {% if proyecto.estado == 'EN-ESPERA'%}
+        <th  style="width: 20%">Accion</th>
+        {% endif %}
 
         {% for p in sprints %}
 
     <tr>
 	     <td><em><a href="{% url 'Sprint.views.mi_sprint' p.id %}">{{p.nombre}}</a></em></td>
          <td><em>{{p.tiempo_acumulado}}</em></td>
-
-
-
-        <td>
+         <td>
             <div class="input-group">
                 <a class="btn btn-primary" href="{% url 'UserStory.views.lista_userstory_no_creado' id_proyecto p.id %}">UserStory</a>
         </div>
@@ -41,6 +38,14 @@
                 <a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_relacionado_a_sprint'  p.id %}">Visualizar</a>
             </div>
         </td>
+        {% if proyecto.estado == 'EN-ESPERA'%}
+        <td>
+            <div class="input-group">
+                <a class="btn btn-info" href="{% url 'Sprint.views.editar_sprint'  p.id %}">Editar</a>&nbsp;
+                <a class="btn btn-danger" href="{% url 'Sprint.views.pre_eliminar_sprint'  p.id %}">Eliminar</a>
+            </div>
+        </td>
+        {% endif %}
 
 	</tr>
 
@@ -48,6 +53,7 @@
         {% endfor %}
 
     </table>
-        </center>
+</div>
+<br>
 <a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

@@ -1,29 +1,24 @@
 {% extends 'admin/base_site.html' %}%}
-
-
-
-
 {% block content %}
 
 <h2>Listado de Todos los User Story</h2>
 <br>
-{% if  user.esScrumMaster or user.esAdmin %}
- <a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' id_proyecto  %}">
-       Crear UserStory&nbsp;</a>
+{% if  permiso and proyecto.estado == 'EN-ESPERA' %}
+ <a class="btn btn-success"     href="{% url 'UserStory.views.nuevo_userstory' proyecto.id  %}">
+       Crear UserStory</a>
 {% endif %}
-    <center>
+<br>
+<br>
+<div class="panel panel-info">
 
         <table class="table table-striped" style="width: 100%">
-            <thead>
-        <th >NOMBRE</th>
-        <th >ESTADO</th>
-        <th >FECHA DE CREACION</th>
-        <th>TIEMPO ESTIMADO</th>
-        <th>TIEMPO TRABAJADO</th>
-        <th >PRIORIDAD</th>
-        <th >SPRINT</th>
-        <th >ACTIVIDAD</th>
-        <th>COMENTARIOS</th>
+        <th >Nombre</th>
+        <th >Estado</th>
+        <th>Tiempo Estimado</th>
+        <th>Tiempo Trabajado</th>
+        <th >Sprint</th>
+        <th >Actividad</th>
+        <th style="width: 400px" >Accion</th>
     </thead>
 
         {% for p in userstorys %}
@@ -31,18 +26,44 @@
              <tr>
 	             <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
                  <td><em>{{p.estado}}</em></td>
-                 <td><em>{{p.fecha_creacion}}</em></td>
                  <td><em>{{p.tiempo_estimado}}</em></td>
                  <td><em>{{p.tiempo_trabajado}}</em></td>
-                 <td><em>{{p.prioridad}}</em></td>
                  <td><em>{{p.sprint.nombre}}</em></td>
                  <td><em>{{p.actividad}}</em></td>
-                 <td> <div class="input-group">
-                    <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}" >Ver<i class="fa fa-edit"></i></a></div>
+                 <td>
+
+                        <a class="btn btn-success btn-sm" href="{% url 'Comentario.views.mis_comentarios' p.id %}" >Comentarios</a>
+                        {% if proyecto.estado == 'EN-ESPERA' %}
+                        <a class="btn btn-primary btn-sm" href="{% url 'UserStory.views.editar_userstory' p.id %}" >Editar</a>
+                        {% if p.estado == 'CREADO' %}
+                        <a class="btn btn-danger btn-sm" href="{% url 'UserStory.views.pre_eliminar_userstory' p.id %}" >Eliminar</a>
+                        {% endif %}
+                        {% endif %}
+                        {% if p.estado != 'CREADO' %}
+                        <a class="btn btn-warning btn-sm" href="{% url 'Comentario.views.mis_comentarios' p.id %}" >Cancelar</a>
+                        {% endif %}
+
+
                  </td>
 	        </tr>
         {% endfor %}
     </table>
-</center>
-<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if userstorys.has_previous %}
+            <a href="?page={{ userstorys.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ userstorys.number }} of {{ userstorys.paginator.num_pages }}.
+        </span>
+
+        {% if userstorys.has_next %}
+            <a href="?page={{ userstorys.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+<br>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' proyecto.id %}">Volver</a>
 {% endblock %}

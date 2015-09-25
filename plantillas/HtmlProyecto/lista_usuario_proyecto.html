@@ -5,11 +5,13 @@
 
 {% block content %}
 
-    <center><h1>Usuarios Asignado al "{{proyecto.nombre}}"</h1></center>
+    <h2>Usuarios Asignado al "{{proyecto.nombre}}"</h2>
 <br>
 <a class="btn btn-success"     href="{% url 'AdminProyectos.views.listar_usuarios_para_asignar_proyecto' id_proyecto %}">
        Agregar Usuarios&nbsp;</a>
-    <center>
+<br>
+<br>
+  <div class="panel panel-info">
 
         <table class="table table-striped" style="width: 100%">
             <thead>
@@ -47,7 +49,23 @@
         {% endfor %}
 
     </table>
-        </center>
+        </div>
+<div class="pagination">
+    <span class="step-links">
+        {% if usuarioproyecto.has_previous %}
+            <a href="?page={{ usuarioproyecto.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ usuarioproyecto.number }} of {{ usuarioproyecto.paginator.num_pages }}.
+        </span>
+
+        {% if usuarioproyecto.has_next %}
+            <a href="?page={{ usuarioproyecto.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+<br>
 <a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 
 {% endblock %}

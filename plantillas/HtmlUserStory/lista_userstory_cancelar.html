@@ -2,8 +2,8 @@
 
 {% block content %}
 <h3> Lista de sus User Storys </h3>
-<h3>Bienvenido "{{user}}"</h3>
-<center>
+
+
 <ul class="nav nav-tabs">
     <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     <li class="active" ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
@@ -13,9 +13,9 @@
 
 
 </ul>
-</center>
+
 <br>
-    <center>
+<div class="panel panel-info">
         <table class="table table-striped" style="width: 100%">
             <thead>
         <th >NOMBRE</th>
@@ -49,5 +49,5 @@
 	        </tr>
         {% endfor %}
     </table>
-</center>
+</div>
 {% endblock %}

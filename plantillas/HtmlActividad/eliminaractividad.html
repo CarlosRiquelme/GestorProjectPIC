@@ -1,0 +1,10 @@
+{% extends 'admin/base_site.html' %}
+{% block content %}
+    <br>
+    <center><h1>Eliminar Actividad</h1></center>
+    <br><br>
+    <h3>Esta seguro que desea eliminar la Actividad  "{{ actividad.nombre }}"</h3>
+		<a class="btn btn-danger" href="{% url 'Actividades.views.eliminar_actividad' proyecto.id actividad.id %}">Aceptar</a>
+        <a class="btn btn-info" href="{% url 'Actividades.views.mis_actividades' proyecto.id %}">Cancelar</a>
+
+{% endblock %}

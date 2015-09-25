@@ -1,0 +1,23 @@
+{% extends 'admin/base_site.html' %}
+{% block content %}
+
+
+	<form id='formulario' method='post' action=''>{% csrf_token %}
+	<ul class="messages">
+		    {% for message in formulario.errors %}
+		    <div class="alert alert-dismissible alert-error' >
+		     <button type="button" class="close" data-dismiss="alert">
+		     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		    {{ message }}</div>
+		    {% endfor %}
+		</ul>
+		<table style="width: 50%"  class="table table-striped">{{formulario.as_table}}</table>
+
+		<a class="btn btn-default" href="{% url 'Actividades.views.mis_actividades' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+		<button class="btn btn-primary" type='submit' >Guardar <i class="fa fa-save"></i></button>
+
+
+
+	</form>
+
+{% endblock %}

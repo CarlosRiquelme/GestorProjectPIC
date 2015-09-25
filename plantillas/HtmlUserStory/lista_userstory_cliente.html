@@ -4,7 +4,7 @@
 
 <h3>Lista de los User Storys Creado por el Cliente</h3>
 <br>
-    <center>
+  <div class="panel panel-info">
         <table class="table table-striped" style="width: 100%">
             <thead>
         <th >NOMBRE</th>
@@ -24,6 +24,6 @@
 	        </tr>
         {% endfor %}
     </table>
-</center>
+</div>
 <a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

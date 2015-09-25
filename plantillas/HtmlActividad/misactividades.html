@@ -7,35 +7,49 @@
 <a class="btn btn-success"     href="{% url 'Actividades.views.nueva_actividad' id_proyecto %}">
        Crear Actividades&nbsp;</a>
 {% endif %}
-    <center>
 
+<div class="panel panel-info">
         <table class="table table-striped" style="width: 100%">
             <thead>
         <th >NOMBRE</th>
         <th >FECHA DE CREACION</th>
         <th>SECUENCIA</th>
-        <th  style="width: 10%">ESTADOS</th>
+        {% if proyecto.estado == 'EN-ESPERA'%}
+        <th  style="width: 40%">ACCION</th>
+        {% endif %}
         {% for p in actividades %}
-    <tr>
+        <tr>
 	     <td><em><a href="{% url 'Actividades.views.mi_actividad' p.id %}">{{p.nombre}}</a></em></td>
          <td><em>{{p.fecha_creacion}}</em></td>
-        <td><em>{{p.secuencia}}</em></td>
-        <td>
+         <td><em>{{p.secuencia}}</em></td>
+         {% if proyecto.estado == 'EN-ESPERA'%}
+         <td>
             <div class="input-group">
-                <a class="btn btn-success" href="{% url 'Actividades.views.ver_estados' id_proyecto p.id %}">VER</a>
-        </div>
-
-
-        </td>
-
-
-
-	</tr>
-
+                <a class="btn btn-success" href="{% url 'Actividades.views.editar_actividad' id_proyecto p.id %}">Editar</a>
+                &nbsp; <a class="btn btn-danger" href="{% url 'Actividades.views.pre_eliminar_actividad' id_proyecto p.id %}">Eliminar</a>
+            </div>
+         </td>
+         {% endif %}
+	    </tr>
         {% endfor %}
+        </table>
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if actividades.has_previous %}
+            <a href="?page={{ actividades.previous_page_number }}">previous</a>
+        {% endif %}
 
-    </table>
-        </center>
+        <span class="current">
+            Page {{ actividades.number }} of {{ actividades.paginator.num_pages }}.
+        </span>
+
+        {% if userstorys.has_next %}
+            <a href="?page={{ actividades.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+<br>
 <a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 
 {% endblock %}

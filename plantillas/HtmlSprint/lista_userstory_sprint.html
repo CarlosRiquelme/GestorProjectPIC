@@ -5,11 +5,11 @@
 
 {% block content %}
 
-    <center><h1>Listado de los User Story del sprint {{sprint.nombre}}</h1></center>
+ <h2>Listado de los User Story del sprint {{sprint.nombre}}</h2>
 
 
 
-    <center>
+<div class="panel panel-info">
 
         <table class="table table-striped" style="width: 100%">
             <thead>
@@ -50,7 +50,7 @@
         {% endfor %}
 
     </table>
-        </center>
+</div>
 
 
 {% endblock %}

@@ -7,15 +7,14 @@
 
 
 </table>
-
+<div class="panel panel-info">
  <table class="table table-bordered table-condensed table-striped" >
     <thead>
-        <th >USERNAME</th>
-        <th >EMAIL</th>
-        <th >NOMBRE</th>
-        <th >APELLIDO</th>
-{#        <th >Rol</th>#}
-        <th >ACCIÓN</th>
+        <th >UserName</th>
+        <th >Email</th>
+        <th >Nombre</th>
+        <th >Apellido</th>
+        <th >Asignar</th>
     </thead>
     {% for dato in lista %}
              <tr>
@@ -24,14 +23,14 @@
                 <td>{{ dato.first_name }}</td>
                 <td>{{ dato.last_name }}</td>
                 <td>
-                <a  class="btn btn-primary" href="{% url 'AdminProyectos.views.asignar_usuario_proyecto' id_proyecto dato.id  %}">Asignar <i class="fa fa-edit"></i></a>
+                <a  class="btn btn-primary" href="{% url 'PIC.views.asignar_rol_a_user_proyecto' id_proyecto dato.id  %}">Rol<i class="fa fa-edit"></i></a>
                 </td>
 	        </tr>
     {% endfor %}
 
 
  </table>
-
+</div>
 
 <br><br><br>
 

@@ -10,6 +10,7 @@
 <br>
 {% if ban == 'FALSE' and ban2 == 'TRUE' %}
 <h4>Lista de User Storys Sin Finalizar</h4>
+  <div class="panel panel-info">
     <table class="table table-striped" style="width: 100%">
     <thead>
         <th >NOMBRE</th>
@@ -24,10 +25,11 @@
 	{% endfor %}
  </table>
 {% endif %}
-
+</div>
 {% if ban == 'TRUE' and ban2 == 'FALSE' %}
 <h4>Lista de Sprint Sin Finalizar</h4>
-    <table class="table table-striped" style="width: 100%">
+  <div class="panel panel-info">
+<table class="table table-striped" style="width: 100%">
     <thead>
         <th >NOMBRE</th>
         <th >ESTADO</th>
@@ -40,11 +42,12 @@
 	{% endfor %}
  </table>
 {% endif %}
-
+</div>
 
 {% if ban == 'FALSE' and ban2 == 'FALSE' %}
 <h4>Lista de Sprint Sin Finalizar</h4>
-    <table class="table table-striped" style="width: 100%">
+  <div class="panel panel-info">
+<table class="table table-striped" style="width: 100%">
     <thead>
         <th >NOMBRE</th>
         <th >ESTADO</th>
@@ -56,9 +59,10 @@
 	</tr>
 	{% endfor %}
      </table>
-
+</div>
 <h4>Lista de User Storys Sin Finalizar</h4>
-    <table class="table table-striped" style="width: 100%">
+  <div class="panel panel-info">
+<table class="table table-striped" style="width: 100%">
     <thead>
         <th >NOMBRE</th>
         <th >ESTADO</th>
@@ -71,7 +75,7 @@
 	</tr>
 	{% endfor %}
  </table>
-
+</div>
 {% endif %}
 
 

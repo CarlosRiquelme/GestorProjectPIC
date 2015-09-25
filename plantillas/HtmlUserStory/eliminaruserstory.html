@@ -1,22 +1,10 @@
 {% extends 'admin/base_site.html' %}
-{% block titulo %}Eliminar UserStory{% endblock %}
-{% block encabezado %}
-
-{% endblock %}
 {% block content %}
     <br>
-    <center><h1>Eliminar UserStory</h1></center>
+<h2>Eliminar UserStory</h2>
     <br><br>
-    <center>
-    <p>Esta seguro que desea eliminar el UserStory {{ userstory.nombre }}<p>
-        </center>
-    <center>
+    <h3>Esta seguro que desea eliminar el UserStory  "{{ userstory.nombre }}"</h3>
+		<a class="btn btn-danger" href="{% url 'UserStory.views.eliminar_userstory' userstory.id %}">Aceptar</a>
+        <a class="btn btn-info" href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}">Cancelar</a>
 
-	<form  method='post' action=''>{% csrf_token %}
-
-
-		<input class="btn btn-info" type='submit' name="delete" value='si'/>
-        <input class="btn btn-info" type='submit' name="delete" value='no'/>
-	</form>
-    </center>
 {% endblock %}

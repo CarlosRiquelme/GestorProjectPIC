@@ -1,23 +1,24 @@
-{% extends 'admin/base_site.html' %}%}
+{% extends 'admin/base_site.html' %}
 
 {% block content %}
 <h3> Lista de sus User Storys </h3>
-<h3>Bienvenido "{{user}}"</h3>
-<center>
 <ul class="nav nav-tabs">
     <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     <li class="active" ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
-    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
     {% if proyecto.estado == 'EN-DESARROLLO' %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
     {% endif %}
+    {% if proyecto.estado != 'EN-ESPERA' %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
     <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
+    {% endif %}
+
 
 
 </ul>
-</center>
+
 <br>
-    <center>
+<div class="panel panel-info">
         <table class="table table-striped" style="width: 100%">
             <thead>
         <th >NOMBRE</th>
@@ -26,9 +27,11 @@
         <th >SPRINT</th>
         <th >TIEMPO ESTIMADO</th>
         <th >TIEMPO TRABAJADO</th>
+        {% if proyecto.estado == 'EN-DESARROLLO' %}
         <th>NO INICIADO</th>
         <th>COMENTARIO</th>
         <th>ACTIVIDAD</th>
+        {% endif %}
     </thead>
         {% for p in userstorys %}
              <tr>
@@ -46,15 +49,12 @@
                  </td>
                  {% endif %}
                  {% if p.estado == 'DOING' %}
-                 <td><a>INICIADO</a></div></td>
+                 <td><a>INICIADO</a></td>
                  {% endif %}
                  {% if p.estado != 'TODO' and p.estado != 'DOING' %}
                  <td></td>
                  {% endif %}
-                 <td> <div class="input-group">
-                    <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}">Visualizar<i class="fa fa-edit"></i></a>
-                     </div>
-                 </td>
+
                  {% if p.estado == 'DOING' or p.estado == 'REVISAR_TIEMPO'  %}
 
                  <td> <div class="input-group">
@@ -62,9 +62,17 @@
                      </div>
                  </td>
                  {% endif %}
-                  {% endif %}
+                  {% else %}
+                 <td>----------------------</td>
+                 <td> <div class="input-group">
+                    <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}">Visualizar<i class="fa fa-edit"></i></a>
+                     </div>
+                 </td>
+                 <td>----------------------</td>
+                 {% endif %}
 	        </tr>
         {% endfor %}
     </table>
-</center>
+</div>
+
 {% endblock %}

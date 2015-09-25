@@ -1,12 +1,5 @@
 {% extends 'admin/base_site.html' %}
 
-
-
-{% block header %}
-
-        SPRINTS
-
-{% endblock %}
 {% block content %}
 
 
@@ -38,9 +31,10 @@
 <a  class="btn btn-info" href="{% url 'Sprint.views.nuevo_sprint'  %}">
 Nuevo Sprint <i class="fa fa-plus"></i></a>
 </td>
+       <br>
    </table>
 
-
+<div class="panel panel-info">
  <table class="table table-striped" style="width: 100%">
     <thead>
         <th >NOMBRE</th>
@@ -71,14 +65,5 @@ Nuevo Sprint <i class="fa fa-plus"></i></a>
 	</tr>
 	{% endfor %}
  </table>
-<input type="hidden" id="delete-id" value="0">
-
-<script>
-function redirect(){
-var id=$('#delete-id').val()
-window.location.replace("/sprint/eliminar/"+id.toString());
-
-}
-</script>
-
+    </div>
 {% endblock %}
