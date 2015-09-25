@@ -12,12 +12,10 @@ from django.shortcuts import render_to_response, get_object_or_404
 from PIC.models import RolUsuarioProyecto
 from AdminProyectos.models import Proyecto
 from django.contrib.auth.decorators import login_required, user_passes_test
+from PIC.models import RolUsuarioProyecto
 
 
 
-# @login_required(login_url='/admin/login/?next=/admin/')
-# def prueba(request):
-#     print "hola mundo"
 
 
 def nuevo_usuario(request):
@@ -184,3 +182,16 @@ def asignar_rol_usuario(request,id_rol,id_user):
     messages.success(request, 'Se le asigno el ROl al Usuario')
 
     return HttpResponseRedirect('/rol/listar/')
+
+def asignar_rol_a_user_proyecto(request, id_proyecto,id_user):
+    usuario=User.objects.get(pk=id_user)
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+    roles=Group.objects.all().exclude(name='Administrador').exclude(name='ScrumMaster')
+
+
+
+    return render_to_response('HtmlProyecto/asignar_rol_user_proyecto.html',{'id_user':id_user,
+                                                                             'id_proyecto':id_proyecto,
+                                                                             'usuario':usuario,
+                                                                             'proyecto':proyecto,
+                                                                             'roles':roles})

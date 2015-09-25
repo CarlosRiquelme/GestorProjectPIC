@@ -20,8 +20,5 @@ class Migration(migrations.Migration):
                 ('secuencia', models.IntegerField(null=True)),
                 ('proyecto', models.ForeignKey(to='AdminProyectos.Proyecto', null=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
     ]

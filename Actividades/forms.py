@@ -19,12 +19,10 @@ class ActividadForm(forms.ModelForm):
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre de la Actividad",)
 
-    secuencia=forms.IntegerField(label="Numero de la  Actividad",help_text="Maximo 10 Actividades",
-                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'1','max':'10'}))
 
     class Meta:
         model = Actividad
-        fields = ['nombre','secuencia']
+        fields = ['nombre']
 
 
     def save(self, commit=True):
@@ -34,4 +32,15 @@ class ActividadForm(forms.ModelForm):
         return actividad
 
 
+class EditActividadForm(forms.ModelForm):
+    nombre=forms.CharField(widget=TextInput(attrs={'class':'form-control'}), label="nombre")
 
+    class Meta:
+        model = Actividad
+        fields = ['nombre']
+
+    def save(self, commit=True):
+        actividad = super(ActividadForm, self).save(commit=False)
+        if commit:
+            actividad.save()
+        return actividad

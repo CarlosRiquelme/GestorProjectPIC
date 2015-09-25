@@ -20,8 +20,11 @@ def nuevo_sprint(request, id_proyecto):
     Crea un nuevo sprint
     """
     user=request.user
-    #if not user.is_staff:
-     #   return HttpResponseRedirect('/sinpermiso')
+    sprint_ultimo=Sprint.objects.filter(proyecto_id=id_proyecto)
+    ultimo=0
+    for object in sprint_ultimo:
+        if ultimo <= object.secuencia:
+            ultimo = object.secuencia
     if request.method=='POST':
         sprint_form = SprintForm(data=request.POST)
 
@@ -31,12 +34,10 @@ def nuevo_sprint(request, id_proyecto):
             # Guarda el Usuarios en la bd
             sprint_form.clean()
             nombre = sprint_form.cleaned_data['nombre']
-            secuencia=sprint_form.cleaned_data['secuencia']
-
 
             sprint = Sprint()
             sprint.nombre=nombre
-            sprint.secuencia=secuencia
+            sprint.secuencia=ultimo+1
             sprint.fecha_creacion=today()
             sprint.tiempo_acumulado = 0
             sprint.proyecto_id=id_proyecto
@@ -99,9 +100,29 @@ def eliminar_sprint(request, id_sprint):
 
     return render_to_response('HtmlSprint/eliminarsprint.html',{'sprint':sprint},
                               context_instance=RequestContext(request))
+
+
+
+@login_required(login_url='/admin/login/')
+def eliminar_sprint(request, id_sprint):
+    sprint= Sprint.objects.get(pk=id_sprint)
+    user=request.user
+    id_proyecto=sprint.proyecto_id
+    nombre=sprint.nombre
+    sprint.delete()
+
+    messages.success(request,"Sprint "+nombre+" Eliminado!")
+    return HttpResponseRedirect('/sprint/missprints/'+str(id_proyecto))
+
+def pre_eliminar_sprint(request, id_sprint):
+    user=request.user
+    sprint=Sprint.objects.get(pk=id_sprint)
+    return render_to_response('HtmlSprint/eliminarsprint.html',{'sprint':sprint},
+                              context_instance=RequestContext(request))
+
 def mis_sprints(request,id_proyecto):
 
-    sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
+    sprints=Sprint.objects.filter(proyecto_id=id_proyecto).order_by('secuencia')
     proyecto=Proyecto.objects.get(pk=id_proyecto)
 
 

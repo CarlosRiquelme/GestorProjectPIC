@@ -19,9 +19,6 @@ class SprintForm(forms.ModelForm):
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del Sprint",)
 
-    secuencia=forms.IntegerField(label="Nro de Secuencia",
-                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'30'}))
-
 
     class Meta:
         model = Sprint

@@ -10,26 +10,20 @@ from AdminProyectos.models import Proyecto
 from UserStory.models import UserStory, US_Estado_ultimo
 from django.contrib import messages
 from Sprint.models import Sprint
-from Comentario.models import Comentario
-from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from datetime import datetime, date, time, timedelta
 import time
-from time import strftime
-from django.template.loader import render_to_string
 from Sprint.models import Estimacion_Proyecto, Estimacion_Sprint
-#from matplotlib import pylab
-#import matplotlib.pyplot
-#from pylab import *
-#import PIL
-#import PIL.Image
-#import StringIO
+import datetime
 from django.template import RequestContext, loader
 from django.http import HttpResponse
 from Sprint.models import Sprint_En_Proceso,Dias_de_un_Sprint
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, Exception
+from PIC.models import RolUsuarioProyecto
 
 def kanban(request,id_proyecto):
+    user=request.user
+    rol=RolUsuarioProyecto.objects.get(usuario_id=user.id)
     actividades=Actividad.objects.filter(proyecto_id=id_proyecto).order_by("secuencia")
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto).order_by("estado")
     userstorys2=UserStory.objects.filter(proyecto_id=id_proyecto, estado='REASIGNAR_SPRINT')
@@ -46,6 +40,7 @@ def kanban(request,id_proyecto):
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
 
     return render_to_response('HtmlProyectoDesarrollo/kanban.html',{'actividades':actividades,
+                                                                    'rol':rol,
                                                                     'userstorys':userstorys,'proyecto':proyecto,
                                                                     'sprints':sprints, 'id_proyecto':id_proyecto,
                                                                     'lista':lista})
@@ -61,7 +56,7 @@ def analizar_sprint(request, id_proyecto):
     """
     sprint=Sprint.objects.get(proyecto_id=id_proyecto ,estado='ABIERTO')
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
-    sprint_fechas=Dias_de_un_Sprint.objects.filter(sprint_id=sprint.id)
+    sprint_fechas=Dias_de_un_Sprint.objects.filter(sprint_id=sprint.id)#tabla donde se guardan los dias de un sprint
     ultimo_sprint=0
     ultima_actividad=0
     proyecto=Proyecto.objects.get(pk=id_proyecto)
@@ -76,6 +71,7 @@ def analizar_sprint(request, id_proyecto):
     fecha_actual_sprint=date.today()
     userstorys=UserStory.objects.filter(sprint_id=sprint.id)
     suma=0
+    hoy=que_dia_es()
     for dato2 in userstorys:
         suma+=dato2.tiempo_trabajado
     for dato in sprint_fechas:
@@ -84,7 +80,7 @@ def analizar_sprint(request, id_proyecto):
             sprint_en_proceso=Sprint_En_Proceso.objects.get(sprint_id=sprint.id, fecha=fecha_actual_sprint)
         except ObjectDoesNotExist:
             bandera=False
-        if fecha_actual_sprint == dato.fecha:
+        if fecha_actual_sprint == dato.fecha and hoy != 'Domingo' and hoy != 'Sabado':
             if bandera == False:
                 sprint_en_proceso=Sprint_En_Proceso()
                 sprint_en_proceso.sprint_id=sprint.id
@@ -215,6 +211,8 @@ def crear_nuevo_sprint(id_proyecto):
 def visualizar_sprint_en_desarrollo(request,id_proyecto):
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     ahora = date.today()
+    user=request.user
+    rol=RolUsuarioProyecto.objects.get(usuario_id=user.id)
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
     ultimo_sprint=0
     for dato in sprints:
@@ -234,19 +232,19 @@ def visualizar_sprint_en_desarrollo(request,id_proyecto):
 
     estimacion_sprint=Estimacion_Sprint.objects.get(sprint_id=sprint.id)
     bandera=True
+    hoy=que_dia_es()
+    print hoy
     try:
         sprint_en_proceso=Sprint_En_Proceso.objects.get(sprint_id=sprint.id, fecha=ahora)
     except ObjectDoesNotExist:
         bandera=False
-    if bandera == False:
-        print "holaaaaaaaaaaaaaaaa"
+    if bandera == False and hoy != 'Domingo' and hoy != 'Sabado':
         sprint_en_proceso=Sprint_En_Proceso()
         sprint_en_proceso.sprint_id=sprint.id
         sprint_en_proceso.fecha=ahora
         sprint_en_proceso.horas_acumulada=suma
         sprint_en_proceso.save()
     if bandera == True:
-        print "holaaaaaaaaaaaaaaa222222222222"
         sprint_en_proceso.horas_acumulada=suma
         sprint_en_proceso.fecha=ahora
         sprint_en_proceso.save()
@@ -292,7 +290,8 @@ def visualizar_sprint_en_desarrollo(request,id_proyecto):
                                                                                'lista_porcentaje':lista_porcentaje,
                                                                                'lista_porcentaje_estimado':lista_porcentaje_estimado,
                                                                                'lista_hora_estimado':lista_hora_estimado,
-                                                                               'lista_hora_proceso':lista_hora_proceso})
+                                                                               'lista_hora_proceso':lista_hora_proceso,
+                                                                               'rol':rol})
 
 
 def lista_reasignar_userstory_a_actividad(request,id_proyecto):
@@ -380,12 +379,6 @@ def reasignar_userstory_a_sprint(request,id_proyecto,id_userstory):
 
 
 
-def scrumMaster(request, id_proyecto):
-    user=request.user
-    return render_to_response('HtmlProyectoDesarrollo/scrumMaster.html',{'user':user,
-                                                                               'id_proyecto':id_proyecto })
-
-
 def lista_reasignar_userstory_tiempo(request,id_proyecto):
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,estado='REVISAR_TIEMPO')
     proyecto=Proyecto.objects.get(pk=id_proyecto)
@@ -456,37 +449,27 @@ def fecha_calcular(start, days, holidays=(), workdays=(MON,TUE,WED,THU,FRI)):
 
 
 def Burndowncharts(request, id_proyecto):
-    x=[]
-    y=[]
-    sprint=[]
-    estimacion_sprint=Estimacion_Sprint.objects.filter(proyecto_id=id_proyecto)
-    suma=0
-    for dato in estimacion_sprint:
-        sprint.append(dato.duracion)
-    for dato in sprint:
-        x.append(suma)
-        suma=suma+dato
-    x.append(suma)
-    resta=suma
-    for i in sprint:
-        y.append(resta)
-        resta=resta-i
-    y.append(0)
-    plot(x,y,linewidth=2)
-
-    xlabel('x axis')
-    ylabel('y axis')
-    title('sample graph')
-    grid(True)
-    pylab.show()
-
-    buffer = StringIO.StringIO()
-    canvas = pylab.get_current_fig_manager().canvas
-    canvas.draw()
-    graphIMG = PIL.Image.fromstring("RGB",canvas.get_width_height(), canvas.tostring_rgb())
-    graphIMG.save(buffer,"PNG")
-    pylab.close()
-
-    return HttpResponse(buffer.getvalue(), content_type="image/png")
+    user=request.user
+    rol=RolUsuarioProyecto.objects.get(usuario_id=user.id)
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+    sprints=Sprint.objects.filter(proyecto_id=id_proyecto).order_by('secuencia')
+    return render_to_response('HtmlProyectoDesarrollo/burndowncharts.html',{'user':user,'proyecto':proyecto,
+                                                                             'id_proyecto':id_proyecto,
+                                                                             'sprints':sprints,
+                                                                             'rol':rol},
+                              context_instance=RequestContext(request))
 
 
+def que_dia_es():
+    x = datetime.datetime.now()
+
+    dicdias = {'MONDAY':'Lunes','TUESDAY':'Martes','WEDNESDAY':'Miercoles','THURSDAY':'Jueves', \
+    'FRIDAY':'Viernes','SATURDAY':'Sabado','SUNDAY':'Domingo'}
+    anho = x.year
+    mes =  x.month
+    dia= x.day
+
+    fecha = datetime.date(anho, mes, dia)
+    dia = (dicdias[fecha.strftime('%A').upper()])
+    print (dicdias[fecha.strftime('%A').upper()])
+    return dia

@@ -21,11 +21,8 @@ class Migration(migrations.Migration):
                 ('fecha_creacion', models.DateTimeField(auto_now=True)),
                 ('fechaInicio', models.DateField(null=True, verbose_name=b'Fecha de Inicio')),
                 ('fechaFin', models.DateField(null=True, verbose_name=b'Fecha de Fin')),
-                ('estado', models.CharField(default=b'EN-ESPERA', max_length=30, choices=[(b'EN-ESPERA', b'EN-ESPERA'), (b'EN-DESARROLLO', b'EN-DESARROLLO'), (b'FINALIZADO', b'FINALIZADO'), (b'CANCELADO', b'CANCELADO')])),
+                ('estado', models.CharField(default=b'EN-ESPERA', max_length=30, choices=[(b'EN-ESPERA', b'EN-ESPERA'), (b'EN-DESARROLLO', b'EN-DESARROLLO'), (b'FINALIZADO', b'FINALIZADO'), (b'CANCELADO', b'CANCELADO'), (b'REVISAR', b'REVISAR')])),
                 ('scrumMaster', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
     ]

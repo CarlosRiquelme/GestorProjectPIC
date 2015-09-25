@@ -16,7 +16,9 @@ from django.core.mail import send_mail
 from datetime import datetime, date, time, timedelta
 from django.template.loader import render_to_string
 from AdminProyectos.models import Proyecto
-
+from PIC.models import RolUsuarioProyecto
+from django.contrib.auth.models import User, Group, Permission
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -92,6 +94,28 @@ def editar_userstory(request, id_userstory):
                 {'formulario':formulario,'id_userstory':id_userstory},
                               context_instance=RequestContext(request))
 
+
+@login_required(login_url='/admin/login/')
+def eliminar_userstory(request, id_userstory):
+    userstory= UserStory.objects.get(pk=id_userstory)
+    proyecto_id=userstory.proyecto_id
+    user=request.user
+    nombre=userstory.nombre
+    userstory.delete()
+
+    messages.success(request,"User Story "+nombre+" Eliminado!")
+    return HttpResponseRedirect('/userstory/misuserstorys/'+str(proyecto_id))
+
+def pre_eliminar_userstory(request, id_userstory):
+    user=request.user
+    userstory=UserStory.objects.get(pk=id_userstory)
+    id_proyecto=userstory.proyecto_id
+    print id_proyecto
+    return render_to_response('HtmlUserStory/eliminaruserstory.html',{'userstory':userstory,
+                                                                    'user':user,
+                                                                    'id_proyecto':id_proyecto},
+                             context_instance=RequestContext(request))
+
 def completar_atributos_userstory(id_userstory):
     """
     Funcion donde se completa los atributo que faltan modificar en un user story
@@ -103,34 +127,31 @@ def completar_atributos_userstory(id_userstory):
     userstory.estado='CREADO'
     userstory.save()
 
-@login_required(login_url='/admin/login/')
-def userstorys(request):
-    userstory = UserStory.objects.all()
 
 
-    return render_to_response('HtmlUserStory/userstorys.html',
-                {'userstory':userstory}, RequestContext(request))
-
-
-@login_required(login_url='/admin/login/')
-def eliminar_userstory(request, id_userstory):
-    userstory= UserStory.objects.get(pk=id_userstory)
-    user=request.user
-    nombre=userstory.nombre
-    userstory.delete()
-    
-    messages.success(request,"UserStory "+nombre+" Eliminado!")
-    return HttpResponseRedirect('/userstorys/')
-
- 
-    return render_to_response('HtmlUserStory/eliminaruserstory.html',{'userstory':userstory},
-                              context_instance=RequestContext(request))
 @login_required(login_url='/admin/login/')
 def mis_userstorys(request, id_proyecto):
-    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto).order_by('prioridad')
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+    rol=Group.objects.get(name='ScrumMaster')
     user=request.user
+    rol_proyecto=RolUsuarioProyecto.objects.get(proyecto_id=id_proyecto, usuario_id=user.id)
+    permiso=False
+    print rol_proyecto.rol
+    if rol_proyecto.rol == rol:
+        permiso=True
+    paginator=Paginator(userstorys,10)
+    page=request.GET.get('page')
+    try:
+        userstorys=paginator.page(page)
+    except PageNotAnInteger:
+        userstorys=paginator.page(1)
+    except EmptyPage:
+        userstorys=paginator.page(paginator.num_pages)
     return render_to_response('HtmlUserStory/misuserstorys.html',{'userstorys':userstorys,
-                                                                  'id_proyecto':id_proyecto,'user':user})
+                                                                  'proyecto':proyecto,
+                                                                  'user':user,
+                                                                  'permiso':permiso})
 
 @login_required(login_url='/admin/login/')
 def mi_userstory(request, id_userstory):
@@ -140,23 +161,7 @@ def mi_userstory(request, id_userstory):
 
     return render_to_response('HtmlUserStory/miuserstory.html',
                 { 'userstory':userstory }, RequestContext(request))
-@login_required(login_url='/admin/login/')
-def lista_userstory_creado(request,id_proyecto, id_actividad):
-     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
-     actividad=Actividad.objects.get(pk=id_actividad)
 
-     return render_to_response('HtmlUserStory/userstory_creado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
-                                                                       'id_actividad':id_actividad,'actividad':actividad})
-@login_required(login_url='/admin/login/')
-def lista_userstory_reasignar(request,id_proyecto, id_actividad):
-     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
-     for us in userstorys:
-         id_sprint=us.sprint_id
-         if id_sprint != '':
-            sprint=Sprint.objects.get(pk=id_sprint)
-
-     return render_to_response('HtmlUserStory/userstory_reasignado.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
-                                                                       'id_sprint':id_sprint,'sprint':sprint})
 @login_required(login_url='/admin/login/')
 def asignar_userstory_a_actividad(request,id_proyecto ,id_actividad, id_userstory ):
     userstory=UserStory.objects.get(pk=id_userstory)
@@ -165,27 +170,7 @@ def asignar_userstory_a_actividad(request,id_proyecto ,id_actividad, id_userstor
     userstory.save()
     messages.success(request, 'USER STORY ASIGNADO A UNA ACTIVIDAD CORRECTAMENTE!')
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
-@login_required(login_url='/admin/login/')
-def lista_userstory_todo(request,id_proyecto, id_actividad):
-     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
-     actividad=Actividad.objects.get(pk=id_actividad)
 
-     return render_to_response('HtmlUserStory/userstory_todo.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
-                                                                       'id_actividad':id_actividad,'actividad':actividad})
-@login_required(login_url='/admin/login/')
-def lista_userstory_doing(request,id_proyecto, id_actividad):
-     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
-     actividad=Actividad.objects.get(pk=id_actividad)
-
-     return render_to_response('HtmlUserStory/userstory_doing.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
-                                                                       'id_actividad':id_actividad,'actividad':actividad})
-@login_required(login_url='/admin/login/')
-def lista_userstory_done(request,id_proyecto, id_actividad):
-     userstorys=UserStory.objects.filter(actividad_id=id_actividad)
-     actividad=Actividad.objects.get(pk=id_actividad)
-
-     return render_to_response('HtmlUserStory/userstory_done.html',{'userstorys':userstorys,'id_proyecto':id_proyecto,
-                                                                       'id_actividad':id_actividad,'actividad':actividad})
 @login_required(login_url='/admin/login/')
 def lista_userstory_reasignarActividad(request,id_proyecto, id_actividad):
      userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
@@ -373,14 +358,19 @@ def lista_userstory_usuario(request, id_proyecto):
     :param id_proyecto:
     :return:
     """
-    sprint=Sprint.objects.get(proyecto_id=id_proyecto, estado='ABIERTO')
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     user=request.user
+    try:
+        sprint=Sprint.objects.get(proyecto_id=id_proyecto, estado='ABIERTO')
+    except ObjectDoesNotExist:
+        sprint=""
+
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,usuario_id=user.id)
     return render_to_response('HtmlUserStory/lista_userstory_usuario.html',{'userstorys':userstorys,
                                                                    'id_proyecto':id_proyecto, 'user':user,
                                                                    'proyecto':proyecto,
-                                                                   'sprint':sprint},
+                                                                   'sprint':sprint,
+                                                                   },
                               context_instance=RequestContext(request))
 
 def iniciar_userstory(request, id_userstory):

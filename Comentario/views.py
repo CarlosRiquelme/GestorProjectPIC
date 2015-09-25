@@ -47,12 +47,12 @@ def nuevo_comentario(request, id_userstory):
                 comentario.userstory_id=id_userstory
                 comentario.hora_trabajada=hora_trabajada
                 comentario.save()
-                html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  "' +userstory.nombre+ '" donde a trabajado "' \
-                           +str(userstory.tiempo_trabajado)+' " horas en total en este user story    " '
+                html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  " ' +userstory.nombre+ '" donde a trabajado "' \
+                           +str(hora_trabajada)+' " horas en total en este user story'
                 send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
 
-                html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde a trabajado "' +str(userstory.tiempo_trabajado)+ \
-                               'Se le ha notificado al ScrumMaster de esta accion'
+                html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde a trabajado " ' +str(hora_trabajada)+ \
+                               ' " Se le ha notificado al ScrumMaster de esta accion'
                 send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
                 userstory.tiempo_trabajado=suma
                 userstory.suma_trabajadas+=hora_trabajada2
@@ -189,6 +189,16 @@ def mis_comentarios(request, id_userstory):
         for dato1 in archivos:
             if dato.id == dato1.comentario.id:
                 lista.append(dato1)
+    paginator=Paginator(comentarios,5)
+    page=request.GET.get('page')
+    try:
+        comentarios=paginator.page(page)
+    except PageNotAnInteger:
+        comentarios=paginator.page(1)
+    except EmptyPage:
+        comentarios=paginator.page(paginator.num_pages)
+
+
 
     return render_to_response('HtmlComentario/miscomentarios.html',{'comentarios':comentarios,'id_userstory':id_userstory,
                                                                   'userstory':userstory,
@@ -196,3 +206,5 @@ def mis_comentarios(request, id_userstory):
                                                                   'id_proyecto':id_proyecto,
                                                                   'user':user})
 
+def error_conexion():
+    return render_to_response('HtmlProyecto/errorconexion.html')

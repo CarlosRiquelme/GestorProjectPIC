@@ -61,6 +61,8 @@ INSTALLED_APPS = (
     'Comentario',
     'ProyectoDesarrollo',
 )
+LOGIN_REDIRECT_URL='/proyecto/menu'
+LOGIN_URL='/accounts/login/'
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
         'django.core.context_processors.request',

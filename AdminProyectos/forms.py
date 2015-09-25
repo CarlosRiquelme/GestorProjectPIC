@@ -1,7 +1,6 @@
 from django import forms
 from django.core.context_processors import request
 from django.http import request
-
 from django.contrib.auth.models import User
 from django.forms.widgets import TextInput
 from django.db import models

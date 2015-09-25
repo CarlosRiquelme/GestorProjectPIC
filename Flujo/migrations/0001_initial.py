@@ -21,8 +21,5 @@ class Migration(migrations.Migration):
                 ('estado', models.CharField(default=b'NO-CREADO', max_length=30, choices=[(b'NO-CREADO', b'NO-CREADO'), (b'CREADO', b'CREADO')])),
                 ('proyecto', models.ForeignKey(to='AdminProyectos.Proyecto', null=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
     ]

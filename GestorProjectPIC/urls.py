@@ -1,20 +1,18 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-
-
+from django.http import HttpResponseRedirect
+from django.views.generic.base import RedirectView
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'GestorProjectPIC.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+
     url(r'^files/', include('db_file_storage.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include(admin.site.urls)),
     url(r'^reset/password_reset/$', 'django.contrib.auth.views.password_reset', name='admin_password_reset'),
     url(r'^reset/password_reset/done/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', name='password_reset_confirm'),
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete', name='password_reset_complete'),
-    url(r'^accounts/login/', include(admin.site.urls) , name='login'),
+    url(r'^accounts/login/', include(admin.site.urls) ),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    # url(r'^user_story/crear', 'PIC.views.crear_user_story'),
+
 
 #USUARIOS
 
@@ -37,11 +35,11 @@ urlpatterns = patterns('',
      url(r'^proyecto/editar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.editar_proyecto'),
      url(r'^proyecto/iniciar/$','AdminProyectos.views.iniciar_proyecto'),
      url(r'^proyecto/eliminar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.eliminar_proyecto'),
-     url(r'^proyecto/misproyectos/$','AdminProyectos.views.mis_proyectos'),
+     url(r'^proyecto/pre/eliminar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.pre_eliminar_proyecto'),
      url(r'^proyecto/miproyecto/(?P<id_proyecto>\d+)/$','AdminProyectos.views.mi_proyecto'),
      url(r'^proyecto/usuarios/(?P<id_proyecto>\d+)/$','AdminProyectos.views.listar_usuario_proyecto'),
      url(r'^proyecto/nousuarios/(?P<id_proyecto>\d+)/$','AdminProyectos.views.listar_usuarios_para_asignar_proyecto'),
-     url(r'^proyecto/usuarios/asignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','AdminProyectos.views.asignar_usuario_proyecto'),
+     url(r'^proyecto/usuarios/asignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/(?P<id_rol>\d+)/$','AdminProyectos.views.asignar_usuario_proyecto'),
      url(r'^proyecto/usuarios/desasignar/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','AdminProyectos.views.desasignar_usuario_proyecto'),
      url(r'^proyecto/sin/finalizar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.finalizar_proyecto'),
 
@@ -54,6 +52,7 @@ urlpatterns = patterns('',
     url(r'^rol/modificar/(?P<id_rol>\d+)/$', 'PIC.views.modificar_rol'),
     url(r'^rol/consultar/(?P<id_rol>\d+)/$', 'PIC.views.consultar_roles'),
     url(r'^rol/eliminar/(?P<id_rol>.*)/$', 'PIC.views.eliminar_rol'),
+    url(r'^proyecto/rol/(?P<id_proyecto>.*)/(?P<id_user>.*)/$', 'PIC.views.asignar_rol_a_user_proyecto'),
 
 
 
@@ -65,8 +64,13 @@ urlpatterns = patterns('',
 #ACTIVIDADES
     url(r'^actividad/nueva/(?P<id_proyecto>\d+)/$','Actividades.views.nueva_actividad'),
     url(r'^actividad/miactividad/(?P<id_actividad>\d+)/$','Actividades.views.mi_actividad'),
+    url(r'^actividad/eliminar/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','Actividades.views.eliminar_actividad'),
+    url(r'^actividad/pre/eliminar/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','Actividades.views.pre_eliminar_actividad'),
     url(r'^actividad/misactividades/(?P<id_proyecto>\d+)/$','Actividades.views.mis_actividades'),
     url(r'^actividad/misactividades/estados/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','Actividades.views.ver_estados'),
+    url(r'^actividad/editar/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','Actividades.views.editar_actividad'),
+
+
 
  #SPRINT
      url(r'^sprint/nuevo/(?P<id_proyecto>\d+)/$','Sprint.views.nuevo_sprint'),
@@ -74,6 +78,7 @@ urlpatterns = patterns('',
      url(r'^sprint/editar/(?P<id_sprint>\d+)/$','Sprint.views.editar_sprint'),
      url(r'^sprint/iniciar/(?P<id_sprint>\d+)/$','Sprint.views.iniciar_sprint'),
      url(r'^sprint/eliminar/(?P<id_sprint>\d+)/$','Sprint.views.eliminar_sprint'),
+    url(r'^sprint/pre/eliminar/(?P<id_sprint>\d+)/$','Sprint.views.pre_eliminar_sprint'),
      url(r'^sprint/missprints/(?P<id_proyecto>\d+)/$','Sprint.views.mis_sprints'),
      url(r'^sprint/misprint/(?P<id_sprint>\d+)/$','Sprint.views.mi_sprint'),
      url(r'^sprint/cerrar/(?P<id_sprint>\d+)/$','Sprint.views.cerrar_sprint'),
@@ -82,16 +87,13 @@ urlpatterns = patterns('',
 
 #USERSTORY
      url(r'^userstory/nuevo/(?P<id_proyecto>\d+)/$','UserStory.views.nuevo_userstory'),
+     url(r'^userstory/elimar/(?P<id_userstory>\d+)/$','UserStory.views.eliminar_userstory'),
+     url(r'^userstory/pre/elimar/(?P<id_userstory>\d+)/$','UserStory.views.pre_eliminar_userstory'),
      url(r'^userstory/editar/(?P<id_userstory>\d+)/$','UserStory.views.editar_userstory'),
      url(r'^userstory/misuserstorys/(?P<id_proyecto>\d+)/$','UserStory.views.mis_userstorys'),
      url(r'^userstory/miuserstory/(?P<id_userstory>\d+)/$','UserStory.views.mi_userstory'),
-     url(r'^userstory/miuserstory_creado/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_creado',name='mi_userstory_creado'),
      url(r'^userstory/miuserstory_reasignarActividad/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_reasignarActividad',name='mi_userstory_reasignado'),
      url(r'^userstory/miuserstory/actividad/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.asignar_userstory_a_actividad'),
-     url(r'^userstory/miuserstory_todo/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_todo'),
-     url(r'^userstory/miuserstory_doing/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_doing'),
-     url(r'^userstory/miuserstory_done/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_done'),
-     url(r'^userstory/miuserstory_reasignar/(?P<id_proyecto>\d+)/(?P<id_actividad>\d+)/$','UserStory.views.lista_userstory_reasignar'),
      url(r'^userstory/miuserstory_no_creado/(?P<id_proyecto>\d+)/(?P<id_sprint>\d+)/$','UserStory.views.lista_userstory_no_creado'),
      url(r'^userstory/miuserstory/sprint/(?P<id_proyecto>\d+)/(?P<id_sprint>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.asignar_userstory_a_sprint'),
      url(r'^usuario/userstory/lista/(?P<id_proyecto>\d+)/(?P<id_user>\d+)/$','UserStory.views.lista_userstory_creado_para_asignar_usuario'),
@@ -117,7 +119,7 @@ urlpatterns = patterns('',
      url(r'^userstory/lista/sprint/reasignar/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.lista_reasignar_userstory_a_sprint'),
      url(r'^userstory/sprint/reasignar/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','ProyectoDesarrollo.views.reasignar_userstory_a_sprint'),
 
-     url(r'^proyecto/scrum_master/administracion/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.scrumMaster'),
+     #url(r'^proyecto/scrum_master/administracion/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.scrumMaster'),
      url(r'^proyecto/burndowncharts/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.Burndowncharts'),
      url(r'^proyecto/us/tiempo/nuevo/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','ProyectoDesarrollo.views.reasignar_userstory_tiempo'),
      url(r'^proyecto/us/tiempo/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.lista_reasignar_userstory_tiempo'),
@@ -141,5 +143,22 @@ urlpatterns = patterns('',
     url(r'^proyecto/equipo/userstorys/(?P<id_proyecto>\d+)/$','UserStory.views.lista_userstory_usuario'),
     url(r'^proyecto/equipo/userstorys/finalizar/actividad/(?P<id_userstory>\d+)/$','UserStory.views.fin_de_una_actividad_de_un_us'),
     url(r'^proyecto/equipo/userstorys/iniciar/(?P<id_userstory>\d+)/$','UserStory.views.iniciar_userstory'),
+
+
+##### graficas
+    url(r'^BurnDownCharProyecto/(?P<id_proyecto>\d+)/$','AdminProyectos.views.jo3'),
+    url(r'^BurnDownCharSprint/$','AdminProyectos.views.jo5'),
+    url(r'^Sprint/BurnDownChar/(?P<id_proyecto>\d+)/$','AdminProyectos.views.lista_sprint_para_graficar'),
+    url(r'^Sprint/BurnDownChar/ver/(?P<id_sprint>\d+)/$','AdminProyectos.views.jo5'),
+#### pdfs
+
+    url(r'^reporte01/(?P<id_proyecto>\d+)/$','AdminProyectos.views.reporte01'),
+    url(r'^reporte02/(?P<id_proyecto>\d+)/$','AdminProyectos.views.reporte02'),
+    url(r'^reporte03/(?P<id_proyecto>\d+)/$','AdminProyectos.views.reporte03'),
+    url(r'^reporte04/(?P<id_proyecto>\d+)/$','AdminProyectos.views.reporte04'),
+    url(r'^reporte05/(?P<id_proyecto>\d+)/$','AdminProyectos.views.reporte05'),
+    url(r'^reporte06/(?P<id_proyecto>\d+)/$','AdminProyectos.views.reporte06'),
+    url(r'^reportesPrincipal/(?P<id_proyecto>\d+)/$','AdminProyectos.views.lista_de_reportes'),
+
 
 )
