@@ -19,6 +19,7 @@ from AdminProyectos.models import Proyecto
 from PIC.models import RolUsuarioProyecto
 from django.contrib.auth.models import User, Group, Permission
 from django.core.exceptions import ObjectDoesNotExist
+import smtplib
 
 
 
@@ -233,8 +234,12 @@ def asignar_usuario_userstory(request, id_userstory, id_user):
         proyectos=userstory.proyecto
         descripcion=userstory.descripcion
         proyecto=proyectos.nombre
-        html_content = 'Fue asignado a un User Story "'+nombre+'" que trata sobre  '+descripcion+'  del proyecto '+proyecto
-        send_mail('Asignacion User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+        try:
+            html_content = 'Fue asignado a un User Story "'+nombre+'" que trata sobre  '+descripcion+'  del proyecto '+proyecto
+            send_mail('Asignacion User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+        except smtplib.socket.gaierror:
+            return HttpResponseRedirect('/error/conexion/')
+
     else:
         messages.success(request, 'El Usuario No Posee email, para notificarle, pero igual fue asignado!')
 
@@ -415,14 +420,22 @@ def fin_de_una_actividad_de_un_us(request, id_userstory):
             ultima_actividad=dato.secuencia
     if actividad.secuencia == ultima_actividad:
         userstory.estado='REVISAR_FIN'
-        html_content = 'El Usuario "'+usuario+'" a finalizado la ultima Actividad de su User Story, Favor Aprobar User Story'
-        send_mail('Finalizacion de la Ultima de las Actividad de un User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+        try:
+            html_content = 'El Usuario "'+usuario+'" a finalizado la ultima Actividad de su User Story, Favor Aprobar User Story'
+            send_mail('Finalizacion de la Ultima de las Actividad de un User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+        except smtplib.socket.gaierror:
+            return HttpResponseRedirect('/error/conexion/')
+
         userstory.save()
         messages.success(request, 'A finalizado la Actividad, Espere la Aprobacion de ScrumMaster')
     else:
         userstory.estado='REVISAR_FIN_AC'
-        html_content = 'El Usuario "'+usuario+'" a finalizado una Actividad de su User Story, Favor Aprobar User Story'
-        send_mail('Finalizacion de la Actividad de un User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+        try:
+            html_content = 'El Usuario "'+usuario+'" a finalizado una Actividad de su User Story, Favor Aprobar User Story'
+            send_mail('Finalizacion de la Actividad de un User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+        except smtplib.socket.gaierror:
+            return HttpResponseRedirect('/error/conexion/')
+
         userstory.save()
         messages.success(request, 'A finalizado la Actividad, Espere la Aprobacion de ScrumMaster')
 
@@ -455,12 +468,16 @@ def aprobar_finalizacion(request,id_userstory):
     id_proyecto=userstory.proyecto.id
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     userstory.estado='FINALIZADO'
-
-    html_content = 'A sido aprobada la finalizacion de su User Story "'+userstory.nombre+'" del Proyecto '+proyecto.nombre+ ' por el Scrum Master ' +proyecto.scrumMaster.username
-    send_mail('Aprobacion de Finalizacion de su User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
-
-    html_content = 'Aprobo la finalizacion de su User Story "'+userstory.nombre+'" del Proyecto '+proyecto.nombre+ ' asignado al usuario ' +usuario
-    send_mail('Aprobacion de Finalizacion de User Story',html_content , 'gestorprojectpic@gmail.com',[proyecto.scrumMaster.email], fail_silently=False)
+    try:
+        html_content = 'A sido aprobada la finalizacion de su User Story "'+userstory.nombre+'" del Proyecto '+proyecto.nombre+ ' por el Scrum Master ' +proyecto.scrumMaster.username
+        send_mail('Aprobacion de Finalizacion de su User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+    except smtplib.socket.gaierror:
+        return HttpResponseRedirect('/error/conexion/')
+    try:
+        html_content = 'Aprobo la finalizacion de su User Story "'+userstory.nombre+'" del Proyecto '+proyecto.nombre+ ' asignado al usuario ' +usuario
+        send_mail('Aprobacion de Finalizacion de User Story',html_content , 'gestorprojectpic@gmail.com',[proyecto.scrumMaster.email], fail_silently=False)
+    except smtplib.socket.gaierror:
+        return HttpResponseRedirect('/error/conexion/')
 
     userstory.save()
     messages.success(request, 'A aprobado correctamente el USER STORY')

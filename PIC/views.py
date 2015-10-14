@@ -195,3 +195,5 @@ def asignar_rol_a_user_proyecto(request, id_proyecto,id_user):
                                                                              'usuario':usuario,
                                                                              'proyecto':proyecto,
                                                                              'roles':roles})
+def error_conexion(resquest):
+    return render_to_response('admin/error_conexion.html')

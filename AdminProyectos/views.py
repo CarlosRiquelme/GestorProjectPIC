@@ -21,6 +21,8 @@ from Sprint.models import Sprint, Estimacion_Proyecto, Estimacion_Sprint
 from UserStory.models import UserStory
 from Actividades.models import Actividad
 from Sprint.models import Dias_de_un_Sprint
+import smtplib
+
 
 @login_required(login_url='/admin/login/')
 def nuevo_proyecto(request):
@@ -30,6 +32,7 @@ def nuevo_proyecto(request):
     user=request.user
     #if not user.is_staff:
      #   return HttpResponseRedirect('/sinpermiso')
+    bandera=True
     if request.method=='POST':
         proyecto_form = ProyectoForm(data=request.POST)
 
@@ -55,11 +58,14 @@ def nuevo_proyecto(request):
                 fecha=fecha_inicio
                 email=usuario.email
 
-
-                html_content = 'Fue asignado a un Proyecto '+nombre+' ' \
+                try:
+                    html_content = 'Fue asignado a un Proyecto '+nombre+' ' \
                                                                     'Descripcion:'+descripcion+' ' \
                                                                                                    'Fecha Inicio:'+fecha.strftime('%Y/%m/%d')
-                send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [email], fail_silently=False)
+                    send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [email], fail_silently=False)
+                except smtplib.socket.gaierror:
+                     return HttpResponseRedirect('/error/conexion/')
+
 
 
             proyecto.save()
@@ -92,8 +98,12 @@ def iniciar_proyecto(request):
         if objeto.fechaInicio <= ahora and objeto.estado == 'EN-ESPERA':
             scrum_master=objeto.scrumMaster
             fecha=objeto.fechaInicio
-            html_content = 'Su Proyecto "'+objeto.nombre+'"  a iniciado por llegar su fecha de Inicio  '+fecha.strftime('%Y/%m/%d')
-            send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [scrum_master.email], fail_silently=False)
+            try:
+                html_content = 'Su Proyecto "'+objeto.nombre+'"  a iniciado por llegar su fecha de Inicio  '+fecha.strftime('%Y/%m/%d')
+                send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [scrum_master.email], fail_silently=False)
+            except smtplib.socket.gaierror:
+                return HttpResponseRedirect('/error/conexion/')
+
             objeto.estado= 'EN-DESARROLLO'
             sprint=Sprint.objects.filter(proyecto_id=objeto.id).order_by("secuencia")
             fecha1=fecha
@@ -407,8 +417,11 @@ def finalizar_proyecto(request, id_proyecto):
     if ban == 'TRUE' and ban2 == 'TRUE':
         proyecto.estado='FINALIZADO'
         ahora = date.today()
-        html_content = 'EL PROYECTO A FINALIZADO'+proyecto.nombre+' ' 'Descripcion:'+proyecto.descripcion+' ''Fecha de Finalizacion :'+str(ahora)
-        send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+        try:
+            html_content = 'EL PROYECTO A FINALIZADO'+proyecto.nombre+' ' 'Descripcion:'+proyecto.descripcion+' ''Fecha de Finalizacion :'+str(ahora)
+            send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+        except smtplib.socket.gaierror:
+             return HttpResponseRedirect('/error/conexion/')
         proyecto.save()
         messages.success(request, 'A FINALIZADO CORRECTAMENTE EL PROYECTO!')
         return HttpResponseRedirect('/proyecto/scrumMaster/'+str(id_proyecto))

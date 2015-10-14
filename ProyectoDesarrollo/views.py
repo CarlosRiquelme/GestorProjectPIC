@@ -18,9 +18,9 @@ import datetime
 from django.template import RequestContext, loader
 from django.http import HttpResponse
 from Sprint.models import Sprint_En_Proceso,Dias_de_un_Sprint
-from django.core.exceptions import ObjectDoesNotExist, Exception
+from django.core.exceptions import ObjectDoesNotExist
 from PIC.models import RolUsuarioProyecto
-
+import smtplib
 def kanban(request,id_proyecto):
     user=request.user
     rol=RolUsuarioProyecto.objects.get(usuario_id=user.id)
@@ -54,6 +54,12 @@ def analizar_sprint(request, id_proyecto):
     :param id_proyecto:
     :return:
     """
+    try:
+        html_content = 'Prueba de conexion'
+        send_mail('Prueba de conexion',html_content , 'gestorprojectpic@gmail.com', 'gestorprojectpic@gmail.com', fail_silently=False)
+    except smtplib.socket.gaierror:
+        return HttpResponseRedirect('/error/conexion/')
+
     sprint=Sprint.objects.get(proyecto_id=id_proyecto ,estado='ABIERTO')
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
     sprint_fechas=Dias_de_un_Sprint.objects.filter(sprint_id=sprint.id)#tabla donde se guardan los dias de un sprint
@@ -100,8 +106,12 @@ def analizar_sprint(request, id_proyecto):
             id_sprint=sprint.id
             siguiente=sprint.secuencia+1
             sprint.save()
-            html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado un Sprint Favor Fijarse si han terminados todos su user story"'
-            send_mail('Finalizacion de Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+            try:
+                html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado un Sprint Favor Fijarse si han terminados todos su user story"'
+                send_mail('Finalizacion de Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+            except smtplib.socket.gaierror:
+                     return HttpResponseRedirect('/error/conexion/')
+            sprint.save()
             userstory2=UserStory.objects.filter(sprint_id=id_sprint)
             ban=0
             for dato in userstory2:
@@ -147,14 +157,20 @@ def analizar_sprint(request, id_proyecto):
                 sprint2.save()
             else:
                 if ban == 1:
-                    html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado todos sus Sprint, pero quedan aun user storys sin concluir se creo un nuevo Sprint donde se han ubicado todos su user storys sin terminar  "'
-                    send_mail('Finalizacion de todos sus Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                    try:
+                        html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado todos sus Sprint, pero quedan aun user storys sin concluir se creo un nuevo Sprint donde se han ubicado todos su user storys sin terminar  "'
+                        send_mail('Finalizacion de todos sus Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                    except smtplib.socket.gaierror:
+                        return HttpResponseRedirect('/error/conexion/')
                     proyecto.estado='REVISAR'
                     crear_nuevo_sprint(id_proyecto)
 
                 if ban == 0:
-                    html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado todos sus Sprint. Y sus user story estan todos Finalizados.   "'
-                    send_mail('Finalizacion de todos sus Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                    try:
+                        html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado todos sus Sprint. Y sus user story estan todos Finalizados.   "'
+                        send_mail('Finalizacion de todos sus Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                    except smtplib.socket.gaierror:
+                        return HttpResponseRedirect('/error/conexion/')
                     proyecto.estado='REVISAR'
 
 

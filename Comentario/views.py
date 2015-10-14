@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from AdminProyectos.models import Proyecto
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
+import smtplib
 
 def nuevo_comentario(request, id_userstory):
     """
@@ -46,14 +47,20 @@ def nuevo_comentario(request, id_userstory):
                 comentario.fecha_creacion=today()
                 comentario.userstory_id=id_userstory
                 comentario.hora_trabajada=hora_trabajada
-                comentario.save()
-                html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  " ' +userstory.nombre+ '" donde a trabajado "' \
-                           +str(hora_trabajada)+' " horas en total en este user story'
-                send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
 
-                html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde a trabajado " ' +str(hora_trabajada)+ \
+                try:
+                    html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  " ' +userstory.nombre+ '" donde a trabajado "' \
+                           +str(hora_trabajada)+' " horas en total en este user story'
+                    send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                except smtplib.socket.gaierror:
+                    return HttpResponseRedirect('/error/conexion/')
+                try:
+                    html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde a trabajado " ' +str(hora_trabajada)+ \
                                ' " Se le ha notificado al ScrumMaster de esta accion'
-                send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
+                    send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
+                except smtplib.socket.gaierror:
+                    return HttpResponseRedirect('/error/conexion/')
+                comentario.save()
                 userstory.tiempo_trabajado=suma
                 userstory.suma_trabajadas+=hora_trabajada2
                 userstory.save()
@@ -68,14 +75,19 @@ def nuevo_comentario(request, id_userstory):
                     comentario.fecha_creacion=today()
                     comentario.userstory_id=id_userstory
                     comentario.hora_trabajada=hora_trabajada2
+                    try:
+                        html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  "' +userstory.nombre+ '" donde a trabajado"' \
+                               +userstory.tiempo_trabajado+' " horas en total en este user story donde a finalizado su tiempo estimado   " '
+                        send_mail('Nuevo Comentario - Finalizo su Tiempo de User Story',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                    except smtplib.socket.gaierror:
+                        return HttpResponseRedirect('/error/conexion/')
+                    try:
+                        html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde a trabajado "' +userstory.tiempo_trabajado+ \
+                                   'Se le ha notificado al ScrumMaster que alcanzo el tiempo estimado de su User Story'
+                        send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
+                    except smtplib.socket.gaierror:
+                        return HttpResponseRedirect('/error/conexion/')
                     comentario.save()
-                    html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  "' +userstory.nombre+ '" donde a trabajado"' \
-                           +userstory.tiempo_trabajado+' " horas en total en este user story donde a finalizado su tiempo estimado   " '
-                    send_mail('Nuevo Comentario - Finalizo su Tiempo de User Story',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
-
-                    html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde a trabajado "' +userstory.tiempo_trabajado+ \
-                               'Se le ha notificado al ScrumMaster que alcanzo el tiempo estimado de su User Story'
-                    send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
                     us_ultimo_estado=US_Estado_ultimo()
                     us_ultimo_estado.us_id=userstory.id
                     us_ultimo_estado.estado=userstory.estado
@@ -97,13 +109,18 @@ def nuevo_comentario(request, id_userstory):
                     comentario.userstory_id=id_userstory
                     comentario.hora_trabajada=hora_trabajada
                     comentario.save()
-                    html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  "' +userstory.nombre+ '" donde a trabajado"' \
+                    try:
+                        html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  "' +userstory.nombre+ '" donde a trabajado"' \
                            +str(userstory.tiempo_trabajado)+' " horas en total en este user story donde a finalizado su tiempo estimado   " '
-                    send_mail('Nuevo Comentario - Finalizo su Tiempo de User Story',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
-
-                    html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde a trabajado "' +str(userstory.tiempo_trabajado)+ \
+                        send_mail('Nuevo Comentario - Finalizo su Tiempo de User Story',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                    except smtplib.socket.gaierror:
+                        return HttpResponseRedirect('/error/conexion/')
+                    try:
+                        html_content = 'Agrego correctamente su comentario del "'+userstory.nombre+'" donde a trabajado "' +str(userstory.tiempo_trabajado)+ \
                                'Se le ha notificado al ScrumMaster que alcanzo el tiempo estimado de su User Story'
-                    send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
+                        send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
+                    except smtplib.socket.gaierror:
+                        return HttpResponseRedirect('/error/conexion/')
                     us_ultimo_estado=US_Estado_ultimo()
                     us_ultimo_estado.us_id=userstory.id
                     us_ultimo_estado.estado=userstory.estado

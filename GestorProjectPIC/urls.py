@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete', name='password_reset_complete'),
     url(r'^accounts/login/', include(admin.site.urls) ),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
+    url(r'^error/conexion/', 'PIC.views.error_conexion'),
 
 #USUARIOS
 
