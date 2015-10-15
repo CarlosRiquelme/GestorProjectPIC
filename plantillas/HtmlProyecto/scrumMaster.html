@@ -1,16 +1,12 @@
 {% extends 'admin/base_site.html' %}%}
 
-{% block titulo %}Proyectos{% endblock %}
-{% block extra_head %}
-
-{% endblock %}
 {% block content %}
 
 <div class="container">
   <h2>Administracion Scrum Master</h2>
     <h3>Bienvenido {{user}}</h3>
 
-<center>
+
 <ul class="nav nav-tabs">
     <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     <li class="active"><a href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}">ScrumMaster</a></li>
@@ -20,7 +16,7 @@
     <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
     {% endif %}
 </ul>
-</center>
+
 <br>
    {% if proyecto.estado != 'FINALIZADO'%}
    <a  class="btn btn-info" href="{% url 'AdminProyectos.views.finalizar_proyecto' id_proyecto %}">

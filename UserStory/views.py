@@ -198,7 +198,7 @@ def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
     sprint.save()
     userstory.save()
     messages.success(request, 'USER STORY ASIGNADO A UNA SPRINT CORRECTAMENTE!')
-    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+    return HttpResponseRedirect('/userstory/miuserstory_no_creado/'+str(id_proyecto)+'/'+str(id_sprint))
 @login_required(login_url='/admin/login/')
 def lista_userstory_relacionado_a_sprint(request,id_sprint):
     userstory=UserStory.objects.filter(sprint_id=id_sprint)
@@ -224,6 +224,7 @@ def desasinar_userstory_a_sprint(request, id_userstory,id_sprint):
 def asignar_usuario_userstory(request, id_userstory, id_user):
     userstory=UserStory.objects.get(pk=id_userstory)
     usuario=User.objects.get(pk=id_user)
+    id_proyecto=userstory.proyecto_id
     userstory.usuario_id=id_user
     userstory.save()
     messages.success(request, 'USER STORY ASIGNADO USUARIO Al USERSTORY CORRECTAMENTE!')
@@ -243,7 +244,7 @@ def asignar_usuario_userstory(request, id_userstory, id_user):
     else:
         messages.success(request, 'El Usuario No Posee email, para notificarle, pero igual fue asignado!')
 
-    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+    return HttpResponseRedirect('/proyecto/usuarios/'+str(id_proyecto))
 
 @login_required(login_url='/admin/login/')
 def lista_userstory_creado_para_asignar_usuario(request,id_proyecto, id_user):

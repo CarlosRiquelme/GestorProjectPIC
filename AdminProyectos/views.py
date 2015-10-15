@@ -20,8 +20,9 @@ from PIC.models import RolUsuarioProyecto
 from Sprint.models import Sprint, Estimacion_Proyecto, Estimacion_Sprint
 from UserStory.models import UserStory
 from Actividades.models import Actividad
-from Sprint.models import Dias_de_un_Sprint
+from Sprint.models import Dias_de_un_Sprint, Sprint_En_Proceso, Proyecto_En_Proceso
 import smtplib
+from django.core.exceptions import ObjectDoesNotExist
 
 
 @login_required(login_url='/admin/login/')
@@ -460,6 +461,15 @@ def jo5(request,id_sprint):
     """
     userstorys = UserStory.objects.filter(sprint_id = id_sprint)
     sprint = Sprint.objects.get(pk=id_sprint)
+    try:
+        sprint_proceso=Sprint_En_Proceso.objects.get(sprint_id=id_sprint)
+    except ObjectDoesNotExist:
+        sprint_proceso=''
+    cantidad=0
+    if sprint_proceso != '':
+        for aux in sprint_proceso:
+            cantidad+=1
+
     v = []
     v2 = []
     v3 = []
@@ -468,11 +478,16 @@ def jo5(request,id_sprint):
         suma = suma + aux1.tiempo_estimado
 
     v3.append(suma)
+
     c=0
+    contador=0
     for au in userstorys:
-        aeiou = au.suma_trabajadas
-        v3.append(v3[c]-aeiou)
-        c=c+1
+        if cantidad !=0 and contador < cantidad:
+            contador+=1
+            aeiou = au.suma_trabajadas
+            v3.append(v3[c]-aeiou)
+            c=c+1
+
 
     v.append(suma)
     v2.append('Al Inicio')
@@ -542,6 +557,9 @@ def jo5(request,id_sprint):
     #lista3 = pipo
     #lista3.append(fec)
     lista2 = v3
+    print v
+    print v2
+    print v3
 
     """
         ----------------------------- OBSERVACION-----------------------------
@@ -561,6 +579,14 @@ def jo3(request,id_proyecto):
     :return:
     """
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+    try:
+        proyecto_proceso=Proyecto_En_Proceso.objects.get(proyecto_id=id_proyecto)
+    except ObjectDoesNotExist:
+        sprint_proceso=''
+    cantidad=0
+    if sprint_proceso != '':
+        for aux in sprint_proceso:
+            cantidad+=1
     lista1=[]
     lista3=[]
     lista4=[]
@@ -607,7 +633,9 @@ def jo3(request,id_proyecto):
     #lista3 = ['1', ' 2', ' 3', ' 4', ' 5', ' 6',
     #            ' 7', ' 8', ' 9', ' 10', ' 11', ' 12']
 
-
+    print lista2
+    print lista1
+    print lista3
 
 
 

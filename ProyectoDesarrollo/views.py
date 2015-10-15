@@ -466,7 +466,7 @@ def fecha_calcular(start, days, holidays=(), workdays=(MON,TUE,WED,THU,FRI)):
 
 def Burndowncharts(request, id_proyecto):
     user=request.user
-    rol=RolUsuarioProyecto.objects.get(usuario_id=user.id)
+    rol=RolUsuarioProyecto.objects.get(usuario_id=user.id, proyecto_id=id_proyecto)
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto).order_by('secuencia')
     return render_to_response('HtmlProyectoDesarrollo/burndowncharts.html',{'user':user,'proyecto':proyecto,
