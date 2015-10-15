@@ -23,10 +23,10 @@ from PIC.models import RolUsuarioProyecto
 import smtplib
 def kanban(request,id_proyecto):
     user=request.user
-    rol=RolUsuarioProyecto.objects.get(usuario_id=user.id)
+    rol=RolUsuarioProyecto.objects.get(usuario_id=user.id, proyecto_id=id_proyecto)
     actividades=Actividad.objects.filter(proyecto_id=id_proyecto).order_by("secuencia")
-    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto).order_by("estado")
-    userstorys2=UserStory.objects.filter(proyecto_id=id_proyecto, estado='REASIGNAR_SPRINT')
+    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto).order_by("prioridad")
+    userstorys2=UserStory.objects.filter(proyecto_id=id_proyecto, estado='REASIGNAR_SPRINT').order_by("prioridad")
     lista=[]
     for dato in userstorys2:
         bandera=True
@@ -228,7 +228,7 @@ def visualizar_sprint_en_desarrollo(request,id_proyecto):
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     ahora = date.today()
     user=request.user
-    rol=RolUsuarioProyecto.objects.get(usuario_id=user.id)
+    rol=RolUsuarioProyecto.objects.get(usuario_id=user.id, proyecto_id=id_proyecto)
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
     ultimo_sprint=0
     for dato in sprints:
