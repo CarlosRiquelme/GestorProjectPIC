@@ -133,7 +133,7 @@ def nuevo_comentario(request, id_userstory):
                     messages.success(request, 'Agrego Correctamente su Comentario')
                     messages.success(request, 'A alcanzado su tiempo estimado de su User Story')
                     messages.success(request, 'Se comunico al Scrum Master')
-                    return HttpResponseRedirect('/comentario/micomentario/'+str(comentario.id))
+                    return HttpResponseRedirect('/comentario/miscomentarios/'+str(userstory.id))
 
     else:
         comentario_form= ComentarioForm(request.POST)

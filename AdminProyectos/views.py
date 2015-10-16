@@ -96,76 +96,84 @@ def iniciar_proyecto(request):
     ahora = date.today()
     proyectos=Proyecto.objects.all()
     for objeto in proyectos:
-        if objeto.fechaInicio <= ahora and objeto.estado == 'EN-ESPERA':
-            scrum_master=objeto.scrumMaster
-            fecha=objeto.fechaInicio
-            try:
-                html_content = 'Su Proyecto "'+objeto.nombre+'"  a iniciado por llegar su fecha de Inicio  '+fecha.strftime('%Y/%m/%d')
-                send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [scrum_master.email], fail_silently=False)
-            except smtplib.socket.gaierror:
-                return HttpResponseRedirect('/error/conexion/')
+        try:
+            actividad=Actividad.objects.get(proyecto_id=objeto.id,secuencia='1')
+        except ObjectDoesNotExist:
+            actividad=''
+        try:
+            sprint=Sprint.objects.get(proyecto_id=objeto.id,secuencia='1')
+        except ObjectDoesNotExist:
+            sprint=''
+        userstory1=UserStory.objects.filter(proyecto_id=objeto.id)
 
-            objeto.estado= 'EN-DESARROLLO'
-            sprint=Sprint.objects.filter(proyecto_id=objeto.id).order_by("secuencia")
-            fecha1=fecha
-            estimacion_proyecto=Estimacion_Proyecto()
-            estimacion_proyecto.fechaInicio=objeto.fechaInicio
-            estimacion_proyecto.proyecto_id=objeto.id
-            estimacion_proyecto.save()
-            userstorys=UserStory.objects.filter(proyecto_id=objeto.id)
-            ###################### Ya no se usa dejo por que no molesta #######################
-            uno=1
-            actividad=Actividad.objects.get(proyecto_id=objeto.id , secuencia=uno)
-            actividades=Actividad.objects.filter(proyecto_id=objeto.id)
-            cantidad_actividades=0
-            peso_actividad=0.0
-            for dato in actividades:
-                cantidad_actividades+=1
-            peso_actividad=100/cantidad_actividades
-            #############################################################################
-            for dato in userstorys:
-                dato.actividad_id=actividad.id
-                dato.porcentaje_actividad=peso_actividad
-                dato.estado='TODO'
-                dato.save()
-
-            for dato in sprint:
-                sprint1=Sprint.objects.get(pk=dato.id)
-                estimacion_sprint=Estimacion_Sprint()
-                estimacion_sprint.proyecto_estimacion_id=estimacion_proyecto.id
-                estimacion_sprint.sprint_id=dato.id
-                estimacion_sprint.fechaInicio=fecha1
-                sprint1.fechaInicio=fecha1
-                dias= dato.tiempo_acumulado/8
-                contador=0
-                while dias > contador:
-                    contador+=1
-                    dias_sprint=Dias_de_un_Sprint()
-                    fecha3=fecha_calcular(fecha1,contador-1)
-                    dias_sprint.dia=contador
-                    dias_sprint.fecha=fecha3
-                    dias_sprint.sprint_id=dato.id
-                    dias_sprint.save()
-                fecha2=fecha_calcular(fecha1,dias-1)
-                estimacion_sprint.fechaFin=fecha2
-                fecha1=fecha_calcular(fecha2,1)
-                sprint1.fechaFin=fecha2
-                sprint1.dias_duracion=dias
-                sprint1.dia_trancurrido=0
-                estimacion_sprint.duracion=dato.tiempo_acumulado
-                sprint1.save()
-                estimacion_sprint.save()
-            sprint2=Sprint.objects.get(proyecto_id=objeto.id, fechaInicio=fecha)
-            sprint2.estado='ABIERTO'
-            sprint2.save()
-            estimacion_proyecto=Estimacion_Proyecto.objects.get(proyecto_id=objeto.id)
-            estimacion_proyecto.fechaFin=fecha2
-            objeto.fechaFin=fecha2
-            estimacion_proyecto.save()
-            objeto.save()
-            lista.append(objeto)
-
-    return render_to_response('HtmlProyecto/lista_proyectos_iniciados.html',{'lista':lista})
+        if actividad != '' and sprint != '' and userstory1 != null:
+            if objeto.fechaInicio <= ahora and objeto.estado == 'EN-ESPERA':
+                scrum_master=objeto.scrumMaster
+                fecha=objeto.fechaInicio
+                try:
+                    html_content = 'Su Proyecto "'+objeto.nombre+'"  a iniciado por llegar su fecha de Inicio  '+fecha.strftime('%Y/%m/%d')
+                    send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [scrum_master.email], fail_silently=False)
+                except smtplib.socket.gaierror:
+                    return HttpResponseRedirect('/error/conexion/')
+                objeto.estado= 'EN-DESARROLLO'
+                sprint=Sprint.objects.filter(proyecto_id=objeto.id).order_by("secuencia")
+                fecha1=fecha
+                estimacion_proyecto=Estimacion_Proyecto()
+                estimacion_proyecto.fechaInicio=objeto.fechaInicio
+                estimacion_proyecto.proyecto_id=objeto.id
+                estimacion_proyecto.save()
+                userstorys=UserStory.objects.filter(proyecto_id=objeto.id)
+                ###################### Ya no se usa dejo por que no molesta #######################
+                uno=1
+                actividad=Actividad.objects.get(proyecto_id=objeto.id , secuencia=uno)
+                actividades=Actividad.objects.filter(proyecto_id=objeto.id)
+                cantidad_actividades=0
+                peso_actividad=0.0
+                for dato in actividades:
+                    cantidad_actividades+=1
+                peso_actividad=100/cantidad_actividades
+                #############################################################################
+                for dato in userstorys:
+                    dato.actividad_id=actividad.id
+                    dato.porcentaje_actividad=peso_actividad
+                    dato.estado='TODO'
+                    dato.save()
+                for dato in sprint:
+                    sprint1=Sprint.objects.get(pk=dato.id)
+                    estimacion_sprint=Estimacion_Sprint()
+                    estimacion_sprint.proyecto_estimacion_id=estimacion_proyecto.id
+                    estimacion_sprint.sprint_id=dato.id
+                    estimacion_sprint.fechaInicio=fecha1
+                    sprint1.fechaInicio=fecha1
+                    dias= dato.tiempo_acumulado/8
+                    contador=0
+                    while dias > contador:
+                        contador+=1
+                        dias_sprint=Dias_de_un_Sprint()
+                        fecha3=fecha_calcular(fecha1,contador-1)
+                        dias_sprint.dia=contador
+                        dias_sprint.fecha=fecha3
+                        dias_sprint.sprint_id=dato.id
+                        dias_sprint.save()
+                    fecha2=fecha_calcular(fecha1,dias-1)
+                    estimacion_sprint.fechaFin=fecha2
+                    fecha1=fecha_calcular(fecha2,1)
+                    sprint1.fechaFin=fecha2
+                    sprint1.dias_duracion=dias
+                    sprint1.dia_trancurrido=0
+                    estimacion_sprint.duracion=dato.tiempo_acumulado
+                    sprint1.save()
+                    estimacion_sprint.save()
+                sprint2=Sprint.objects.get(proyecto_id=objeto.id, fechaInicio=fecha)
+                sprint2.estado='ABIERTO'
+                sprint2.save()
+                estimacion_proyecto=Estimacion_Proyecto.objects.get(proyecto_id=objeto.id)
+                estimacion_proyecto.fechaFin=fecha2
+                objeto.fechaFin=fecha2
+                estimacion_proyecto.save()
+                objeto.save()
+                lista.append(objeto)
+            return render_to_response('HtmlProyecto/lista_proyectos_iniciados.html',{'lista':lista})
 
 @login_required(login_url='/admin/login/')
 def editar_proyecto(request, id_proyecto):

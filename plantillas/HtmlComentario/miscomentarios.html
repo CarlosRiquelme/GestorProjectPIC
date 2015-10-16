@@ -36,9 +36,9 @@
          <td>
             <div class="input-group">
                 {% if p.get_archivo_id %}
-                <a class="btn btn-success" href="/admin/Comentario/document/{{p.get_archivo_id}}/?id={{ p.id }}&id_us={{userstory.id}}">Editar Archivo</a>
+                <a class="btn btn-success" href="/Comentario/document/{{p.get_archivo_id}}/?id={{ p.id }}&id_us={{userstory.id}}">Editar Archivo</a>
                 {% else %}
-                 <a class="btn btn-primary" href="/admin/Comentario/document/add/?id={{ p.id }}&id_us={{userstory.id}}">Archivo</a>
+                 <a class="btn btn-primary" href="/Comentario/document/add/?id={{ p.id }}&id_us={{userstory.id}}">Archivo</a>
 
                 {% endif %}
             </div>
