@@ -42,7 +42,7 @@
                         {% if p.estado != 'CREADO' %}
                         <a class="btn btn-warning btn-sm" href="{% url 'Comentario.views.mis_comentarios' p.id %}" >Cancelar</a>
                         {% endif %}
-
+                        <a class="btn btn-info btn-sm" href="{% url 'UserStory.views.listar_historial_us' p.id %}" >Historial</a>
 
                  </td>
 	        </tr>

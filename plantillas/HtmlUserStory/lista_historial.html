@@ -1,0 +1,43 @@
+{% extends 'admin/base_site.html' %}%}
+
+
+
+
+{% block content %}
+
+    <h2>Historial del User Story "{{userstory.nombre}}"</h2>
+<br>
+
+  <div class="panel panel-info">
+      <table class="table table-striped" style="width: 100%">
+          <thead>
+                <th style="width: 40%" >Descripcion</th>
+                <th style="width 30%">Fecha</th>
+          </thead>
+          {% for p in historial%}
+                <tr>
+                    <td><em>{{p.descripcion}}</em></td>
+                    <td><em>{{p.fecha}}</em></td>
+                </tr>
+          {% endfor %}
+      </table>
+  </div>
+<div class="pagination">
+    <span class="step-links">
+        {% if historial.has_previous %}
+            <a href="?page={{ historial.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ historial.number }} of {{ historial.paginator.num_pages }}.
+        </span>
+
+        {% if historial.has_next %}
+            <a href="?page={{ historial.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+<br>
+<a class="btn btn-default" href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+
+{% endblock %}

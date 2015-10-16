@@ -53,3 +53,11 @@ class US_Estado_ultimo(models.Model):
     us=models.ForeignKey(UserStory)
     estado=models.CharField(max_length=30)
     estado_actual=models.CharField(max_length=30)
+
+
+class Historial_US(models.Model):
+    us=models.ForeignKey(UserStory, null=True)
+    nombre_us=models.CharField(max_length=100, null=True)
+    descripcion=models.CharField(max_length=200)
+    fecha=models.DateTimeField(auto_now=True)
+    proyecto=models.ForeignKey(Proyecto)

@@ -51,7 +51,7 @@
 
 <h2>Sprints</h2>
 <ul class="nav nav-tabs">
-  <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+    <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     {% if rol.rol.name == 'ScrumMaster' %}
     <li ><a href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}">ScrumMaster</a></li>
     {% endif %}
@@ -72,84 +72,76 @@
 <br>
 
 <br>
+{% if rol.rol.name == 'ScrumMaster'%}
  <a class="btn btn-success"     href="{% url 'ProyectoDesarrollo.views.analizar_sprint' id_proyecto  %}">
        Analizar Sprint&nbsp;</a>
+{% endif %}
 <br>
-
-        <body>
-            <div class="marco">
-                <div class="cuerpo">
-                    <div class="columna_izquierda">
-                        <h3>Sprint Estimado</h3>
-                            <table class="table" style="width: 250px">
-                                {% for p in lista_estimacion_sprint %}
-                                <tr>
-                                    <td>
-                                    {{ p.sprint.nombre }}
-                                    </td>
-
-                                </tr>
-                                {% endfor %}
-
-                            </table>
-                    </div>
-                    <div class="columna_hora1">
-                        <h3>hs</h3>
-                          <table class="table" style="width: 45px">
-                             {% for p in lista_hora_estimado %}
-                            <tr>
-                                <td>
-                                    {{p}}hs
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="columna_porcentaje2">
-                        <h3>%</h3>
-                          <table class="table" style="width: 45px">
-                             {% for p in lista_porcentaje_estimado %}
-                            <tr>
-                                <td>
-                                    {{p}}%
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="columna_central">
-                        <h3>Sprint en Proceso</h3>
-                          <table class="table" style="width: 250px">
-                             {% for p in lista_sprint_proceso %}
-                            <tr>
-                                <td>
-                                    {{ p.sprint.nombre }} - {{p.sprint.estado}}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="columna_hora2">
-                        <h3>hs</h3>
-                          <table class="table" style="width: 45px">
-                             {% for p in lista_hora_proceso%}
-                            <tr>
-                                <td>
-                                    {{p}}hs
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-
+    <div class="marco">
+        <div class="cuerpo">
+            <div class="columna_izquierda">
+                <h3>Sprint Estimado</h3>
+                <table class="table" style="width: 250px">
+                    {% for p in lista_estimacion_sprint %}
+                        <tr>
+                            <td>
+                                {{ p.sprint.nombre }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
-        </body>
+            <div class="columna_hora1">
+                <h3>hs</h3>
+                <table class="table" style="width: 45px">
+                    {% for p in lista_hora_estimado %}
+                        <tr>
+                            <td>
+                                {{p}}hs
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="columna_porcentaje2">
+                <h3>%</h3>
+                <table class="table" style="width: 45px">
+                    {% for p in lista_porcentaje_estimado %}
+                        <tr>
+                            <td>
+                                {{p}}%
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="columna_central">
+                <h3>Sprint en Proceso</h3>
+                <table class="table" style="width: 250px">
+                    {% for p in lista_sprint_proceso %}
+                        <tr>
+                            <td>
+                                {{ p.sprint.nombre }} - {{p.sprint.estado}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="columna_hora2">
+                <h3>hs</h3>
+                <table class="table" style="width: 45px">
+                    {% for p in lista_hora_proceso%}
+                        <tr>
+                            <td>
+                                {{p}}hs
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+<h2>Sprints Lista</h2>
 <br>
-
-
-
-
-
 <a class="btn btn-default" href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

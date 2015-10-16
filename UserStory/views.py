@@ -7,7 +7,7 @@ from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from Actividades.models import Actividad
 from UserStory.forms import UserStoryForm, UserStoryFormEdit, UserStoryClienteForm
-from UserStory.models import UserStory
+from UserStory.models import UserStory, Historial_US
 from django.contrib import messages
 from Sprint.models import Sprint
 from Comentario.models import Comentario
@@ -54,11 +54,16 @@ def nuevo_userstory(request, id_proyecto):
             userstory.proyecto_id=id_proyecto
             userstory.tiempo_estimado=tiempo_estimado
             userstory.save()
+            historial = Historial_US()
+            historial.us_id=userstory.id
+            historial.nombre_us=nombre
+            historial.proyecto_id=id_proyecto
+            historial.fecha=today()
+            historial.descripcion="Creado por "+user.username
+            historial.save()
             messages.success(request, 'USER STORY CREADO CON EXITO!')
-                        
 
-
-            return HttpResponseRedirect('/userstory/miuserstory/'+str(userstory.id))
+            return HttpResponseRedirect('/userstory/misuserstorys/'+str(id_proyecto))
     else:
         userstory_form= UserStoryForm(request.POST)
     return render_to_response('HtmlUserStory/nuevouserstory.html',{'formulario':userstory_form,'user':user,
@@ -67,11 +72,20 @@ def nuevo_userstory(request, id_proyecto):
 
 @login_required(login_url='/admin/login/')
 def iniciar_userstory(request, id_userstory):
+    user=request.user
     userstory= UserStory.objects.get(pk=id_userstory)
+    id_proyecto=userstory.proyecto.id
+    historial_us=Historial_US()
+    historial_us.us_id=userstory.id
+    historial_us.nombre_us=userstory.nombre
+    historial_us.fecha=today()
+    historial_us.proyecto=userstory.proyecto_id
+    historial_us.descripcion="Fue Iniciado por "+user.username+", paso al Estado DOING"
     userstory.estado='DOING'
     userstory.save()
+    historial_us.save()
     messages.success(request,'UserStory "'+userstory.nombre+'" doing')
-    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+    return HttpResponseRedirect('/userstory/misuserstorys/'+str(id_proyecto))
 @login_required(login_url='/admin/login/')
 def editar_userstory(request, id_userstory):
     """
@@ -86,9 +100,17 @@ def editar_userstory(request, id_userstory):
         formulario= UserStoryFormEdit(request.POST,instance=userstory)
         if formulario.is_valid():
             userstory= formulario.save()
+            historial_us=Historial_US()
+            historial_us.us_id=userstory.id
+            historial_us.nombre_us=userstory.nombre
+            historial_us.fecha=today()
+            historial_us.proyecto=userstory.proyecto_id
+            historial_us.descripcion="Fue Editado por "+user.username
+            id_proyecto=userstory.proyecto.id
             userstory.save()
+            historial_us.save()
             completar_atributos_userstory(id_userstory)
-            return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+            return HttpResponseRedirect('/userstory/misuserstorys/'+str(id_proyecto))
     else:
         formulario= UserStoryFormEdit(instance=userstory)
     return render_to_response('HtmlUserStory/editaruserstory.html',
@@ -98,14 +120,20 @@ def editar_userstory(request, id_userstory):
 
 @login_required(login_url='/admin/login/')
 def eliminar_userstory(request, id_userstory):
+    user=request.user
     userstory= UserStory.objects.get(pk=id_userstory)
-    proyecto_id=userstory.proyecto_id
+    historial_us=Historial_US()
+    historial_us.nombre_us=userstory.nombre
+    historial_us.fecha=today()
+    historial_us.proyecto=userstory.proyecto_id
+    historial_us.descripcion="Fue Eliminado por "+user.username
+    historial_us.save()
+    id_proyecto=userstory.proyecto_id
     user=request.user
     nombre=userstory.nombre
     userstory.delete()
-
     messages.success(request,"User Story "+nombre+" Eliminado!")
-    return HttpResponseRedirect('/userstory/misuserstorys/'+str(proyecto_id))
+    return HttpResponseRedirect('/userstory/misuserstorys/'+str(id_proyecto))
 
 def pre_eliminar_userstory(request, id_userstory):
     user=request.user
@@ -166,11 +194,19 @@ def mi_userstory(request, id_userstory):
 @login_required(login_url='/admin/login/')
 def asignar_userstory_a_actividad(request,id_proyecto ,id_actividad, id_userstory ):
     userstory=UserStory.objects.get(pk=id_userstory)
-
+    actividad=Actividad.objects.get(pk=id_actividad)
+    user=request.user
     userstory.actividad_id=id_actividad
+    historial_us=Historial_US()
+    historial_us.nombre_us=userstory.nombre
+    historial_us.us_id=userstory.id
+    historial_us.fecha=today()
+    historial_us.descripcion="Fue asignado a la Actividad "+actividad.nombre+" por el usuario "+user.username
+    historial_us.proyecto_id=id_proyecto
     userstory.save()
+    historial_us.save()
     messages.success(request, 'USER STORY ASIGNADO A UNA ACTIVIDAD CORRECTAMENTE!')
-    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+    return HttpResponseRedirect('/userstory/misuserstorys/'+str(id_proyecto))
 
 @login_required(login_url='/admin/login/')
 def lista_userstory_reasignarActividad(request,id_proyecto, id_actividad):
@@ -188,6 +224,7 @@ def lista_userstory_no_creado(request,id_proyecto, id_sprint):
                                                                        'id_sprint':id_sprint,'sprint':sprint})
 @login_required(login_url='/admin/login/')
 def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
+    user=request.user
     userstory=UserStory.objects.get(pk=id_userstory)
     sprint=Sprint.objects.get(pk=id_sprint)
     valor=sprint.tiempo_acumulado
@@ -195,6 +232,13 @@ def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
         sprint.tiempo_acumulado=userstory.tiempo_estimado
     userstory.sprint_id=id_sprint
     sprint.suma_tiempo_usestory+=userstory.tiempo_trabajado
+    historial_us=Historial_US()
+    historial_us.nombre_us=userstory.nombre
+    historial_us.us_id=userstory.id
+    historial_us.fecha=today()
+    historial_us.descripcion="Fue asignado al Sprint "+sprint.nombre+" por el usuario "+user.username
+    historial_us.proyecto_id=id_proyecto
+    historial_us.save()
     sprint.save()
     userstory.save()
     messages.success(request, 'USER STORY ASIGNADO A UNA SPRINT CORRECTAMENTE!')
@@ -207,6 +251,7 @@ def lista_userstory_relacionado_a_sprint(request,id_sprint):
                                                                        'id_sprint':id_sprint})
 @login_required(login_url='/admin/login/')
 def desasinar_userstory_a_sprint(request, id_userstory,id_sprint):
+    user=request.user
     userstory=UserStory.objects.get(pk=id_userstory)
     userstory.sprint_id=''
     userstory.save()
@@ -217,16 +262,31 @@ def desasinar_userstory_a_sprint(request, id_userstory,id_sprint):
         if dato.tiempo_estimado > valor:
             valor=dato.tiempo_estimado
     sprint.tiempo_acumulado=valor
+    historial_us=Historial_US()
+    historial_us.nombre_us=userstory.nombre
+    historial_us.us_id=id_userstory
+    historial_us.fecha=today()
+    historial_us.descripcion="Fue desasignado del Sprint "+sprint.nombre+" por el usuario "+user.username
+    historial_us.proyecto_id=sprint.proyecto_id
+    historial_us.save()
     sprint.save()
     messages.success(request, 'USER STORY DESASIGNADO A UNA SPRINT CORRECTAMENTE!')
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
 @login_required(login_url='/admin/login/')
 def asignar_usuario_userstory(request, id_userstory, id_user):
+    user=request.user
     userstory=UserStory.objects.get(pk=id_userstory)
     usuario=User.objects.get(pk=id_user)
     id_proyecto=userstory.proyecto_id
     userstory.usuario_id=id_user
     userstory.save()
+    historial_us=Historial_US()
+    historial_us.nombre_us=userstory.nombre
+    historial_us.us_id=id_userstory
+    historial_us.fecha=today()
+    historial_us.descripcion="Fue Asignado al Usuario "+usuario.username+" por el usuario "+user.username
+    historial_us.proyecto_id=id_proyecto
+    historial_us.save()
     messages.success(request, 'USER STORY ASIGNADO USUARIO Al USERSTORY CORRECTAMENTE!')
 
     if(usuario.email != 'NULL'):
@@ -321,6 +381,13 @@ def cliente_crear_userstory(request, id_proyecto):
             userstory.proyecto_id=id_proyecto
             userstory.tiempo_estimado=0
             userstory.save()
+            historial_us=Historial_US()
+            historial_us.nombre_us=nombre
+            historial_us.us_id=userstory.id
+            historial_us.fecha=today()
+            historial_us.descripcion="Fue creado por "+user.username
+            historial_us.proyecto_id=id_proyecto
+            historial_us.save()
             messages.success(request, 'USER STORY CREADO CON EXITO!')
             messages.success(request, 'SE HA ENVIADO AL SCRUM MASTER PARA SU REVISION!')
             return HttpResponseRedirect('/proyecto/cliente/menu/'+str(id_proyecto))
@@ -428,6 +495,13 @@ def fin_de_una_actividad_de_un_us(request, id_userstory):
             return HttpResponseRedirect('/error/conexion/')
 
         userstory.save()
+        historial_us=Historial_US()
+        historial_us.nombre_us=userstory.nombre
+        historial_us.us_id=id_userstory
+        historial_us.fecha=today()
+        historial_us.descripcion="Finalizado todas sus Actividades, por el usuario "+user.username+" pasa a revision"
+        historial_us.proyecto_id=id_proyecto
+        historial_us.save()
         messages.success(request, 'A finalizado la Actividad, Espere la Aprobacion de ScrumMaster')
     else:
         userstory.estado='REVISAR_FIN_AC'
@@ -438,6 +512,13 @@ def fin_de_una_actividad_de_un_us(request, id_userstory):
             return HttpResponseRedirect('/error/conexion/')
 
         userstory.save()
+        historial_us=Historial_US()
+        historial_us.nombre_us=userstory.nombre
+        historial_us.us_id=id_userstory
+        historial_us.fecha=today()
+        historial_us.descripcion="Finalizado la Actividad "+userstory.actividad.nombre+ ", por el usuario "+user.username+", pasa a revision"
+        historial_us.proyecto_id=id_proyecto
+        historial_us.save()
         messages.success(request, 'A finalizado la Actividad, Espere la Aprobacion de ScrumMaster')
 
     return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
@@ -449,20 +530,37 @@ def lista_userstory_cancelar(request, id_proyecto):
                               context_instance=RequestContext(request))
 
 def cancelar_userstory(request,id_proyecto,id_userstory):
+    user=request.user
     userstory=UserStory.objects.get(pk=id_userstory)
     userstory.estado='CANCELADO'
     userstory.save()
+    historial_us=Historial_US()
+    historial_us.nombre_us=userstory.nombre
+    historial_us.us_id=id_userstory
+    historial_us.fecha=today()
+    historial_us.descripcion="Cancelado  , por el usuario "+user.username
+    historial_us.proyecto_id=id_proyecto
+    historial_us.save()
     messages.success(request, 'UserStory CANCELADO!!!')
     return HttpResponseRedirect('/userstory/lista/cancelar/'+str(id_proyecto))
 
 def descancelar_userstory(request,id_proyecto,id_userstory):
+    user=request.user
     userstory=UserStory.objects.get(pk=id_userstory)
     userstory.estado='CREADO'
     userstory.save()
+    historial_us=Historial_US()
+    historial_us.nombre_us=userstory.nombre
+    historial_us.us_id=id_userstory
+    historial_us.fecha=today()
+    historial_us.descripcion="Descancelado  , por el usuario "+user.username
+    historial_us.proyecto_id=id_proyecto
+    historial_us.save()
     messages.success(request, 'UserStory DESCANCELADO!!!')
     return HttpResponseRedirect('/userstory/lista/cancelar/'+str(id_proyecto))
 
 def aprobar_finalizacion(request,id_userstory):
+    user=request.user
     userstory=UserStory.objects.get(pk=id_userstory)
     usuario=userstory.usuario.username
     email=userstory.usuario.email
@@ -481,6 +579,37 @@ def aprobar_finalizacion(request,id_userstory):
         return HttpResponseRedirect('/error/conexion/')
 
     userstory.save()
+    historial_us=Historial_US()
+    historial_us.nombre_us=userstory.nombre
+    historial_us.us_id=id_userstory
+    historial_us.fecha=today()
+    historial_us.descripcion="Aprobado de Finalizacion del User Story "+userstory.nombre+ "  , por el usuario "+user.username
+    historial_us.proyecto_id=id_proyecto
+    historial_us.save()
     messages.success(request, 'A aprobado correctamente el USER STORY')
 
     return HttpResponseRedirect('/proyecto/aprobacion/us/finalizacion/'+str(id_proyecto))
+@login_required(login_url='/admin/login/')
+def listar_historial_us(request, id_userstory):
+    """
+    Lista los usuarios de un proyecto
+    :param request:
+    :param id_proyecto:
+    :return:
+    """
+    historial=Historial_US.objects.filter(us_id=id_userstory).order_by("fecha")
+    userstory=UserStory.objects.get(pk=id_userstory)
+    id_proyecto=userstory.proyecto.id
+    paginator=Paginator(historial,10)
+    page=request.GET.get('page')
+    try:
+        historial=paginator.page(page)
+    except PageNotAnInteger:
+        historial=paginator.page(1)
+    except EmptyPage:
+        historial=paginator.page(paginator.num_pages)
+
+    return render_to_response('HtmlUserStory/lista_historial.html',{'historial':historial,
+                                                                    'id_proyecto':id_proyecto,
+                                                                    'userstory':userstory},
+                              context_instance=RequestContext(request))

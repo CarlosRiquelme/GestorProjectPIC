@@ -7,7 +7,7 @@ from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from Actividades.models import Actividad
 from AdminProyectos.models import Proyecto
-from UserStory.models import UserStory, US_Estado_ultimo
+from UserStory.models import UserStory, US_Estado_ultimo, Historial_US
 from django.contrib import messages
 from Sprint.models import Sprint
 from django.core.mail import send_mail
@@ -336,6 +336,7 @@ def reasignar_userstory_a_actividad(request,id_proyecto,id_userstory):
     userstory=UserStory.objects.get(pk=id_userstory)
     actividad=Actividad.objects.filter(proyecto_id=id_proyecto)
     ultima_actividad=0
+    user=request.user
     secuencia2=0
     valor=0
     valor=userstory.actividad.secuencia
@@ -349,6 +350,13 @@ def reasignar_userstory_a_actividad(request,id_proyecto,id_userstory):
         userstory.actividad_id=actividad.id
         userstory.estado='TODO'
         userstory.save()
+        historial_us=Historial_US()
+        historial_us.nombre_us=userstory.nombre
+        historial_us.us_id=id_userstory
+        historial_us.fecha=today()
+        historial_us.descripcion="Fue Asignado a la Actividad "+userstory.actividad.nombre+ "  , por el usuario "+user.username
+        historial_us.proyecto_id=id_proyecto
+        historial_us.save()
         messages.success(request, 'UserStory Reasignado a la Actividad Siguiente')
         return HttpResponseRedirect('/userstory/lista/actividad/reasignar/'+str(id_proyecto))
     else:
@@ -363,6 +371,7 @@ def lista_reasignar_userstory_a_sprint(request,id_proyecto):
                                                                                'id_proyecto':id_proyecto,
                                                                                'proyecto':proyecto})
 def reasignar_userstory_a_sprint(request,id_proyecto,id_userstory):
+    user=request.user
     userstory=UserStory.objects.get(pk=id_userstory)
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
     bandera=True
@@ -383,6 +392,13 @@ def reasignar_userstory_a_sprint(request,id_proyecto,id_userstory):
         if sprint.secuencia > ultimo_sprint:
             userstory.sprint_id=sprint.id
             userstory.estado=us_ultimo_estado.estado
+            historial_us=Historial_US()
+            historial_us.nombre_us=userstory.nombre
+            historial_us.us_id=id_userstory
+            historial_us.fecha=today()
+            historial_us.descripcion="Fue Asignado al Sprint "+userstory.sprint.nombre+ "  , por el usuario "+user.username
+            historial_us.proyecto_id=id_proyecto
+            historial_us.save()
             userstory.save()
         if sprint.secuencia == ultimo_sprint:
             print "hola"
@@ -412,6 +428,13 @@ def reasignar_userstory_tiempo(request,id_proyecto,id_userstory):
         if formulario.is_valid():
             userstory= formulario.save()
             completar_atributos_userstory_tiempo(id_userstory,id_sprint)
+            historial_us=Historial_US()
+            historial_us.nombre_us=userstory.nombre
+            historial_us.us_id=id_userstory
+            historial_us.fecha=today()
+            historial_us.descripcion="Fue Asignado un nuevo tiempo "+str(userstory.tiempo_estimado)+ "  , por el usuario "+user.username
+            historial_us.proyecto_id=id_proyecto
+            historial_us.save()
             messages.success(request,'UserStory "'+userstory.nombre+'" fue asignado su Nuevo TIEMPO')
             return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
     else:

@@ -101,6 +101,7 @@ urlpatterns = patterns('',
      url(r'^userstory/actualizado/(?P<id_proyecto>\d+)/$','UserStory.views.cambiar_estado_todo'),
      url(r'^userstory/reasignar/(?P<id_proyecto>\d+)/(?P<id_sprint>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.reasignar_userstory'),
      url(r'^userstory/desasignar/sprint/(?P<id_userstory>\d+)/(?P<id_sprint>\d+)/$','UserStory.views.desasinar_userstory_a_sprint'),
+     url(r'^userstory/historial/(?P<id_userstory>\d+)/$','UserStory.views.listar_historial_us'),
 
 #COMENTARIOS
 

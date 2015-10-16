@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from Comentario.models import Comentario, Document
 from Comentario.forms import ComentarioForm, DocumentForm
 from django.contrib import messages
-from UserStory.models import UserStory, US_Estado_ultimo
+from UserStory.models import UserStory, US_Estado_ultimo, Historial_US
 from django.contrib.auth.decorators import login_required
 from AdminProyectos.models import Proyecto
 from django.core.urlresolvers import reverse
@@ -64,6 +64,13 @@ def nuevo_comentario(request, id_userstory):
                 userstory.tiempo_trabajado=suma
                 userstory.suma_trabajadas+=hora_trabajada2
                 userstory.save()
+                historial_us=Historial_US()
+                historial_us.nombre_us=userstory.nombre
+                historial_us.us_id=id_userstory
+                historial_us.fecha=today()
+                historial_us.descripcion="Fue agregado un comentario "+titulo+" , por el usuario "+user.name
+                historial_us.proyecto_id=id_proyecto
+                historial_us.save()
                 messages.success(request, 'Agrego Correctamente su Comentario')
                 return HttpResponseRedirect('/comentario/micomentario/'+str(comentario.id))
             else:
@@ -97,6 +104,13 @@ def nuevo_comentario(request, id_userstory):
                     userstory.estado='REVISAR_TIEMPO'
                     userstory.suma_trabajadas+=hora_trabajada2
                     userstory.save()
+                    historial_us=Historial_US()
+                    historial_us.nombre_us=userstory.nombre
+                    historial_us.us_id=id_userstory
+                    historial_us.fecha=today()
+                    historial_us.descripcion="Fue agregado un comentario "+titulo+" , por el usuario "+user.name+ ", pasa a revision por terminar el tiempo"
+                    historial_us.proyecto_id=id_proyecto
+                    historial_us.save()
                     messages.success(request, 'Agrego Correctamente su Comentario')
                     messages.success(request, 'A alcanzado su tiempo estimado de su User Story')
                     messages.success(request, 'Se comunico al Scrum Master')
@@ -130,6 +144,13 @@ def nuevo_comentario(request, id_userstory):
                     userstory.estado='REVISAR_TIEMPO'
                     userstory.suma_trabajadas=userstory.suma_trabajadas+hora_trabajada
                     userstory.save()
+                    historial_us=Historial_US()
+                    historial_us.nombre_us=userstory.nombre
+                    historial_us.us_id=id_userstory
+                    historial_us.fecha=today()
+                    historial_us.descripcion="Fue agregado un comentario "+titulo+" , por el usuario "+user.name+ ", pasa a revision por terminar el tiempo"
+                    historial_us.proyecto_id=id_proyecto
+                    historial_us.save()
                     messages.success(request, 'Agrego Correctamente su Comentario')
                     messages.success(request, 'A alcanzado su tiempo estimado de su User Story')
                     messages.success(request, 'Se comunico al Scrum Master')
