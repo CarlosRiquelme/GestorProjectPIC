@@ -11,7 +11,15 @@
             {% endif %}
             <tr><th class="navbar-inner">Descripcion: </th><td style="text-align: center">{{ userstory.descripcion }}</td></tr>
             <tr><th class="navbar-inner">Usuario: </th><td style="text-align: center">{{ userstory.usuario }}</td></tr>
-            <tr><th class="navbar-inner">Prioridad: </th><td style="text-align: center">{{ userstory.prioridad }}</td></tr>
+            {% if userstory.prioridad == '3' %}
+            <tr><th class="navbar-inner">Prioridad: </th><td style="text-align: center">BAJA</td></tr>
+            {% endif %}
+            {% if userstory.prioridad == '2' %}
+            <tr><th class="navbar-inner">Prioridad: </th><td style="text-align: center">MEDIA</td></tr>
+            {% endif %}
+            {% if userstory.prioridad == '1' %}
+            <tr><th class="navbar-inner">Prioridad: </th><td style="text-align: center">ALTA</td></tr>
+            {% endif %}
             <tr><th class="navbar-inner">Estado: </th><td style="text-align: center">{{ userstory.estado }}</td></tr>
             <tr><th class="navbar-inner">Actividad: </th><td style="text-align: center">{{ userstory.actividad }}</td></tr>
             <tr><th class="navbar-inner">Tiempo Trabajo (Hs): </th><td style="text-align: center">{{ userstory.tiempo_trabajado }}</td></tr>

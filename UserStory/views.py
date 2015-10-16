@@ -104,7 +104,7 @@ def editar_userstory(request, id_userstory):
             historial_us.us_id=userstory.id
             historial_us.nombre_us=userstory.nombre
             historial_us.fecha=today()
-            historial_us.proyecto=userstory.proyecto_id
+            historial_us.proyecto_id=userstory.proyecto_id
             historial_us.descripcion="Fue Editado por "+user.username
             id_proyecto=userstory.proyecto.id
             userstory.save()

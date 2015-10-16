@@ -13,9 +13,9 @@ from django.contrib.admin import widgets
 
 
 US_PRIORIDAD = (
-    ('BAJA', 'BAJA'),
-    ('MEDIA', 'MEDIA'),
-    ('ALTA', 'ALTA'),
+    ('3', 'BAJA'),
+    ('2', 'MEDIA'),
+    ('1', 'ALTA'),
 
 )
 

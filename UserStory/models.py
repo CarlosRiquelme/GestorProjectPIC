@@ -21,9 +21,9 @@ US_ESTADOS = (
 
 )
 US_PRIORIDAD = (
-    ('BAJA', 'BAJA'),
-    ('MEDIA', 'MEDIA'),
-    ('ALTA', 'ALTA'),
+    ('BAJA', 'B'),
+    ('MEDIA', 'M'),
+    ('ALTA', 'A'),
     ('SUPER-ALTA', 'SUPER-ALTA'),
 )
 
