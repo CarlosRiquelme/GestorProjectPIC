@@ -57,7 +57,7 @@ class UserStoryFormEdit(forms.ModelForm):
     
     descripcion=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3','required':'required'}),
                                 help_text="Maximo 120 caracteres",max_length=300,label="Descripcion")
-    prioridad=forms.MultipleChoiceField(widget=forms.SelectMultiple, choices=US_PRIORIDAD)
+    prioridad=forms.CharField(widget=forms.Select(choices=US_PRIORIDAD))
     tiempo_estimado = forms.IntegerField(label="Tiempo Estimado(hs)",
                    widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
 

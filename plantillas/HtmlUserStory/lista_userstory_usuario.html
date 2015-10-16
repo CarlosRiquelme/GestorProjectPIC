@@ -28,9 +28,9 @@
         <th >TIEMPO ESTIMADO</th>
         <th >TIEMPO TRABAJADO</th>
         {% if proyecto.estado == 'EN-DESARROLLO' %}
-        <th>NO INICIADO</th>
-        <th>COMENTARIO</th>
-        <th>ACTIVIDAD</th>
+            <th>NO INICIADO</th>
+            <th>ACTIVIDAD</th>
+            <th>COMENTARIO</th>
         {% endif %}
     </thead>
         {% for p in userstorys %}
@@ -42,35 +42,33 @@
                  <td><em>{{p.tiempo_estimado}}</em></td>
                  <td><em>{{p.tiempo_trabajado}}</em></td>
                  {% if sprint.id == p.sprint.id%}
-                 {% if p.estado == 'TODO'  %}
-                 <td> <div class="input-group">
-                    <a class="btn btn-info btn-md" href="{% url 'UserStory.views.iniciar_userstory' p.id %}">Iniciar<i class="fa fa-edit"></i></a>
-                     </div>
-                 </td>
-                 {% endif %}
-                 {% if p.estado == 'DOING' %}
-                 <td><a>INICIADO</a></td>
-                 {% endif %}
-                 {% if p.estado != 'TODO' and p.estado != 'DOING' %}
-                 <td></td>
-                 {% endif %}
-
-                 {% if p.estado == 'DOING' or p.estado == 'REVISAR_TIEMPO'  %}
-
-                 <td> <div class="input-group">
-                    <a class="btn btn-warning btn-md" href="{% url 'UserStory.views.fin_de_una_actividad_de_un_us' p.id %}">Finalizar<i class="fa fa-edit"></i></a>
-                     </div>
-                 </td>
-                 {% endif %}
-                  {% else %}
-                 <td>----------------------</td>
-                 <td> <div class="input-group">
-                    <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}">Visualizar<i class="fa fa-edit"></i></a>
-                     </div>
-                 </td>
-                 <td>----------------------</td>
-                 {% endif %}
-	        </tr>
+                    {% if p.estado == 'TODO'  %}
+                        <td> <div class="input-group">
+                                <a class="btn btn-info btn-md" href="{% url 'UserStory.views.iniciar_userstory' p.id %}">Iniciar<i class="fa fa-edit"></i></a>
+                            </div>
+                        </td>
+                    {% endif %}
+                    {% if p.estado == 'DOING' %}
+                        <td><a>INICIADO</a></td>
+                    {% endif %}
+                    {% if p.estado != 'TODO' and p.estado != 'DOING' %}
+                        <td>------</td>
+                    {% endif %}
+                    {% if p.estado == 'DOING' or p.estado == 'REVISAR_TIEMPO'  %}
+                        <td> <div class="input-group">
+                                <a class="btn btn-warning btn-md" href="{% url 'UserStory.views.fin_de_una_actividad_de_un_us' p.id %}">Finalizar<i class="fa fa-edit"></i></a>
+                             </div>
+                        </td>
+                    
+                    {% else %}
+                        <td>------</td>
+                    {% endif %}
+                    <td> <div class="input-group">
+                            <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}">Visualizar<i class="fa fa-edit"></i></a>
+                        </div>
+                    </td>
+	            {% endif %}
+             </tr>
         {% endfor %}
     </table>
 </div>
