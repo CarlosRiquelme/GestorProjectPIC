@@ -67,6 +67,10 @@
                             <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}">Visualizar<i class="fa fa-edit"></i></a>
                         </div>
                     </td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                    <td></td>
 	            {% endif %}
              </tr>
         {% endfor %}

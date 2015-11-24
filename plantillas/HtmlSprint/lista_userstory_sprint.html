@@ -5,7 +5,7 @@
 
 {% block content %}
 
- <h2>Listado de los User Story del sprint {{sprint.nombre}}</h2>
+ <h2> User Story del sprint "{{sprint.nombre}}"</h2>
 
 
 
@@ -16,13 +16,14 @@
         <th >NOMBRE</th>
         <th >USUARIO</th>
         <th >ESTADO</th>
-        <th >FECHA DE CREACION</th>
         <th>TIEMPO ESTIMADO</th>
         <th>TIEMPO TRABAJADO</th>
         <th >PRIORIDAD</th>
         <th >SPRINT</th>
         <th >ACTIVIDAD</th>
+        {% if permiso.rol.name == 'ScrumMaster' and proyecto.estado == 'EN-ESPERA' %}
         <th  style="width: 10%">DESASIGNAR</th>
+         {% endif%}
     </thead>
 
         {% for p in userstory %}
@@ -31,18 +32,26 @@
 	     <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
          <td><em>{{p.usuario}}</em></td>
          <td><em>{{p.estado}}</em></td>
-         <td><em>{{p.fecha_creacion}}</em></td>
          <td><em>{{p.tiempo_estimado}}</em></td>
          <td><em>{{p.tiempo_trabajado}}</em></td>
-         <td><em>{{p.prioridad}}</em></td>
+         {% if p.prioridad == '1'%}
+         <td><em>Alta</em></td>
+         {% endif %}
+         {% if p.prioridad == '2'%}
+         <td><em>Media</em></td>
+         {% endif %}
+         {% if p.prioridad == '3'%}
+         <td><em>Baja</em></td>
+         {% endif %}
          <td><em>{{p.sprint.nombre}}</em></td>
          <td><em>{{p.actividad}}</em></td>
+         {% if permiso.rol.name == 'ScrumMaster' and proyecto.estado == 'EN-ESPERA'%}
          <td>
             <div class="input-group">
                 <a class="btn btn-primary" href="{% url 'UserStory.views.desasinar_userstory_a_sprint'  p.id sprint.id %}">UserStory</a>
             </div>
          <td>
-
+         {% endif %}
 
 	</tr>
 

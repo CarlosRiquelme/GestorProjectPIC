@@ -18,12 +18,13 @@
 </ul>
 
 <br>
-   {% if proyecto.estado != 'FINALIZADO'%}
+   {% if proyecto.estado == 'EN-DESARROLLO' %}
    <a  class="btn btn-info" href="{% url 'AdminProyectos.views.finalizar_proyecto' id_proyecto %}">
 Finalizar Proyecto </a>
+    <br><br><br>
     {% endif %}
 
-<br><br><br>
+
   <div class="panel-group" id="accordion">
    {% if proyecto.estado != 'FINALIZADO'%}
     <div class="panel panel-info">

@@ -4,16 +4,6 @@
 <h3> Lista de sus User Storys </h3>
 
 
-<ul class="nav nav-tabs">
-    <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
-    <li class="active" ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
-    <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
-    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint2</a></li>
-    <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
-
-
-</ul>
-
 <br>
 <div class="panel panel-info">
         <table class="table table-striped" style="width: 100%">
@@ -50,4 +40,5 @@
         {% endfor %}
     </table>
 </div>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endblock %}

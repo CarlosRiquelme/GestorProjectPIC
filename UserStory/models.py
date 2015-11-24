@@ -28,7 +28,7 @@ US_PRIORIDAD = (
 )
 
 class UserStory(models.Model):
-    nombre = models.CharField(max_length=30, unique=True)
+    nombre = models.CharField(max_length=30, unique=False)
     descripcion = models.CharField(max_length=150)
     fecha_creacion= models.DateTimeField(auto_now=True)
     estado=models.CharField(choices=US_ESTADOS,default='CREADO',max_length=30)

@@ -76,18 +76,12 @@ class UserStoryClienteForm(forms.ModelForm):
     Atributos que el Cliente deber completar para la creacion
     de un nuevo UserStory
     """
-    US_PRIORIDAD = (
-    ('BAJA', 'BAJA'),
-    ('MEDIA', 'MEDIA'),
-    ('ALTA', 'ALTA'),
-
-    )
 
     nombre=forms.CharField(widget=TextInput(attrs={'class': 'form-control'}),
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del User Story",)
     descripcion=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3'}),
                                 help_text="Maximo 120 caracteres",max_length=120,label="Descripcion")
-    prioridad=forms.MultipleChoiceField(widget=forms.SelectMultiple, choices=US_PRIORIDAD)
+    prioridad=forms.CharField(widget=forms.Select(choices=US_PRIORIDAD))
 
     class Meta:
         model = UserStory

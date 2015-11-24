@@ -17,10 +17,11 @@ from Sprint.models import Estimacion_Proyecto, Estimacion_Sprint
 import datetime
 from django.template import RequestContext, loader
 from django.http import HttpResponse
-from Sprint.models import Sprint_En_Proceso,Dias_de_un_Sprint
+from Sprint.models import Sprint_En_Proceso,Dias_de_un_Sprint,Estimacion_Sprint
 from django.core.exceptions import ObjectDoesNotExist
 from PIC.models import RolUsuarioProyecto
 import smtplib
+from django.db.models import Max
 def kanban(request,id_proyecto):
     user=request.user
     rol=RolUsuarioProyecto.objects.get(usuario_id=user.id, proyecto_id=id_proyecto)
@@ -55,12 +56,16 @@ def analizar_sprint(request, id_proyecto):
     :return:
     """
     try:
+        sprint=Sprint.objects.get(proyecto_id=id_proyecto ,estado='ABIERTO')
+    except ObjectDoesNotExist:
+        messages.debug(request, 'NO posee ningun sprint ABIERTO para su analisis')
+        return HttpResponseRedirect('/proyecto/sprint/visualizar/'+str(id_proyecto))
+    try:
         html_content = 'Prueba de conexion'
-        send_mail('Prueba de conexion',html_content , 'gestorprojectpic@gmail.com', 'gestorprojectpic@gmail.com', fail_silently=False)
+        send_mail('Prueba de conexion',html_content , 'gestorprojectpic@gmail.com', ['gestorprojectpic@gmail.com'], fail_silently=False)
     except smtplib.socket.gaierror:
         return HttpResponseRedirect('/error/conexion/')
 
-    sprint=Sprint.objects.get(proyecto_id=id_proyecto ,estado='ABIERTO')
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
     sprint_fechas=Dias_de_un_Sprint.objects.filter(sprint_id=sprint.id)#tabla donde se guardan los dias de un sprint
     ultimo_sprint=0
@@ -102,6 +107,7 @@ def analizar_sprint(request, id_proyecto):
         if hora < hora2:
             print "Horaaaaaaaaaaaaaa " + hora
         else:
+            print 'hola123'
             sprint.estado='CERRADO'
             id_sprint=sprint.id
             siguiente=sprint.secuencia+1
@@ -172,11 +178,6 @@ def analizar_sprint(request, id_proyecto):
                     except smtplib.socket.gaierror:
                         return HttpResponseRedirect('/error/conexion/')
                     proyecto.estado='REVISAR'
-
-
-
-
-
     return HttpResponseRedirect('/proyecto/sprint/visualizar/'+str(id_proyecto))
 
 
@@ -308,6 +309,32 @@ def visualizar_sprint_en_desarrollo(request,id_proyecto):
                                                                                'lista_hora_estimado':lista_hora_estimado,
                                                                                'lista_hora_proceso':lista_hora_proceso,
                                                                                'rol':rol})
+
+def observar_proceso_sprint(request, id_sprint):
+    sprint=Sprint.objects.get(pk=id_sprint)
+    sprint_estimado=Estimacion_Sprint.objects.get(sprint_id=id_sprint)
+    us2=UserStory.objects.filter(sprint_id=id_sprint)
+    dia_sprint=Dias_de_un_Sprint.objects.filter(sprint_id=id_sprint)
+    mayor=0
+    for i in dia_sprint:
+        if mayor <= i.dia:
+            mayor=i.dia
+    tiempo_en_proceso=mayor*8
+
+
+    print str(dia_sprint)
+    tiempo_hora_hombre_estimado=0
+    tiempo_hora_hombre_proceso=0
+    for object in us2:
+        tiempo_hora_hombre_estimado+=object.tiempo_estimado
+        tiempo_hora_hombre_proceso+=object.suma_trabajadas
+    return render_to_response('HtmlProyectoDesarrollo/observar_sprint.html',{'sprint':sprint,
+                                                                               'sprint_estimado':sprint_estimado,
+                                                                               'tiempo_en_proceso':tiempo_en_proceso,
+                                                                               'tiempo_hora_hombre_estimado':tiempo_hora_hombre_estimado,
+                                                                               'tiempo_hora_hombre_proceso':tiempo_hora_hombre_proceso})
+
+
 
 
 def lista_reasignar_userstory_a_actividad(request,id_proyecto):

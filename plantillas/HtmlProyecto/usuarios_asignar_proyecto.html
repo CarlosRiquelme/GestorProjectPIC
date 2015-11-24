@@ -32,6 +32,20 @@
  </table>
 </div>
 
-<br><br><br>
+<div class="pagination">
+    <span class="step-links">
+        {% if lista.has_previous %}
+            <a href="?page={{ lista.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ lista.number }} of {{ lista.paginator.num_pages }}.
+        </span>
+
+        {% if lista.has_next %}
+            <a href="?page={{ lista.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
 
 {% endblock %}

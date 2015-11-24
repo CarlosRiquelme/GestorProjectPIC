@@ -32,8 +32,10 @@
 
 
 {% if proyecto.estado == 'EN-ESPERA' %}
-<a class="btn btn-primary" data-toggle="modal" data-target="#myModal"  href="#myModal" >
-       Editar&nbsp;<i class="fa fa-edit"></i></a>
+<br>
+<a class="btn btn-primary" href="{% url 'AdminProyectos.views.editar_proyecto' proyecto.id %}" >
+       Editar&nbsp;</a>
+<br><br>
 {% endif %}
 
  <div class="panel panel-info">

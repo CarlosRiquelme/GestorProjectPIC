@@ -7,7 +7,7 @@
 
 <h2>Listado de Comentarios del User Story "{{userstory.nombre}}" </h2>
 <br>
-{% if userstory.estado == 'FINALIZADO' or  user.esScrumMaster %}
+{% if userstory.estado == 'FINALIZADO' or permiso.rol.name == 'ScrumMaster' %}
 
 {% else %}
     <a  class="btn btn-success" href="{% url 'Comentario.views.nuevo_comentario' id_userstory %}">Nuevo Comentario</a>
@@ -68,9 +68,13 @@
 </div>
 <br>
 
-{% if not user.esScrumMaster %}
+{% if permiso.rol.name == 'Equipo' %}
 
 <a class="btn btn-default" href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+{% endif %}
+{% if permiso.rol.name == 'ScrumMaster' %}
+
+<a class="btn btn-default" href="{% url 'UserStory.views.mis_userstorys' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
 {% endif %}
 
 {% endblock %}

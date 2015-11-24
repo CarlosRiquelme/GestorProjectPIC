@@ -8,7 +8,7 @@ SPRINT_ESTADOS = (
 
 
 class Sprint(models.Model):
-    nombre = models.CharField(max_length=30, unique=True)
+    nombre = models.CharField(max_length=30, unique=False)
     fecha_creacion= models.DateTimeField(auto_now=True)
     fechaInicio=models.DateField(null=True)
     fechaFin=models.DateField(null=True)

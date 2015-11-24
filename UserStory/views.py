@@ -125,7 +125,7 @@ def eliminar_userstory(request, id_userstory):
     historial_us=Historial_US()
     historial_us.nombre_us=userstory.nombre
     historial_us.fecha=today()
-    historial_us.proyecto=userstory.proyecto_id
+    historial_us.proyecto_id=userstory.proyecto_id
     historial_us.descripcion="Fue Eliminado por "+user.username
     historial_us.save()
     id_proyecto=userstory.proyecto_id
@@ -247,8 +247,13 @@ def asignar_userstory_a_sprint(request,id_proyecto ,id_sprint, id_userstory ):
 def lista_userstory_relacionado_a_sprint(request,id_sprint):
     userstory=UserStory.objects.filter(sprint_id=id_sprint)
     sprint=Sprint.objects.get(pk=id_sprint)
+    user=request.user
+    permiso=RolUsuarioProyecto.objects.get(proyecto_id=sprint.proyecto_id, usuario_id=user.id)
+
     return render_to_response('HtmlSprint/lista_userstory_sprint.html',{'userstory':userstory,'sprint':sprint,
-                                                                       'id_sprint':id_sprint})
+                                                                       'id_sprint':id_sprint,
+                                                                       'user':user,
+                                                                       'permiso':permiso})
 @login_required(login_url='/admin/login/')
 def desasinar_userstory_a_sprint(request, id_userstory,id_sprint):
     user=request.user

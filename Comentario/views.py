@@ -14,6 +14,7 @@ from AdminProyectos.models import Proyecto
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 import smtplib
+from PIC.models import RolUsuarioProyecto
 
 def nuevo_comentario(request, id_userstory):
     """
@@ -68,7 +69,7 @@ def nuevo_comentario(request, id_userstory):
                 historial_us.nombre_us=userstory.nombre
                 historial_us.us_id=id_userstory
                 historial_us.fecha=today()
-                historial_us.descripcion="Fue agregado un comentario "+titulo+" , por el usuario "+user.name
+                historial_us.descripcion="Fue agregado un comentario "+titulo+" , por el usuario "+user.username
                 historial_us.proyecto_id=id_proyecto
                 historial_us.save()
                 messages.success(request, 'Agrego Correctamente su Comentario')
@@ -108,7 +109,7 @@ def nuevo_comentario(request, id_userstory):
                     historial_us.nombre_us=userstory.nombre
                     historial_us.us_id=id_userstory
                     historial_us.fecha=today()
-                    historial_us.descripcion="Fue agregado un comentario "+titulo+" , por el usuario "+user.name+ ", pasa a revision por terminar el tiempo"
+                    historial_us.descripcion="Fue agregado un comentario "+titulo+" , por el usuario "+user.username+ ", pasa a revision por terminar el tiempo"
                     historial_us.proyecto_id=id_proyecto
                     historial_us.save()
                     messages.success(request, 'Agrego Correctamente su Comentario')
@@ -148,7 +149,7 @@ def nuevo_comentario(request, id_userstory):
                     historial_us.nombre_us=userstory.nombre
                     historial_us.us_id=id_userstory
                     historial_us.fecha=today()
-                    historial_us.descripcion="Fue agregado un comentario "+titulo+" , por el usuario "+user.name+ ", pasa a revision por terminar el tiempo"
+                    historial_us.descripcion="Fue agregado un comentario "+titulo+" , por el usuario "+user.username+ ", pasa a revision por terminar el tiempo"
                     historial_us.proyecto_id=id_proyecto
                     historial_us.save()
                     messages.success(request, 'Agrego Correctamente su Comentario')
@@ -223,6 +224,8 @@ def mis_comentarios(request, id_userstory):
     userstory=UserStory.objects.get(pk=id_userstory)
     archivos=Document.objects.all()
     id_proyecto=userstory.proyecto_id
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+    permiso=RolUsuarioProyecto.objects.get(proyecto_id=id_proyecto, usuario_id=user.id)
     for dato in comentarios:
         for dato1 in archivos:
             if dato.id == dato1.comentario.id:
@@ -237,12 +240,13 @@ def mis_comentarios(request, id_userstory):
         comentarios=paginator.page(paginator.num_pages)
 
 
-
     return render_to_response('HtmlComentario/miscomentarios.html',{'comentarios':comentarios,'id_userstory':id_userstory,
                                                                   'userstory':userstory,
                                                                   'lista':comentarios,
                                                                   'id_proyecto':id_proyecto,
-                                                                  'user':user})
+                                                                  'user':user,
+                                                                  'proyecto':proyecto,
+                                                                  'permiso':permiso})
 
 def error_conexion():
     return render_to_response('HtmlProyecto/errorconexion.html')

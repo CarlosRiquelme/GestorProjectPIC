@@ -1,55 +1,8 @@
 {% extends 'admin/base_site.html' %}
 
 {% block content %}
-            <style type="text/css">
-                .cuerpo {
-                    padding:20px 0 20px 0;
-                    overflow-x:hidden;
-                    overflow-y:auto; /* Hace que se ajuste a la columna más alta en ff */
-                    height:100%; /* Hace que se ajuste a la columna más alta  en ie6 */
-                }
 
-                .columna_izquierda {
-                    float:left; /* Alineación a la izquierda */
-                    width:250px;
-                    border:solid lightblue 3px;
-                    padding:10px;
-                }
-
-                .columna_central {
-                    float:left; /* Alineación a la izquierda */
-                    width:250px;
-                    border:3px solid lightgreen;
-                    padding:10px;
-                }
-                .columna_porcentaje {
-                    float:left; /* Alineación a la izquierda */
-                    width:60px;
-                    border:3px solid lightgreen;
-                    padding:10px;
-                }
-                .columna_porcentaje2 {
-                    float:left; /* Alineación a la izquierda */
-                    width:60px;
-                    border:solid lightblue 3px;
-                    padding:10px;
-                }
-                .columna_hora1 {
-                    float:left; /* Alineación a la izquierda */
-                    width:60px;
-                    border:solid lightblue 3px;
-                    padding:10px;
-                }
-                .columna_hora2 {
-                    float:left; /* Alineación a la izquierda */
-                    width:60px;
-                    border:3px solid lightgreen;
-                    padding:10px;
-                }
-            </style>
-
-
-<h2>Sprints</h2>
+<h2>Sprints del Proyecto </h2>
 <ul class="nav nav-tabs">
     <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     {% if rol.rol.name == 'ScrumMaster' %}
@@ -71,77 +24,33 @@
 </ul>
 <br>
 
-<br>
 {% if rol.rol.name == 'ScrumMaster'%}
  <a class="btn btn-success"     href="{% url 'ProyectoDesarrollo.views.analizar_sprint' id_proyecto  %}">
        Analizar Sprint&nbsp;</a>
 {% endif %}
 <br>
-    <div class="marco">
-        <div class="cuerpo">
-            <div class="columna_izquierda">
-                <h3>Sprint Estimado</h3>
-                <table class="table" style="width: 250px">
-                    {% for p in lista_estimacion_sprint %}
-                        <tr>
-                            <td>
-                                {{ p.sprint.nombre }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="columna_hora1">
-                <h3>hs</h3>
-                <table class="table" style="width: 45px">
-                    {% for p in lista_hora_estimado %}
-                        <tr>
-                            <td>
-                                {{p}}hs
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="columna_porcentaje2">
-                <h3>%</h3>
-                <table class="table" style="width: 45px">
-                    {% for p in lista_porcentaje_estimado %}
-                        <tr>
-                            <td>
-                                {{p}}%
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="columna_central">
-                <h3>Sprint en Proceso</h3>
-                <table class="table" style="width: 250px">
-                    {% for p in lista_sprint_proceso %}
-                        <tr>
-                            <td>
-                                {{ p.sprint.nombre }} - {{p.sprint.estado}}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="columna_hora2">
-                <h3>hs</h3>
-                <table class="table" style="width: 45px">
-                    {% for p in lista_hora_proceso%}
-                        <tr>
-                            <td>
-                                {{p}}hs
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
-    </div>
-<h2>Sprints Lista</h2>
 <br>
-<a class="btn btn-default" href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+<div class="panel panel-info">
+
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+        <th >NOMBRE</th>
+        <th  style="width: 10%">Proceso</th>
+        <th  style="width: 10%">UserStory</th>
+        {% for p in sprints %}
+    <tr>
+	     <td><em>{{p.nombre}}-{{p.estado}}</em></td>
+         {% if p.estado != 'EN-ESPERA' %}
+         <td><em><a class="btn btn-info" href="{% url 'ProyectoDesarrollo.views.observar_proceso_sprint' p.id %}">Observar</a></em></td>
+         {% else%}
+        <td><em><a class="btn btn-info disabled">Observar</a></em></td>
+        {% endif %}
+        <td><em><a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_relacionado_a_sprint' p.id %}">Observar</a></em></td>
+    </tr>
+        {% endfor %}
+    </table>
+</div>
+<br>
+<a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+
 {% endblock %}

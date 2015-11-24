@@ -106,7 +106,7 @@ def iniciar_proyecto(request):
             sprint=''
         userstory1=UserStory.objects.filter(proyecto_id=objeto.id)
 
-        if actividad != '' and sprint != '' and userstory1 != null:
+        if actividad != '' and sprint != '' and  userstory1.exists():
             if objeto.fechaInicio <= ahora and objeto.estado == 'EN-ESPERA':
                 scrum_master=objeto.scrumMaster
                 fecha=objeto.fechaInicio
@@ -173,8 +173,7 @@ def iniciar_proyecto(request):
                 estimacion_proyecto.save()
                 objeto.save()
                 lista.append(objeto)
-            return render_to_response('HtmlProyecto/lista_proyectos_iniciados.html',{'lista':lista})
-
+    return render_to_response('HtmlProyecto/lista_proyectos_iniciados.html',{'lista':lista})
 @login_required(login_url='/admin/login/')
 def editar_proyecto(request, id_proyecto):
     """
@@ -195,7 +194,7 @@ def editar_proyecto(request, id_proyecto):
     else:
         formulario= ProyectoFormEdit(instance=proyecto)
     return render_to_response('HtmlProyecto/editarproyecto.html',
-                {'formulario':formulario,'id_proyecto':id_proyecto,'user':proyecto.scrumMaster},
+                {'formulario':formulario,'id_proyecto':id_proyecto,'user':user},
                               context_instance=RequestContext(request))
 @login_required(login_url='/admin/login/')
 def menu_proyecto(request):
@@ -325,17 +324,25 @@ def listar_usuarios_para_asignar_proyecto(request, id_proyecto):
     """
     lista=[]
     usuarioproyecto=RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
-    usuarios=User.objects.all()
-    user=request.user
+    usuarios=User.objects.all().order_by('username')
+    usuario=request.user
     for user in usuarios:
         ban=1
         for user2 in usuarioproyecto:
-            if user2.usuario.id == user.id: #si existe un usurio ya en tabla no quiero
+            if user2.usuario.id == user.id: #si existe un usuario ya en tabla no quiero
                 ban=0
         if ban == 1:
             lista.append(user)
+    paginator=Paginator(lista,10)
+    page=request.GET.get('page')
+    try:
+        lista=paginator.page(page)
+    except PageNotAnInteger:
+        lista=paginator.page(1)
+    except EmptyPage:
+        lista=paginator.page(paginator.num_pages)
     return render_to_response('HtmlProyecto/usuarios_asignar_proyecto.html',{'lista':lista,'usuarioproyecto':usuarioproyecto,
-                                                                             'id_proyecto':id_proyecto,'user':user},
+                                                                             'id_proyecto':id_proyecto,'user':usuario},
                               context_instance=RequestContext(request))
 
 
@@ -428,7 +435,7 @@ def finalizar_proyecto(request, id_proyecto):
         ahora = date.today()
         try:
             html_content = 'EL PROYECTO A FINALIZADO'+proyecto.nombre+' ' 'Descripcion:'+proyecto.descripcion+' ''Fecha de Finalizacion :'+str(ahora)
-            send_mail('Asignado a Proyecto',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+            send_mail('Finalizacion del Proyecto',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
         except smtplib.socket.gaierror:
              return HttpResponseRedirect('/error/conexion/')
         proyecto.save()
@@ -469,15 +476,9 @@ def jo5(request,id_sprint):
     """
     userstorys = UserStory.objects.filter(sprint_id = id_sprint)
     sprint = Sprint.objects.get(pk=id_sprint)
-    try:
-        sprint_proceso=Sprint_En_Proceso.objects.get(sprint_id=id_sprint)
-    except ObjectDoesNotExist:
-        sprint_proceso=''
     cantidad=0
-    if sprint_proceso != '':
-        for aux in sprint_proceso:
-            cantidad+=1
-
+    cantidad=sprint_proceso=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).count()
+    print "cantidad: "+str(cantidad)
     v = []
     v2 = []
     v3 = []
@@ -565,8 +566,11 @@ def jo5(request,id_sprint):
     #lista3 = pipo
     #lista3.append(fec)
     lista2 = v3
+    print "lista1"
     print v
+    print "lista3"
     print v2
+    print "lista2"
     print v3
 
     """

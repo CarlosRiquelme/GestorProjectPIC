@@ -31,7 +31,7 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         <th >FECHA DE INICIO</th>
         <th >FECHA DE FINALIZACION</th>
          {% if proyecto.estado == 'EN-ESPERA' %}
-        <th  style="width: 20%">ACCION</th>
+        <th  style="width: 30%">ACCION</th>
         {% endif %}
     </thead>
     {% for dato in usuarioproyecto %}
@@ -46,8 +46,8 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         {% if dato.proyecto.estado == 'EN-ESPERA' %}
         <td> 
         <div class="input-group">  
-        <a class="btn btn-primary" href="{% url 'AdminProyectos.views.editar_proyecto' dato.proyecto.id %}">Editar <i class="fa fa-edit"></i></a>
-       &nbsp; <a class="btn btn-danger"  href="{% url 'AdminProyectos.views.pre_eliminar_proyecto' dato.proyecto.id %}" > Eliminar&nbsp;<i class="fa fa-ban"></i></a>
+        <a class="btn btn-primary btn-sm" href="{% url 'AdminProyectos.views.editar_proyecto' dato.proyecto.id %}">Editar <i class="fa fa-edit"></i></a>
+       &nbsp; <a class="btn btn-danger btn-sm"  href="{% url 'AdminProyectos.views.pre_eliminar_proyecto' dato.proyecto.id %}" > Eliminar&nbsp;<i class="fa fa-ban"></i></a>
         </div>
         </td>
         {% endif %}

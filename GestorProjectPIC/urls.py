@@ -125,6 +125,7 @@ urlpatterns = patterns('',
      url(r'^proyecto/us/tiempo/nuevo/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','ProyectoDesarrollo.views.reasignar_userstory_tiempo'),
      url(r'^proyecto/us/tiempo/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.lista_reasignar_userstory_tiempo'),
      url(r'^proyecto/aprobacion/us/finalizacion/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.lista_aprobacion_finalizacion'),
+    url(r'^sprint/observar/proceso/(?P<id_sprint>\d+)/$','ProyectoDesarrollo.views.observar_proceso_sprint'),
 
 
 #ADMINISTRACION DEL SCRUM MASTER

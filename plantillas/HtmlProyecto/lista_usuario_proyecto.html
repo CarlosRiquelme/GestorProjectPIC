@@ -27,7 +27,7 @@
 	     <td><em>{{p.usuario.first_name}}</em></td>
          <td><em>{{p.usuario.last_name}}</em></td>
          <td><em>{{p.rol}}</em></td>
-
+        {% if p.rol.name != 'ScrumMaster' %}
 
         <td>
             <div class="input-group">
@@ -40,6 +40,10 @@
                 <a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_creado_para_asignar_usuario' id_proyecto p.usuario_id %}">Asignar</a>
            </div>
         </td>
+        {% else %}
+        <td></td>
+        <td></td>
+        {% endif %}
 
 
 
