@@ -27,13 +27,14 @@
 	     <td><em>{{p.usuario.first_name}}</em></td>
          <td><em>{{p.usuario.last_name}}</em></td>
          <td><em>{{p.rol}}</em></td>
-        {% if p.rol.name != 'ScrumMaster' %}
+        {% if p.rol.name != 'ScrumMaster' and proyecto.estado == 'EN-ESPERA'%}
 
         <td>
             <div class="input-group">
                 <a class="btn btn-primary" href="{% url 'AdminProyectos.views.desasignar_usuario_proyecto' id_proyecto p.usuario_id %}">Desasignar</a>
             </div>
         </td>
+
 
         <td>
             <div class="input-group">

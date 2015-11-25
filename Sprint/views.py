@@ -117,6 +117,7 @@ def eliminar_sprint(request, id_sprint):
 def pre_eliminar_sprint(request, id_sprint):
     user=request.user
     sprint=Sprint.objects.get(pk=id_sprint)
+    userstory=UserStory.objects.filter(sprint_id=id_sprint)
     return render_to_response('HtmlSprint/eliminarsprint.html',{'sprint':sprint},
                               context_instance=RequestContext(request))
 
@@ -124,8 +125,8 @@ def mis_sprints(request,id_proyecto):
 
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto).order_by('secuencia')
     proyecto=Proyecto.objects.get(pk=id_proyecto)
-
-
+    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+    lista=[]
 
     return render_to_response('HtmlSprint/missprints.html',{'sprints':sprints,'id_proyecto':id_proyecto,
                                                             'proyecto':proyecto})

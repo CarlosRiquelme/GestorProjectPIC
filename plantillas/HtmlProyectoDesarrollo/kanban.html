@@ -42,7 +42,17 @@
                                     </td>
                                 </td>
                             {% endif %}
-                            {% if  dato.estado == 'REVISAR_FIN_AC' %}
+                            {% if  dato.estado == 'REVISAR_FIN_AC' or dato.estado == 'REVISAR_FIN' %}
+                                <td>
+                                    <div class="input-group">
+                                        <a class="btn btn-primary" href="{% url 'UserStory.views.mi_userstory' dato.id %}">{{dato.nombre}}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a>DOING</a>
+                                </td>
+                            {% endif %}
+                             {% if  dato.estado == 'FINALIZADO' %}
                                 <td>
                                     <div class="input-group">
                                         <a class="btn btn-primary" href="{% url 'UserStory.views.mi_userstory' dato.id %}">{{dato.nombre}}</a>

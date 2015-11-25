@@ -28,18 +28,26 @@
                  <td><em>{{p.estado}}</em></td>
                  <td><em>{{p.tiempo_estimado}}</em></td>
                  <td><em>{{p.tiempo_trabajado}}</em></td>
-                 <td><em>{{p.sprint.nombre}}</em></td>
+                 <td><em>{{p.sprint}}</em></td>
                  <td><em>{{p.actividad}}</em></td>
                  <td>
 
                         <a class="btn btn-success btn-sm" href="{% url 'Comentario.views.mis_comentarios' p.id %}" >Comentarios</a>
                         {% if proyecto.estado == 'EN-ESPERA' and p.estado != 'CANCELADO' %}
-                        <a class="btn btn-primary btn-sm" href="{% url 'UserStory.views.editar_userstory' p.id %}" >Editar</a>
-                        {% if p.estado == 'CREADO' %}
-                        <a class="btn btn-danger btn-sm" href="{% url 'UserStory.views.pre_eliminar_userstory' p.id %}" >Eliminar</a>
+                            {% if not p.sprint %}
+                                <a class="btn btn-primary btn-sm" href="{% url 'UserStory.views.editar_userstory' p.id %}" >Editar</a>
+                            {% else %}
+                                <a class="btn btn-default btn-sm" data-toggle="tooltip" title="No se puede Editar posee Sprint, Favor Des-Relacionar del Sprint para efectuar esta operacion" href="#" >Editar</a>
+                            {% endif %}
+                            {% if p.estado == 'CREADO' %}
+                                {% if not p.sprint %}
+                                    <a class="btn btn-danger btn-sm "  href="{% url 'UserStory.views.pre_eliminar_userstory' p.id %}" >Eliminar</a>
+                                {% else %}
+                                    <a class="btn btn-default btn-sm  " data-toggle="tooltip" title="No se puede Eliminar posee Sprint, Favor Des-Relacionar del Sprint para efectuar esta operacion"  href="#" >Eliminar</a>
+                                {% endif %}
+                            {% endif %}
                         {% endif %}
-                        {% endif %}
-                        {% if p.estado != 'CREADO' and p.estado != 'CANCELADO' %}
+                        {% if p.estado != 'CREADO' and p.estado != 'CANCELADO' and p.estado != 'FINALIZADO' %}
                         <a class="btn btn-warning btn-sm" href="{% url 'Comentario.views.mis_comentarios' p.id %}" >Cancelar</a>
                         {% endif %}
                         <a class="btn btn-info btn-sm" href="{% url 'UserStory.views.listar_historial_us' p.id %}" >Historial</a>
@@ -66,4 +74,11 @@
 </div>
 <br>
 <a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' proyecto.id %}">Volver</a>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+</script>
 {% endblock %}

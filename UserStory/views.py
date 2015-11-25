@@ -94,29 +94,33 @@ def editar_userstory(request, id_userstory):
     :param id_userstory:
     :return:
     """
-    userstory= UserStory.objects.get(pk=id_userstory)
     user=request.user
-    if request.method=='POST':
-        formulario= UserStoryFormEdit(request.POST,instance=userstory)
-        if formulario.is_valid():
-            userstory= formulario.save()
-            historial_us=Historial_US()
-            historial_us.us_id=userstory.id
-            historial_us.nombre_us=userstory.nombre
-            historial_us.fecha=today()
-            historial_us.proyecto_id=userstory.proyecto_id
-            historial_us.descripcion="Fue Editado por "+user.username
-            id_proyecto=userstory.proyecto.id
-            userstory.save()
-            historial_us.save()
-            completar_atributos_userstory(id_userstory)
-            return HttpResponseRedirect('/userstory/misuserstorys/'+str(id_proyecto))
-    else:
-        formulario= UserStoryFormEdit(instance=userstory)
-    return render_to_response('HtmlUserStory/editaruserstory.html',
-                {'formulario':formulario,'id_userstory':id_userstory},
-                              context_instance=RequestContext(request))
+    userstory= UserStory.objects.get(pk=id_userstory)
+    id_proyecto=userstory.proyecto.id
+    if userstory.sprint is None:
+        if request.method=='POST':
+            formulario= UserStoryFormEdit(request.POST,instance=userstory)
+            if formulario.is_valid():
+                userstory= formulario.save()
+                historial_us=Historial_US()
+                historial_us.us_id=userstory.id
+                historial_us.nombre_us=userstory.nombre
+                historial_us.fecha=today()
+                historial_us.proyecto_id=userstory.proyecto_id
+                historial_us.descripcion="Fue Editado por "+user.username
+                userstory.save()
+                historial_us.save()
+                completar_atributos_userstory(id_userstory)
+                return HttpResponseRedirect('/userstory/misuserstorys/'+str(id_proyecto))
+        else:
+            formulario= UserStoryFormEdit(instance=userstory)
 
+        return render_to_response('HtmlUserStory/editaruserstory.html',
+                    {'formulario':formulario,'id_userstory':id_userstory},
+                                  context_instance=RequestContext(request))
+    else:
+        messages.success(request,"No se puede editar el US por estar relacionado a un Sprint")
+        return HttpResponseRedirect('/userstory/misuserstorys/'+str(id_proyecto))
 
 @login_required(login_url='/admin/login/')
 def eliminar_userstory(request, id_userstory):
@@ -249,11 +253,13 @@ def lista_userstory_relacionado_a_sprint(request,id_sprint):
     sprint=Sprint.objects.get(pk=id_sprint)
     user=request.user
     permiso=RolUsuarioProyecto.objects.get(proyecto_id=sprint.proyecto_id, usuario_id=user.id)
+    proyecto=Proyecto.objects.get(pk=sprint.proyecto_id)
 
     return render_to_response('HtmlSprint/lista_userstory_sprint.html',{'userstory':userstory,'sprint':sprint,
                                                                        'id_sprint':id_sprint,
                                                                        'user':user,
-                                                                       'permiso':permiso})
+                                                                       'permiso':permiso,
+                                                                       'proyecto':proyecto})
 @login_required(login_url='/admin/login/')
 def desasinar_userstory_a_sprint(request, id_userstory,id_sprint):
     user=request.user
@@ -276,7 +282,7 @@ def desasinar_userstory_a_sprint(request, id_userstory,id_sprint):
     historial_us.save()
     sprint.save()
     messages.success(request, 'USER STORY DESASIGNADO A UNA SPRINT CORRECTAMENTE!')
-    return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+    return HttpResponseRedirect('/sprint/userstory/relacionados/'+str(id_sprint))
 @login_required(login_url='/admin/login/')
 def asignar_usuario_userstory(request, id_userstory, id_user):
     user=request.user

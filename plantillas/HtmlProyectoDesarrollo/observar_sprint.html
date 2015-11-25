@@ -4,13 +4,19 @@
 
 
 {% block content %}
-
+<h3>Estado del Sprint "{{sprint.estado}}"</h3>
 <div class="panel panel-info">
     <h3>Tiempo Total de Duracion del Sprint:</h3>
     <table class="table table-striped" style="width: 100%">
         <thead>
+            {% if sprint.estado == 'ABIERTO' %}
             <th  style="width: 20%" >Estimado</th>
             <th  style="width: 20%">En Proceso</th>
+            {% endif %}
+            {% if sprint.estado == 'CERRADO' %}
+                <th  style="width: 20%" >Estimado</th>
+                <th  style="width: 20%">Completado</th>
+            {% endif %}
         </thead>
         <tr>
 	        <td>{{sprint_estimado.duracion}} hs.</td>
@@ -19,13 +25,17 @@
     </table>
     <h3>Tiempo horas/hombre del Sprint:</h3>
     <table class="table table-striped" style="width: 100%">
-        <thead>
+            {% if sprint.estado == 'ABIERTO' %}
             <th  style="width: 20%" >Estimado</th>
             <th  style="width: 20%">En Proceso</th>
-        </thead>
+            {% endif %}
+            {% if sprint.estado == 'CERRADO' %}
+                <th  style="width: 20%" >Estimado</th>
+                <th  style="width: 20%">Completado</th>
+            {% endif %}
         <tr>
 	        <td>{{tiempo_hora_hombre_estimado}} hs.</td>
-            <td>{{sprint_proceso.horas_acumulada}} hs.</td>
+            <td>{{sprint_en_proceso.horas_acumulada}} hs.</td>
         </tr>
     </table>
 </div>

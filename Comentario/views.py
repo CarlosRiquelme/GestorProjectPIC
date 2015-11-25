@@ -73,7 +73,7 @@ def nuevo_comentario(request, id_userstory):
                 historial_us.proyecto_id=id_proyecto
                 historial_us.save()
                 messages.success(request, 'Agrego Correctamente su Comentario')
-                return HttpResponseRedirect('/comentario/micomentario/'+str(comentario.id))
+                return HttpResponseRedirect('/comentario/miscomentarios/'+str(comentario.userstory.id))
             else:
                 resta=suma-userstory.tiempo_trabajado
                 if resta == 0:

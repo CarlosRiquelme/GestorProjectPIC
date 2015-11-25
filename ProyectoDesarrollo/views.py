@@ -22,6 +22,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from PIC.models import RolUsuarioProyecto
 import smtplib
 from django.db.models import Max
+from django.db.models import F
+
 def kanban(request,id_proyecto):
     user=request.user
     rol=RolUsuarioProyecto.objects.get(usuario_id=user.id, proyecto_id=id_proyecto)
@@ -313,26 +315,63 @@ def visualizar_sprint_en_desarrollo(request,id_proyecto):
 def observar_proceso_sprint(request, id_sprint):
     sprint=Sprint.objects.get(pk=id_sprint)
     sprint_estimado=Estimacion_Sprint.objects.get(sprint_id=id_sprint)
+    tiempo_en_proceso=0
+    ban=0
     us2=UserStory.objects.filter(sprint_id=id_sprint)
-    dia_sprint=Dias_de_un_Sprint.objects.filter(sprint_id=id_sprint)
-    mayor=0
-    for i in dia_sprint:
-        if mayor <= i.dia:
-            mayor=i.dia
-    tiempo_en_proceso=mayor*8
-
-
-    print str(dia_sprint)
+    sprint_en_proceso=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).latest('fecha')
+    if sprint.estado == 'ABIERTO':
+        mayor=0
+        hoy = date.today()#fecha en anho-mes-dia
+        hoy = str(hoy)
+        rango_dia_inicio= "08:00:00"
+        rango_dia_fin="12:00:00"
+        rango_almuerzo_inicio="12:00:00"
+        rango_almuerzo_fin="14:00:00"
+        rango_tarde_inicio="14:00:00"
+        rango_tarde_fin="18:00:00"
+        ahora=time.strftime("%X")
+        ahora=str(ahora)
+        print ahora
+        ahora_int = int(ahora[:2])
+        try:
+            dia_sprint=Dias_de_un_Sprint.objects.get(sprint_id=id_sprint, fecha=hoy)
+        except ObjectDoesNotExist:
+            dia_sprint=''
+        if dia_sprint != '':
+            dia=dia_sprint.dia
+            print dia
+            if rango_dia_inicio <= ahora and ahora <= rango_dia_fin:
+                tiempo_en_proceso= (dia-1)*8+ahora_int-8
+            else:
+                if rango_tarde_inicio <= ahora and ahora <= rango_tarde_fin:
+                    tiempo_en_proceso= (dia-1)*8+ahora_int-10
+                else:
+                    if rango_almuerzo_inicio <= ahora and ahora <= rango_almuerzo_fin:
+                        tiempo_en_proceso= ((dia-1)*8)+4
+                    else:
+                        if rango_dia_inicio > ahora:
+                            print "hola bebe"
+                            print rango_dia_inicio
+                            print  ahora
+                            print "hola bebe"
+                            tiempo_en_proceso= (dia-1)*8
+                        else:
+                            tiempo_en_proceso= ((dia-1)*8)+8
+    else:
+        ban=1
     tiempo_hora_hombre_estimado=0
     tiempo_hora_hombre_proceso=0
-    for object in us2:
-        tiempo_hora_hombre_estimado+=object.tiempo_estimado
-        tiempo_hora_hombre_proceso+=object.suma_trabajadas
+    tiempo_hora_hombre_estimado=sprint_estimado.horas_hombre
+    print "hola"
+    print tiempo_en_proceso
+    if ban == 1:
+        tiempo_en_proceso=sprint_estimado.duracion
     return render_to_response('HtmlProyectoDesarrollo/observar_sprint.html',{'sprint':sprint,
                                                                                'sprint_estimado':sprint_estimado,
                                                                                'tiempo_en_proceso':tiempo_en_proceso,
                                                                                'tiempo_hora_hombre_estimado':tiempo_hora_hombre_estimado,
-                                                                               'tiempo_hora_hombre_proceso':tiempo_hora_hombre_proceso})
+                                                                               'tiempo_hora_hombre_proceso':tiempo_hora_hombre_proceso,
+                                                                               'sprint_en_proceso':sprint_en_proceso})
 
 
 
@@ -416,7 +455,7 @@ def reasignar_userstory_a_sprint(request,id_proyecto,id_userstory):
     except ObjectDoesNotExist:
         bandera2=False
     if bandera == True:
-        if sprint.secuencia > ultimo_sprint:
+        if sprint.secuencia >= ultimo_sprint:
             userstory.sprint_id=sprint.id
             userstory.estado=us_ultimo_estado.estado
             historial_us=Historial_US()

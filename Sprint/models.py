@@ -39,6 +39,7 @@ class Estimacion_Sprint(models.Model):
     fechaInicio=models.DateField(null=True)
     fechaFin=models.DateField(null=True)
     duracion=models.IntegerField()
+    horas_hombre=models.IntegerField()
     proyecto_estimacion=models.ForeignKey(Estimacion_Proyecto)
 
 class Sprint_En_Proceso(models.Model):

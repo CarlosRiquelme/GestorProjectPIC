@@ -162,6 +162,11 @@ def iniciar_proyecto(request):
                     sprint1.dias_duracion=dias
                     sprint1.dia_trancurrido=0
                     estimacion_sprint.duracion=dato.tiempo_acumulado
+                    us=UserStory.objects.filter(sprint_id=dato.id)
+                    suma=0
+                    for i in us:
+                        suma=suma+i.tiempo_estimado
+                    estimacion_sprint.horas_hombre=suma
                     sprint1.save()
                     estimacion_sprint.save()
                 sprint2=Sprint.objects.get(proyecto_id=objeto.id, fechaInicio=fecha)

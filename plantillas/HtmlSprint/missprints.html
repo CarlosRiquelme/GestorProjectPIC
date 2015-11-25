@@ -38,11 +38,15 @@
                 <a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_relacionado_a_sprint'  p.id %}">Visualizar</a>
             </div>
         </td>
-        {% if proyecto.estado == 'EN-ESPERA'%}
+        {% if proyecto.estado == 'EN-ESPERA' %}
         <td>
             <div class="input-group">
                 <a class="btn btn-info" href="{% url 'Sprint.views.editar_sprint'  p.id %}">Editar</a>&nbsp;
-                <a class="btn btn-danger" href="{% url 'Sprint.views.pre_eliminar_sprint'  p.id %}">Eliminar</a>
+                {% if p.tiempo_acumulado == 0 %}
+                    <a class="btn btn-danger" href="{% url 'Sprint.views.pre_eliminar_sprint'  p.id %}">Eliminar</a>
+                {% else %}
+                    <a class="btn btn-default" data-toggle="tooltip" title="No se puede Eliminar el Sprint, Posee UserStory relacionados, Favor Des-Relacionar para realizar esta operacion" href=" # ">Eliminar</a>
+                {% endif %}
             </div>
         </td>
         {% endif %}
@@ -56,4 +60,10 @@
 </div>
 <br>
 <a class="btn btn-default" href="{% url 'AdminProyectos.views.scrum_master_vista' id_proyecto %}"> <i class="fa fa-backward"></i> Volver</a>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+</script>
 {% endblock %}
