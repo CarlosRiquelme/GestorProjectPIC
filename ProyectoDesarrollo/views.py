@@ -119,7 +119,6 @@ def analizar_sprint(request, id_proyecto):
                 send_mail('Finalizacion de Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
             except smtplib.socket.gaierror:
                      return HttpResponseRedirect('/error/conexion/')
-            sprint.save()
             userstory2=UserStory.objects.filter(sprint_id=id_sprint)
             ban=0
             for dato in userstory2:
@@ -142,6 +141,7 @@ def analizar_sprint(request, id_proyecto):
                             us_estado_ultimo.estado_actual='REASIGNAR_SPRINT'
                             us_estado_ultimo.save()
                         dato.estado='REASIGNAR_SPRINT'
+                        dato
                         dato.save()
                         ban=1
                 else:
@@ -350,10 +350,6 @@ def observar_proceso_sprint(request, id_sprint):
                         tiempo_en_proceso= ((dia-1)*8)+4
                     else:
                         if rango_dia_inicio > ahora:
-                            print "hola bebe"
-                            print rango_dia_inicio
-                            print  ahora
-                            print "hola bebe"
                             tiempo_en_proceso= (dia-1)*8
                         else:
                             tiempo_en_proceso= ((dia-1)*8)+8

@@ -15,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 import smtplib
 from PIC.models import RolUsuarioProyecto
+from django.core.exceptions import ObjectDoesNotExist
 
 def nuevo_comentario(request, id_userstory):
     """
@@ -96,15 +97,28 @@ def nuevo_comentario(request, id_userstory):
                     except smtplib.socket.gaierror:
                         return HttpResponseRedirect('/error/conexion/')
                     comentario.save()
-                    us_ultimo_estado=US_Estado_ultimo()
-                    us_ultimo_estado.us_id=userstory.id
-                    us_ultimo_estado.estado=userstory.estado
-                    us_ultimo_estado.estado_actual='REVISAR_TIEMPO'
-                    us_ultimo_estado.save()
-                    userstory.tiempo_trabajado=suma
-                    userstory.estado='REVISAR_TIEMPO'
-                    userstory.suma_trabajadas+=hora_trabajada2
-                    userstory.save()
+                    try:
+                        us_ultimo_estado=US_Estado_ultimo.objects.get(us_id=id_userstory)
+                    except ObjectDoesNotExist:
+                        bandera=False
+                    if bandera == 'False':
+                        us_ultimo_estado=US_Estado_ultimo()
+                        us_ultimo_estado.us_id=userstory.id
+                        us_ultimo_estado.estado=userstory.estado
+                        us_ultimo_estado.estado_actual='REVISAR_TIEMPO'
+                        us_ultimo_estado.save()
+                        userstory.tiempo_trabajado=suma
+                        userstory.estado='REVISAR_TIEMPO'
+                        userstory.suma_trabajadas+=hora_trabajada2
+                        userstory.save()
+                    else:
+                        us_ultimo_estado.estado=userstory.estado
+                        us_ultimo_estado.estado_actual='REVISAR_TIEMPO'
+                        us_ultimo_estado.save()
+                        userstory.tiempo_trabajado=suma
+                        userstory.estado='REVISAR_TIEMPO'
+                        userstory.suma_trabajadas+=hora_trabajada2
+                        userstory.save()
                     historial_us=Historial_US()
                     historial_us.nombre_us=userstory.nombre
                     historial_us.us_id=id_userstory

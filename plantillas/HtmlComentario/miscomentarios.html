@@ -7,10 +7,13 @@
 
 <h2>Listado de Comentarios del User Story "{{userstory.nombre}}" </h2>
 <br>
-{% if userstory.estado == 'FINALIZADO' or permiso.rol.name == 'ScrumMaster' %}
+{% if userstory.estado == 'FINALIZADO' or permiso.rol.name == 'ScrumMaster' or userstory.estado == 'TODO'%}
 
 {% else %}
     <a  class="btn btn-success" href="{% url 'Comentario.views.nuevo_comentario' id_userstory %}">Nuevo Comentario</a>
+{% endif %}
+{% if userstory.estado ==  'TODO' and permiso.rol.name == 'Equipo' %}
+    <h4>Si quiere agregar algun comentario debe  iniciar el User Story</h4>
 {% endif %}
 <div class="panel panel-info">
 
