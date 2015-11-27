@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 from PIC.models import RolUsuarioProyecto
 from Sprint.models import Sprint, Estimacion_Proyecto, Estimacion_Sprint
-from UserStory.models import UserStory, UserStory_aux
+from UserStory.models import UserStory, UserStory_aux,UserStory_Sprint
 from Actividades.models import Actividad
 from Sprint.models import Dias_de_un_Sprint, Sprint_En_Proceso, Proyecto_En_Proceso
 import smtplib
@@ -177,6 +177,39 @@ def iniciar_proyecto(request):
                 estimacion_proyecto.save()
                 objeto.save()
                 lista.append(objeto)
+        ###########Carga los datos a la tabla aux del user story#########
+        us_ax=UserStory_aux.objects.filter(proyecto_id=objeto.id)
+        if not us_ax.exists():
+            ###########################################################################
+            #################Funcion donde se crea un aux a la tabla de US#############
+            us=UserStory.objects.filter(proyecto_id=objeto.id).order_by('pk')
+            for i in us:
+                user_story2=UserStory_aux()
+                user_story2.nombre=i.nombre
+                user_story2.descripcion =i.descripcion
+                user_story2.fecha_creacion=i.fecha_creacion
+                user_story2.sprint_id=i.sprint_id
+                user_story2.usuario_id=i.usuario_id
+                user_story2.estado=i.estado
+                user_story2.prioridad=i.prioridad
+                user_story2.tiempo_trabajado=i.tiempo_trabajado
+                user_story2.porcentaje=i.porcentaje
+                user_story2.proyecto_id=i.proyecto_id
+                user_story2.tiempo_estimado=i.tiempo_estimado
+                user_story2.save()
+            ############################################################################
+        us_sprint=UserStory_Sprint.objects.filter(proyecto_id=objeto.id)
+        if not us_sprint.exists():
+            us=UserStory.objects.filter(proyecto_id=objeto.id).order_by('pk')
+            for i in us:
+                us_s=UserStory_Sprint()
+                us_s.proyecto_id=objeto.id
+                us_s.horas_estimada=i.tiempo_estimado
+                us_s.horas_trabajadas=i.tiempo_trabajado
+                us_s.sprint_id=i.sprint_id
+                us_s.us_id=i.id
+                us_s.save()
+
     return render_to_response('HtmlProyecto/lista_proyectos_iniciados.html',{'lista':lista})
 @login_required(login_url='/admin/login/')
 def editar_proyecto(request, id_proyecto):
@@ -484,9 +517,9 @@ def jo5(request,id_sprint):
     cantidad=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).count()
     sprint_proceso=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint)
     print "cantidad: "+str(cantidad)
-    v = [] #eje y en proceso
+    v = [] #eje y estimado
     v2 = [] # eje x
-    v3 = [] # eje y estimado
+    v3 = [] # eje y en proceso
     suma = 0
     for aux1 in userstorys:
         suma = suma + aux1.tiempo_estimado
@@ -494,13 +527,15 @@ def jo5(request,id_sprint):
 
     c=0
     contador=0
+    #############Calculo del Sprint en proceso#######################
+    us_sprint=UserStory_Sprint.objects.filter(sprint_id=id_sprint)
+    suma_estimadas_del_sprint=0
+    for i in us_sprint:
+        suma_estimadas_del_sprint=suma_estimadas_del_sprint+i.horas_estimada
     for au in sprint_proceso:
-        if cantidad !=0 and contador < cantidad:
-            contador+=1
-            aeiou = suma-au.horas_acumulada
-            v3.append(aeiou)
-            c=c+1
-
+        aeiou = suma_estimadas_del_sprint-au.horas_acumulada
+        v3.append(aeiou)
+    #########################################3
 
     v.append(suma)
     v2.append('Al Inicio')
@@ -623,16 +658,14 @@ def jo3(request,id_proyecto):
 
 
     sprints = Sprint.objects.filter(proyecto_id=id_proyecto).order_by("fechaFin")
+    us_aux=UserStory_aux.objects.filter(proyecto_id=id_proyecto).order_by("sprint_id")
     for dato1 in sprints:
         suma = 0
-        suma2 = 0
-        for dato2 in userstorys:
+        for dato2 in us_aux:
 
             if(dato2.sprint_id == dato1.id):
                 suma = suma + dato2.tiempo_estimado
-                suma2 = suma2 + dato2.suma_trabajadas
         suma_estimacion_us = suma_estimacion_us - suma
-        aux23 = aux23 - suma2
         lista1.append(suma_estimacion_us)
         lista3.append(str(dato1.fechaFin))
     print "sprint"
@@ -678,7 +711,7 @@ def reporte01(request,id_proyecto):
     id_proyecto = id_proyecto
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = '; filename="somefilename.pdf"'
+    response['Content-Disposition'] = '; filename="reporte01.pdf"'
 
     buffer = BytesIO()
 
@@ -690,22 +723,27 @@ def reporte01(request,id_proyecto):
 
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
-    pu = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+    pu = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto).order_by('rol')
     user = User.objects.all()
 
-    palabra = "Informe del Sistema Gestor Project PIC"
-    palabra2 = "Cantidad de Trabajo en Curso por el Equipo"
+    palabra2 = "GestorProjectPIC"
+    palabra = "Cantidad de Trabajo en Curso por el Equipo"
     palabra3 = "Proyecto : " + proyecto.nombre
     palabra4 = "Estado : " + proyecto.estado
-    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster)
+    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster).capitalize()
     palabra6 = "Equipo:"
 
 
 
     p.setFontSize(size=14, leading=None)
-    p.drawString(200, 800, palabra)
+    p.drawString(150, 800, palabra)
+    p.setFontSize(size=8, leading=None)
+    p.drawString(250, 790, palabra2)
+
+    palabra13="_________________________________________________________________________"
     p.setFontSize(size=12, leading=None)
-    p.drawString(45, 780, palabra2)
+    p.drawString(45, 775, palabra13)
+
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 760, palabra3)
     p.setFontSize(size=12, leading=None)
@@ -715,63 +753,57 @@ def reporte01(request,id_proyecto):
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 700, palabra6)
 
-    c=0
+    c=15
+    a=700
     vect = []
-    for a in pu:
-        if(a.usuario_id != 1):
-            userstorys2 = User.objects.get(id = a.usuario_id)
-            vect.append(userstorys2)
-            palabra7 = "             - " +str( userstorys2)
+    for b in pu:
+        if b.rol.name == 'Equipo':
+            palabra7 = "             - " +str(b.usuario).capitalize()
             p.setFontSize(size=12, leading=None)
-            c=c+15
-            a=700
             a=a-c
             p.drawString(45, a, palabra7)
+        if b.rol.name == 'Cliente':
+            a=a-c
+            palabra13 = "Cliente:"
+            p.setFontSize(size=12, leading=None)
+            p.drawString(45, a, palabra13)
+            a=a-c
+            palabra13 = "             - " +str(b.usuario).capitalize()
+            p.drawString(45, a, palabra13)
+    a=a-10
+    palabra13="_________________________________________________________________________"
+    p.setFontSize(size=12, leading=None)
+    p.drawString(45, a , palabra13)
 
+    a=a-30
     palabra8 = "User Storys:"
     p.setFontSize(size=12, leading=None)
-    p.drawString(45, 600, palabra8)
+    p.drawString(45, a, palabra8)
 
-
-    a = 600
     ussss = UserStory.objects.filter(proyecto_id=id_proyecto).order_by('fecha_creacion')
     c=0
     d=0
     for cont in ussss:
-        palabra9 =  "-Nombre :   " + str(cont.nombre)
-        palabra10 = "-Usuario Responsable    :    "+ cont.usuario.username
+        palabra9 =  "-Nombre :   " + str(cont.nombre).capitalize()
+        palabra10 = "-Usuario Responsable    :    "+ (cont.usuario.username).capitalize()
         palabra11 = "*Tiempo Estimado:       " + str(cont.tiempo_estimado)
         palabra12 = "*Tiempo Trabajado:      " + str(cont.tiempo_trabajado)
         a = a - 20
         b = a - 15
         c = b - 15
         d = c - 15
-        p.setFontSize(size=12, leading=None)
+        p.setFontSize(size=11, leading=None)
         p.drawString(100, a, palabra9)
-        p.setFontSize(size=12, leading=None)
+        p.setFontSize(size=11, leading=None)
         p.drawString(100, b, palabra10)
-        p.setFontSize(size=12, leading=None)
+        p.setFontSize(size=11, leading=None)
         p.drawString(150, c, palabra11)
-        p.setFontSize(size=12, leading=None)
+        p.setFontSize(size=11, leading=None)
         p.drawString(150, d, palabra12)
         a = d
 
-
-
-    # Close the PDF object cleanly.
     p.showPage()
     p.save()
-
-
-
-
-    # Get the value of the BytesIO buffer and write it to the response.
-    # pdf = buffer.getvalue()
-
-
-
-    #buffer.close()
-    #response.write(pdf)
     return response
 
 def lista_de_reportes(request,id_proyecto):
@@ -781,14 +813,14 @@ def lista_de_reportes(request,id_proyecto):
 
 
 def reporte02(request,id_proyecto):
-    id_proyecto = id_proyecto
     # Create the HttpResponse object with the appropriate PDF headers.
+
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = '; filename="somefilename.pdf"'
+    response['Content-Disposition'] = '; filename="reporte02.pdf"'
 
     buffer = BytesIO()
 
-    # Create the PDF object, using the BytesIO object as its "file."
+
     p = canvas.Canvas(response)
 
     # Draw things on the PDF. Here's where the PDF generation happens.
@@ -798,23 +830,28 @@ def reporte02(request,id_proyecto):
     TenCursos = UserStory.objects.filter(proyecto_id=id_proyecto).exclude(estado="CREADO").exclude(estado="FINALIZADO").exclude(estado="CANCELADO")
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
-    UsuariosProyectos = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+    UsuariosProyectos = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto).order_by('rol')
     for jo in UsuariosProyectos:
         user = User.objects.filter(id=jo.usuario_id)
 
-    palabra = "Informe del Sistema Gestor Project PIC"
-    palabra2 = "Cantidad de Trabajo por Usuario Pendiente, en Curso y Finalizados."
-    palabra3 = "Proyecto : " + proyecto.nombre
+    palabra2 = "GestorProjectPIC"
+    palabra = "Cantidad de Trabajo por Usuario Pendiente, en Curso y Finalizados."
+    palabra3 = "Proyecto : " + proyecto.nombre.capitalize()
     palabra4 = "Estado : " + proyecto.estado
-    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster)
+    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster).capitalize()
     palabra6 = "Equipo:"
 
 
 
     p.setFontSize(size=14, leading=None)
-    p.drawString(200, 800, palabra)
+    p.drawString(100, 800, palabra)
+    p.setFontSize(size=8, leading=None)
+    p.drawString(270, 790, palabra2)
+
+    palabra13="_________________________________________________________________________"
     p.setFontSize(size=12, leading=None)
-    p.drawString(45, 780, palabra2)
+    p.drawString(45, 775, palabra13)
+
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 760, palabra3)
     p.setFontSize(size=12, leading=None)
@@ -823,125 +860,103 @@ def reporte02(request,id_proyecto):
     p.drawString(45, 720, palabra5)
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 700, palabra6)
-
-    c=0
-    vect = [] #vector que contiene us
-    vect2 = [] # vector que contiene usuarios
-    for a in UsuariosProyectos:
-        if(a.usuario_id != 1):
-            userstorys2 = User.objects.get(id = a.usuario_id)
-            vect.append(userstorys2)
-            vect2.append(a.usuario_id)
-            palabra7 = "             - " +str( userstorys2)
+    c=15
+    a=700
+    for b in UsuariosProyectos:
+        if b.rol.name == 'Equipo':
+            palabra7 = "             - " +str(b.usuario).capitalize()
             p.setFontSize(size=12, leading=None)
-            c=c+15
-            a=700
             a=a-c
-            p.drawString(60, a, palabra7)
-
-
-    salto = 600
-
-
-
+            p.drawString(45, a, palabra7)
+        if b.rol.name == 'Cliente':
+            a=a-c
+            palabra13 = "Cliente:"
+            p.setFontSize(size=12, leading=None)
+            p.drawString(45, a, palabra13)
+            a=a-c
+            palabra13 = "             - " +str(b.usuario).capitalize()
+            p.drawString(45, a, palabra13)
+    palabra13="_________________________________________________________________________"
+    salto = a-10
+    p.setFontSize(size=12, leading=None)
+    p.drawString(45, salto, palabra13)
     for a in UsuariosProyectos:
-        if(a.usuario_id != 1):
-            userstorys2 = User.objects.get(id = a.usuario_id)
-            vect.append(userstorys2)
-            vect2.append(a.usuario_id)
-            palabra9 = "Usuario: " +str( userstorys2)
+        if a.rol.name == 'Equipo':
+            userstorys2=UserStory.objects.filter(proyecto_id=id_proyecto,usuario_id=a.usuario_id)
+            palabra9 = str(a.usuario).capitalize()+":"
             salto = salto - 15
-            p.setFontSize(size=10, leading=None)
+            p.setFontSize(size=11, leading=None)
             p.drawString(45, salto, palabra9)
-
             palabra10 = "Trabajos Pendientes:  "
             salto = salto - 15
-            p.setFontSize(size=8, leading=None)
+            p.setFontSize(size=9, leading=None)
             p.drawString(100, salto, palabra10)
-            for pen in TPendientes:
-                if(pen.usuario_id == a.usuario_id):
-                    palabra11 = "                  -" + str(pen.nombre)
+            print "holaaaa"
+            for i in userstorys2:
+                if i.estado == 'CREADO':
+                    palabra11 = "                  -" + str(i.nombre).capitalize()
                     salto = salto - 15
-                    p.setFontSize(size=8, leading=None)
+                    p.setFontSize(size=9, leading=None)
                     p.drawString(150, salto, palabra11)
-
-
-
-
-
-            palabra12 = "Trabajos Finalizados:  "
-            salto = salto - 15
-            p.setFontSize(size=8, leading=None)
-            p.drawString(100, salto, palabra12)
-            for pen in TFinalizados:
-                if(pen.usuario_id == a.usuario_id):
-                    palabra13 = "                  -" + str(pen.nombre)
-                    salto = salto - 15
-                    p.setFontSize(size=8, leading=None)
-                    p.drawString(150, salto, palabra13)
             palabra14 = "Trabajos En Cursos:  "
             salto = salto - 15
-            p.setFontSize(size=8, leading=None)
+            p.setFontSize(size=9, leading=None)
             p.drawString(100, salto, palabra14)
-            for pen in TenCursos:
-                if(pen.usuario_id == a.usuario_id):
-                    palabra15 = "                  -" + str(pen.nombre)
+            for i in userstorys2:
+                if i.estado != 'CREADO' and i.estado != 'FINALIZADO' and i.estado != 'CANCELADO':
+                    palabra11 = "                  -" + str(i.nombre).capitalize()
                     salto = salto - 15
-                    p.setFontSize(size=8, leading=None)
-                    p.drawString(150, salto, palabra15)
-
-
-
-
+                    p.setFontSize(size=9, leading=None)
+                    p.drawString(150, salto, palabra11)
+            palabra12 = "Trabajos Finalizados:  "
+            salto = salto - 15
+            p.setFontSize(size=9, leading=None)
+            p.drawString(100, salto, palabra12)
+            for i in userstorys2:
+                if  i.estado == 'FINALIZADO':
+                    palabra11 = "                  -" + str(i.nombre).capitalize()
+                    salto = salto - 15
+                    p.setFontSize(size=9, leading=None)
+                    p.drawString(150, salto, palabra11)
     # Close the PDF object cleanly.
     p.showPage()
     p.save()
-
-
-
-
-    # Get the value of the BytesIO buffer and write it to the response.
-    # pdf = buffer.getvalue()
-
-
-
-    #buffer.close()
-    #response.write(pdf)
     return response
 
 def reporte03(request,id_proyecto):
     id_proyecto = id_proyecto
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = '; filename="somefilename.pdf"'
+    response['Content-Disposition'] = '; filename="reporte03.pdf"'
 
     buffer = BytesIO()
 
-    # Create the PDF object, using the BytesIO object as its "file."
     p = canvas.Canvas(response)
-
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
 
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
-    pu = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+    UsuariosProyectos = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto).order_by('rol')
     user = User.objects.all()
 
-    palabra = "Informe del Sistema Gestor Project PIC"
-    palabra2 = "Lista clasificada por orden de prioridad de todas las actividades para completar el proyecto."
-    palabra3 = "Proyecto : " + proyecto.nombre
+    palabra2 = "GestorProjectPIC"
+    palabra = "Lista clasificada por orden de prioridad de todas las actividades para completar el proyecto."
+    palabra3 = "Proyecto : " + proyecto.nombre.capitalize()
     palabra4 = "Estado : " + proyecto.estado
-    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster)
+    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster).capitalize()
     palabra6 = "Equipo:"
 
 
 
 
-    p.setFontSize(size=14, leading=None)
-    p.drawString(200, 800, palabra)
     p.setFontSize(size=12, leading=None)
-    p.drawString(45, 780, palabra2)
+    p.drawString(55, 800, palabra)
+    p.setFontSize(size=8, leading=None)
+    p.drawString(270, 790, palabra2)
+
+    palabra13="_________________________________________________________________________"
+    p.setFontSize(size=12, leading=None)
+    p.drawString(45, 775, palabra13)
+
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 760, palabra3)
     p.setFontSize(size=12, leading=None)
@@ -950,93 +965,82 @@ def reporte03(request,id_proyecto):
     p.drawString(45, 720, palabra5)
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 700, palabra6)
-
-    c=0
-    vect = []
-    for a in pu:
-        if(a.usuario_id != 1):
-            userstorys2 = User.objects.get(id = a.usuario_id)
-            vect.append(userstorys2)
-            palabra7 = "             - " +str( userstorys2)
+    c=15
+    a=700
+    for b in UsuariosProyectos:
+        if b.rol.name == 'Equipo':
+            palabra7 = "             - " +str(b.usuario).capitalize()
             p.setFontSize(size=12, leading=None)
-            c=c+15
-            a=700
             a=a-c
             p.drawString(45, a, palabra7)
-
+        if b.rol.name == 'Cliente':
+            a=a-c
+            palabra13 = "Cliente:"
+            p.setFontSize(size=12, leading=None)
+            p.drawString(45, a, palabra13)
+            a=a-c
+            palabra13 = "             - " +str(b.usuario).capitalize()
+            p.drawString(45, a, palabra13)
+    palabra13="_________________________________________________________________________"
+    salto = a-10
+    p.setFontSize(size=12, leading=None)
+    p.drawString(45, salto, palabra13)
+    salto=salto-20
     palabra8 = "Actividades:"
     p.setFontSize(size=14, leading=None)
-    p.drawString(45, 600, palabra8)
-    salto = 600
+    p.drawString(45, salto, palabra8)
+    salto = salto-15
 
     actividades=Actividad.objects.filter(proyecto_id=id_proyecto)
 
     c=0
     for i in actividades:
         c=c+1
-        palabra9 = "-Nombre de la Actividad: " + str(i.nombre)
+        palabra9 = "-Nombre: " + str(i.nombre).capitalize()
         palabra10 = "-Prioridad: " + str(i.secuencia)
-        salto = salto -20
         p.setFontSize(size=12, leading=None)
         p.drawString(150, salto, palabra9)
         salto = salto -15
         p.setFontSize(size=12, leading=None)
         p.drawString(150, salto, palabra10)
+        salto = salto -25
 
-
-
-
-
-
-    # Close the PDF object cleanly.
     p.showPage()
     p.save()
-
-
-
-
-    # Get the value of the BytesIO buffer and write it to the response.
-    # pdf = buffer.getvalue()
-
-
-
-    #buffer.close()
-    #response.write(pdf)
     return response
 
 def reporte04(request,id_proyecto):
-    id_proyecto = id_proyecto
-    # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = '; filename="somefilename.pdf"'
+    response['Content-Disposition'] = '; filename="reporte04.pdf"'
 
     buffer = BytesIO()
 
-    # Create the PDF object, using the BytesIO object as its "file."
     p = canvas.Canvas(response)
 
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
 
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
-    pu = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+    UsuariosProyectos = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto).order_by('rol')
     user = User.objects.all()
 
-    palabra = "Informe del Sistema Gestor Project PIC"
-    palabra2 = "Lista de Tiempo estimado"
+    palabra2 = "GestorProjectPIC"
+    palabra = "Lista de Tiempo estimado"
     palabra3 = "Proyecto : " + proyecto.nombre
     palabra4 = "Estado : " + proyecto.estado
-    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster)
+    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster).capitalize()
     palabra6 = "Equipo:"
 
 
-
     p.setFontSize(size=14, leading=None)
-    p.drawString(200, 800, palabra)
+    p.drawString(225, 800, palabra)
+    p.setFontSize(size=8, leading=None)
+    p.drawString(270, 790, palabra2)
+
+    palabra13="_________________________________________________________________________"
     p.setFontSize(size=12, leading=None)
-    p.drawString(45, 780, palabra2)
+    p.drawString(45, 775, palabra13)
+
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 760, palabra3)
     p.setFontSize(size=12, leading=None)
@@ -1045,19 +1049,27 @@ def reporte04(request,id_proyecto):
     p.drawString(45, 720, palabra5)
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 700, palabra6)
-
-    c=0
-    vect = []
-    for a in pu:
-        if(a.usuario_id != 1):
-            userstorys2 = User.objects.get(id = a.usuario_id)
-            vect.append(userstorys2)
-            palabra7 = "             - " +str( userstorys2)
+    c=15
+    a=700
+    for b in UsuariosProyectos:
+        if b.rol.name == 'Equipo':
+            palabra7 = "             - " +str(b.usuario).capitalize()
             p.setFontSize(size=12, leading=None)
-            c=c+15
-            a=700
             a=a-c
             p.drawString(45, a, palabra7)
+        if b.rol.name == 'Cliente':
+            a=a-c
+            palabra13 = "Cliente:"
+            p.setFontSize(size=12, leading=None)
+            p.drawString(45, a, palabra13)
+            a=a-c
+            palabra13 = "             - " +str(b.usuario).capitalize()
+            p.drawString(45, a, palabra13)
+    palabra13="_________________________________________________________________________"
+    salto = a-10
+    p.setFontSize(size=12, leading=None)
+    p.drawString(45, salto, palabra13)
+    salto=salto-20
 
     palabra8 = "Lista de tiempo estimado"
     p.setFontSize(size=14, leading=None)
@@ -1099,56 +1111,39 @@ def reporte04(request,id_proyecto):
         p.setFontSize(size=12, leading=None)
         p.drawString(150, salta, palabra15)
 
-
-
-
-
-    # Close the PDF object cleanly.
     p.showPage()
     p.save()
-
-
-
-
-    # Get the value of the BytesIO buffer and write it to the response.
-    # pdf = buffer.getvalue()
-
-
-
-    #buffer.close()
-    #response.write(pdf)
     return response
 def reporte05(request,id_proyecto):
-    id_proyecto = id_proyecto
-    # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = '; filename="somefilename.pdf"'
+    response['Content-Disposition'] = '; filename="reporte05.pdf"'
 
     buffer = BytesIO()
 
-    # Create the PDF object, using the BytesIO object as its "file."
     p = canvas.Canvas(response)
 
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
 
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
-    pu = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+    UsuariosProyectos = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto).order_by('rol')
     user = User.objects.all()
 
-    palabra = "Informe de Sistema Gestor Project PIC"
-    palabra2 = "Backlog de Producto"
+    palabra2 = "GestorProjectPIC"
+    palabra = "Backlog de Producto"
     palabra3 = "Proyecto : " + proyecto.nombre
     palabra4 = "Estado : " + proyecto.estado
-    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster)
+    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster).capitalize()
     palabra6 = "Equipo:"
 
-
     p.setFontSize(size=14, leading=None)
-    p.drawString(200, 800, palabra)
+    p.drawString(225, 800, palabra)
+    p.setFontSize(size=8, leading=None)
+    p.drawString(260, 790, palabra2)
+
+    palabra13="_________________________________________________________________________"
     p.setFontSize(size=12, leading=None)
-    p.drawString(45, 780, palabra2)
+    p.drawString(45, 775, palabra13)
+
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 760, palabra3)
     p.setFontSize(size=12, leading=None)
@@ -1158,91 +1153,87 @@ def reporte05(request,id_proyecto):
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 700, palabra6)
 
-    c=0
-    vect = []
-    for a in pu:
-        if(a.usuario_id != 1):
-            userstorys2 = User.objects.get(id = a.usuario_id)
-            vect.append(userstorys2)
-            palabra7 = "             - " +str( userstorys2)
+    c=15
+    a=700
+    for b in UsuariosProyectos:
+        if b.rol.name == 'Equipo':
+            palabra7 = "             - " +str(b.usuario).capitalize()
             p.setFontSize(size=12, leading=None)
-            c=c+15
-            a=700
             a=a-c
             p.drawString(45, a, palabra7)
+        if b.rol.name == 'Cliente':
+            a=a-c
+            palabra13 = "Cliente:"
+            p.setFontSize(size=12, leading=None)
+            p.drawString(45, a, palabra13)
+            a=a-c
+            palabra13 = "             - " +str(b.usuario).capitalize()
+            p.drawString(45, a, palabra13)
+    palabra13="_________________________________________________________________________"
+    salto = a-10
+    p.setFontSize(size=12, leading=None)
+    p.drawString(45, salto, palabra13)
+    salto=salto-20
+
 
     palabra8 = "User Storys"
     p.setFontSize(size=12, leading=None)
-    p.drawString(45, 600, palabra8)
+    p.drawString(45, salto, palabra8)
 
 
-    a = 600
-    ussss = UserStory.objects.filter(proyecto_id=id_proyecto).order_by('tiempo_estimado')
-    c=0
-    for cont in ussss:
-        palabra9 = "-Nombre: " + str(cont.nombre)
-        palabra10 = "*Tiempo Estimado: " + str(cont.tiempo_estimado)
+    a = salto
 
-        a = a - 15
-        b = a - 15
-        c = b - 15
-        p.setFontSize(size=12, leading=None)
-        p.drawString(100, a, palabra9)
-        p.setFontSize(size=12, leading=None)
-        p.drawString(130, b, palabra10)
-        a = c
+    sprints = Sprint.objects.filter(proyecto_id=id_proyecto).order_by('secuencia')
+    for i in sprints:
+        print i.secuencia
+        ussss = UserStory_aux.objects.filter(proyecto_id=id_proyecto,sprint_id=i.id).order_by('prioridad')
+        c=0
+        for cont in ussss:
+            palabra9 = "-Nombre: " + str(cont.nombre)
+            palabra10 = "*Tiempo Estimado: " + str(cont.tiempo_estimado)
 
+            a = a - 15
+            b = a - 15
+            c = b - 15
+            p.setFontSize(size=12, leading=None)
+            p.drawString(100, a, palabra9)
+            p.setFontSize(size=12, leading=None)
+            p.drawString(130, b, palabra10)
+            a = c
 
-
-    # Close the PDF object cleanly.
     p.showPage()
     p.save()
-
-
-
-
-    # Get the value of the BytesIO buffer and write it to the response.
-    # pdf = buffer.getvalue()
-
-
-
-    #buffer.close()
-    #response.write(pdf)
     return response
 
 def reporte06(request,id_proyecto):
-    id_proyecto = id_proyecto
-    # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = '; filename="somefilename.pdf"'
+    response['Content-Disposition'] = '; filename="reporte06.pdf"'
 
     buffer = BytesIO()
-
-    # Create the PDF object, using the BytesIO object as its "file."
     p = canvas.Canvas(response)
-
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
 
     proyecto=Proyecto.objects.get(pk=id_proyecto)
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
     sprints = Sprint.objects.filter(proyecto_id=id_proyecto)
-    pu = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
+    UsuariosProyectos = RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto).order_by('rol')
     user = User.objects.all()
 
-    palabra = "Informe de Sistema Gestor Project PIC"
-    palabra2 = "Backlog de Sprints"
+    palabra2 = "GestorProjectPIC"
+    palabra = "Backlog de Sprints"
     palabra3 = "Proyecto : " + proyecto.nombre
     palabra4 = "Estado : " + proyecto.estado
-    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster)
+    palabra5 = "Scrum Master: " + str(proyecto.scrumMaster).capitalize()
     palabra6 = "Equipo:"
 
-
-
     p.setFontSize(size=14, leading=None)
-    p.drawString(200, 800, palabra)
+    p.drawString(225, 800, palabra)
+    p.setFontSize(size=8, leading=None)
+    p.drawString(260, 790, palabra2)
+
+    palabra13="_________________________________________________________________________"
     p.setFontSize(size=12, leading=None)
-    p.drawString(45, 780, palabra2)
+    p.drawString(45, 775, palabra13)
+
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 760, palabra3)
     p.setFontSize(size=12, leading=None)
@@ -1252,23 +1243,32 @@ def reporte06(request,id_proyecto):
     p.setFontSize(size=12, leading=None)
     p.drawString(45, 700, palabra6)
 
-    c=0
-    vect = []
-    for a in pu:
-        if(a.usuario_id != 1):
-            userstorys2 = User.objects.get(id = a.usuario_id)
-            vect.append(userstorys2)
-            palabra7 = "             - " +str( userstorys2)
+    c=15
+    a=700
+    for b in UsuariosProyectos:
+        if b.rol.name == 'Equipo':
+            palabra7 = "             - " +str(b.usuario).capitalize()
             p.setFontSize(size=12, leading=None)
-            c=c+15
-            a=700
             a=a-c
             p.drawString(45, a, palabra7)
+        if b.rol.name == 'Cliente':
+            a=a-c
+            palabra13 = "Cliente:"
+            p.setFontSize(size=12, leading=None)
+            p.drawString(45, a, palabra13)
+            a=a-c
+            palabra13 = "             - " +str(b.usuario).capitalize()
+            p.drawString(45, a, palabra13)
+    palabra13="_________________________________________________________________________"
+    salto = a-10
+    p.setFontSize(size=12, leading=None)
+    p.drawString(45, salto, palabra13)
+    salto=salto-20
+
 
     palabra8 = "Sprints y sus UserStorys"
     p.setFontSize(size=12, leading=None)
-    p.drawString(45, 600, palabra8)
-    salto = 600
+    p.drawString(45, salto, palabra8)
     for sp in sprints:
         palabra9 = "-Sprint: " + sp.nombre
         salto = salto - 20
@@ -1286,23 +1286,6 @@ def reporte06(request,id_proyecto):
             p.setFontSize(size=12, leading=None)
             p.drawString(150, salto, palabra10)
 
-
-
-
-
-
-    # Close the PDF object cleanly.
     p.showPage()
     p.save()
-
-
-
-
-    # Get the value of the BytesIO buffer and write it to the response.
-    # pdf = buffer.getvalue()
-
-
-
-    #buffer.close()
-    #response.write(pdf)
     return response

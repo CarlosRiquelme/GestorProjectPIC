@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from Comentario.models import Comentario, Document
 from Comentario.forms import ComentarioForm, DocumentForm
 from django.contrib import messages
-from UserStory.models import UserStory, US_Estado_ultimo, Historial_US
+from UserStory.models import UserStory, US_Estado_ultimo, Historial_US,UserStory_Sprint
 from django.contrib.auth.decorators import login_required
 from AdminProyectos.models import Proyecto
 from django.core.urlresolvers import reverse
@@ -62,7 +62,13 @@ def nuevo_comentario(request, id_userstory):
                     send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
                 except smtplib.socket.gaierror:
                     return HttpResponseRedirect('/error/conexion/')
+
                 comentario.save()
+                ######
+                us_sprint=UserStory_Sprint.objects.get(us_id=userstory.id,sprint_id=userstory.sprint_id)
+                us_sprint.horas_trabajadas=suma
+                us_sprint.save()
+                ######
                 userstory.tiempo_trabajado=suma
                 userstory.suma_trabajadas+=hora_trabajada2
                 userstory.save()
@@ -98,6 +104,11 @@ def nuevo_comentario(request, id_userstory):
                     except smtplib.socket.gaierror:
                         return HttpResponseRedirect('/error/conexion/')
                     comentario.save()
+                    ######
+                    us_sprint=UserStory_Sprint.Objects.get(us_id=userstory.id,sprint_id=userstory.sprint_id)
+                    us_sprint.horas_trabajadas=suma
+                    us_sprint.save()
+                    ######
                     try:
                         us_ultimo_estado=US_Estado_ultimo.objects.get(us_id=id_userstory)
                     except ObjectDoesNotExist:
@@ -134,7 +145,8 @@ def nuevo_comentario(request, id_userstory):
                     comentario.fecha_creacion=today()
                     comentario.userstory_id=id_userstory
                     comentario.hora_trabajada=hora_trabajada
-                    comentario.save()
+
+
                     try:
                         html_content = 'El Usuario   "'+userstory.usuario.username+'"  agrego un nuevo comentario al userstory  "' +userstory.nombre+ '" donde a trabajado"' \
                            +str(userstory.tiempo_trabajado)+' " horas en total en este user story donde a finalizado su tiempo estimado   " '
@@ -147,6 +159,12 @@ def nuevo_comentario(request, id_userstory):
                         send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
                     except smtplib.socket.gaierror:
                         return HttpResponseRedirect('/error/conexion/')
+                    comentario.save()
+                    ######
+                    us_sprint=UserStory_Sprint.Objects.get(us_id=userstory.id,sprint_id=userstory.sprint_id)
+                    us_sprint.horas_trabajadas=suma
+                    us_sprint.save()
+                    ######
                     try:
                         us_ultimo_estado=US_Estado_ultimo.objects.get(us_id=id_userstory)
                     except ObjectDoesNotExist:

@@ -83,3 +83,10 @@ class Historial_US(models.Model):
     descripcion=models.CharField(max_length=200)
     fecha=models.DateTimeField(auto_now=True)
     proyecto=models.ForeignKey(Proyecto)
+
+class UserStory_Sprint(models.Model):
+    us=models.ForeignKey(UserStory)
+    sprint=models.ForeignKey(Sprint)
+    horas_trabajadas=models.IntegerField(default=0)
+    horas_estimada=models.IntegerField(default=0)
+    proyecto=models.ForeignKey(Proyecto)

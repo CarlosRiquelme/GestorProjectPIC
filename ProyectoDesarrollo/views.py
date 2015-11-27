@@ -7,7 +7,7 @@ from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from Actividades.models import Actividad
 from AdminProyectos.models import Proyecto
-from UserStory.models import UserStory, US_Estado_ultimo, Historial_US,UserStory_aux
+from UserStory.models import UserStory, US_Estado_ultimo, Historial_US,UserStory_aux,UserStory_Sprint
 from django.contrib import messages
 from Sprint.models import Sprint, Proyecto_En_Proceso
 from django.core.mail import send_mail
@@ -55,6 +55,7 @@ def analizar_proyecto(id_proyecto):
     print hoy
     if hoy != 'Sabado' and hoy != 'Domingo':
         sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
+        us_sprint=UserStory_Sprint.objects.filter(proyecto_id=id_proyecto)
         ahora = date.today()
         print "ahora:"+str(ahora)
         try:
@@ -62,11 +63,9 @@ def analizar_proyecto(id_proyecto):
         except ObjectDoesNotExist:
             proyecto_en_proceos=''
         horas_acumulada=0
-        for s in sprints:
-            us=UserStory.objects.filter(sprint_id=s.id)
-            for u in us:
-                horas_acumulada=horas_acumulada+u.tiempo_trabajado
-            print "hora acumulada del sprint:"+str(horas_acumulada)
+        for s in us_sprint:
+            horas_acumulada=horas_acumulada+s.horas_trabajadas
+        print "hora acumulada del sprint:"+str(horas_acumulada)
         if proyecto_en_proceos != '':
             proyecto_en_proceos.horas_acumulada_sprint=horas_acumulada
             proyecto_en_proceos.save()
@@ -88,25 +87,7 @@ def analizar_sprint(request, id_proyecto):
     :param id_proyecto:
     :return:
     """
-    ###########################################################################
-    #################Funcion donde se crea un aux a la tabla de US#############
-    # us=UserStory.objects.filter(proyecto_id=id_proyecto).order_by('pk')
-    # for i in us:
-    #     user_story2=UserStory_aux()
-    #     user_story2.nombre=i.nombre
-    #     user_story2.descripcion =i.descripcion
-    #     user_story2.fecha_creacion=i.fecha_creacion
-    #     user_story2.sprint_id=i.sprint_id
-    #     user_story2.usuario_id=i.usuario_id
-    #     user_story2.estado=i.estado
-    #     user_story2.prioridad=i.prioridad
-    #     user_story2.tiempo_trabajado=i.tiempo_trabajado
-    #     user_story2.porcentaje=i.porcentaje
-    #     user_story2.proyecto_id=i.proyecto_id
-    #     user_story2.tiempo_estimado=i.tiempo_estimado
-    #     user_story2.save()
 
-    # ###########################################################################
     try:
         sprint=Sprint.objects.get(proyecto_id=id_proyecto ,estado='ABIERTO')
     except ObjectDoesNotExist:
@@ -133,10 +114,11 @@ def analizar_sprint(request, id_proyecto):
 
     fecha_actual_sprint=date.today()
     userstorys=UserStory.objects.filter(sprint_id=sprint.id)
+    us_sprint=UserStory_Sprint.objects.filter(sprint_id=sprint.id)
     suma=0
     hoy=que_dia_es()
-    for dato2 in userstorys:
-        suma+=dato2.tiempo_trabajado
+    for dato2 in us_sprint:
+        suma+=dato2.horas_trabajadas
     for dato in sprint_fechas:
         bandera=True
         try:
@@ -217,7 +199,7 @@ def analizar_sprint(request, id_proyecto):
                 if ban == 1:
                     try:
                         html_content = 'Su Proyecto   "'+proyecto.nombre+'"  a finalizado todos sus Sprint, pero quedan aun user storys sin concluir se creo un nuevo Sprint donde se han ubicado todos su user storys sin terminar  "'
-                        send_mail('Finalizacion de todos sus Sprint',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
+                        send_mail('Finalizacion de todos sus Sprint-NO HAN TERMINADO SUS USER STORYS ',html_content , 'gestorprojectpic@gmail.com', [proyecto.scrumMaster.email], fail_silently=False)
                     except smtplib.socket.gaierror:
                         return HttpResponseRedirect('/error/conexion/')
                     proyecto.estado='REVISAR'
@@ -273,6 +255,15 @@ def crear_nuevo_sprint(id_proyecto):
     for dato in userstory:
         us_estado_ultimo=US_Estado_ultimo.objects.get(us_id=dato.id, estado_actual='REASIGNAR_SPRINT')
         dato.sprint_id=sprint3.id
+        ######
+        us_sprint=UserStory_Sprint()
+        us_sprint.horas_trabajadas=0
+        us_sprint.horas_estimada=mayor_tiempo
+        us_sprint.sprint_id=sprint3.id
+        us_sprint.us_id=dato.id
+        us_sprint.proyecto_id=id_proyecto
+        us_sprint.save()
+        ######
         dato.tiempo_estimado=mayor_tiempo
         dato.tiempo_trabajado=0
         dato.estado=us_estado_ultimo.estado
@@ -522,7 +513,18 @@ def reasignar_userstory_a_sprint(request,id_proyecto,id_userstory):
             historial_us.descripcion="Fue Asignado al Sprint "+userstory.sprint.nombre+ "  , por el usuario "+user.username
             historial_us.proyecto_id=id_proyecto
             historial_us.save()
+            ######
+            us_sprint=UserStory_Sprint()
+            us_sprint.horas_trabajadas=0
+            us_sprint.horas_estimada=userstory.tiempo_estimado-userstory.tiempo_trabajado
+            us_sprint.sprint_id=sprint.id
+            us_sprint.us_id=userstory.id
+            us_sprint.proyecto_id=id_proyecto
+            us_sprint.save()
+            ######
             userstory.save()
+
+
         if sprint.secuencia == ultimo_sprint:
             print "hola"
     if bandera == False:
@@ -576,6 +578,11 @@ def completar_atributos_userstory_tiempo(id_userstory,id_sprint):
     us_estado=US_Estado_ultimo.objects.get(us_id=id_userstory, estado_actual='REVISAR_TIEMPO')
     userstory.estado=us_estado.estado
     userstory.sprint_id=id_sprint
+    ######
+    us_sprint=UserStory_Sprint.objects.get(us_id=id_userstory,sprint_id=id_sprint)
+    us_sprint.horas_estimada=userstory.tiempo_estimado
+    us_sprint.save()
+    ######
     userstory.save()
 
 
