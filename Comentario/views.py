@@ -105,7 +105,7 @@ def nuevo_comentario(request, id_userstory):
                         return HttpResponseRedirect('/error/conexion/')
                     comentario.save()
                     ######
-                    us_sprint=UserStory_Sprint.Objects.get(us_id=userstory.id,sprint_id=userstory.sprint_id)
+                    us_sprint=UserStory_Sprint.objects.get(us_id=userstory.id,sprint_id=userstory.sprint_id)
                     us_sprint.horas_trabajadas=suma
                     us_sprint.save()
                     ######
@@ -161,7 +161,7 @@ def nuevo_comentario(request, id_userstory):
                         return HttpResponseRedirect('/error/conexion/')
                     comentario.save()
                     ######
-                    us_sprint=UserStory_Sprint.Objects.get(us_id=userstory.id,sprint_id=userstory.sprint_id)
+                    us_sprint=UserStory_Sprint.objects.get(us_id=userstory.id,sprint_id=userstory.sprint_id)
                     us_sprint.horas_trabajadas=suma
                     us_sprint.save()
                     ######

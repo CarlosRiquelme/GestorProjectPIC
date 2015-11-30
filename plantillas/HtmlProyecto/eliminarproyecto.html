@@ -1,10 +1,22 @@
 {% extends 'admin/base_site.html' %}
 {% block content %}
 
-<h2>Eliminar Proyecto</h2>
-    <br><br>
-    <p>Esta seguro que desea eliminar el proyecto {{ proyecto.nombre }}<p>
-		<a class="btn btn-danger" href="{% url 'AdminProyectos.views.eliminar_proyecto' proyecto.id %}">Aceptar</a>
-        <a class="btn btn-info" href="{% url 'AdminProyectos.views.proyectos' user.id %}">Cancelar</a>
+    {% if proyecto.estado == 'EN-ESPERA'%}
+        <h2>Eliminar Proyecto</h2>
+        <br><br>
+
+        <p>Esta seguro que desea eliminar el proyecto {{ proyecto.nombre }}<p>
+		    <a class="btn btn-danger" href="{% url 'AdminProyectos.views.eliminar_proyecto' proyecto.id %}">Aceptar</a>
+            <a class="btn btn-info" href="{% url 'AdminProyectos.views.proyectos' user.id %}">Cancelar</a>
+    {% endif %}
+
+    {% if proyecto.estado == 'ELIMINADO'%}
+        <h2>Restaurar Proyecto</h2>
+        <br><br>
+
+        <p>Esta seguro que desea Restaurar el proyecto {{ proyecto.nombre }}<p>
+		    <a class="btn btn-danger" href="{% url 'AdminProyectos.views.eliminar_proyecto' proyecto.id %}">Aceptar</a>
+            <a class="btn btn-info" href="{% url 'AdminProyectos.views.proyectos' user.id %}">Cancelar</a>
+    {% endif %}
 
 {% endblock %}

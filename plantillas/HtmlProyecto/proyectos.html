@@ -20,7 +20,7 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
 </td>
 {% endif %}
    </table>
-
+ {% if not user.esAdmin %}
 <div class="panel panel-info">
  <table class="table table-striped" style="width: 100%">
     <thead>
@@ -35,6 +35,7 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         {% endif %}
     </thead>
     {% for dato in usuarioproyecto %}
+     {% if dato.proyecto.estado != 'ELIMINADO'%}
     <tr>
 	     <td><em><a href="{% url 'AdminProyectos.views.mi_proyecto' dato.proyecto.id %}">{{dato.proyecto.nombre}}</a></em></td>
         <td >{{dato.proyecto.scrumMaster}}</td>
@@ -43,7 +44,7 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         <td>{{ dato.proyecto.fechaInicio}}</td>
         <td>{{ dato.proyecto.fechaFin }}</td>
 
-        {% if dato.proyecto.estado == 'EN-ESPERA' %}
+        {% if dato.proyecto.estado == 'EN-ESPERA' and dato.rol.name == 'ScrumMaster'%}
         <td> 
         <div class="input-group">  
         <a class="btn btn-primary btn-sm" href="{% url 'AdminProyectos.views.editar_proyecto' dato.proyecto.id %}">Editar <i class="fa fa-edit"></i></a>
@@ -52,7 +53,49 @@ Nuevo Proyecto <i class="fa fa-plus"></i></a>
         </td>
         {% endif %}
 	</tr>
+     {% endif %}
 	{% endfor %}
  </table>
+{% endif %}
+
+
+
+ {% if user.esAdmin %}
+<table class="table table-striped" style="width: 100%">
+    <thead>
+        <th >NOMBRE</th>
+        <th >SCRUM MASTER</th>
+        <th >ESTADO</th>
+        <th >FECHA DE CREACION</th>
+        <th >FECHA DE INICIO</th>
+        <th >FECHA DE FINALIZACION</th>
+         {% if proyecto.estado == 'EN-ESPERA' %}
+        <th  style="width: 30%">ACCION</th>
+        {% endif %}
+    </thead>
+    {% for dato in proyectos %}
+    <tr>
+	     <td><em>{{dato.nombre}}</em></td>
+        <td >{{dato.scrumMaster}}</td>
+        <td>{{dato.estado}}</td>
+        <td>{{ dato.fecha_creacion }}</td>
+        <td>{{ dato.fechaInicio}}</td>
+        <td>{{ dato.fechaFin }}</td>
+
+
+        <td>
+        <div class="input-group">
+        <a class="btn btn-primary btn-sm" href="{% url 'AdminProyectos.views.editar_proyecto' dato.id %}">Editar <i class="fa fa-edit"></i></a>
+       &nbsp; <a class="btn btn-info btn-sm"  href="{% url 'AdminProyectos.views.pre_eliminar_proyecto' dato.id %}" > Restaurar&nbsp;<i class="fa fa-ban"></i></a>
+        </div>
+        </td>
+
+	</tr>
+	{% endfor %}
+
+
+
+ </table>
+    {% endif %}
 </div>
 {% endblock %}

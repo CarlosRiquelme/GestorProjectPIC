@@ -44,6 +44,21 @@ Nuevo Usuario <i class="fa fa-plus"></i></a>
 	{% endfor %}
  </table>
 </div>
+<div class="pagination">
+    <span class="step-links">
+        {% if objetos.has_previous %}
+            <a href="?page={{ objetos.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ objetos.number }} of {{ objetos.paginator.num_pages }}.
+        </span>
+
+        {% if objetos.has_next %}
+            <a href="?page={{ objetos.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
 
 <br><br><br>
 

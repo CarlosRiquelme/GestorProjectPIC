@@ -100,7 +100,7 @@ def analizar_sprint(request, id_proyecto):
         return HttpResponseRedirect('/error/conexion/')
     analizar_proyecto(id_proyecto)
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
-    sprint_fechas=Dias_de_un_Sprint.objects.filter(sprint_id=sprint.id)#tabla donde se guardan los dias de un sprint
+    sprint_fechas=Dias_de_un_Sprint.objects.filter(sprint_id=sprint.id).order_by('fecha')#tabla donde se guardan los dias de un sprint
     ultimo_sprint=0
     ultima_actividad=0
     proyecto=Proyecto.objects.get(pk=id_proyecto)
@@ -117,6 +117,8 @@ def analizar_sprint(request, id_proyecto):
     us_sprint=UserStory_Sprint.objects.filter(sprint_id=sprint.id)
     suma=0
     hoy=que_dia_es()
+    ahora = date.today()
+
     for dato2 in us_sprint:
         suma+=dato2.horas_trabajadas
     for dato in sprint_fechas:
@@ -125,16 +127,19 @@ def analizar_sprint(request, id_proyecto):
             sprint_en_proceso=Sprint_En_Proceso.objects.get(sprint_id=sprint.id, fecha=fecha_actual_sprint)
         except ObjectDoesNotExist:
             bandera=False
-        if fecha_actual_sprint == dato.fecha and hoy != 'Domingo' and hoy != 'Sabado':
-            if bandera == False:
-                sprint_en_proceso=Sprint_En_Proceso()
-                sprint_en_proceso.sprint_id=sprint.id
-                sprint_en_proceso.fecha=fecha_actual_sprint
-                sprint_en_proceso.horas_acumulada=suma
-                sprint_en_proceso.save()
-            if bandera == True:
-                sprint_en_proceso.horas_acumulada=suma
-                sprint_en_proceso.save()
+        if fecha_actual_sprint == dato.fecha and hoy != 'Domingo' and hoy != 'Sabado' :
+            if sprint.fechaInicio <= ahora and ahora <= sprint.fechaFin:
+                print "ahora2"
+                print ahora
+                if bandera == False:
+                    sprint_en_proceso=Sprint_En_Proceso()
+                    sprint_en_proceso.sprint_id=sprint.id
+                    sprint_en_proceso.fecha=fecha_actual_sprint
+                    sprint_en_proceso.horas_acumulada=suma
+                    sprint_en_proceso.save()
+                if bandera == True:
+                    sprint_en_proceso.horas_acumulada=suma
+                    sprint_en_proceso.save()
     if fecha_actual_sprint == sprint.fechaFin:
         hora=time.strftime("%X")
         hora2= '19:00:00'
@@ -223,10 +228,12 @@ def crear_nuevo_sprint(id_proyecto):
     resta=0
     valor=0
     for dato in userstory:
-        resta=dato.tiempo_estimado-dato.tiempo_trabajado
+        resta=dato.tiempo_estimado
         if resta > mayor_tiempo:
             mayor_tiempo=resta
-    valor=int(mayor_tiempo/8)+1
+    valor=int(mayor_tiempo/8)
+    if valor == 0:
+        valor=1
     ultimo_sprint=0
     ahora = date.today()
     siguiente=0
@@ -234,7 +241,7 @@ def crear_nuevo_sprint(id_proyecto):
         if ultimo_sprint < dato.secuencia:
             ultimo_sprint=dato.secuencia
     sprint2=Sprint.objects.get(proyecto_id=id_proyecto,secuencia=ultimo_sprint)
-    fecha1=sprint2.fechaInicio
+    fecha1=sprint2.fechaFin
     siguiente=ultimo_sprint+1
     nombre= 'Sprint_Recuperacion_'+str(siguiente)
     sprint_nuevo=Sprint()
@@ -284,84 +291,13 @@ def visualizar_sprint_en_desarrollo(request,id_proyecto):
     ahora = date.today()
     user=request.user
     rol=RolUsuarioProyecto.objects.get(usuario_id=user.id, proyecto_id=id_proyecto)
-    sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
-    ultimo_sprint=0
-    for dato in sprints:
-        if ultimo_sprint < dato.secuencia:
-            ultimo_sprint=dato.secuencia
-    try:
-        sprint=Sprint.objects.get(proyecto_id=id_proyecto, estado='ABIERTO')
-    except ObjectDoesNotExist:
-        sprint=Sprint.objects.get(proyecto_id=id_proyecto, secuencia=ultimo_sprint)
-    userstorys=UserStory.objects.filter(sprint_id=sprint.id)
-    suma=0
-    ahora = date.today()
-    contador=0
-    for dato in userstorys:
-        suma+=dato.tiempo_trabajado
-        contador+=1
-
-    estimacion_sprint=Estimacion_Sprint.objects.get(sprint_id=sprint.id)
-    bandera=True
-    hoy=que_dia_es()
-    print hoy
-    try:
-        sprint_en_proceso=Sprint_En_Proceso.objects.get(sprint_id=sprint.id, fecha=ahora)
-    except ObjectDoesNotExist:
-        bandera=False
-    if bandera == False and hoy != 'Domingo' and hoy != 'Sabado':
-        sprint_en_proceso=Sprint_En_Proceso()
-        sprint_en_proceso.sprint_id=sprint.id
-        sprint_en_proceso.fecha=ahora
-        sprint_en_proceso.horas_acumulada=suma
-        sprint_en_proceso.save()
-    if bandera == True:
-        sprint_en_proceso.horas_acumulada=suma
-        sprint_en_proceso.fecha=ahora
-        sprint_en_proceso.save()
-
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto).order_by('secuencia')
-    lista_sprint_proceso=[]
-    lista_estimacion_sprint=[]
-    lista_porcentaje=[]
-    total_horas=0
-    for dato in sprints:
-        userstorys1=UserStory.objects.filter(proyecto_id=id_proyecto, sprint_id=dato.id)
-        for dato1 in userstorys1:
-            total_horas+=dato1.tiempo_estimado
-    lista_porcentaje_estimado=[]
-    lista_hora_estimado=[]
-    lista_hora_proceso=[]
-    valor=0
-    for dato in sprints:
-        porcentaje_sprint_hecho=0.0
-        bandera=True
-        try:
-            sprint_proceso=Sprint_En_Proceso.objects.get(sprint_id=dato.id, fecha=ahora)
-        except ObjectDoesNotExist:
-            bandera=False
-        if bandera == True:
-            porcentaje_sprint_hecho=sprint_en_proceso.horas_acumulada*100/total_horas
-            lista_sprint_proceso.append(sprint_proceso)
-            lista_porcentaje.append(porcentaje_sprint_hecho)
-            lista_hora_proceso.append(sprint_proceso.horas_acumulada)
-        sprint_estimacion=Estimacion_Sprint.objects.get(sprint_id=dato.id)
-        lista_estimacion_sprint.append(sprint_estimacion)
-        userstorys1=UserStory.objects.filter(proyecto_id=id_proyecto, sprint_id=dato.id)
-        for dato1 in userstorys1:
-            valor+=dato1.tiempo_estimado
-        lista_porcentaje_estimado.append(valor*100/total_horas)
-        lista_hora_estimado.append(valor)
+
+
 
     return render_to_response('HtmlProyectoDesarrollo/vizualizar_sprint.html',{'sprints':sprints,
                                                                                'id_proyecto':id_proyecto,
                                                                                'proyecto':proyecto,
-                                                                               'lista_sprint_proceso':lista_sprint_proceso,
-                                                                               'lista_estimacion_sprint':lista_estimacion_sprint,
-                                                                               'lista_porcentaje':lista_porcentaje,
-                                                                               'lista_porcentaje_estimado':lista_porcentaje_estimado,
-                                                                               'lista_hora_estimado':lista_hora_estimado,
-                                                                               'lista_hora_proceso':lista_hora_proceso,
                                                                                'rol':rol})
 
 def observar_proceso_sprint(request, id_sprint):
@@ -369,8 +305,16 @@ def observar_proceso_sprint(request, id_sprint):
     sprint_estimado=Estimacion_Sprint.objects.get(sprint_id=id_sprint)
     tiempo_en_proceso=0
     ban=0
+    hoy1=date.today()
     us2=UserStory.objects.filter(sprint_id=id_sprint)
-    sprint_en_proceso=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).latest('fecha')
+    try:
+        sprint_en_proceso=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).latest('fecha')
+    except ObjectDoesNotExist:
+        sprint_en_proceso=Sprint_En_Proceso()
+        sprint_en_proceso.fecha=hoy1
+        sprint_en_proceso.sprint_id=id_sprint
+        sprint_en_proceso.horas_acumulada=0
+        sprint_en_proceso.save()
     if sprint.estado == 'ABIERTO':
         mayor=0
         hoy = date.today()#fecha en anho-mes-dia

@@ -75,7 +75,7 @@ def usuarios(request):
     usuarios_list = User.objects.filter(Q(username__icontains=buscar)|Q(first_name__icontains=buscar))
     paginator = Paginator(usuarios_list, 10) # Show 25 contacts per page
 
-    page = request.GET.get('page','')
+    page = request.GET.get('page','1')
     try:
         page=int(page)
     except:

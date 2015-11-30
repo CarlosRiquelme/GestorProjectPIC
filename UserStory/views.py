@@ -460,7 +460,7 @@ def lista_userstory_usuario(request, id_proyecto):
     except ObjectDoesNotExist:
         sprint=""
 
-    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,usuario_id=user.id)
+    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,usuario_id=user.id).order_by('estado')
     return render_to_response('HtmlUserStory/lista_userstory_usuario.html',{'userstorys':userstorys,
                                                                    'id_proyecto':id_proyecto, 'user':user,
                                                                    'proyecto':proyecto,

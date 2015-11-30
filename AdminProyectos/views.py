@@ -253,9 +253,11 @@ def proyectos(request,id_user):
     """
     usuarioproyecto=RolUsuarioProyecto.objects.filter(usuario_id=id_user)
     user=request.user
+    proyectos=Proyecto.objects.filter(estado='ELIMINADO')
 
     return render_to_response('HtmlProyecto/proyectos.html',
-                {'usuarioproyecto':usuarioproyecto,'user':user}, RequestContext(request))
+                {'usuarioproyecto':usuarioproyecto,'user':user,
+                 'proyectos':proyectos}, RequestContext(request))
 
 
 @login_required(login_url='/admin/login/')
@@ -266,13 +268,21 @@ def eliminar_proyecto(request, id_proyecto):
     :param id_proyecto:
     :return:
     """
+
     proyecto= Proyecto.objects.get(pk=id_proyecto)
     user=request.user
-    nombre=proyecto.nombre
-    proyecto.delete()
-    
-    messages.success(request,"Proyecto "+nombre+" Eliminado!")
-    return HttpResponseRedirect('/proyectos/'+str(user.id))
+    if proyecto.estado == 'ELIMINADO':
+        nombre=proyecto.nombre
+        proyecto.estado='EN-ESPERA'
+        proyecto.save()
+        messages.success(request,"Proyecto "+nombre+" Restaurado!")
+        return HttpResponseRedirect('/proyectos/'+str(user.id))
+    if proyecto.estado == 'EN-ESPERA':
+        nombre=proyecto.nombre
+        proyecto.estado='ELIMINADO'
+        proyecto.save()
+        messages.success(request,"Proyecto "+nombre+" Eliminado!")
+        return HttpResponseRedirect('/proyectos/'+str(user.id))
 
 def pre_eliminar_proyecto(request, id_proyecto):
     """
