@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 from PIC.models import RolUsuarioProyecto
 from Sprint.models import Sprint, Estimacion_Proyecto, Estimacion_Sprint
-from UserStory.models import UserStory
+from UserStory.models import UserStory, UserStory_aux
 from Actividades.models import Actividad
 from Sprint.models import Dias_de_un_Sprint, Sprint_En_Proceso, Proyecto_En_Proceso
 import smtplib
@@ -478,7 +478,7 @@ def jo5(request,id_sprint):
     :param id_sprint:
     :return:
     """
-    userstorys = UserStory.objects.filter(sprint_id = id_sprint)
+    userstorys = UserStory_aux.objects.filter(sprint_id = id_sprint)
     sprint = Sprint.objects.get(pk=id_sprint)
     cantidad=0
     cantidad=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).count()

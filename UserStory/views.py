@@ -7,7 +7,7 @@ from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from Actividades.models import Actividad
 from UserStory.forms import UserStoryForm, UserStoryFormEdit, UserStoryClienteForm
-from UserStory.models import UserStory, Historial_US#, UserStory_aux
+from UserStory.models import UserStory, Historial_US, UserStory_aux
 from django.contrib import messages
 from Sprint.models import Sprint
 from Comentario.models import Comentario

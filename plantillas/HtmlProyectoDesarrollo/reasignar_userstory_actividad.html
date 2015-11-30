@@ -11,8 +11,10 @@
         <table class="table table-striped" style="width: 100%">
             <thead>
         <th >NOMBRE</th>
+        <th>Usuario</th>
         <th >ACTIVIDAD</th>
-        <th>ESTADO</th>
+        <th>Horas Trabajada</th>
+        <th>Tiempo Estimado</th>
         <th  style="width: 10%">RE-ASIGNAR</th>
 
 
@@ -20,8 +22,10 @@
 
     <tr>
 	     <td>{{p.nombre}}</td>
+         <td>{{p.usuario}}</td>
          <td>{{p.actividad}}</td>
-         <td>{{p.estado}}</td>
+         <td>{{p.tiempo_trabajado}}</td>
+         <td>{{p.tiempo_estimado}}</td>
         <td>
             <div class="input-group">
                 <a class="btn btn-primary" href="{% url 'ProyectoDesarrollo.views.reasignar_userstory_a_actividad' id_proyecto p.id %}">ACTIVIDAD</a>

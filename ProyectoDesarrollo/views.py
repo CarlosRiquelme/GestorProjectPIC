@@ -7,7 +7,7 @@ from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from Actividades.models import Actividad
 from AdminProyectos.models import Proyecto
-from UserStory.models import UserStory, US_Estado_ultimo, Historial_US
+from UserStory.models import UserStory, US_Estado_ultimo, Historial_US,UserStory_aux
 from django.contrib import messages
 from Sprint.models import Sprint, Proyecto_En_Proceso
 from django.core.mail import send_mail
@@ -88,6 +88,25 @@ def analizar_sprint(request, id_proyecto):
     :param id_proyecto:
     :return:
     """
+    ###########################################################################
+    #################Funcion donde se crea un aux a la tabla de US#############
+    # us=UserStory.objects.filter(proyecto_id=id_proyecto).order_by('pk')
+    # for i in us:
+    #     user_story2=UserStory_aux()
+    #     user_story2.nombre=i.nombre
+    #     user_story2.descripcion =i.descripcion
+    #     user_story2.fecha_creacion=i.fecha_creacion
+    #     user_story2.sprint_id=i.sprint_id
+    #     user_story2.usuario_id=i.usuario_id
+    #     user_story2.estado=i.estado
+    #     user_story2.prioridad=i.prioridad
+    #     user_story2.tiempo_trabajado=i.tiempo_trabajado
+    #     user_story2.porcentaje=i.porcentaje
+    #     user_story2.proyecto_id=i.proyecto_id
+    #     user_story2.tiempo_estimado=i.tiempo_estimado
+    #     user_story2.save()
+
+    # ###########################################################################
     try:
         sprint=Sprint.objects.get(proyecto_id=id_proyecto ,estado='ABIERTO')
     except ObjectDoesNotExist:
