@@ -77,6 +77,7 @@ def nuevo_comentario(request, id_userstory):
                 return HttpResponseRedirect('/comentario/miscomentarios/'+str(comentario.userstory.id))
             else:
                 resta=suma-userstory.tiempo_trabajado
+                bandera=True
                 if resta == 0:
                     comentario = Comentario()
                     comentario.titulo=titulo
@@ -100,25 +101,21 @@ def nuevo_comentario(request, id_userstory):
                     try:
                         us_ultimo_estado=US_Estado_ultimo.objects.get(us_id=id_userstory)
                     except ObjectDoesNotExist:
-                        bandera=False
-                    if bandera == 'False':
+                        us_ultimo_estado = ''
+                    if us_ultimo_estado == '':
                         us_ultimo_estado=US_Estado_ultimo()
-                        us_ultimo_estado.us_id=userstory.id
+                        us_ultimo_estado.us_id=id_userstory
                         us_ultimo_estado.estado=userstory.estado
                         us_ultimo_estado.estado_actual='REVISAR_TIEMPO'
                         us_ultimo_estado.save()
-                        userstory.tiempo_trabajado=suma
-                        userstory.estado='REVISAR_TIEMPO'
-                        userstory.suma_trabajadas+=hora_trabajada2
-                        userstory.save()
-                    else:
+                    if us_ultimo_estado != '':
                         us_ultimo_estado.estado=userstory.estado
                         us_ultimo_estado.estado_actual='REVISAR_TIEMPO'
                         us_ultimo_estado.save()
-                        userstory.tiempo_trabajado=suma
-                        userstory.estado='REVISAR_TIEMPO'
-                        userstory.suma_trabajadas+=hora_trabajada2
-                        userstory.save()
+                    userstory.tiempo_trabajado=suma
+                    userstory.estado='REVISAR_TIEMPO'
+                    userstory.suma_trabajadas+=hora_trabajada2
+                    userstory.save()
                     historial_us=Historial_US()
                     historial_us.nombre_us=userstory.nombre
                     historial_us.us_id=id_userstory
@@ -150,12 +147,21 @@ def nuevo_comentario(request, id_userstory):
                         send_mail('Nuevo Comentario',html_content , 'gestorprojectpic@gmail.com', [user.email], fail_silently=False)
                     except smtplib.socket.gaierror:
                         return HttpResponseRedirect('/error/conexion/')
-                    us_ultimo_estado=US_Estado_ultimo()
-                    us_ultimo_estado.us_id=userstory.id
-                    us_ultimo_estado.estado=userstory.estado
-                    us_ultimo_estado.estado_actual='REVISAR_TIEMPO'
-                    us_ultimo_estado.save()
-                    userstory.tiempo_trabajado=userstory.tiempo_estimado
+                    try:
+                        us_ultimo_estado=US_Estado_ultimo.objects.get(us_id=id_userstory)
+                    except ObjectDoesNotExist:
+                        us_ultimo_estado=''
+                    if us_ultimo_estado == '':
+                        us_ultimo_estado=US_Estado_ultimo()
+                        us_ultimo_estado.us_id=id_userstory
+                        us_ultimo_estado.estado=userstory.estado
+                        us_ultimo_estado.estado_actual='REVISAR_TIEMPO'
+                        us_ultimo_estado.save()
+                    if us_ultimo_estado != '':
+                        us_ultimo_estado.estado=userstory.estado
+                        us_ultimo_estado.estado_actual='REVISAR_TIEMPO'
+                        us_ultimo_estado.save()
+                    userstory.tiempo_trabajado=suma########################################################
                     userstory.estado='REVISAR_TIEMPO'
                     userstory.suma_trabajadas=userstory.suma_trabajadas+hora_trabajada
                     userstory.save()

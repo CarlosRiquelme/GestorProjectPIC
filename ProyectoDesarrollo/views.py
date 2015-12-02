@@ -9,7 +9,7 @@ from Actividades.models import Actividad
 from AdminProyectos.models import Proyecto
 from UserStory.models import UserStory, US_Estado_ultimo, Historial_US
 from django.contrib import messages
-from Sprint.models import Sprint
+from Sprint.models import Sprint, Proyecto_En_Proceso
 from django.core.mail import send_mail
 from datetime import datetime, date, time, timedelta
 import time
@@ -21,9 +21,11 @@ from Sprint.models import Sprint_En_Proceso,Dias_de_un_Sprint,Estimacion_Sprint
 from django.core.exceptions import ObjectDoesNotExist
 from PIC.models import RolUsuarioProyecto
 import smtplib
+from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 from django.db.models import F
 
+@login_required(login_url='/admin/login/')
 def kanban(request,id_proyecto):
     user=request.user
     rol=RolUsuarioProyecto.objects.get(usuario_id=user.id, proyecto_id=id_proyecto)
@@ -47,6 +49,35 @@ def kanban(request,id_proyecto):
                                                                     'userstorys':userstorys,'proyecto':proyecto,
                                                                     'sprints':sprints, 'id_proyecto':id_proyecto,
                                                                     'lista':lista})
+def analizar_proyecto(id_proyecto):
+    hoy=que_dia_es()
+    print "hoy de proyecto"
+    print hoy
+    if hoy != 'Sabado' and hoy != 'Domingo':
+        sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
+        ahora = date.today()
+        print "ahora:"+str(ahora)
+        try:
+            proyecto_en_proceos=Proyecto_En_Proceso.objects.get(proyecto_id= id_proyecto,fecha=ahora)
+        except ObjectDoesNotExist:
+            proyecto_en_proceos=''
+        horas_acumulada=0
+        for s in sprints:
+            us=UserStory.objects.filter(sprint_id=s.id)
+            for u in us:
+                horas_acumulada=horas_acumulada+u.tiempo_trabajado
+            print "hora acumulada del sprint:"+str(horas_acumulada)
+        if proyecto_en_proceos != '':
+            proyecto_en_proceos.horas_acumulada_sprint=horas_acumulada
+            proyecto_en_proceos.save()
+        if proyecto_en_proceos == '':
+            proyecto_en_proceos=Proyecto_En_Proceso()
+            proyecto_en_proceos.horas_acumulada_sprint=horas_acumulada
+            proyecto_en_proceos.proyecto_id=id_proyecto
+            proyecto_en_proceos.fecha=ahora
+            proyecto_en_proceos.save()
+
+
 
 
 def analizar_sprint(request, id_proyecto):
@@ -67,7 +98,7 @@ def analizar_sprint(request, id_proyecto):
         send_mail('Prueba de conexion',html_content , 'gestorprojectpic@gmail.com', ['gestorprojectpic@gmail.com'], fail_silently=False)
     except smtplib.socket.gaierror:
         return HttpResponseRedirect('/error/conexion/')
-
+    analizar_proyecto(id_proyecto)
     sprints=Sprint.objects.filter(proyecto_id=id_proyecto)
     sprint_fechas=Dias_de_un_Sprint.objects.filter(sprint_id=sprint.id)#tabla donde se guardan los dias de un sprint
     ultimo_sprint=0
@@ -201,7 +232,7 @@ def crear_nuevo_sprint(id_proyecto):
     for dato in sprint:
         if ultimo_sprint < dato.secuencia:
             ultimo_sprint=dato.secuencia
-    sprint2=Sprint.objects.filter(proyecto_id=id_proyecto,secuencia=ultimo_sprint)
+    sprint2=Sprint.objects.get(proyecto_id=id_proyecto,secuencia=ultimo_sprint)
     fecha1=sprint2.fechaInicio
     siguiente=ultimo_sprint+1
     nombre= 'Sprint_Recuperacion_'+str(siguiente)
@@ -219,13 +250,24 @@ def crear_nuevo_sprint(id_proyecto):
     sprint_nuevo.suma_tiempo_usestory=0
     sprint_nuevo.save()
     sprint3=Sprint.objects.get(proyecto_id=id_proyecto,estado='ABIERTO')
+    suma=0
     for dato in userstory:
         us_estado_ultimo=US_Estado_ultimo.objects.get(us_id=dato.id, estado_actual='REASIGNAR_SPRINT')
         dato.sprint_id=sprint3.id
         dato.tiempo_estimado=mayor_tiempo
+        dato.tiempo_trabajado=0
         dato.estado=us_estado_ultimo.estado
         dato.save()
-
+        suma=suma+dato.tiempo_estimado
+    estimacion_proyecto=Estimacion_Proyecto.objects.get(proyecto_id=id_proyecto)
+    estimacion_sprint=Estimacion_Sprint()
+    estimacion_sprint.proyecto_estimacion_id=estimacion_proyecto.id
+    estimacion_sprint.sprint_id=sprint3.id
+    estimacion_sprint.fechaInicio=sprint3.fechaInicio
+    estimacion_sprint.fechaFin=sprint3.fechaFin
+    estimacion_sprint.duracion=sprint3.tiempo_acumulado
+    estimacion_sprint.horas_hombre=suma
+    estimacion_sprint.save()
 
 def visualizar_sprint_en_desarrollo(request,id_proyecto):
     proyecto=Proyecto.objects.get(pk=id_proyecto)

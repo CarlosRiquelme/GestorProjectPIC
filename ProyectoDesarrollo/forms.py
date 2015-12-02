@@ -6,8 +6,11 @@ class UserStoryFormTiempo(forms.ModelForm):
 
 
 
+
     tiempo_estimado = forms.IntegerField(label="Nuevo Tiempo Estimado(hs)",
-                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'0','max':'100'}))
+                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'1','max':'16'}),
+                   help_text="Debe aumentar las horas de Estimacion del User Story")
+
 
 
     class Meta:

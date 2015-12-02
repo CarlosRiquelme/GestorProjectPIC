@@ -1,13 +1,10 @@
 {% extends 'admin/base_site.html' %}%}
 
-
-
-
 {% block content %}
 
 <h2>Listado de Comentarios del User Story "{{userstory.nombre}}" </h2>
 <br>
-{% if userstory.estado == 'FINALIZADO' or permiso.rol.name == 'ScrumMaster' or userstory.estado == 'TODO'%}
+{% if userstory.estado == 'FINALIZADO' or permiso.rol.name == 'ScrumMaster' or userstory.estado == 'TODO' or userstory.estado == 'REVISAR_TIEMPO'%}
 
 {% else %}
     <a  class="btn btn-success" href="{% url 'Comentario.views.nuevo_comentario' id_userstory %}">Nuevo Comentario</a>

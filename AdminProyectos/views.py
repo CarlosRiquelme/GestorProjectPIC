@@ -10,7 +10,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from AdminProyectos.forms import ProyectoForm, ProyectoFormEdit
 from AdminProyectos.models import Proyecto
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from PIC.models import RolUsuarioProyecto
 from mx.DateTime.DateTime import today
 from datetime import datetime, date, time, timedelta
@@ -482,24 +481,24 @@ def jo5(request,id_sprint):
     userstorys = UserStory.objects.filter(sprint_id = id_sprint)
     sprint = Sprint.objects.get(pk=id_sprint)
     cantidad=0
-    cantidad=sprint_proceso=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).count()
+    cantidad=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).count()
+    sprint_proceso=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint)
     print "cantidad: "+str(cantidad)
-    v = []
-    v2 = []
-    v3 = []
+    v = [] #eje y en proceso
+    v2 = [] # eje x
+    v3 = [] # eje y estimado
     suma = 0
     for aux1 in userstorys:
         suma = suma + aux1.tiempo_estimado
-
     v3.append(suma)
 
     c=0
     contador=0
-    for au in userstorys:
+    for au in sprint_proceso:
         if cantidad !=0 and contador < cantidad:
             contador+=1
-            aeiou = au.suma_trabajadas
-            v3.append(v3[c]-aeiou)
+            aeiou = suma-au.horas_acumulada
+            v3.append(aeiou)
             c=c+1
 
 
@@ -571,11 +570,11 @@ def jo5(request,id_sprint):
     #lista3 = pipo
     #lista3.append(fec)
     lista2 = v3
-    print "lista1"
+    print "lista1 o v"
     print v
-    print "lista3"
+    print "lista3 o v2"
     print v2
-    print "lista2"
+    print "lista2 o v3"
     print v3
 
     """
@@ -596,62 +595,72 @@ def jo3(request,id_proyecto):
     :return:
     """
     userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
-    try:
-        proyecto_proceso=Proyecto_En_Proceso.objects.get(proyecto_id=id_proyecto)
-    except ObjectDoesNotExist:
-        sprint_proceso=''
-    cantidad=0
-    if sprint_proceso != '':
-        for aux in sprint_proceso:
-            cantidad+=1
-    lista1=[]
-    lista3=[]
-    lista4=[]
-    aux = 0
+
+    # try:
+    #     proyecto_proceso=Proyecto_En_Proceso.objects.get(proyecto_id=id_proyecto)
+    # except ObjectDoesNotExist:
+    #     proyecto_proceso=''
+    # cantidad=0
+
+    lista1=[]   #Lista donde se guarda las estimacion del proyecto
+    lista3=[]   #Lista de las fechas del proyecto
+    lista4=[]   #Lista donde esta los datos del proceso de desarrollo del Proyecto
+    suma_estimacion_us = 0
+
+
     aux23 = 0
     for dato in userstorys:
-        aux = aux + dato.tiempo_estimado
-        aux23 = aux
+        suma_estimacion_us = suma_estimacion_us  + dato.tiempo_estimado
+        aux23 = suma_estimacion_us
+        aux_suma_estimacion_us=suma_estimacion_us
 
-    lista1.append(aux)
-    lista4.append(aux23)
+    lista4.append(suma_estimacion_us)
+    lista1.append(suma_estimacion_us)
     proyecto = Proyecto.objects.get(pk=id_proyecto)
     op = str(proyecto.fechaInicio)
     lista3.append(op)
 
 
 
-    sprints = Sprint.objects.filter(proyecto_id=id_proyecto)
-    c=0
+    sprints = Sprint.objects.filter(proyecto_id=id_proyecto).order_by("fechaFin")
     for dato1 in sprints:
         suma = 0
         suma2 = 0
-        c=c+1
         for dato2 in userstorys:
 
-            if(dato2.sprint_id == c):
+            if(dato2.sprint_id == dato1.id):
                 suma = suma + dato2.tiempo_estimado
                 suma2 = suma2 + dato2.suma_trabajadas
-        aux = aux - suma
+        suma_estimacion_us = suma_estimacion_us - suma
         aux23 = aux23 - suma2
-        lista1.append(aux)
-        lista4.append(aux23)
-        aux2 = Sprint.objects.get(pk=c)
-        lista3.append(str(aux2.fechaFin))
+        lista1.append(suma_estimacion_us)
+        lista3.append(str(dato1.fechaFin))
+    print "sprint"
+    print sprints
+    proyecto_en_proceso=Proyecto_En_Proceso.objects.filter(proyecto_id=id_proyecto).order_by("fecha")
 
-    #sprintsdelpro = sprints.objects.filter(proyecto_id = id_proyecto)
-
-
-
-
-
+    resta=0
+    fecha_max='2015-01-01'
+    if proyecto_en_proceso.exists():
+        for sp in sprints:
+            for pep in proyecto_en_proceso.reverse():
+                if sp.fechaInicio <= pep.fecha and pep.fecha <= sp.fechaFin:
+                    if fecha_max < str(pep.fecha):
+                        fecha_max=str(pep.fecha)
+                        resta=aux_suma_estimacion_us-pep.horas_acumulada_sprint
+                        lista4.append(resta)
+    else:
+        lista4.append(aux_suma_estimacion_us)
     #lista1 = [120, 100,90,80,70,60,50,40,30,20,10,0]
     lista2 = lista4
     #lista3 = ['1', ' 2', ' 3', ' 4', ' 5', ' 6',
     #            ' 7', ' 8', ' 9', ' 10', ' 11', ' 12']
 
+    print "lista2"
     print lista2
+    print "lista1"
     print lista1
+    print "lista3"
     print lista3
 
 

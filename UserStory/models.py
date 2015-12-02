@@ -49,6 +49,28 @@ class UserStory(models.Model):
     def __unicode__(self):
         return self.nombre
 
+# class UserStory_aux(models.Model):
+#     nombre = models.CharField(max_length=30, unique=False)
+#     descripcion = models.CharField(max_length=150)
+#     fecha_creacion= models.DateTimeField(auto_now=True)
+#     estado=models.CharField(choices=US_ESTADOS,default='CREADO',max_length=30)
+#     prioridad=models.CharField(max_length=30)
+#     sprint=models.ForeignKey(Sprint, unique=False, null=True)
+#     actividad=models.ForeignKey(Actividad, unique=False, null=True)
+#     tiempo_trabajado = models.IntegerField(null=True)
+#     suma_trabajadas=models.IntegerField(null=True, default=0)
+#     porcentaje = models.FloatField(null=True)
+#     proyecto=models.ForeignKey(Proyecto, null=True)
+#     tiempo_estimado=models.IntegerField(null=True,default=0)
+#     usuario=models.ForeignKey(User, null=True)
+#     nro_sprint=models.IntegerField(null=True)
+#     nro_actividad=models.IntegerField(null=True)
+#     porcentaje_actividad=models.FloatField(null=True)
+#
+#
+#     def __unicode__(self):
+#         return self.nombre
+
 class US_Estado_ultimo(models.Model):
     us=models.ForeignKey(UserStory)
     estado=models.CharField(max_length=30)

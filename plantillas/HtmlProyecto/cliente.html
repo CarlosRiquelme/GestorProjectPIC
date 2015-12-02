@@ -7,7 +7,9 @@
 
 <ul class="nav nav-tabs">
   <li ><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
+    {% if proyecto.estado != 'FINALIZADO' %}
     <li class="active"><a href="{% url 'UserStory.views.menu_cliente' id_proyecto %}">Cliente</a></li>
+    {% endif %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
     {% if proyecto.estado == 'EN-DESARROLLO' %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>

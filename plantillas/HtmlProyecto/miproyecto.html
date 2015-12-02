@@ -15,7 +15,7 @@
     {% if permiso.rol.name == 'Equipo' %}
     <li ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
     {% endif %}
-    {% if permiso.rol.name == 'Cliente' %}
+    {% if permiso.rol.name == 'Cliente' and proyecto.estado != 'FINALIZADO' %}
     <li ><a href="{% url 'UserStory.views.menu_cliente' id_proyecto %}">Cliente</a></li>
     {% endif %}
 

@@ -18,7 +18,7 @@ class ProyectoForm(forms.ModelForm):
                            max_length=30, help_text="Maximo 30 caracteres",label="Nombre del Proyecto",)
     descripcion=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','rows':'3'}),
                                 help_text="Maximo 120 caracteres",max_length=120,label="Descripcion")
-    scrumMaster=forms.ModelChoiceField(queryset= User.objects.filter(is_active=True))
+    scrumMaster=forms.ModelChoiceField(queryset= User.objects.filter(groups__name__in=['ScrumMaster']))
     fechaInicio = forms.DateField(input_formats=['%Y-%m-%d'], widget=widgets.AdminDateWidget,
                                      required=True, help_text='* Ingrese en formato anho-mes-dia',
                                      error_messages={'required': 'Ingrese una fecha de Inicio del proyecto'} )

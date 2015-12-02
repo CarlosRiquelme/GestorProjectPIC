@@ -7,7 +7,7 @@ from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from Actividades.models import Actividad
 from UserStory.forms import UserStoryForm, UserStoryFormEdit, UserStoryClienteForm
-from UserStory.models import UserStory, Historial_US
+from UserStory.models import UserStory, Historial_US#, UserStory_aux
 from django.contrib import messages
 from Sprint.models import Sprint
 from Comentario.models import Comentario
@@ -53,7 +53,18 @@ def nuevo_userstory(request, id_proyecto):
             userstory.porcentaje=0
             userstory.proyecto_id=id_proyecto
             userstory.tiempo_estimado=tiempo_estimado
+            # user_story2=UserStory_aux()
+            # user_story2.nombre=nombre
+            # user_story2.descripcion = descripcion
+            # user_story2.fecha_creacion=today()
+            # user_story2.estado='CREADO'
+            # user_story2.prioridad=prioridad
+            # user_story2.tiempo_trabajado=0
+            # user_story2.porcentaje=0
+            # user_story2.proyecto_id=id_proyecto
+            # user_story2.tiempo_estimado=tiempo_estimado
             userstory.save()
+            #user_story2.save()
             historial = Historial_US()
             historial.us_id=userstory.id
             historial.nombre_us=nombre

@@ -5,10 +5,11 @@
 <ul class="nav nav-tabs">
     <li><a href="{% url 'AdminProyectos.views.mi_proyecto' id_proyecto %}">Mi Proyecto</a></li>
     <li class="active" ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
-    {% if proyecto.estado == 'EN-DESARROLLO' %}
-    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
-    {% endif %}
+
+
+
     {% if proyecto.estado != 'EN-ESPERA' %}
+    <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
     <li ><a href="{% url 'ProyectoDesarrollo.views.kanban' id_proyecto %}">Kanban</a></li>
     <li ><a href="{% url 'ProyectoDesarrollo.views.Burndowncharts' id_proyecto %}">Burndowncharts</a></li>
     {% endif %}
@@ -63,15 +64,16 @@
                     {% else %}
                         <td>------</td>
                     {% endif %}
-                    <td> <div class="input-group">
-                            <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}">Visualizar<i class="fa fa-edit"></i></a>
-                        </div>
-                    </td>
+
                 {% else %}
                     <td></td>
                     <td></td>
-                    <td></td>
+
 	            {% endif %}
+                   <td> <div class="input-group">
+                            <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}">Visualizar<i class="fa fa-edit"></i></a>
+                        </div>
+                    </td>
              </tr>
         {% endfor %}
     </table>

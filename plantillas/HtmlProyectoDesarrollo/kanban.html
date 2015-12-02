@@ -12,10 +12,10 @@
     {% if rol.rol.name == 'Equipo' %}
     <li ><a href="{% url 'UserStory.views.lista_userstory_usuario' id_proyecto %}">Equipo</a></li>
     {% endif %}
-    {% if rol.rol.name == 'Cliente' %}
+    {% if rol.rol.name == 'Cliente' and proyecto.estado != 'FINALIZADO' %}
     <li ><a href="{% url 'UserStory.views.menu_cliente' id_proyecto %}">Cliente</a></li>
     {% endif %}
-    {% if proyecto.estado == 'EN-DESARROLLO' %}
+    {% if proyecto.estado != 'EN-ESPERA' %}
     <li ><a href="{% url 'ProyectoDesarrollo.views.visualizar_sprint_en_desarrollo' id_proyecto %}">Sprint</a></li>
     {% endif %}
     {% if proyecto.estado != 'EN-ESPERA' %}
