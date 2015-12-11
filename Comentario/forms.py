@@ -25,7 +25,7 @@ class ComentarioForm(forms.ModelForm):
                                 help_text="Maximo 120 caracteres",max_length=120,label="Descripcion")
 
     hora_trabajada=forms.IntegerField(label="Hora Trabajada",
-                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'1','max':'16'}))
+                   widget=forms.TextInput(attrs={'class': 'form-control','type':'number','min':'1','max':'8'}))
 
     class Meta:
         model = Comentario

@@ -74,28 +74,42 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.models.Sprint-class.html" class="summary-name">Sprint</a><br />
-      Sprint(id, nombre, fecha_creacion, fechaInicio, fechaFin, 
-        tiempo_acumulado, proyecto_id, estado, secuencia, dias_duracion, 
-        cantidad_userstory, porcentaje_actual, porcentaje_hecho_actual, 
-        dia_trancurrido)
+        <a href="Sprint.models.Sprint-class.html" class="summary-name">Sprint</a>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.models.Estimacion_Proyecto-class.html" class="summary-name">Estimacion_Proyecto</a><br />
-      Estimacion_Proyecto(id, proyecto_id, fechaInicio, fechaFin)
+        <a href="Sprint.models.Estimacion_Proyecto-class.html" class="summary-name">Estimacion_Proyecto</a>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.models.Estimacion_Sprint-class.html" class="summary-name">Estimacion_Sprint</a><br />
-      Estimacion_Sprint(id, sprint_id, fechaInicio, fechaFin, duracion, 
-        proyecto_estimacion_id)
+        <a href="Sprint.models.Estimacion_Sprint-class.html" class="summary-name">Estimacion_Sprint</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="Sprint.models.Sprint_En_Proceso-class.html" class="summary-name">Sprint_En_Proceso</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="Sprint.models.Proyecto_En_Proceso-class.html" class="summary-name">Proyecto_En_Proceso</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="Sprint.models.Dias_de_un_Sprint-class.html" class="summary-name">Dias_de_un_Sprint</a>
     </td>
   </tr>
 </table>
@@ -120,16 +134,8 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="Sprint.models-module.html#SPRINT_ESTADOS" class="summary-name">SPRINT_ESTADOS</a> = <code title="(('EN-ESPERA', 'EN-ESPERA'),
- ('ABIERTO', 'ABIERTO'),
- ('CERRADO', 'CERRADO'))"><code class="variable-group">(</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">EN-ESPERA</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">EN-ESPERA</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">ABIERTO</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ABI</code><code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'Sprint'"><code class="variable-quote">'</code><code class="variable-string">Sprint</code><code class="variable-quote">'</code></code>
+        <a href="Sprint.models-module.html#SPRINT_ESTADOS" class="summary-name">SPRINT_ESTADOS</a> = <code title="'EN-ESPERA', 'EN-ESPERA', ('ABIERTO', 'ABIERTO'), ('CERRADO', 'CERRADO\
+'),">'EN-ESPERA', 'EN-ESPERA', ('ABIERTO', 'ABIERT<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 </table>
@@ -163,9 +169,8 @@
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">(</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">EN-ESPERA</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">EN-ESPERA</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
- <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">ABIERTO</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ABIERTO</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
- <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">CERRADO</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CERRADO</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">)</code>
+'EN-ESPERA', 'EN-ESPERA', ('ABIERTO', 'ABIERTO'), ('CERRADO', 'CERRADO<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+'),
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -195,7 +200,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
+    Generated by Epydoc 3.0.1 on Fri Nov 27 23:25:47 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

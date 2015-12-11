@@ -37,17 +37,13 @@
         <table class="table table-striped" style="width: 100%">
             <thead>
                 <th >NOMBRE</th>
-                <th  style="width: 10%">Proceso</th>
+
                 <th  style="width: 10%">UserStory</th>
             </thead>
             {% for p in sprints %}
             <tr>
 	            <td><em>{{p.nombre}}-{{p.estado}}</em></td>
-                {% if p.estado != 'EN-ESPERA' %}
-                    <td><em><a class="btn btn-info" href="{% url 'ProyectoDesarrollo.views.observar_proceso_sprint' p.id %}">Observar</a></em></td>
-                {% else%}
-                    <td><em><a class="btn btn-info disabled">Observar</a></em></td>
-                {% endif %}
+
                 <td><em><a class="btn btn-success" href="{% url 'UserStory.views.lista_userstory_relacionado_a_sprint' p.id %}">Observar</a></em></td>
             </tr>
             {% endfor %}

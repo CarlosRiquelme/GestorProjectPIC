@@ -6,6 +6,7 @@ urlpatterns = patterns('',
 
     url(r'^files/', include('db_file_storage.urls')),
     url(r'^', include(admin.site.urls)),
+    #url(r'^',  'PIC.views.login',{'template_name': 'admin/login.html'}),
     url(r'^reset/password_reset/$', 'django.contrib.auth.views.password_reset', name='admin_password_reset'),
     url(r'^reset/password_reset/done/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', name='password_reset_confirm'),
@@ -14,12 +15,14 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^error/conexion/', 'PIC.views.error_conexion'),
 
+
 #USUARIOS
 
 
 
     url(r'^usuario/lista/asignar/rol/(?P<id_rol>\d+)/$','PIC.views.lista_usuario_para_rol'),
-    url(r'^usuario/asignar/rol/(?P<id_rol>\d+)//(?P<id_user>\d+)$','PIC.views.asignar_rol_usuario'),
+    url(r'^usuario/asignar/rol/(?P<id_rol>\d+)/(?P<id_user>\d+)$','PIC.views.asignar_rol_usuario'),
+    url(r'^usuario/desasignar/rol/(?P<id_rol>\d+)/(?P<id_user>\d+)$','PIC.views.desasignar_rol_usuario'),
     url(r'^usuario/nuevo/$', 'PIC.views.nuevo_usuario'),
     url(r'^usuarios/$','PIC.views.usuarios'),
     url(r'^usuario/eliminar/(?P<id_user>\d+)/$','PIC.views.desactivar_usuario'),
@@ -125,7 +128,7 @@ urlpatterns = patterns('',
      url(r'^proyecto/us/tiempo/nuevo/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','ProyectoDesarrollo.views.reasignar_userstory_tiempo'),
      url(r'^proyecto/us/tiempo/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.lista_reasignar_userstory_tiempo'),
      url(r'^proyecto/aprobacion/us/finalizacion/(?P<id_proyecto>\d+)/$','ProyectoDesarrollo.views.lista_aprobacion_finalizacion'),
-    url(r'^sprint/observar/proceso/(?P<id_sprint>\d+)/$','ProyectoDesarrollo.views.observar_proceso_sprint'),
+     url(r'^sprint/observar/proceso/(?P<id_sprint>\d+)/$','ProyectoDesarrollo.views.observar_proceso_sprint'),
 
 
 #ADMINISTRACION DEL SCRUM MASTER
@@ -136,6 +139,7 @@ urlpatterns = patterns('',
     url(r'^userstory/lista/cancelar/(?P<id_proyecto>\d+)/$','UserStory.views.lista_userstory_cancelar'),
     url(r'^userstory/descancelar/(?P<id_proyecto>\d+)/(?P<id_userstory>\d+)/$','UserStory.views.descancelar_userstory'),
     url(r'^userstory/aprobar/finalizacion/(?P<id_userstory>\d+)/$','UserStory.views.aprobar_finalizacion'),
+    url(r'^userstory/desaprobar/finalizacion/(?P<id_userstory>\d+)/$','UserStory.views.desaprobar_finalizacion'),
 
 #CLIENTE
     url(r'^proyecto/cliente/menu/(?P<id_proyecto>\d+)/$','UserStory.views.menu_cliente'),

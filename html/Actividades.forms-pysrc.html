@@ -53,20 +53,19 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="Actividades.forms-module.html">Module Actividades.forms</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt> <tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module Actividades.forms=Actividades.forms-module.html,Module AdminProyectos.forms=AdminProyectos.forms-module.html,Module Comentario.forms=Comentario.forms-module.html,Module Flujo.forms=Flujo.forms-module.html,Module PIC.forms=PIC.forms-module.html,Module Sprint.forms=Sprint.forms-module.html,Module UserStory.forms=UserStory.forms-module.html"><a title="Actividades.forms
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt> <tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module Actividades.forms=Actividades.forms-module.html,Module AdminProyectos.forms=AdminProyectos.forms-module.html,Module Comentario.forms=Comentario.forms-module.html,Module PIC.forms=PIC.forms-module.html,Module ProyectoDesarrollo.forms=ProyectoDesarrollo.forms-module.html,Module Sprint.forms=Sprint.forms-module.html,Module UserStory.forms=UserStory.forms-module.html"><a title="Actividades.forms
 AdminProyectos.forms
 Comentario.forms
-Flujo.forms
 PIC.forms
+ProyectoDesarrollo.forms
 Sprint.forms
 UserStory.forms" class="py-name" href="#" onclick="return doclink('link-0', 'forms', 'link-0');">forms</a></tt> </tt>
 <a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">core</tt><tt class="py-op">.</tt><tt class="py-name">context_processors</tt> <tt class="py-keyword">import</tt> <tt class="py-name">request</tt> </tt>
 <a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">http</tt> <tt class="py-keyword">import</tt> <tt class="py-name">request</tt> </tt>
 <a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt class="py-name">auth</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module Actividades.models=Actividades.models-module.html,Module AdminProyectos.models=AdminProyectos.models-module.html,Module Comentario.models=Comentario.models-module.html,Module Flujo.models=Flujo.models-module.html,Module PIC.models=PIC.models-module.html,Module ProyectoDesarrollo.models=ProyectoDesarrollo.models-module.html,Module Sprint.models=Sprint.models-module.html,Module UserStory.models=UserStory.models-module.html"><a title="Actividades.models
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt class="py-name">auth</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module Actividades.models=Actividades.models-module.html,Module AdminProyectos.models=AdminProyectos.models-module.html,Module Comentario.models=Comentario.models-module.html,Module PIC.models=PIC.models-module.html,Module ProyectoDesarrollo.models=ProyectoDesarrollo.models-module.html,Module Sprint.models=Sprint.models-module.html,Module UserStory.models=UserStory.models-module.html"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
-Flujo.models
 PIC.models
 ProyectoDesarrollo.models
 Sprint.models
@@ -74,136 +73,193 @@ UserStory.models" class="py-name" href="#" onclick="return doclink('link-1', 'mo
 <a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name"><a title="Actividades.forms
 AdminProyectos.forms
 Comentario.forms
-Flujo.forms
 PIC.forms
+ProyectoDesarrollo.forms
 Sprint.forms
-UserStory.forms" class="py-name" href="#" onclick="return doclink('link-2', 'forms', 'link-0');">forms</a></tt><tt class="py-op">.</tt><tt class="py-name">widgets</tt> <tt class="py-keyword">import</tt> <tt class="py-name">TextInput</tt> </tt>
-<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">db</tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name"><a title="Actividades.models
+UserStory.forms" class="py-name" href="#" onclick="return doclink('link-2', 'forms', 'link-0');">forms</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Variable Comentario.forms.DocumentForm.Meta.widgets=Comentario.forms.DocumentForm.Meta-class.html#widgets"><a title="Comentario.forms.DocumentForm.Meta.widgets" class="py-name" href="#" onclick="return doclink('link-3', 'widgets', 'link-3');">widgets</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">TextInput</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">db</tt> <tt class="py-keyword">import</tt> <tt id="link-4" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
-Flujo.models
 PIC.models
 ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-3', 'models', 'link-1');">models</a></tt> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name" targets="Package Actividades=Actividades-module.html"><a title="Actividades" class="py-name" href="#" onclick="return doclink('link-4', 'Actividades', 'link-4');">Actividades</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="Actividades.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-4', 'models', 'link-1');">models</a></tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-5" class="py-name" targets="Package Actividades=Actividades-module.html"><a title="Actividades" class="py-name" href="#" onclick="return doclink('link-5', 'Actividades', 'link-5');">Actividades</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="Actividades.models
 AdminProyectos.models
 Comentario.models
-Flujo.models
 PIC.models
 ProyectoDesarrollo.models
 Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-5', 'models', 'link-1');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-6" class="py-name" targets="Class Actividades.models.Actividad=Actividades.models.Actividad-class.html"><a title="Actividades.models.Actividad" class="py-name" href="#" onclick="return doclink('link-6', 'Actividad', 'link-6');">Actividad</a></tt> </tt>
-<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-7" class="py-name" targets="Package Flujo=Flujo-module.html,Class Flujo.models.Flujo=Flujo.models.Flujo-class.html"><a title="Flujo
-Flujo.models.Flujo" class="py-name" href="#" onclick="return doclink('link-7', 'Flujo', 'link-7');">Flujo</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="Actividades.models
-AdminProyectos.models
-Comentario.models
-Flujo.models
-PIC.models
-ProyectoDesarrollo.models
-Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-8', 'models', 'link-1');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name"><a title="Flujo
-Flujo.models.Flujo" class="py-name" href="#" onclick="return doclink('link-9', 'Flujo', 'link-7');">Flujo</a></tt> </tt>
-<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Module Actividades.admin=Actividades.admin-module.html,Module AdminProyectos.admin=AdminProyectos.admin-module.html,Module Comentario.admin=Comentario.admin-module.html,Module Flujo.admin=Flujo.admin-module.html,Module PIC.admin=PIC.admin-module.html,Module ProyectoDesarrollo.admin=ProyectoDesarrollo.admin-module.html,Module Sprint.admin=Sprint.admin-module.html,Module UserStory.admin=UserStory.admin-module.html"><a title="Actividades.admin
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-6', 'models', 'link-1');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class Actividades.models.Actividad=Actividades.models.Actividad-class.html"><a title="Actividades.models.Actividad" class="py-name" href="#" onclick="return doclink('link-7', 'Actividad', 'link-7');">Actividad</a></tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Module Actividades.admin=Actividades.admin-module.html,Module AdminProyectos.admin=AdminProyectos.admin-module.html,Module Comentario.admin=Comentario.admin-module.html,Module PIC.admin=PIC.admin-module.html,Module ProyectoDesarrollo.admin=ProyectoDesarrollo.admin-module.html,Module Sprint.admin=Sprint.admin-module.html,Module UserStory.admin=UserStory.admin-module.html"><a title="Actividades.admin
 AdminProyectos.admin
 Comentario.admin
-Flujo.admin
 PIC.admin
 ProyectoDesarrollo.admin
 Sprint.admin
-UserStory.admin" class="py-name" href="#" onclick="return doclink('link-10', 'admin', 'link-10');">admin</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">widgets</tt> </tt>
+UserStory.admin" class="py-name" href="#" onclick="return doclink('link-8', 'admin', 'link-8');">admin</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name"><a title="Comentario.forms.DocumentForm.Meta.widgets" class="py-name" href="#" onclick="return doclink('link-9', 'widgets', 'link-3');">widgets</a></tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
 <a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"> </tt>
-<a name="ActividadForm"></a><div id="ActividadForm-def"><a name="L13"></a><tt class="py-lineno">13</tt> <a class="py-toggle" href="#" id="ActividadForm-toggle" onclick="return toggle('ActividadForm');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="Actividades.forms.ActividadForm-class.html">ActividadForm</a><tt class="py-op">(</tt><tt class="py-base-class">forms</tt><tt class="py-op">.</tt><tt class="py-base-class">ModelForm</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="ActividadForm-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ActividadForm-expanded"><a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">    Atributos que el usuario deber completar para la creacion</tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">    de un nuevo proyecto</tt> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
-<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
-<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">    <tt class="py-comment">#leader=forms.CharField(widget=TextInput(attrs={'readonly':'readonly'}),required=False)</tt> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">    <tt id="link-11" class="py-name" targets="Variable Actividades.forms.ActividadForm.nombre=Actividades.forms.ActividadForm-class.html#nombre,Variable Actividades.models.Actividad.nombre=Actividades.models.Actividad-class.html#nombre,Variable AdminProyectos.forms.ProyectoForm.nombre=AdminProyectos.forms.ProyectoForm-class.html#nombre,Variable AdminProyectos.forms.ProyectoFormEdit.nombre=AdminProyectos.forms.ProyectoFormEdit-class.html#nombre,Variable AdminProyectos.models.Proyecto.nombre=AdminProyectos.models.Proyecto-class.html#nombre,Variable Flujo.forms.FlujoForm.nombre=Flujo.forms.FlujoForm-class.html#nombre,Variable Flujo.models.Flujo.nombre=Flujo.models.Flujo-class.html#nombre,Variable Sprint.forms.SprintForm.nombre=Sprint.forms.SprintForm-class.html#nombre,Variable Sprint.forms.SprintFormEdit.nombre=Sprint.forms.SprintFormEdit-class.html#nombre,Variable Sprint.models.Sprint.nombre=Sprint.models.Sprint-class.html#nombre,Variable UserStory.forms.UserStoryForm.nombre=UserStory.forms.UserStoryForm-class.html#nombre,Variable UserStory.forms.UserStoryFormEdit.nombre=UserStory.forms.UserStoryFormEdit-class.html#nombre,Variable UserStory.models.UserStory.nombre=UserStory.models.UserStory-class.html#nombre"><a title="Actividades.forms.ActividadForm.nombre
+<a name="ActividadForm"></a><div id="ActividadForm-def"><a name="L12"></a><tt class="py-lineno">12</tt> <a class="py-toggle" href="#" id="ActividadForm-toggle" onclick="return toggle('ActividadForm');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="Actividades.forms.ActividadForm-class.html">ActividadForm</a><tt class="py-op">(</tt><tt class="py-base-class">forms</tt><tt class="py-op">.</tt><tt class="py-base-class">ModelForm</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ActividadForm-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ActividadForm-expanded"><a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">    Atributos que el usuario deber completar para la creacion</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">    de un nuevo proyecto</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">    <tt class="py-comment">#leader=forms.CharField(widget=TextInput(attrs={'readonly':'readonly'}),required=False)</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">    <tt id="link-10" class="py-name" targets="Variable Actividades.forms.ActividadForm.nombre=Actividades.forms.ActividadForm-class.html#nombre,Variable Actividades.forms.EditActividadForm.nombre=Actividades.forms.EditActividadForm-class.html#nombre,Variable Actividades.models.Actividad.nombre=Actividades.models.Actividad-class.html#nombre,Variable AdminProyectos.forms.ProyectoForm.nombre=AdminProyectos.forms.ProyectoForm-class.html#nombre,Variable AdminProyectos.forms.ProyectoFormEdit.nombre=AdminProyectos.forms.ProyectoFormEdit-class.html#nombre,Variable AdminProyectos.models.Proyecto.nombre=AdminProyectos.models.Proyecto-class.html#nombre,Variable Sprint.forms.SprintForm.nombre=Sprint.forms.SprintForm-class.html#nombre,Variable Sprint.forms.SprintFormEdit.nombre=Sprint.forms.SprintFormEdit-class.html#nombre,Variable Sprint.models.Sprint.nombre=Sprint.models.Sprint-class.html#nombre,Variable UserStory.forms.UserStoryClienteForm.nombre=UserStory.forms.UserStoryClienteForm-class.html#nombre,Variable UserStory.forms.UserStoryForm.nombre=UserStory.forms.UserStoryForm-class.html#nombre,Variable UserStory.forms.UserStoryFormEdit.nombre=UserStory.forms.UserStoryFormEdit-class.html#nombre,Variable UserStory.models.UserStory.nombre=UserStory.models.UserStory-class.html#nombre,Variable UserStory.models.UserStory_aux.nombre=UserStory.models.UserStory_aux-class.html#nombre"><a title="Actividades.forms.ActividadForm.nombre
+Actividades.forms.EditActividadForm.nombre
 Actividades.models.Actividad.nombre
 AdminProyectos.forms.ProyectoForm.nombre
 AdminProyectos.forms.ProyectoFormEdit.nombre
 AdminProyectos.models.Proyecto.nombre
-Flujo.forms.FlujoForm.nombre
-Flujo.models.Flujo.nombre
 Sprint.forms.SprintForm.nombre
 Sprint.forms.SprintFormEdit.nombre
 Sprint.models.Sprint.nombre
+UserStory.forms.UserStoryClienteForm.nombre
 UserStory.forms.UserStoryForm.nombre
 UserStory.forms.UserStoryFormEdit.nombre
-UserStory.models.UserStory.nombre" class="py-name" href="#" onclick="return doclink('link-11', 'nombre', 'link-11');">nombre</a></tt><tt class="py-op">=</tt><tt id="link-12" class="py-name"><a title="Actividades.forms
+UserStory.models.UserStory.nombre
+UserStory.models.UserStory_aux.nombre" class="py-name" href="#" onclick="return doclink('link-10', 'nombre', 'link-10');">nombre</a></tt><tt class="py-op">=</tt><tt id="link-11" class="py-name"><a title="Actividades.forms
 AdminProyectos.forms
 Comentario.forms
-Flujo.forms
 PIC.forms
+ProyectoDesarrollo.forms
 Sprint.forms
-UserStory.forms" class="py-name" href="#" onclick="return doclink('link-12', 'forms', 'link-0');">forms</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">widget</tt><tt class="py-op">=</tt><tt class="py-name">TextInput</tt><tt class="py-op">(</tt><tt class="py-name">attrs</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">'class'</tt><tt class="py-op">:</tt> <tt class="py-string">'form-control'</tt><tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
-<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">                           <tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">30</tt><tt class="py-op">,</tt> <tt class="py-name">help_text</tt><tt class="py-op">=</tt><tt class="py-string">"Maximo 30 caracteres"</tt><tt class="py-op">,</tt><tt class="py-name">label</tt><tt class="py-op">=</tt><tt class="py-string">"Nombre de la Actividad"</tt><tt class="py-op">,</tt><tt class="py-op">)</tt> </tt>
+UserStory.forms" class="py-name" href="#" onclick="return doclink('link-11', 'forms', 'link-0');">forms</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">widget</tt><tt class="py-op">=</tt><tt class="py-name">TextInput</tt><tt class="py-op">(</tt><tt class="py-name">attrs</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">'class'</tt><tt class="py-op">:</tt> <tt class="py-string">'form-control'</tt><tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">                           <tt class="py-name">max_length</tt><tt class="py-op">=</tt><tt class="py-number">30</tt><tt class="py-op">,</tt> <tt class="py-name">help_text</tt><tt class="py-op">=</tt><tt class="py-string">"Maximo 30 caracteres"</tt><tt class="py-op">,</tt><tt class="py-name">label</tt><tt class="py-op">=</tt><tt class="py-string">"Nombre de la Actividad"</tt><tt class="py-op">,</tt><tt class="py-op">)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
 <a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
-<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">    <tt id="link-13" class="py-name" targets="Variable Actividades.forms.ActividadForm.secuencia=Actividades.forms.ActividadForm-class.html#secuencia,Variable Actividades.models.Actividad.secuencia=Actividades.models.Actividad-class.html#secuencia,Variable Sprint.forms.SprintForm.secuencia=Sprint.forms.SprintForm-class.html#secuencia,Variable Sprint.models.Sprint.secuencia=Sprint.models.Sprint-class.html#secuencia"><a title="Actividades.forms.ActividadForm.secuencia
-Actividades.models.Actividad.secuencia
-Sprint.forms.SprintForm.secuencia
-Sprint.models.Sprint.secuencia" class="py-name" href="#" onclick="return doclink('link-13', 'secuencia', 'link-13');">secuencia</a></tt><tt class="py-op">=</tt><tt id="link-14" class="py-name"><a title="Actividades.forms
-AdminProyectos.forms
-Comentario.forms
-Flujo.forms
-PIC.forms
-Sprint.forms
-UserStory.forms" class="py-name" href="#" onclick="return doclink('link-14', 'forms', 'link-0');">forms</a></tt><tt class="py-op">.</tt><tt class="py-name">IntegerField</tt><tt class="py-op">(</tt><tt class="py-name">label</tt><tt class="py-op">=</tt><tt class="py-string">"Numero de la  Actividad"</tt><tt class="py-op">,</tt><tt class="py-name">help_text</tt><tt class="py-op">=</tt><tt class="py-string">"Maximo 10 Actividades"</tt><tt class="py-op">,</tt> </tt>
-<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">                   <tt class="py-name">widget</tt><tt class="py-op">=</tt><tt id="link-15" class="py-name"><a title="Actividades.forms
-AdminProyectos.forms
-Comentario.forms
-Flujo.forms
-PIC.forms
-Sprint.forms
-UserStory.forms" class="py-name" href="#" onclick="return doclink('link-15', 'forms', 'link-0');">forms</a></tt><tt class="py-op">.</tt><tt class="py-name">TextInput</tt><tt class="py-op">(</tt><tt class="py-name">attrs</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">'class'</tt><tt class="py-op">:</tt> <tt class="py-string">'form-control'</tt><tt class="py-op">,</tt><tt class="py-string">'type'</tt><tt class="py-op">:</tt><tt class="py-string">'number'</tt><tt class="py-op">,</tt><tt class="py-string">'min'</tt><tt class="py-op">:</tt><tt class="py-string">'1'</tt><tt class="py-op">,</tt><tt class="py-string">'max'</tt><tt class="py-op">:</tt><tt class="py-string">'10'</tt><tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
-<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"> </tt>
-<a name="ActividadForm.Meta"></a><div id="ActividadForm.Meta-def"><a name="L26"></a><tt class="py-lineno">26</tt> <a class="py-toggle" href="#" id="ActividadForm.Meta-toggle" onclick="return toggle('ActividadForm.Meta');">-</a><tt class="py-line">    <tt class="py-keyword">class</tt> <a class="py-def-name" href="Actividades.forms.ActividadForm.Meta-class.html">Meta</a><tt class="py-op">:</tt> </tt>
-</div><div id="ActividadForm.Meta-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ActividadForm.Meta-expanded"><a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt id="link-16" class="py-name" targets="Variable Actividades.forms.ActividadForm.Meta.model=Actividades.forms.ActividadForm.Meta-class.html#model,Variable AdminProyectos.forms.ProyectoForm.Meta.model=AdminProyectos.forms.ProyectoForm.Meta-class.html#model,Variable AdminProyectos.forms.ProyectoFormEdit.Meta.model=AdminProyectos.forms.ProyectoFormEdit.Meta-class.html#model,Variable Comentario.forms.ComentarioForm.Meta.model=Comentario.forms.ComentarioForm.Meta-class.html#model,Variable Comentario.forms.DocumentForm.Meta.model=Comentario.forms.DocumentForm.Meta-class.html#model,Variable Flujo.forms.FlujoForm.Meta.model=Flujo.forms.FlujoForm.Meta-class.html#model,Variable PIC.forms.EditUserForm.Meta.model=PIC.forms.EditUserForm.Meta-class.html#model,Variable PIC.forms.GroupForm.Meta.model=PIC.forms.GroupForm.Meta-class.html#model,Variable PIC.forms.RegistrationForm.Meta.model=PIC.forms.RegistrationForm.Meta-class.html#model,Variable UserStory.forms.UserStoryForm.Meta.model=UserStory.forms.UserStoryForm.Meta-class.html#model,Variable UserStory.forms.UserStoryFormEdit.Meta.model=UserStory.forms.UserStoryFormEdit.Meta-class.html#model"><a title="Actividades.forms.ActividadForm.Meta.model
+<a name="ActividadForm.Meta"></a><div id="ActividadForm.Meta-def"><a name="L23"></a><tt class="py-lineno">23</tt> <a class="py-toggle" href="#" id="ActividadForm.Meta-toggle" onclick="return toggle('ActividadForm.Meta');">-</a><tt class="py-line">    <tt class="py-keyword">class</tt> <a class="py-def-name" href="Actividades.forms.ActividadForm.Meta-class.html">Meta</a><tt class="py-op">:</tt> </tt>
+</div><div id="ActividadForm.Meta-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ActividadForm.Meta-expanded"><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">        <tt id="link-12" class="py-name" targets="Variable Actividades.forms.ActividadForm.Meta.model=Actividades.forms.ActividadForm.Meta-class.html#model,Variable Actividades.forms.EditActividadForm.Meta.model=Actividades.forms.EditActividadForm.Meta-class.html#model,Variable AdminProyectos.forms.ProyectoForm.Meta.model=AdminProyectos.forms.ProyectoForm.Meta-class.html#model,Variable AdminProyectos.forms.ProyectoFormEdit.Meta.model=AdminProyectos.forms.ProyectoFormEdit.Meta-class.html#model,Variable Comentario.forms.ComentarioForm.Meta.model=Comentario.forms.ComentarioForm.Meta-class.html#model,Variable Comentario.forms.DocumentForm.Meta.model=Comentario.forms.DocumentForm.Meta-class.html#model,Variable PIC.forms.EditUserForm.Meta.model=PIC.forms.EditUserForm.Meta-class.html#model,Variable PIC.forms.GroupForm.Meta.model=PIC.forms.GroupForm.Meta-class.html#model,Variable PIC.forms.RegistrationForm.Meta.model=PIC.forms.RegistrationForm.Meta-class.html#model,Variable ProyectoDesarrollo.forms.UserStoryFormTiempo.Meta.model=ProyectoDesarrollo.forms.UserStoryFormTiempo.Meta-class.html#model,Variable Sprint.forms.SprintForm.Meta.model=Sprint.forms.SprintForm.Meta-class.html#model,Variable Sprint.forms.SprintFormEdit.Meta.model=Sprint.forms.SprintFormEdit.Meta-class.html#model"><a title="Actividades.forms.ActividadForm.Meta.model
+Actividades.forms.EditActividadForm.Meta.model
 AdminProyectos.forms.ProyectoForm.Meta.model
 AdminProyectos.forms.ProyectoFormEdit.Meta.model
 Comentario.forms.ComentarioForm.Meta.model
 Comentario.forms.DocumentForm.Meta.model
-Flujo.forms.FlujoForm.Meta.model
 PIC.forms.EditUserForm.Meta.model
 PIC.forms.GroupForm.Meta.model
 PIC.forms.RegistrationForm.Meta.model
-UserStory.forms.UserStoryForm.Meta.model
-UserStory.forms.UserStoryFormEdit.Meta.model" class="py-name" href="#" onclick="return doclink('link-16', 'model', 'link-16');">model</a></tt> <tt class="py-op">=</tt> <tt id="link-17" class="py-name"><a title="Actividades.models.Actividad" class="py-name" href="#" onclick="return doclink('link-17', 'Actividad', 'link-6');">Actividad</a></tt> </tt>
-<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">        <tt id="link-18" class="py-name" targets="Variable Actividades.forms.ActividadForm.Meta.fields=Actividades.forms.ActividadForm.Meta-class.html#fields,Variable AdminProyectos.forms.ProyectoForm.Meta.fields=AdminProyectos.forms.ProyectoForm.Meta-class.html#fields,Variable AdminProyectos.forms.ProyectoFormEdit.Meta.fields=AdminProyectos.forms.ProyectoFormEdit.Meta-class.html#fields,Variable Comentario.forms.ComentarioForm.Meta.fields=Comentario.forms.ComentarioForm.Meta-class.html#fields,Variable Flujo.forms.FlujoForm.Meta.fields=Flujo.forms.FlujoForm.Meta-class.html#fields,Variable PIC.forms.EditUserForm.Meta.fields=PIC.forms.EditUserForm.Meta-class.html#fields,Variable PIC.forms.GroupForm.Meta.fields=PIC.forms.GroupForm.Meta-class.html#fields,Variable PIC.forms.RegistrationForm.Meta.fields=PIC.forms.RegistrationForm.Meta-class.html#fields,Variable Sprint.forms.SprintForm.Meta.fields=Sprint.forms.SprintForm.Meta-class.html#fields,Variable Sprint.forms.SprintFormEdit.Meta.fields=Sprint.forms.SprintFormEdit.Meta-class.html#fields,Variable UserStory.forms.UserStoryForm.Meta.fields=UserStory.forms.UserStoryForm.Meta-class.html#fields,Variable UserStory.forms.UserStoryFormEdit.Meta.fields=UserStory.forms.UserStoryFormEdit.Meta-class.html#fields"><a title="Actividades.forms.ActividadForm.Meta.fields
+ProyectoDesarrollo.forms.UserStoryFormTiempo.Meta.model
+Sprint.forms.SprintForm.Meta.model
+Sprint.forms.SprintFormEdit.Meta.model" class="py-name" href="#" onclick="return doclink('link-12', 'model', 'link-12');">model</a></tt> <tt class="py-op">=</tt> <tt id="link-13" class="py-name"><a title="Actividades.models.Actividad" class="py-name" href="#" onclick="return doclink('link-13', 'Actividad', 'link-7');">Actividad</a></tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt id="link-14" class="py-name" targets="Variable Actividades.forms.ActividadForm.Meta.fields=Actividades.forms.ActividadForm.Meta-class.html#fields,Variable Actividades.forms.EditActividadForm.Meta.fields=Actividades.forms.EditActividadForm.Meta-class.html#fields,Variable AdminProyectos.forms.ProyectoForm.Meta.fields=AdminProyectos.forms.ProyectoForm.Meta-class.html#fields,Variable AdminProyectos.forms.ProyectoFormEdit.Meta.fields=AdminProyectos.forms.ProyectoFormEdit.Meta-class.html#fields,Variable Comentario.forms.ComentarioForm.Meta.fields=Comentario.forms.ComentarioForm.Meta-class.html#fields,Variable PIC.forms.EditUserForm.Meta.fields=PIC.forms.EditUserForm.Meta-class.html#fields,Variable PIC.forms.GroupForm.Meta.fields=PIC.forms.GroupForm.Meta-class.html#fields,Variable PIC.forms.RegistrationForm.Meta.fields=PIC.forms.RegistrationForm.Meta-class.html#fields,Variable ProyectoDesarrollo.forms.UserStoryFormTiempo.Meta.fields=ProyectoDesarrollo.forms.UserStoryFormTiempo.Meta-class.html#fields,Variable Sprint.forms.SprintForm.Meta.fields=Sprint.forms.SprintForm.Meta-class.html#fields,Variable Sprint.forms.SprintFormEdit.Meta.fields=Sprint.forms.SprintFormEdit.Meta-class.html#fields,Variable UserStory.forms.UserStoryClienteForm.Meta.fields=UserStory.forms.UserStoryClienteForm.Meta-class.html#fields,Variable UserStory.forms.UserStoryForm.Meta.fields=UserStory.forms.UserStoryForm.Meta-class.html#fields,Variable UserStory.forms.UserStoryFormEdit.Meta.fields=UserStory.forms.UserStoryFormEdit.Meta-class.html#fields"><a title="Actividades.forms.ActividadForm.Meta.fields
+Actividades.forms.EditActividadForm.Meta.fields
 AdminProyectos.forms.ProyectoForm.Meta.fields
 AdminProyectos.forms.ProyectoFormEdit.Meta.fields
 Comentario.forms.ComentarioForm.Meta.fields
-Flujo.forms.FlujoForm.Meta.fields
 PIC.forms.EditUserForm.Meta.fields
 PIC.forms.GroupForm.Meta.fields
 PIC.forms.RegistrationForm.Meta.fields
+ProyectoDesarrollo.forms.UserStoryFormTiempo.Meta.fields
 Sprint.forms.SprintForm.Meta.fields
 Sprint.forms.SprintFormEdit.Meta.fields
+UserStory.forms.UserStoryClienteForm.Meta.fields
 UserStory.forms.UserStoryForm.Meta.fields
-UserStory.forms.UserStoryFormEdit.Meta.fields" class="py-name" href="#" onclick="return doclink('link-18', 'fields', 'link-18');">fields</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'nombre'</tt><tt class="py-op">,</tt><tt class="py-string">'secuencia'</tt><tt class="py-op">]</tt> </tt>
-</div><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"> </tt>
-<a name="ActividadForm.save"></a><div id="ActividadForm.save-def"><a name="L31"></a><tt class="py-lineno">31</tt> <a class="py-toggle" href="#" id="ActividadForm.save-toggle" onclick="return toggle('ActividadForm.save');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Actividades.forms.ActividadForm-class.html#save">save</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">commit</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="ActividadForm.save-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ActividadForm.save-expanded"><a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">        <tt id="link-19" class="py-name" targets="Variable UserStory.models.UserStory.actividad=UserStory.models.UserStory-class.html#actividad"><a title="UserStory.models.UserStory.actividad" class="py-name" href="#" onclick="return doclink('link-19', 'actividad', 'link-19');">actividad</a></tt> <tt class="py-op">=</tt> <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-20" class="py-name" targets="Class Actividades.forms.ActividadForm=Actividades.forms.ActividadForm-class.html"><a title="Actividades.forms.ActividadForm" class="py-name" href="#" onclick="return doclink('link-20', 'ActividadForm', 'link-20');">ActividadForm</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-21" class="py-name" targets="Method Actividades.forms.ActividadForm.save()=Actividades.forms.ActividadForm-class.html#save,Method AdminProyectos.forms.ProyectoForm.save()=AdminProyectos.forms.ProyectoForm-class.html#save,Method AdminProyectos.forms.ProyectoFormEdit.save()=AdminProyectos.forms.ProyectoFormEdit-class.html#save,Method PIC.forms.EditUserForm.save()=PIC.forms.EditUserForm-class.html#save,Method PIC.forms.RegistrationForm.save()=PIC.forms.RegistrationForm-class.html#save,Method Sprint.forms.SprintFormEdit.save()=Sprint.forms.SprintFormEdit-class.html#save,Method UserStory.forms.UserStoryFormEdit.save()=UserStory.forms.UserStoryFormEdit-class.html#save"><a title="Actividades.forms.ActividadForm.save
+UserStory.forms.UserStoryFormEdit.Meta.fields" class="py-name" href="#" onclick="return doclink('link-14', 'fields', 'link-14');">fields</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'nombre'</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"> </tt>
+<a name="ActividadForm.save"></a><div id="ActividadForm.save-def"><a name="L28"></a><tt class="py-lineno">28</tt> <a class="py-toggle" href="#" id="ActividadForm.save-toggle" onclick="return toggle('ActividadForm.save');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Actividades.forms.ActividadForm-class.html#save">save</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">commit</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ActividadForm.save-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ActividadForm.save-expanded"><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt id="link-15" class="py-name" targets="Variable UserStory.models.UserStory.actividad=UserStory.models.UserStory-class.html#actividad,Variable UserStory.models.UserStory_aux.actividad=UserStory.models.UserStory_aux-class.html#actividad"><a title="UserStory.models.UserStory.actividad
+UserStory.models.UserStory_aux.actividad" class="py-name" href="#" onclick="return doclink('link-15', 'actividad', 'link-15');">actividad</a></tt> <tt class="py-op">=</tt> <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-16" class="py-name" targets="Class Actividades.forms.ActividadForm=Actividades.forms.ActividadForm-class.html"><a title="Actividades.forms.ActividadForm" class="py-name" href="#" onclick="return doclink('link-16', 'ActividadForm', 'link-16');">ActividadForm</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Method Actividades.forms.ActividadForm.save()=Actividades.forms.ActividadForm-class.html#save,Method Actividades.forms.EditActividadForm.save()=Actividades.forms.EditActividadForm-class.html#save,Method AdminProyectos.forms.ProyectoForm.save()=AdminProyectos.forms.ProyectoForm-class.html#save,Method AdminProyectos.forms.ProyectoFormEdit.save()=AdminProyectos.forms.ProyectoFormEdit-class.html#save,Method Comentario.models.Document.save()=Comentario.models.Document-class.html#save,Method PIC.forms.EditUserForm.save()=PIC.forms.EditUserForm-class.html#save,Method PIC.forms.RegistrationForm.save()=PIC.forms.RegistrationForm-class.html#save,Method Sprint.forms.SprintFormEdit.save()=Sprint.forms.SprintFormEdit-class.html#save,Method UserStory.forms.UserStoryFormEdit.save()=UserStory.forms.UserStoryFormEdit-class.html#save"><a title="Actividades.forms.ActividadForm.save
+Actividades.forms.EditActividadForm.save
 AdminProyectos.forms.ProyectoForm.save
 AdminProyectos.forms.ProyectoFormEdit.save
+Comentario.models.Document.save
 PIC.forms.EditUserForm.save
 PIC.forms.RegistrationForm.save
 Sprint.forms.SprintFormEdit.save
-UserStory.forms.UserStoryFormEdit.save" class="py-name" href="#" onclick="return doclink('link-21', 'save', 'link-21');">save</a></tt><tt class="py-op">(</tt><tt class="py-name">commit</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
-<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">commit</tt><tt class="py-op">:</tt> </tt>
-<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">            <tt id="link-22" class="py-name"><a title="UserStory.models.UserStory.actividad" class="py-name" href="#" onclick="return doclink('link-22', 'actividad', 'link-19');">actividad</a></tt><tt class="py-op">.</tt><tt id="link-23" class="py-name"><a title="Actividades.forms.ActividadForm.save
+UserStory.forms.UserStoryFormEdit.save" class="py-name" href="#" onclick="return doclink('link-17', 'save', 'link-17');">save</a></tt><tt class="py-op">(</tt><tt class="py-name">commit</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">commit</tt><tt class="py-op">:</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">            <tt id="link-18" class="py-name"><a title="UserStory.models.UserStory.actividad
+UserStory.models.UserStory_aux.actividad" class="py-name" href="#" onclick="return doclink('link-18', 'actividad', 'link-15');">actividad</a></tt><tt class="py-op">.</tt><tt id="link-19" class="py-name"><a title="Actividades.forms.ActividadForm.save
+Actividades.forms.EditActividadForm.save
 AdminProyectos.forms.ProyectoForm.save
 AdminProyectos.forms.ProyectoFormEdit.save
+Comentario.models.Document.save
 PIC.forms.EditUserForm.save
 PIC.forms.RegistrationForm.save
 Sprint.forms.SprintFormEdit.save
-UserStory.forms.UserStoryFormEdit.save" class="py-name" href="#" onclick="return doclink('link-23', 'save', 'link-21');">save</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-24" class="py-name"><a title="UserStory.models.UserStory.actividad" class="py-name" href="#" onclick="return doclink('link-24', 'actividad', 'link-19');">actividad</a></tt> </tt>
-</div></div><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+UserStory.forms.UserStoryFormEdit.save" class="py-name" href="#" onclick="return doclink('link-19', 'save', 'link-17');">save</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-20" class="py-name"><a title="UserStory.models.UserStory.actividad
+UserStory.models.UserStory_aux.actividad" class="py-name" href="#" onclick="return doclink('link-20', 'actividad', 'link-15');">actividad</a></tt> </tt>
+</div></div><a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="EditActividadForm"></a><div id="EditActividadForm-def"><a name="L35"></a><tt class="py-lineno">35</tt> <a class="py-toggle" href="#" id="EditActividadForm-toggle" onclick="return toggle('EditActividadForm');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="Actividades.forms.EditActividadForm-class.html">EditActividadForm</a><tt class="py-op">(</tt><tt class="py-base-class">forms</tt><tt class="py-op">.</tt><tt class="py-base-class">ModelForm</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="EditActividadForm-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="EditActividadForm-expanded"><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">    <tt id="link-21" class="py-name"><a title="Actividades.forms.ActividadForm.nombre
+Actividades.forms.EditActividadForm.nombre
+Actividades.models.Actividad.nombre
+AdminProyectos.forms.ProyectoForm.nombre
+AdminProyectos.forms.ProyectoFormEdit.nombre
+AdminProyectos.models.Proyecto.nombre
+Sprint.forms.SprintForm.nombre
+Sprint.forms.SprintFormEdit.nombre
+Sprint.models.Sprint.nombre
+UserStory.forms.UserStoryClienteForm.nombre
+UserStory.forms.UserStoryForm.nombre
+UserStory.forms.UserStoryFormEdit.nombre
+UserStory.models.UserStory.nombre
+UserStory.models.UserStory_aux.nombre" class="py-name" href="#" onclick="return doclink('link-21', 'nombre', 'link-10');">nombre</a></tt><tt class="py-op">=</tt><tt id="link-22" class="py-name"><a title="Actividades.forms
+AdminProyectos.forms
+Comentario.forms
+PIC.forms
+ProyectoDesarrollo.forms
+Sprint.forms
+UserStory.forms" class="py-name" href="#" onclick="return doclink('link-22', 'forms', 'link-0');">forms</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">widget</tt><tt class="py-op">=</tt><tt class="py-name">TextInput</tt><tt class="py-op">(</tt><tt class="py-name">attrs</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">'class'</tt><tt class="py-op">:</tt><tt class="py-string">'form-control'</tt><tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">label</tt><tt class="py-op">=</tt><tt class="py-string">"nombre"</tt><tt class="py-op">)</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt>
+<a name="EditActividadForm.Meta"></a><div id="EditActividadForm.Meta-def"><a name="L38"></a><tt class="py-lineno">38</tt> <a class="py-toggle" href="#" id="EditActividadForm.Meta-toggle" onclick="return toggle('EditActividadForm.Meta');">-</a><tt class="py-line">    <tt class="py-keyword">class</tt> <a class="py-def-name" href="Actividades.forms.EditActividadForm.Meta-class.html">Meta</a><tt class="py-op">:</tt> </tt>
+</div><div id="EditActividadForm.Meta-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="EditActividadForm.Meta-expanded"><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt id="link-23" class="py-name"><a title="Actividades.forms.ActividadForm.Meta.model
+Actividades.forms.EditActividadForm.Meta.model
+AdminProyectos.forms.ProyectoForm.Meta.model
+AdminProyectos.forms.ProyectoFormEdit.Meta.model
+Comentario.forms.ComentarioForm.Meta.model
+Comentario.forms.DocumentForm.Meta.model
+PIC.forms.EditUserForm.Meta.model
+PIC.forms.GroupForm.Meta.model
+PIC.forms.RegistrationForm.Meta.model
+ProyectoDesarrollo.forms.UserStoryFormTiempo.Meta.model
+Sprint.forms.SprintForm.Meta.model
+Sprint.forms.SprintFormEdit.Meta.model" class="py-name" href="#" onclick="return doclink('link-23', 'model', 'link-12');">model</a></tt> <tt class="py-op">=</tt> <tt id="link-24" class="py-name"><a title="Actividades.models.Actividad" class="py-name" href="#" onclick="return doclink('link-24', 'Actividad', 'link-7');">Actividad</a></tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">        <tt id="link-25" class="py-name"><a title="Actividades.forms.ActividadForm.Meta.fields
+Actividades.forms.EditActividadForm.Meta.fields
+AdminProyectos.forms.ProyectoForm.Meta.fields
+AdminProyectos.forms.ProyectoFormEdit.Meta.fields
+Comentario.forms.ComentarioForm.Meta.fields
+PIC.forms.EditUserForm.Meta.fields
+PIC.forms.GroupForm.Meta.fields
+PIC.forms.RegistrationForm.Meta.fields
+ProyectoDesarrollo.forms.UserStoryFormTiempo.Meta.fields
+Sprint.forms.SprintForm.Meta.fields
+Sprint.forms.SprintFormEdit.Meta.fields
+UserStory.forms.UserStoryClienteForm.Meta.fields
+UserStory.forms.UserStoryForm.Meta.fields
+UserStory.forms.UserStoryFormEdit.Meta.fields" class="py-name" href="#" onclick="return doclink('link-25', 'fields', 'link-14');">fields</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'nombre'</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
+<a name="EditActividadForm.save"></a><div id="EditActividadForm.save-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="EditActividadForm.save-toggle" onclick="return toggle('EditActividadForm.save');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Actividades.forms.EditActividadForm-class.html#save">save</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">commit</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="EditActividadForm.save-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="EditActividadForm.save-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt id="link-26" class="py-name"><a title="UserStory.models.UserStory.actividad
+UserStory.models.UserStory_aux.actividad" class="py-name" href="#" onclick="return doclink('link-26', 'actividad', 'link-15');">actividad</a></tt> <tt class="py-op">=</tt> <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-27" class="py-name"><a title="Actividades.forms.ActividadForm" class="py-name" href="#" onclick="return doclink('link-27', 'ActividadForm', 'link-16');">ActividadForm</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-28" class="py-name"><a title="Actividades.forms.ActividadForm.save
+Actividades.forms.EditActividadForm.save
+AdminProyectos.forms.ProyectoForm.save
+AdminProyectos.forms.ProyectoFormEdit.save
+Comentario.models.Document.save
+PIC.forms.EditUserForm.save
+PIC.forms.RegistrationForm.save
+Sprint.forms.SprintFormEdit.save
+UserStory.forms.UserStoryFormEdit.save" class="py-name" href="#" onclick="return doclink('link-28', 'save', 'link-17');">save</a></tt><tt class="py-op">(</tt><tt class="py-name">commit</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">commit</tt><tt class="py-op">:</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">            <tt id="link-29" class="py-name"><a title="UserStory.models.UserStory.actividad
+UserStory.models.UserStory_aux.actividad" class="py-name" href="#" onclick="return doclink('link-29', 'actividad', 'link-15');">actividad</a></tt><tt class="py-op">.</tt><tt id="link-30" class="py-name"><a title="Actividades.forms.ActividadForm.save
+Actividades.forms.EditActividadForm.save
+AdminProyectos.forms.ProyectoForm.save
+AdminProyectos.forms.ProyectoFormEdit.save
+Comentario.models.Document.save
+PIC.forms.EditUserForm.save
+PIC.forms.RegistrationForm.save
+Sprint.forms.SprintFormEdit.save
+UserStory.forms.UserStoryFormEdit.save" class="py-name" href="#" onclick="return doclink('link-30', 'save', 'link-17');">save</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-31" class="py-name"><a title="UserStory.models.UserStory.actividad
+UserStory.models.UserStory_aux.actividad" class="py-name" href="#" onclick="return doclink('link-31', 'actividad', 'link-15');">actividad</a></tt> </tt>
+</div></div><a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -233,7 +289,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
+    Generated by Epydoc 3.0.1 on Fri Nov 27 23:25:48 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

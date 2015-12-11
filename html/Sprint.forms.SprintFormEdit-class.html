@@ -55,15 +55,9 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class SprintFormEdit</h1><p class="nomargin-top"><span class="codelink"><a href="Sprint.forms-pysrc.html#SprintFormEdit">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-                   object --+            
-                            |            
-  django.forms.forms.BaseForm --+        
-                                |        
-django.forms.models.BaseModelForm --+    
-                                    |    
-        django.forms.models.ModelForm --+
-                                        |
-                                       <strong class="uidshort">SprintFormEdit</strong>
+django.forms.ModelForm --+
+                         |
+                        <strong class="uidshort">SprintFormEdit</strong>
 </pre>
 
 <hr />
@@ -118,10 +112,8 @@ django.forms.models.BaseModelForm --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="Sprint.forms.SprintFormEdit-class.html#save" class="summary-sig-name">save</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">commit</span>=<span class="summary-sig-default">True</span>)</span><br />
-      Saves this ``form``'s cleaned_data into model instance 
-      ``self.instance``.</td>
+          <td><span class="summary-sig"><a name="save"></a><span class="summary-sig-name">save</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">commit</span>=<span class="summary-sig-default">True</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="Sprint.forms-pysrc.html#SprintFormEdit.save">source&nbsp;code</a></span>
             
@@ -129,58 +121,6 @@ django.forms.models.BaseModelForm --+
         </tr>
       </table>
       
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.models.BaseModelForm</code></b>:
-      <code>__init__</code>,
-      <code>clean</code>,
-      <code>validate_unique</code>
-      </p>
-    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.models.BaseModelForm</code></b> (private):
-      <code>_get_validation_exclusions</code>,
-      <code>_post_clean</code>,
-      <code>_update_errors</code>
-      </p></div>
-    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.forms.BaseForm</code></b>:
-      <code>__getitem__</code>,
-      <code>__iter__</code>,
-      <code>__str__</code>,
-      <code>__unicode__</code>,
-      <code>add_error</code>,
-      <code>add_initial_prefix</code>,
-      <code>add_prefix</code>,
-      <code>as_p</code>,
-      <code>as_table</code>,
-      <code>as_ul</code>,
-      <code>full_clean</code>,
-      <code>has_changed</code>,
-      <code>hidden_fields</code>,
-      <code>is_multipart</code>,
-      <code>is_valid</code>,
-      <code>non_field_errors</code>,
-      <code>visible_fields</code>
-      </p>
-    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.forms.BaseForm</code></b> (private):
-      <code>_clean_fields</code>,
-      <code>_clean_form</code>,
-      <code>_html_output</code>,
-      <code>_raw_value</code>
-      </p></div>
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__delattr__</code>,
-      <code>__format__</code>,
-      <code>__getattribute__</code>,
-      <code>__hash__</code>,
-      <code>__new__</code>,
-      <code>__reduce__</code>,
-      <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
-      <code>__setattr__</code>,
-      <code>__sizeof__</code>,
-      <code>__subclasshook__</code>
-      </p>
     </td>
   </tr>
 </table>
@@ -210,114 +150,7 @@ quired': 'required'}), max_length= 30, help_text= &quot;Maximo 30 caractere\
 s&quot;, label= &quot;Nombre del Sprint&quot;,)">forms.CharField(widget= TextInput(attrs= {'class': 'f<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="Sprint.forms.SprintFormEdit-class.html#_meta" class="summary-name" onclick="show_private();">_meta</a> = <code title="&lt;django.forms.models.ModelFormOptions object at 0x7ff8ae1423d0&gt;">&lt;django.forms.models.ModelFormOptions object at 0x7ff8<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="Sprint.forms.SprintFormEdit-class.html#base_fields" class="summary-name">base_fields</a> = <code title="OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7ff\
-8ae1422d0&gt;)])">OrderedDict([('nombre', &lt;django.forms.fields.Cha<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="Sprint.forms.SprintFormEdit-class.html#declared_fields" class="summary-name">declared_fields</a> = <code title="OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7ff\
-8ae1422d0&gt;)])">OrderedDict([('nombre', &lt;django.forms.fields<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
 </table>
-<!-- ==================== PROPERTIES ==================== -->
-<a name="section-Properties"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Properties</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Properties"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
-</tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="Sprint.forms.SprintFormEdit-class.html#media" class="summary-name">media</a><br />
-      Provide a description of all media required to render the widgets on 
-      this form
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.forms.BaseForm</code></b>:
-      <code>changed_data</code>,
-      <code>errors</code>
-      </p>
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__class__</code>
-      </p>
-    </td>
-  </tr>
-</table>
-<!-- ==================== METHOD DETAILS ==================== -->
-<a name="section-MethodDetails"></a>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Method Details</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-MethodDetails"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
-</tr>
-</table>
-<a name="save"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">save</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">commit</span>=<span class="sig-default">True</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="Sprint.forms-pysrc.html#SprintFormEdit.save">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Saves this ``form``'s cleaned_data into model instance 
-  ``self.instance``.</p>
-  <p>If commit=True, then the changes to ``instance`` will be saved to the 
-  database. Returns ``instance``.</p>
-  <dl class="fields">
-    <dt>Overrides:
-        django.forms.models.BaseModelForm.save
-        <dd><em class="note">(inherited documentation)</em></dd>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
-<br />
 <!-- ==================== CLASS VARIABLE DETAILS ==================== -->
 <a name="section-ClassVariableDetails"></a>
 <table class="details" border="1" cellpadding="3"
@@ -356,96 +189,6 @@ s&quot;, label= &quot;Nombre del Sprint&quot;,)
   </dl>
 </td></tr></table>
 </div>
-<a name="_meta"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_meta</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-&lt;django.forms.models.ModelFormOptions object at 0x7ff8ae1423d0&gt;
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="base_fields"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">base_fields</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7ff<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-8ae1422d0&gt;)])
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="declared_fields"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">declared_fields</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7ff<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-8ae1422d0&gt;)])
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<br />
-<!-- ==================== PROPERTY DETAILS ==================== -->
-<a name="section-PropertyDetails"></a>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Property Details</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-PropertyDetails"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
-</tr>
-</table>
-<a name="media"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">media</h3>
-  <p>Provide a description of all media required to render the widgets on 
-  this form</p>
-  <dl class="fields">
-    <dt>Get Method:</dt>
-    <dd class="value"><span class="summary-sig"><i>unreachable</i>._media(<span class="summary-sig-arg">self</span>)</span>
-    </dd>
-  </dl>
-</td></tr></table>
-</div>
 <br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
@@ -470,7 +213,7 @@ OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7ff<span c
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
+    Generated by Epydoc 3.0.1 on Fri Nov 27 23:25:47 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

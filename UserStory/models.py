@@ -44,6 +44,7 @@ class UserStory(models.Model):
     nro_sprint=models.IntegerField(null=True)
     nro_actividad=models.IntegerField(null=True)
     porcentaje_actividad=models.FloatField(null=True)
+    tiempo_demas=models.IntegerField(null=True, default=0)
 
 
     def __unicode__(self):
@@ -85,8 +86,9 @@ class Historial_US(models.Model):
     proyecto=models.ForeignKey(Proyecto)
 
 class UserStory_Sprint(models.Model):
-    us=models.ForeignKey(UserStory)
+    us=models.ForeignKey(UserStory, null=True)
     sprint=models.ForeignKey(Sprint)
     horas_trabajadas=models.IntegerField(default=0)
     horas_estimada=models.IntegerField(default=0)
     proyecto=models.ForeignKey(Proyecto)
+    fecha=models.DateField(null=True)

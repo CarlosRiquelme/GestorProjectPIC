@@ -228,12 +228,21 @@ def crear_nuevo_sprint(id_proyecto):
     resta=0
     valor=0
     for dato in userstory:
-        resta=dato.tiempo_estimado
+        resta=dato.tiempo_estimado-dato.tiempo_trabajado
         if resta > mayor_tiempo:
             mayor_tiempo=resta
-    valor=int(mayor_tiempo/8)
-    if valor == 0:
-        valor=1
+    print 'mayortiempo'
+    print mayor_tiempo
+    if mayor_tiempo%8 == 0:
+        valor=int(mayor_tiempo/8)
+        print 'valor1'
+        print valor
+    else:
+        valor=int(mayor_tiempo/8)
+        valor+=1
+    print 'valor2'
+    print valor
+
     ultimo_sprint=0
     ahora = date.today()
     siguiente=0
@@ -252,39 +261,92 @@ def crear_nuevo_sprint(id_proyecto):
     sprint_nuevo.fechaInicio=fecha_calcular(fecha1,1)
     sprint_nuevo.fechaFin=fecha_calcular(sprint_nuevo.fechaInicio,valor)
     sprint_nuevo.proyecto_id=id_proyecto
-    sprint_nuevo.tiempo_acumulado=valor*8
+    sprint_nuevo.tiempo_acumulado=(valor-1)*8
     sprint_nuevo.dia_trancurrido=0
     sprint_nuevo.dias_duracion=valor
     sprint_nuevo.suma_tiempo_usestory=0
     sprint_nuevo.save()
     sprint3=Sprint.objects.get(proyecto_id=id_proyecto,estado='ABIERTO')
+    ######
+    us_sprint=UserStory_Sprint()
+    us_sprint.horas_trabajadas=0
+    us_sprint.fecha=date.today()
+    us_sprint.horas_estimada=0
+    us_sprint.sprint_id=sprint3.id
+    us_sprint.proyecto_id=id_proyecto
+    us_sprint.save()
+    ######
     suma=0
     for dato in userstory:
-        us_estado_ultimo=US_Estado_ultimo.objects.get(us_id=dato.id, estado_actual='REASIGNAR_SPRINT')
-        dato.sprint_id=sprint3.id
+        ############################################################################################
+        us_aux=UserStory()
+        nombre=dato.nombre
+        if nombre[-1] == ')' and nombre[-3] == '(' and nombre[-8] == 'e':
+            nro=int(nombre[-2])
+            us_aux.nombre=dato.nombre+'_extra('+str(nro+1)+')'
+        else:
+            us_aux.nombre=dato.nombre+'_extra(1)'
+        ###///
+        us_aux.sprint_id=sprint3.id
+        us_aux.descripcion='UserStory extra de '+dato.nombre+'. '+dato.descripcion
+        us_aux.fecha_creacion=today()
+        us_aux.estado='TODO'
+        us_aux.prioridad='ALTA'
+        us_aux.tiempo_trabajado=0
+        us_aux.tiempo_demas=0
+        us_aux.tiempo_estimado=dato.tiempo_estimado-dato.tiempo_trabajado
+        us_aux.actividad_id=dato.actividad.id
+        us_aux.proyecto_id=id_proyecto
+        us_aux.usuario_id=dato.usuario.id
+
+        ###///
+        historial_us=Historial_US()
+        historial_us.nombre_us=dato.nombre
+        historial_us.us_id=dato.id
+        historial_us.fecha=today()
+        historial_us.descripcion="Concluyo el Sprint del UserStory: "+dato.nombre+ "  , se le da como finalizado y se crea un User Story Extra: "+us_aux.nombre
+        historial_us.proyecto_id=id_proyecto
+        historial_us.save()
         ######
-        us_sprint=UserStory_Sprint()
-        us_sprint.horas_trabajadas=0
-        us_sprint.horas_estimada=mayor_tiempo
-        us_sprint.sprint_id=sprint3.id
-        us_sprint.us_id=dato.id
-        us_sprint.proyecto_id=id_proyecto
+        historial_us=Historial_US()
+        historial_us.nombre_us=us_aux.nombre
+        historial_us.us_id=us_aux.id
+        historial_us.fecha=today()
+        historial_us.descripcion="Fue Creado el User Story extra:'"+us_aux.nombre+"' del User Story original:'"+dato.nombre+"'  y fue asignado al Sprint "+dato.sprint.nombre
+        historial_us.proyecto_id=id_proyecto
+        historial_us.save()
+        #####
+        us_aux.save()
+        us_sprint=UserStory_Sprint.objects.get(sprint_id=sprint3.id)
+        us_sprint.horas_estimada+=(dato.tiempo_estimado-dato.tiempo_trabajado)
+        us_sprint.fecha=date.today()
         us_sprint.save()
         ######
-        dato.tiempo_estimado=mayor_tiempo
-        dato.tiempo_trabajado=0
-        dato.estado=us_estado_ultimo.estado
+        dato.estado='FINALIZADO'
         dato.save()
-        suma=suma+dato.tiempo_estimado
-    estimacion_proyecto=Estimacion_Proyecto.objects.get(proyecto_id=id_proyecto)
-    estimacion_sprint=Estimacion_Sprint()
-    estimacion_sprint.proyecto_estimacion_id=estimacion_proyecto.id
-    estimacion_sprint.sprint_id=sprint3.id
-    estimacion_sprint.fechaInicio=sprint3.fechaInicio
-    estimacion_sprint.fechaFin=sprint3.fechaFin
-    estimacion_sprint.duracion=sprint3.tiempo_acumulado
-    estimacion_sprint.horas_hombre=suma
-    estimacion_sprint.save()
+
+    ############################################################################################
+    #######Dias del Sprint Nuevo#########33
+    dias= valor
+    contador=0
+    while dias > contador:
+        contador+=1
+        dias_sprint=Dias_de_un_Sprint()
+        fecha3=fecha_calcular(fecha1,contador-1)
+        dias_sprint.dia=contador
+        dias_sprint.fecha=fecha3
+        dias_sprint.sprint_id=sprint3.id
+        dias_sprint.save()
+    ########MIRAR##################
+    # estimacion_proyecto=Estimacion_Proyecto.objects.get(proyecto_id=id_proyecto)
+    # estimacion_sprint=Estimacion_Sprint()
+    # estimacion_sprint.proyecto_estimacion_id=estimacion_proyecto.id
+    # estimacion_sprint.sprint_id=sprint3.id
+    # estimacion_sprint.fechaInicio=sprint3.fechaInicio
+    # estimacion_sprint.fechaFin=sprint3.fechaFin
+    # estimacion_sprint.duracion=sprint3.tiempo_acumulado
+    # estimacion_sprint.horas_hombre=suma
+    # estimacion_sprint.save()
 
 def visualizar_sprint_en_desarrollo(request,id_proyecto):
     proyecto=Proyecto.objects.get(pk=id_proyecto)
@@ -448,27 +510,56 @@ def reasignar_userstory_a_sprint(request,id_proyecto,id_userstory):
         bandera2=False
     if bandera == True:
         if sprint.secuencia >= ultimo_sprint:
-            userstory.sprint_id=sprint.id
+            us_aux=UserStory()
+            nombre=userstory.nombre
+            if nombre[-1] == ')' and nombre[-3] == '(' and nombre[-8] == 'e':
+                nro=int(nombre[-2])
+                us_aux.nombre=userstory.nombre+'_extra('+str(nro+1)+')'
+            else:
+                us_aux.nombre=userstory.nombre+'_extra(1)'
+            ###///
+            us_aux.sprint_id=sprint.id
+            us_aux.descripcion='UserStory extra de '+userstory.nombre+'. '+userstory.descripcion
+            us_aux.fecha_creacion=today()
+            us_aux.estado='TODO'
+            us_aux.prioridad='1'
+            us_aux.tiempo_trabajado=0
+            us_aux.tiempo_demas=0
+            us_aux.tiempo_estimado=userstory.tiempo_estimado-userstory.tiempo_trabajado
+            us_aux.actividad_id=userstory.actividad.id
+            us_aux.proyecto_id=id_proyecto
+            us_aux.usuario_id=userstory.usuario.id
+
+            ###///
             userstory.estado=us_ultimo_estado.estado
             historial_us=Historial_US()
             historial_us.nombre_us=userstory.nombre
             historial_us.us_id=id_userstory
             historial_us.fecha=today()
-            historial_us.descripcion="Fue Asignado al Sprint "+userstory.sprint.nombre+ "  , por el usuario "+user.username
+            historial_us.descripcion="Concluyo el Sprint del UserStory: "+userstory.nombre+ "  , se le da como finalizado y se crea un User Story Extra: "+us_aux.nombre
             historial_us.proyecto_id=id_proyecto
             historial_us.save()
             ######
-            us_sprint=UserStory_Sprint()
-            us_sprint.horas_trabajadas=0
-            us_sprint.horas_estimada=userstory.tiempo_estimado-userstory.tiempo_trabajado
-            us_sprint.sprint_id=sprint.id
-            us_sprint.us_id=userstory.id
-            us_sprint.proyecto_id=id_proyecto
+            historial_us=Historial_US()
+            historial_us.nombre_us=us_aux.nombre
+            historial_us.us_id=us_aux.id
+            historial_us.fecha=today()
+            historial_us.descripcion="Fue Creado el User Story extra:'"+us_aux.nombre+"' del User Story original:'"+userstory.nombre+"'  y fue asignado al Sprint "+userstory.sprint.nombre+ "  , por el usuario "+user.username
+            historial_us.proyecto_id=id_proyecto
+            historial_us.save()
+            #####
+            us_aux.save()
+            us_sprint2=UserStory_Sprint.objects.filter(sprint_id=sprint.id).order_by('fecha')
+            fecha_max='2015-01-01'
+            for i in us_sprint2.reverse():
+                if str(i.fecha) >= fecha_max:
+                    us_sprint=i
+            us_sprint.horas_estimada+=userstory.tiempo_estimado-userstory.tiempo_trabajado
+            us_sprint.fecha=date.today()
             us_sprint.save()
             ######
+            userstory.estado='FINALIZADO'
             userstory.save()
-
-
         if sprint.secuencia == ultimo_sprint:
             print "hola"
     if bandera == False:
@@ -489,23 +580,56 @@ def lista_reasignar_userstory_tiempo(request,id_proyecto):
 
 def reasignar_userstory_tiempo(request,id_proyecto,id_userstory):
     userstory=UserStory.objects.get(pk=id_userstory)
-    sprint=Sprint.objects.get(proyecto_id=id_proyecto, estado='ABIERTO')
+    sprint=Sprint.objects.get(proyecto_id=id_proyecto, estado='ABIERTO')####
     id_sprint=sprint.id
     user=request.user
     if request.method=='POST':
-        formulario= UserStoryFormTiempo(request.POST,instance=userstory)
+        formulario= UserStoryFormTiempo(request.POST)
         if formulario.is_valid():
-            userstory= formulario.save()
-            completar_atributos_userstory_tiempo(id_userstory,id_sprint)
-            historial_us=Historial_US()
-            historial_us.nombre_us=userstory.nombre
-            historial_us.us_id=id_userstory
-            historial_us.fecha=today()
-            historial_us.descripcion="Fue Asignado un nuevo tiempo "+str(userstory.tiempo_estimado)+ "  , por el usuario "+user.username
-            historial_us.proyecto_id=id_proyecto
-            historial_us.save()
-            messages.success(request,'UserStory "'+userstory.nombre+'" fue asignado su Nuevo TIEMPO')
-            return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
+            formulario.clean()
+            tiempo_estimado= formulario.cleaned_data['tiempo_estimado']
+            print 'tiempo_estimado'
+            print tiempo_estimado
+            print 'tiempo del us'
+            print userstory.tiempo_estimado
+            if userstory.tiempo_estimado >= tiempo_estimado:
+                messages.success(request,'Favor agregar un tiempo mayor de la que posee!!!!')
+                return HttpResponseRedirect('/proyecto/us/tiempo/nuevo/'+str(id_proyecto)+'/'+str(id_proyecto))
+            else:
+                tiempo_estimado_anterior=0
+                tiempo_estimado_anterior=userstory.tiempo_estimado
+                userstory.tiempo_estimado= tiempo_estimado
+                suma_de_tiempo_trabajado=0
+                suma_de_tiempo_trabajado=userstory.tiempo_trabajado+userstory.tiempo_demas
+                tiempo_demas=userstory.tiempo_demas
+                print 'tiempo demas'
+                print tiempo_demas
+                userstory.tiempo_trabajado=suma_de_tiempo_trabajado
+                userstory.tiempo_demas=0
+                userstory.save()
+                ######
+                fecha_max='2015-01-01'
+                us_sprint2=UserStory_Sprint.objects.filter(sprint_id=id_sprint)
+                for i in us_sprint2.reverse():
+                    if str(i.fecha) >= fecha_max:
+                        us_sprint=i
+                us_sprint.horas_estimada-=tiempo_estimado_anterior
+                us_sprint.horas_estimada+=tiempo_estimado
+                print 'us_sprint.horas_trabajadas'
+                print us_sprint.horas_trabajadas
+                #us_sprint.horas_trabajadas+=tiempo_demas
+                us_sprint.save()
+                ######
+                completar_atributos_userstory_tiempo(id_userstory,id_sprint)
+                historial_us=Historial_US()
+                historial_us.nombre_us=userstory.nombre
+                historial_us.us_id=id_userstory
+                historial_us.fecha=today()
+                historial_us.descripcion="Fue Asignado un nuevo tiempo "+str(userstory.tiempo_estimado)+ "  , por el usuario "+user.username
+                historial_us.proyecto_id=id_proyecto
+                historial_us.save()
+                messages.success(request,'UserStory "'+userstory.nombre+'" fue asignado su Nuevo TIEMPO')
+                return HttpResponseRedirect('/userstory/miuserstory/'+str(id_userstory))
     else:
         formulario= UserStoryFormTiempo(instance=userstory)
     return render_to_response('HtmlUserStory/reasignar_tiempo.html',
@@ -522,11 +646,6 @@ def completar_atributos_userstory_tiempo(id_userstory,id_sprint):
     us_estado=US_Estado_ultimo.objects.get(us_id=id_userstory, estado_actual='REVISAR_TIEMPO')
     userstory.estado=us_estado.estado
     userstory.sprint_id=id_sprint
-    ######
-    us_sprint=UserStory_Sprint.objects.get(us_id=id_userstory,sprint_id=id_sprint)
-    us_sprint.horas_estimada=userstory.tiempo_estimado
-    us_sprint.save()
-    ######
     userstory.save()
 
 

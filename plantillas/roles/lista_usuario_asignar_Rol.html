@@ -28,7 +28,7 @@ Nuevo Usuario <i class="fa fa-plus"></i></a>
         <td>{{ dato.last_name }}</td>
          <td>{{ dato.is_active }}</td>
         <td>
-          <a  class="btn btn-primary" href="#">{{rol.name}} <i class="fa fa-edit"></i></a>
+          <a  class="btn btn-primary" href="{% url 'PIC.views.asignar_rol_usuario'  rol.id dato.id %}">{{rol.name}} <i class="fa fa-edit"></i></a>
         </td>
 
 	</tr>
@@ -36,6 +36,20 @@ Nuevo Usuario <i class="fa fa-plus"></i></a>
  </table>
 
 
-<br><br><br>
+<div class="pagination">
+    <span class="step-links">
+        {% if usuarios.has_previous %}
+            <a href="?page={{ usuarios.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ usuarios.number }} of {{ usuarios.paginator.num_pages }}.
+        </span>
+
+        {% if usuarios.has_next %}
+            <a href="?page={{ usuarios.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
 
 {% endblock %}

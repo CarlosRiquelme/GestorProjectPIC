@@ -53,17 +53,76 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="Comentario.admin-module.html">Module Comentario.admin</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno">1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt> <tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module Actividades.admin=Actividades.admin-module.html,Module AdminProyectos.admin=AdminProyectos.admin-module.html,Module Comentario.admin=Comentario.admin-module.html,Module Flujo.admin=Flujo.admin-module.html,Module PIC.admin=PIC.admin-module.html,Module ProyectoDesarrollo.admin=ProyectoDesarrollo.admin-module.html,Module Sprint.admin=Sprint.admin-module.html,Module UserStory.admin=UserStory.admin-module.html"><a title="Actividades.admin
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt> <tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module Actividades.admin=Actividades.admin-module.html,Module AdminProyectos.admin=AdminProyectos.admin-module.html,Module Comentario.admin=Comentario.admin-module.html,Module PIC.admin=PIC.admin-module.html,Module ProyectoDesarrollo.admin=ProyectoDesarrollo.admin-module.html,Module Sprint.admin=Sprint.admin-module.html,Module UserStory.admin=UserStory.admin-module.html"><a title="Actividades.admin
 AdminProyectos.admin
 Comentario.admin
-Flujo.admin
 PIC.admin
 ProyectoDesarrollo.admin
 Sprint.admin
 UserStory.admin" class="py-name" href="#" onclick="return doclink('link-0', 'admin', 'link-0');">admin</a></tt> </tt>
-<a name="L2"></a><tt class="py-lineno">2</tt>  <tt class="py-line"> </tt>
-<a name="L3"></a><tt class="py-lineno">3</tt>  <tt class="py-line"><tt class="py-comment"># Register your models here.</tt> </tt>
-<a name="L4"></a><tt class="py-lineno">4</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-1" class="py-name" targets="Package Comentario=Comentario-module.html,Class Comentario.models.Comentario=Comentario.models.Comentario-class.html"><a title="Comentario
+Comentario.models.Comentario" class="py-name" href="#" onclick="return doclink('link-1', 'Comentario', 'link-1');">Comentario</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module Actividades.forms=Actividades.forms-module.html,Module AdminProyectos.forms=AdminProyectos.forms-module.html,Module Comentario.forms=Comentario.forms-module.html,Module PIC.forms=PIC.forms-module.html,Module ProyectoDesarrollo.forms=ProyectoDesarrollo.forms-module.html,Module Sprint.forms=Sprint.forms-module.html,Module UserStory.forms=UserStory.forms-module.html"><a title="Actividades.forms
+AdminProyectos.forms
+Comentario.forms
+PIC.forms
+ProyectoDesarrollo.forms
+Sprint.forms
+UserStory.forms" class="py-name" href="#" onclick="return doclink('link-2', 'forms', 'link-2');">forms</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class Comentario.forms.DocumentForm=Comentario.forms.DocumentForm-class.html"><a title="Comentario.forms.DocumentForm" class="py-name" href="#" onclick="return doclink('link-3', 'DocumentForm', 'link-3');">DocumentForm</a></tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment">#from Comentario.models import</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">http</tt> <tt class="py-keyword">import</tt> <tt class="py-name">HttpResponseRedirect</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt> <tt class="py-keyword">import</tt> <tt id="link-4" class="py-name"><a title="Actividades.admin
+AdminProyectos.admin
+Comentario.admin
+PIC.admin
+ProyectoDesarrollo.admin
+Sprint.admin
+UserStory.admin" class="py-name" href="#" onclick="return doclink('link-4', 'admin', 'link-0');">admin</a></tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">core</tt><tt class="py-op">.</tt><tt class="py-name">urlresolvers</tt> <tt class="py-keyword">import</tt> <tt class="py-name">reverse</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-5" class="py-name"><a title="Comentario
+Comentario.models.Comentario" class="py-name" href="#" onclick="return doclink('link-5', 'Comentario', 'link-1');">Comentario</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Module Actividades.models=Actividades.models-module.html,Module AdminProyectos.models=AdminProyectos.models-module.html,Module Comentario.models=Comentario.models-module.html,Module PIC.models=PIC.models-module.html,Module ProyectoDesarrollo.models=ProyectoDesarrollo.models-module.html,Module Sprint.models=Sprint.models-module.html,Module UserStory.models=UserStory.models-module.html"><a title="Actividades.models
+AdminProyectos.models
+Comentario.models
+PIC.models
+ProyectoDesarrollo.models
+Sprint.models
+UserStory.models" class="py-name" href="#" onclick="return doclink('link-6', 'models', 'link-6');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class Comentario.models.Document=Comentario.models.Document-class.html"><a title="Comentario.models.Document" class="py-name" href="#" onclick="return doclink('link-7', 'Document', 'link-7');">Document</a></tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"> </tt>
+<a name="DocumentAdmin"></a><div id="DocumentAdmin-def"><a name="L12"></a><tt class="py-lineno">12</tt> <a class="py-toggle" href="#" id="DocumentAdmin-toggle" onclick="return toggle('DocumentAdmin');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="Comentario.admin.DocumentAdmin-class.html">DocumentAdmin</a><tt class="py-op">(</tt><tt class="py-base-class">admin</tt><tt class="py-op">.</tt><tt class="py-base-class">ModelAdmin</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DocumentAdmin-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="DocumentAdmin-expanded"><a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt id="link-8" class="py-name" targets="Variable Comentario.admin.DocumentAdmin.form=Comentario.admin.DocumentAdmin-class.html#form"><a title="Comentario.admin.DocumentAdmin.form" class="py-name" href="#" onclick="return doclink('link-8', 'form', 'link-8');">form</a></tt> <tt class="py-op">=</tt> <tt id="link-9" class="py-name"><a title="Comentario.forms.DocumentForm" class="py-name" href="#" onclick="return doclink('link-9', 'DocumentForm', 'link-3');">DocumentForm</a></tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="DocumentAdmin.response_add"></a><div id="DocumentAdmin.response_add-def"><a name="L16"></a><tt class="py-lineno">16</tt> <a class="py-toggle" href="#" id="DocumentAdmin.response_add-toggle" onclick="return toggle('DocumentAdmin.response_add');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Comentario.admin.DocumentAdmin-class.html#response_add">response_add</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">obj</tt><tt class="py-op">,</tt> <tt class="py-param">post_url_continue</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DocumentAdmin.response_add-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="DocumentAdmin.response_add-expanded"><a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-docstring">"""This makes the response after adding go to another apps changelist for some model"""</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">HttpResponseRedirect</tt><tt class="py-op">(</tt><tt class="py-name">reverse</tt><tt class="py-op">(</tt><tt class="py-string">"admin:otherappname_modelname_changelist"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"> </tt>
+<a name="DocumentAdmin.response_add"></a><div id="DocumentAdmin.response_add-def"><a name="L21"></a><tt class="py-lineno">21</tt> <a class="py-toggle" href="#" id="DocumentAdmin.response_add-toggle" onclick="return toggle('DocumentAdmin.response_add');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Comentario.admin.DocumentAdmin-class.html#response_add">response_add</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">obj</tt><tt class="py-op">,</tt> <tt class="py-param">post_url_continue</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DocumentAdmin.response_add-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="DocumentAdmin.response_add-expanded"><a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt class="py-docstring">"""This makes the response go to the newly created model's change page</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">        without using reverse"""</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">HttpResponseRedirect</tt><tt class="py-op">(</tt><tt class="py-string">"/comentario/miscomentarios/%s"</tt><tt class="py-op">%</tt><tt class="py-name">request</tt><tt class="py-op">.</tt><tt class="py-name">GET</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"id_us"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"> </tt>
+<a name="DocumentAdmin.response_change"></a><div id="DocumentAdmin.response_change-def"><a name="L26"></a><tt class="py-lineno">26</tt> <a class="py-toggle" href="#" id="DocumentAdmin.response_change-toggle" onclick="return toggle('DocumentAdmin.response_change');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Comentario.admin.DocumentAdmin-class.html#response_change">response_change</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">obj</tt><tt class="py-op">,</tt> <tt class="py-param">post_url_continue</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DocumentAdmin.response_change-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="DocumentAdmin.response_change-expanded"><a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-docstring">"""This makes the response go to the newly created model's change page</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">        without using reverse"""</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">HttpResponseRedirect</tt><tt class="py-op">(</tt><tt class="py-string">"/comentario/miscomentarios/%s"</tt><tt class="py-op">%</tt><tt class="py-name">request</tt><tt class="py-op">.</tt><tt class="py-name">GET</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"id_us"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"> </tt>
+<a name="DocumentAdmin.response_delete"></a><div id="DocumentAdmin.response_delete-def"><a name="L31"></a><tt class="py-lineno">31</tt> <a class="py-toggle" href="#" id="DocumentAdmin.response_delete-toggle" onclick="return toggle('DocumentAdmin.response_delete');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Comentario.admin.DocumentAdmin-class.html#response_delete">response_delete</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">obj</tt><tt class="py-op">,</tt> <tt class="py-param">post_url_continue</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DocumentAdmin.response_delete-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="DocumentAdmin.response_delete-expanded"><a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">        <tt class="py-docstring">"""This makes the response go to the newly created model's change page</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">        without using reverse"""</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">HttpResponseRedirect</tt><tt class="py-op">(</tt><tt class="py-string">"/comentario/miscomentarios/%s"</tt><tt class="py-op">%</tt><tt class="py-name">request</tt><tt class="py-op">.</tt><tt class="py-name">GET</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"id_us"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt id="link-10" class="py-name"><a title="Actividades.admin
+AdminProyectos.admin
+Comentario.admin
+PIC.admin
+ProyectoDesarrollo.admin
+Sprint.admin
+UserStory.admin" class="py-name" href="#" onclick="return doclink('link-10', 'admin', 'link-0');">admin</a></tt><tt class="py-op">.</tt><tt class="py-name">site</tt><tt class="py-op">.</tt><tt class="py-name">register</tt><tt class="py-op">(</tt><tt id="link-11" class="py-name"><a title="Comentario.models.Document" class="py-name" href="#" onclick="return doclink('link-11', 'Document', 'link-7');">Document</a></tt><tt class="py-op">,</tt><tt id="link-12" class="py-name" targets="Class Comentario.admin.DocumentAdmin=Comentario.admin.DocumentAdmin-class.html"><a title="Comentario.admin.DocumentAdmin" class="py-name" href="#" onclick="return doclink('link-12', 'DocumentAdmin', 'link-12');">DocumentAdmin</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -93,7 +152,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
+    Generated by Epydoc 3.0.1 on Fri Nov 27 23:25:48 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

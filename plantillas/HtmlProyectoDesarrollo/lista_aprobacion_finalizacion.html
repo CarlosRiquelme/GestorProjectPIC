@@ -17,14 +17,16 @@
             <thead>
         <th >NOMBRE</th>
         <th >ESTADO</th>
-        <th >FECHA DE CREACION</th>
         <th>TIEMPO ESTIMADO</th>
         <th>TIEMPO TRABAJADO</th>
         <th >PRIORIDAD</th>
         <th >SPRINT</th>
         <th >ACTIVIDAD</th>
         <th>COMENTARIOS</th>
+        <th>DESAPROBAR</th>
         <th>APROBAR</th>
+
+
     </thead>
 
         {% for p in lista %}
@@ -32,7 +34,6 @@
              <tr>
 	             <td><em><a href="{% url 'UserStory.views.mi_userstory' p.id %}">{{p.nombre}}</a></em></td>
                  <td><em>{{p.estado}}</em></td>
-                 <td><em>{{p.fecha_creacion}}</em></td>
                  <td><em>{{p.tiempo_estimado}}</em></td>
                  <td><em>{{p.tiempo_trabajado}}</em></td>
                  <td><em>{{p.prioridad}}</em></td>
@@ -42,8 +43,12 @@
                     <a class="btn btn-success btn-md" href="{% url 'Comentario.views.mis_comentarios' p.id %}" >Ver<i class="fa fa-edit"></i></a></div>
                  </td>
                  <td> <div class="input-group">
+                    <a class="btn btn-warning btn-md" href="{% url 'UserStory.views.desaprobar_finalizacion' p.id %}" >FINALIZACION<i class="fa fa-edit"></i></a></div>
+                 </td>
+                 <td> <div class="input-group">
                     <a class="btn btn-info btn-md" href="{% url 'UserStory.views.aprobar_finalizacion' p.id %}" >FINALIZACION<i class="fa fa-edit"></i></a></div>
                  </td>
+
 	        </tr>
         {% endfor %}
     </table>

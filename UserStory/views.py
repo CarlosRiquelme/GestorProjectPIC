@@ -70,7 +70,7 @@ def nuevo_userstory(request, id_proyecto):
             historial.nombre_us=nombre
             historial.proyecto_id=id_proyecto
             historial.fecha=today()
-            historial.descripcion="Creado por "+user.username
+            historial.descripcion="El User Story fue creado por "+user.username
             historial.save()
             messages.success(request, 'USER STORY CREADO CON EXITO!')
 
@@ -460,7 +460,7 @@ def lista_userstory_usuario(request, id_proyecto):
     except ObjectDoesNotExist:
         sprint=""
 
-    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,usuario_id=user.id).order_by('estado')
+    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto,usuario_id=user.id).order_by('prioridad')
     return render_to_response('HtmlUserStory/lista_userstory_usuario.html',{'userstorys':userstorys,
                                                                    'id_proyecto':id_proyecto, 'user':user,
                                                                    'proyecto':proyecto,
@@ -611,6 +611,38 @@ def aprobar_finalizacion(request,id_userstory):
     messages.success(request, 'A aprobado correctamente el USER STORY')
 
     return HttpResponseRedirect('/proyecto/aprobacion/us/finalizacion/'+str(id_proyecto))
+
+def desaprobar_finalizacion(request,id_userstory):
+    user=request.user
+    userstory=UserStory.objects.get(pk=id_userstory)
+    usuario=userstory.usuario.username
+    email=userstory.usuario.email
+    id_proyecto=userstory.proyecto.id
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
+    userstory.estado='DOING'
+    try:
+        html_content = 'A sido desaprobada la finalizacion de su User Story "'+userstory.nombre+'" del Proyecto '+proyecto.nombre+ ' por el Scrum Master ' +proyecto.scrumMaster.username
+        send_mail('Desaprobacion de Finalizacion de su User Story',html_content , 'gestorprojectpic@gmail.com',[email], fail_silently=False)
+    except smtplib.socket.gaierror:
+        return HttpResponseRedirect('/error/conexion/')
+    try:
+        html_content = 'Desaprobo la finalizacion de su User Story "'+userstory.nombre+'" del Proyecto '+proyecto.nombre+ ' asignado al usuario ' +usuario
+        send_mail('Desaprobacion de Finalizacion de User Story',html_content , 'gestorprojectpic@gmail.com',[proyecto.scrumMaster.email], fail_silently=False)
+    except smtplib.socket.gaierror:
+        return HttpResponseRedirect('/error/conexion/')
+
+    userstory.save()
+    historial_us=Historial_US()
+    historial_us.nombre_us=userstory.nombre
+    historial_us.us_id=id_userstory
+    historial_us.fecha=today()
+    historial_us.descripcion="Fue Desaprobado de Finalizacion del User Story "+userstory.nombre+ "  , por el usuario "+user.username
+    historial_us.proyecto_id=id_proyecto
+    historial_us.save()
+    messages.success(request, 'A Desaprobado correctamente el USER STORY')
+
+    return HttpResponseRedirect('/proyecto/aprobacion/us/finalizacion/'+str(id_proyecto))
+
 @login_required(login_url='/admin/login/')
 def listar_historial_us(request, id_userstory):
     """

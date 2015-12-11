@@ -173,15 +173,42 @@ def modificar_rol (request , id_rol):
 def lista_usuario_para_rol(request,id_rol):
     usuarios=User.objects.filter(is_active='TRUE')
     rol=Group.objects.get(pk=id_rol)
+
+    paginator = Paginator(usuarios, 10) # Show 25 contacts per page
+
+    page = request.GET.get('page','1')
+    try:
+        page=int(page)
+    except:
+        page=1
+    try:
+        usuarios = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        usuarios = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        usuarios = paginator.page(paginator.num_pages)
     return render_to_response('roles/lista_usuario_asignar_Rol.html',{ 'usuarios': usuarios, 'id_rol': id_rol,'rol':rol}, context_instance=RequestContext(request))
 
 def asignar_rol_usuario(request,id_rol,id_user):
     user=User.objects.get(pk=id_user)
     rol=Group.objects.get(pk=id_rol)
-    user.group.add(rol)
-    messages.success(request, 'Se le asigno el ROl al Usuario')
+    user.groups.add(rol)
 
-    return HttpResponseRedirect('/rol/listar/')
+    messages.success(request, 'Fue asignado correctamente el Rol al Usuario')
+
+    return HttpResponseRedirect('/rol/listar')
+def desasignar_rol_usuario(request,id_rol,id_user):
+    user=User.objects.get(pk=id_user)
+    rol=Group.objects.get(pk=id_rol)
+    print 'hola mundo'
+    print user.groups.exists(rol)
+
+    messages.success(request, 'Fue Desasignado correctamente el Rol al Usuario')
+
+    return HttpResponseRedirect('/rol/listar')
+
 
 def asignar_rol_a_user_proyecto(request, id_proyecto,id_user):
     usuario=User.objects.get(pk=id_user)

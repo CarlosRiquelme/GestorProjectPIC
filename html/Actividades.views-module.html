@@ -76,9 +76,9 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="nueva_actividad"></a><span class="summary-sig-name">nueva_actividad</span>(<span class="summary-sig-arg">request</span>,
+          <td><span class="summary-sig"><a href="Actividades.views-module.html#nueva_actividad" class="summary-sig-name">nueva_actividad</a>(<span class="summary-sig-arg">request</span>,
         <span class="summary-sig-arg">id_proyecto</span>)</span><br />
-      Crea un nuevo actividad</td>
+      Crea un nuevo actividad dentro del Proyecto</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="Actividades.views-pysrc.html#nueva_actividad">source&nbsp;code</a></span>
             
@@ -94,8 +94,70 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="mi_actividad"></a><span class="summary-sig-name">mi_actividad</span>(<span class="summary-sig-arg">request</span>,
-        <span class="summary-sig-arg">id_actividad</span>)</span></td>
+          <td><span class="summary-sig"><a href="Actividades.views-module.html#editar_actividad" class="summary-sig-name">editar_actividad</a>(<span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">id_proyecto</span>,
+        <span class="summary-sig-arg">id_actividad</span>)</span><br />
+      Edita los atributos de una Actividad :param request: :param 
+      id_proyecto: :param id_actividad: :return:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="Actividades.views-pysrc.html#editar_actividad">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="Actividades.views-module.html#eliminar_actividad" class="summary-sig-name">eliminar_actividad</a>(<span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">id_proyecto</span>,
+        <span class="summary-sig-arg">id_actividad</span>)</span><br />
+      Elimina una Actividad :param request: :param id_proyecto: :param 
+      id_actividad: :return:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="Actividades.views-pysrc.html#eliminar_actividad">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="Actividades.views-module.html#pre_eliminar_actividad" class="summary-sig-name">pre_eliminar_actividad</a>(<span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">id_proyecto</span>,
+        <span class="summary-sig-arg">id_actividad</span>)</span><br />
+      Funcion que se invoca para aprobar la Eliminacion de la Actividad 
+      :param request: :param id_proyecto: :param id_actividad: :return:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="Actividades.views-pysrc.html#pre_eliminar_actividad">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="Actividades.views-module.html#mi_actividad" class="summary-sig-name">mi_actividad</a>(<span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">id_actividad</span>)</span><br />
+      Funcion que muestra los atributos de la Actividad :param request: 
+      :param id_actividad: :return:</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="Actividades.views-pysrc.html#mi_actividad">source&nbsp;code</a></span>
             
@@ -111,8 +173,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="mis_actividades"></a><span class="summary-sig-name">mis_actividades</span>(<span class="summary-sig-arg">request</span>,
-        <span class="summary-sig-arg">id_proyecto</span>)</span></td>
+          <td><span class="summary-sig"><a href="Actividades.views-module.html#mis_actividades" class="summary-sig-name">mis_actividades</a>(<span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">id_proyecto</span>)</span><br />
+      Lista todas las actividades de un Proyecto :param request: :param 
+      id_proyecto: :return:</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="Actividades.views-pysrc.html#mis_actividades">source&nbsp;code</a></span>
             
@@ -128,9 +192,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="ver_estados"></a><span class="summary-sig-name">ver_estados</span>(<span class="summary-sig-arg">request</span>,
+          <td><span class="summary-sig"><a href="Actividades.views-module.html#ver_estados" class="summary-sig-name">ver_estados</a>(<span class="summary-sig-arg">request</span>,
         <span class="summary-sig-arg">id_proyecto</span>,
-        <span class="summary-sig-arg">id_actividad</span>)</span></td>
+        <span class="summary-sig-arg">id_actividad</span>)</span><br />
+      Muestar los distintos estados de una actividad :param request: :param
+      id_proyecto: :param id_actividad: :return:</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="Actividades.views-pysrc.html#ver_estados">source&nbsp;code</a></span>
             
@@ -141,6 +207,203 @@
     </td>
   </tr>
 </table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="nueva_actividad"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">nueva_actividad</span>(<span class="sig-arg">request</span>,
+        <span class="sig-arg">id_proyecto</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Actividades.views-pysrc.html#nueva_actividad">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Crea un nuevo actividad dentro del Proyecto</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@login_required(login_url= '/admin/login/')</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="editar_actividad"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">editar_actividad</span>(<span class="sig-arg">request</span>,
+        <span class="sig-arg">id_proyecto</span>,
+        <span class="sig-arg">id_actividad</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Actividades.views-pysrc.html#editar_actividad">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Edita los atributos de una Actividad :param request: :param 
+  id_proyecto: :param id_actividad: :return:</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@login_required(login_url= '/admin/login/')</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="eliminar_actividad"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">eliminar_actividad</span>(<span class="sig-arg">request</span>,
+        <span class="sig-arg">id_proyecto</span>,
+        <span class="sig-arg">id_actividad</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Actividades.views-pysrc.html#eliminar_actividad">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Elimina una Actividad :param request: :param id_proyecto: :param 
+  id_actividad: :return:</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@login_required(login_url= '/admin/login/')</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="pre_eliminar_actividad"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">pre_eliminar_actividad</span>(<span class="sig-arg">request</span>,
+        <span class="sig-arg">id_proyecto</span>,
+        <span class="sig-arg">id_actividad</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Actividades.views-pysrc.html#pre_eliminar_actividad">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Funcion que se invoca para aprobar la Eliminacion de la Actividad 
+  :param request: :param id_proyecto: :param id_actividad: :return:</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@login_required(login_url= '/admin/login/')</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="mi_actividad"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">mi_actividad</span>(<span class="sig-arg">request</span>,
+        <span class="sig-arg">id_actividad</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Actividades.views-pysrc.html#mi_actividad">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Funcion que muestra los atributos de la Actividad :param request: 
+  :param id_actividad: :return:</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@login_required(login_url= '/admin/login/')</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="mis_actividades"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">mis_actividades</span>(<span class="sig-arg">request</span>,
+        <span class="sig-arg">id_proyecto</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Actividades.views-pysrc.html#mis_actividades">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Lista todas las actividades de un Proyecto :param request: :param 
+  id_proyecto: :return:</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@login_required(login_url= '/admin/login/')</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ver_estados"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ver_estados</span>(<span class="sig-arg">request</span>,
+        <span class="sig-arg">id_proyecto</span>,
+        <span class="sig-arg">id_actividad</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Actividades.views-pysrc.html#ver_estados">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Muestar los distintos estados de una actividad :param request: :param 
+  id_proyecto: :param id_actividad: :return:</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@login_required(login_url= '/admin/login/')</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -164,7 +427,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
+    Generated by Epydoc 3.0.1 on Fri Nov 27 23:25:47 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

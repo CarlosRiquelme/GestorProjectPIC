@@ -54,3 +54,4 @@ def esEquipo(self,request):
                 return True
     return False
 User.add_to_class('esEquipo',esEquipo)
+

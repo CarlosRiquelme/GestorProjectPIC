@@ -53,114 +53,57 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="AdminProyectos.tests-module.html">Module AdminProyectos.tests</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">test</tt> <tt class="py-keyword">import</tt> <tt class="py-name">TestCase</tt> </tt>
-<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package AdminProyectos=AdminProyectos-module.html"><a title="AdminProyectos" class="py-name" href="#" onclick="return doclink('link-0', 'AdminProyectos', 'link-0');">AdminProyectos</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module Actividades.models=Actividades.models-module.html,Module AdminProyectos.models=AdminProyectos.models-module.html,Module Comentario.models=Comentario.models-module.html,Module Flujo.models=Flujo.models-module.html,Module PIC.models=PIC.models-module.html,Module ProyectoDesarrollo.models=ProyectoDesarrollo.models-module.html,Module Sprint.models=Sprint.models-module.html,Module UserStory.models=UserStory.models-module.html"><a title="Actividades.models
-AdminProyectos.models
-Comentario.models
-Flujo.models
-PIC.models
-ProyectoDesarrollo.models
-Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-1', 'models', 'link-1');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name" targets="Class AdminProyectos.models.Proyecto=AdminProyectos.models.Proyecto-class.html"><a title="AdminProyectos.models.Proyecto" class="py-name" href="#" onclick="return doclink('link-2', 'Proyecto', 'link-2');">Proyecto</a></tt> </tt>
-<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt class="py-name">auth</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name"><a title="Actividades.models
-AdminProyectos.models
-Comentario.models
-Flujo.models
-PIC.models
-ProyectoDesarrollo.models
-Sprint.models
-UserStory.models" class="py-name" href="#" onclick="return doclink('link-3', 'models', 'link-1');">models</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">User</tt><tt class="py-op">,</tt> <tt class="py-name">Group</tt> </tt>
-<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">test</tt> <tt class="py-keyword">import</tt> <tt id="link-4" class="py-name" targets="Class django.test.client.Client=django.test.client.Client-class.html"><a title="django.test.client.Client" class="py-name" href="#" onclick="return doclink('link-4', 'Client', 'link-4');">Client</a></tt> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># Create your tests here.</tt> </tt>
-<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"> </tt>
-<a name="TestLista"></a><div id="TestLista-def"><a name="L7"></a><tt class="py-lineno"> 7</tt> <a class="py-toggle" href="#" id="TestLista-toggle" onclick="return toggle('TestLista');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="AdminProyectos.tests.TestLista-class.html">TestLista</a><tt class="py-op">(</tt><tt class="py-base-class">TestCase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="TestLista-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="TestLista-expanded"><a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
-<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
-<a name="TestLista.test_listaProyecto"></a><div id="TestLista.test_listaProyecto-def"><a name="L10"></a><tt class="py-lineno">10</tt> <a class="py-toggle" href="#" id="TestLista.test_listaProyecto-toggle" onclick="return toggle('TestLista.test_listaProyecto');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="AdminProyectos.tests.TestLista-class.html#test_listaProyecto">test_listaProyecto</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="TestLista.test_listaProyecto-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TestLista.test_listaProyecto-expanded"><a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">        <tt id="link-5" class="py-name" targets="Variable Actividades.models.Actividad.proyecto=Actividades.models.Actividad-class.html#proyecto,Variable Flujo.models.Flujo.proyecto=Flujo.models.Flujo-class.html#proyecto,Variable PIC.models.RolUsuarioProyecto.proyecto=PIC.models.RolUsuarioProyecto-class.html#proyecto,Variable Sprint.models.Estimacion_Proyecto.proyecto=Sprint.models.Estimacion_Proyecto-class.html#proyecto,Variable Sprint.models.Sprint.proyecto=Sprint.models.Sprint-class.html#proyecto,Variable UserStory.models.UserStory.proyecto=UserStory.models.UserStory-class.html#proyecto"><a title="Actividades.models.Actividad.proyecto
-Flujo.models.Flujo.proyecto
-PIC.models.RolUsuarioProyecto.proyecto
-Sprint.models.Estimacion_Proyecto.proyecto
-Sprint.models.Sprint.proyecto
-UserStory.models.UserStory.proyecto" class="py-name" href="#" onclick="return doclink('link-5', 'proyecto', 'link-5');">proyecto</a></tt><tt class="py-op">=</tt><tt id="link-6" class="py-name"><a title="AdminProyectos.models.Proyecto" class="py-name" href="#" onclick="return doclink('link-6', 'Proyecto', 'link-2');">Proyecto</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Method Sprint.models.Estimacion_Proyecto.objects()=Sprint.models.Estimacion_Proyecto-class.html#objects,Method Sprint.models.Estimacion_Sprint.objects()=Sprint.models.Estimacion_Sprint-class.html#objects,Method Sprint.models.Sprint.objects()=Sprint.models.Sprint-class.html#objects"><a title="Sprint.models.Estimacion_Proyecto.objects
-Sprint.models.Estimacion_Sprint.objects
-Sprint.models.Sprint.objects" class="py-name" href="#" onclick="return doclink('link-7', 'objects', 'link-7');">objects</a></tt><tt class="py-op">.</tt><tt class="py-name">create</tt><tt class="py-op">(</tt><tt id="link-8" class="py-name" targets="Variable Actividades.forms.ActividadForm.nombre=Actividades.forms.ActividadForm-class.html#nombre,Variable Actividades.models.Actividad.nombre=Actividades.models.Actividad-class.html#nombre,Variable AdminProyectos.forms.ProyectoForm.nombre=AdminProyectos.forms.ProyectoForm-class.html#nombre,Variable AdminProyectos.forms.ProyectoFormEdit.nombre=AdminProyectos.forms.ProyectoFormEdit-class.html#nombre,Variable AdminProyectos.models.Proyecto.nombre=AdminProyectos.models.Proyecto-class.html#nombre,Variable Flujo.forms.FlujoForm.nombre=Flujo.forms.FlujoForm-class.html#nombre,Variable Flujo.models.Flujo.nombre=Flujo.models.Flujo-class.html#nombre,Variable Sprint.forms.SprintForm.nombre=Sprint.forms.SprintForm-class.html#nombre,Variable Sprint.forms.SprintFormEdit.nombre=Sprint.forms.SprintFormEdit-class.html#nombre,Variable Sprint.models.Sprint.nombre=Sprint.models.Sprint-class.html#nombre,Variable UserStory.forms.UserStoryForm.nombre=UserStory.forms.UserStoryForm-class.html#nombre,Variable UserStory.forms.UserStoryFormEdit.nombre=UserStory.forms.UserStoryFormEdit-class.html#nombre,Variable UserStory.models.UserStory.nombre=UserStory.models.UserStory-class.html#nombre"><a title="Actividades.forms.ActividadForm.nombre
-Actividades.models.Actividad.nombre
-AdminProyectos.forms.ProyectoForm.nombre
-AdminProyectos.forms.ProyectoFormEdit.nombre
-AdminProyectos.models.Proyecto.nombre
-Flujo.forms.FlujoForm.nombre
-Flujo.models.Flujo.nombre
-Sprint.forms.SprintForm.nombre
-Sprint.forms.SprintFormEdit.nombre
-Sprint.models.Sprint.nombre
-UserStory.forms.UserStoryForm.nombre
-UserStory.forms.UserStoryFormEdit.nombre
-UserStory.models.UserStory.nombre" class="py-name" href="#" onclick="return doclink('link-8', 'nombre', 'link-8');">nombre</a></tt><tt class="py-op">=</tt><tt class="py-string">'PROYECTO1'</tt><tt class="py-op">,</tt><tt id="link-9" class="py-name" targets="Variable AdminProyectos.forms.ProyectoForm.descripcion=AdminProyectos.forms.ProyectoForm-class.html#descripcion,Variable AdminProyectos.forms.ProyectoFormEdit.descripcion=AdminProyectos.forms.ProyectoFormEdit-class.html#descripcion,Variable AdminProyectos.models.Proyecto.descripcion=AdminProyectos.models.Proyecto-class.html#descripcion,Variable Comentario.forms.ComentarioForm.descripcion=Comentario.forms.ComentarioForm-class.html#descripcion,Variable Comentario.models.Comentario.descripcion=Comentario.models.Comentario-class.html#descripcion,Variable UserStory.forms.UserStoryForm.descripcion=UserStory.forms.UserStoryForm-class.html#descripcion,Variable UserStory.forms.UserStoryFormEdit.descripcion=UserStory.forms.UserStoryFormEdit-class.html#descripcion,Variable UserStory.models.UserStory.descripcion=UserStory.models.UserStory-class.html#descripcion"><a title="AdminProyectos.forms.ProyectoForm.descripcion
-AdminProyectos.forms.ProyectoFormEdit.descripcion
-AdminProyectos.models.Proyecto.descripcion
-Comentario.forms.ComentarioForm.descripcion
-Comentario.models.Comentario.descripcion
-UserStory.forms.UserStoryForm.descripcion
-UserStory.forms.UserStoryFormEdit.descripcion
-UserStory.models.UserStory.descripcion" class="py-name" href="#" onclick="return doclink('link-9', 'descripcion', 'link-9');">descripcion</a></tt><tt class="py-op">=</tt><tt class="py-string">'hola'</tt><tt class="py-op">,</tt> <tt id="link-10" class="py-name" targets="Variable Actividades.models.Actividad.fecha_creacion=Actividades.models.Actividad-class.html#fecha_creacion,Variable AdminProyectos.models.Proyecto.fecha_creacion=AdminProyectos.models.Proyecto-class.html#fecha_creacion,Variable Comentario.models.Comentario.fecha_creacion=Comentario.models.Comentario-class.html#fecha_creacion,Variable Flujo.models.Flujo.fecha_creacion=Flujo.models.Flujo-class.html#fecha_creacion,Variable Sprint.models.Sprint.fecha_creacion=Sprint.models.Sprint-class.html#fecha_creacion,Variable UserStory.models.UserStory.fecha_creacion=UserStory.models.UserStory-class.html#fecha_creacion"><a title="Actividades.models.Actividad.fecha_creacion
-AdminProyectos.models.Proyecto.fecha_creacion
-Comentario.models.Comentario.fecha_creacion
-Flujo.models.Flujo.fecha_creacion
-Sprint.models.Sprint.fecha_creacion
-UserStory.models.UserStory.fecha_creacion" class="py-name" href="#" onclick="return doclink('link-10', 'fecha_creacion', 'link-10');">fecha_creacion</a></tt><tt class="py-op">=</tt><tt class="py-string">'2015-05-15 21:03:31-04'</tt><tt class="py-op">,</tt> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">                                         <tt id="link-11" class="py-name" targets="Variable AdminProyectos.forms.ProyectoForm.fechaInicio=AdminProyectos.forms.ProyectoForm-class.html#fechaInicio,Variable AdminProyectos.models.Proyecto.fechaInicio=AdminProyectos.models.Proyecto-class.html#fechaInicio,Variable Sprint.models.Estimacion_Proyecto.fechaInicio=Sprint.models.Estimacion_Proyecto-class.html#fechaInicio,Variable Sprint.models.Estimacion_Sprint.fechaInicio=Sprint.models.Estimacion_Sprint-class.html#fechaInicio,Variable Sprint.models.Sprint.fechaInicio=Sprint.models.Sprint-class.html#fechaInicio"><a title="AdminProyectos.forms.ProyectoForm.fechaInicio
-AdminProyectos.models.Proyecto.fechaInicio
-Sprint.models.Estimacion_Proyecto.fechaInicio
-Sprint.models.Estimacion_Sprint.fechaInicio
-Sprint.models.Sprint.fechaInicio" class="py-name" href="#" onclick="return doclink('link-11', 'fechaInicio', 'link-11');">fechaInicio</a></tt><tt class="py-op">=</tt><tt class="py-string">'2015-05-16'</tt><tt class="py-op">,</tt><tt id="link-12" class="py-name" targets="Variable AdminProyectos.models.Proyecto.fechaFin=AdminProyectos.models.Proyecto-class.html#fechaFin,Variable Sprint.models.Estimacion_Proyecto.fechaFin=Sprint.models.Estimacion_Proyecto-class.html#fechaFin,Variable Sprint.models.Estimacion_Sprint.fechaFin=Sprint.models.Estimacion_Sprint-class.html#fechaFin,Variable Sprint.models.Sprint.fechaFin=Sprint.models.Sprint-class.html#fechaFin"><a title="AdminProyectos.models.Proyecto.fechaFin
-Sprint.models.Estimacion_Proyecto.fechaFin
-Sprint.models.Estimacion_Sprint.fechaFin
-Sprint.models.Sprint.fechaFin" class="py-name" href="#" onclick="return doclink('link-12', 'fechaFin', 'link-12');">fechaFin</a></tt><tt class="py-op">=</tt><tt class="py-string">'2015-06-16'</tt><tt class="py-op">,</tt> <tt id="link-13" class="py-name" targets="Variable AdminProyectos.models.Proyecto.estado=AdminProyectos.models.Proyecto-class.html#estado,Variable Flujo.models.Flujo.estado=Flujo.models.Flujo-class.html#estado,Variable Sprint.models.Sprint.estado=Sprint.models.Sprint-class.html#estado,Variable UserStory.models.UserStory.estado=UserStory.models.UserStory-class.html#estado"><a title="AdminProyectos.models.Proyecto.estado
-Flujo.models.Flujo.estado
-Sprint.models.Sprint.estado
-UserStory.models.UserStory.estado" class="py-name" href="#" onclick="return doclink('link-13', 'estado', 'link-13');">estado</a></tt><tt class="py-op">=</tt><tt class="py-string">'EN-ESPERA'</tt><tt class="py-op">)</tt> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">        <tt class="py-comment">#usuario=User.objects.create(username='admin',password='admin')</tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">        <tt id="link-14" class="py-name" targets="Variable PIC.models.RolUsuarioProyecto.usuario=PIC.models.RolUsuarioProyecto-class.html#usuario,Variable UserStory.models.UserStory.usuario=UserStory.models.UserStory-class.html#usuario"><a title="PIC.models.RolUsuarioProyecto.usuario
-UserStory.models.UserStory.usuario" class="py-name" href="#" onclick="return doclink('link-14', 'usuario', 'link-14');">usuario</a></tt><tt class="py-op">=</tt><tt id="link-15" class="py-name"><a title="django.test.client.Client" class="py-name" href="#" onclick="return doclink('link-15', 'Client', 'link-4');">Client</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">        <tt class="py-name">resp</tt><tt class="py-op">=</tt><tt id="link-16" class="py-name"><a title="PIC.models.RolUsuarioProyecto.usuario
-UserStory.models.UserStory.usuario" class="py-name" href="#" onclick="return doclink('link-16', 'usuario', 'link-14');">usuario</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'/proyectos/'</tt><tt class="py-op">)</tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEqual</tt><tt class="py-op">(</tt><tt class="py-name">resp</tt><tt class="py-op">.</tt><tt class="py-name">status_code</tt><tt class="py-op">,</tt> <tt class="py-number">200</tt><tt class="py-op">)</tt> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">"\n Lista Proyecto "</tt> </tt>
-</div></div><a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
-<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"> </tt>
-<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
-<a name="TestProyecto"></a><div id="TestProyecto-def"><a name="L22"></a><tt class="py-lineno">22</tt> <a class="py-toggle" href="#" id="TestProyecto-toggle" onclick="return toggle('TestProyecto');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="AdminProyectos.tests.TestProyecto-class.html">TestProyecto</a><tt class="py-op">(</tt><tt class="py-base-class">TestCase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="TestProyecto-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="TestProyecto-expanded"><a name="TestProyecto.setUp"></a><div id="TestProyecto.setUp-def"><a name="L23"></a><tt class="py-lineno">23</tt> <a class="py-toggle" href="#" id="TestProyecto.setUp-toggle" onclick="return toggle('TestProyecto.setUp');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="AdminProyectos.tests.TestProyecto-class.html#setUp">setUp</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="TestProyecto.setUp-collapsed" style="display:none;" pad="++" indent="++++++++++++"></div><div id="TestProyecto.setUp-expanded"><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">                <tt class="py-keyword">print</tt> <tt class="py-string">"\n TEST Proyecto Existe"</tt> </tt>
-<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">                <tt class="py-keyword">print</tt> <tt class="py-string">"\nBuscar Proyecto Creado"</tt> </tt>
-<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">                <tt class="py-comment">#Proyecto.objects.create(nombre='Proyecto')</tt> </tt>
-<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">                <tt class="py-name">dato</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">'nombre'</tt><tt class="py-op">:</tt><tt class="py-string">'project1'</tt><tt class="py-op">,</tt> <tt class="py-string">'descripcion'</tt><tt class="py-op">:</tt><tt class="py-string">'p1'</tt><tt class="py-op">,</tt> <tt class="py-string">'fechaCreacion'</tt><tt class="py-op">:</tt><tt class="py-string">'2015-04-09 21:03:31-04'</tt><tt class="py-op">,</tt> <tt class="py-string">'fechaInicio'</tt><tt class="py-op">:</tt><tt class="py-string">'2015-04-09 21:03:31-04'</tt><tt class="py-op">,</tt> <tt class="py-string">'fechaFin'</tt><tt class="py-op">:</tt><tt class="py-string">'2015-04-09 21:03:31-04'</tt><tt class="py-op">,</tt> <tt class="py-string">'duracionEstimada'</tt><tt class="py-op">:</tt><tt class="py-string">'3'</tt><tt class="py-op">,</tt> <tt class="py-string">'estado'</tt><tt class="py-op">:</tt><tt class="py-string">'ok'</tt><tt class="py-op">,</tt> <tt class="py-string">'usuarios'</tt><tt class="py-op">:</tt><tt class="py-string">'1'</tt><tt class="py-op">}</tt> </tt>
-</div><a name="TestProyecto.test_traet"></a><div id="TestProyecto.test_traet-def"><a name="L28"></a><tt class="py-lineno">28</tt> <a class="py-toggle" href="#" id="TestProyecto.test_traet-toggle" onclick="return toggle('TestProyecto.test_traet');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="AdminProyectos.tests.TestProyecto-class.html#test_traet">test_traet</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="TestProyecto.test_traet-collapsed" style="display:none;" pad="++" indent="++++++++++++"></div><div id="TestProyecto.test_traet-expanded"><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">                <tt class="py-name">valido</tt><tt class="py-op">=</tt><tt class="py-name">True</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">                <tt class="py-comment">#valido=Proyecto.objects.filter(nombre='Proyecto').exists()</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">valido</tt><tt class="py-op">==</tt><tt class="py-name">False</tt><tt class="py-op">:</tt> </tt>
-<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">                        <tt class="py-keyword">print</tt> <tt class="py-string">"\nNo existe el Proyecto"</tt> </tt>
-<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">valido</tt> <tt class="py-op">==</tt> <tt class="py-name">True</tt><tt class="py-op">:</tt> </tt>
-<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">                        <tt class="py-keyword">print</tt> <tt class="py-string">"\nExiste el Proyecto"</tt> </tt>
-</div></div><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt>
-<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
-<a name="TestProyectoNO"></a><div id="TestProyectoNO-def"><a name="L37"></a><tt class="py-lineno">37</tt> <a class="py-toggle" href="#" id="TestProyectoNO-toggle" onclick="return toggle('TestProyectoNO');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="AdminProyectos.tests.TestProyectoNO-class.html">TestProyectoNO</a><tt class="py-op">(</tt><tt class="py-base-class">TestCase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="TestProyectoNO-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="TestProyectoNO-expanded"><a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt>
-<a name="TestProyectoNO.setUp"></a><div id="TestProyectoNO.setUp-def"><a name="L39"></a><tt class="py-lineno">39</tt> <a class="py-toggle" href="#" id="TestProyectoNO.setUp-toggle" onclick="return toggle('TestProyectoNO.setUp');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="AdminProyectos.tests.TestProyectoNO-class.html#setUp">setUp</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="TestProyectoNO.setUp-collapsed" style="display:none;" pad="++" indent="++++++++++++"></div><div id="TestProyectoNO.setUp-expanded"><a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">                <tt class="py-keyword">print</tt> <tt class="py-string">"\n TEST Proyecto no Existe"</tt> </tt>
-<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">                <tt class="py-keyword">print</tt> <tt class="py-string">"\nBuscar Proyecto Creada"</tt> </tt>
-<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">                <tt class="py-comment">#UserStory.objects.create(nombre='Proyecto')</tt> </tt>
-<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">                <tt class="py-name">dato</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">'nombre'</tt><tt class="py-op">:</tt><tt class="py-string">'project1'</tt><tt class="py-op">,</tt> <tt class="py-string">'descripcion'</tt><tt class="py-op">:</tt><tt class="py-string">'p1'</tt><tt class="py-op">,</tt> <tt class="py-string">'fechaCreacion'</tt><tt class="py-op">:</tt><tt class="py-string">'2015-04-09 21:03:31-04'</tt><tt class="py-op">,</tt> <tt class="py-string">'fechaInicio'</tt><tt class="py-op">:</tt><tt class="py-string">'2015-04-09 21:03:31-04'</tt><tt class="py-op">,</tt> <tt class="py-string">'fechaFin'</tt><tt class="py-op">:</tt><tt class="py-string">'2015-04-09 21:03:31-04'</tt><tt class="py-op">,</tt> <tt class="py-string">'duracionEstimada'</tt><tt class="py-op">:</tt><tt class="py-string">'3'</tt><tt class="py-op">,</tt> <tt class="py-string">'estado'</tt><tt class="py-op">:</tt><tt class="py-string">'ok'</tt><tt class="py-op">,</tt> <tt class="py-string">'usuarios'</tt><tt class="py-op">:</tt><tt class="py-string">'1'</tt><tt class="py-op">}</tt> </tt>
-</div><a name="TestProyectoNO.test_traet"></a><div id="TestProyectoNO.test_traet-def"><a name="L44"></a><tt class="py-lineno">44</tt> <a class="py-toggle" href="#" id="TestProyectoNO.test_traet-toggle" onclick="return toggle('TestProyectoNO.test_traet');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="AdminProyectos.tests.TestProyectoNO-class.html#test_traet">test_traet</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="TestProyectoNO.test_traet-collapsed" style="display:none;" pad="++" indent="++++++++++++"></div><div id="TestProyectoNO.test_traet-expanded"><a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">                <tt class="py-name">valido</tt><tt class="py-op">=</tt><tt class="py-name">False</tt> </tt>
-<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">                <tt class="py-comment">#valido=Proyecto.objects.filter(nombre='Proyecto').exists()</tt> </tt>
-<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">valido</tt><tt class="py-op">==</tt><tt class="py-name">False</tt><tt class="py-op">:</tt> </tt>
-<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">                        <tt class="py-keyword">print</tt> <tt class="py-string">"\nNo existe el Proyecto"</tt> </tt>
-<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">valido</tt> <tt class="py-op">==</tt> <tt class="py-name">True</tt><tt class="py-op">:</tt> </tt>
-<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">                        <tt class="py-keyword">print</tt> <tt class="py-string">"\nExiste el Proyecto"</tt> </tt>
-</div></div><a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># from django.test import TestCase</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># from AdminProyectos.models import Proyecto</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># from django.contrib.auth.models import User, Group</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># from django.test import Client</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># # Create your tests here.</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># class TestLista(TestCase):</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment">#     def test_listaProyecto(self):</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment">#         proyecto=Proyecto.objects.create(nombre='PROYECTO1',descripcion='hola', fecha_creacion='2015-05-15 21:03:31-04',</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment">#                                          fechaInicio='2015-05-16',fechaFin='2015-06-16', estado='EN-ESPERA')</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment">#         #usuario=User.objects.create(username='admin',password='admin')</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment">#         usuario=Client()</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment">#         resp=usuario.get('/proyectos/')</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment">#         self.assertEqual(resp.status_code, 200)</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment">#         print "\n Lista Proyecto "</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-comment"># class TestProyecto(TestCase):</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-comment">#       def setUp(self):</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-comment">#               print "\n TEST Proyecto Existe"</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-comment">#               print "\nBuscar Proyecto Creado"</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-comment">#               #Proyecto.objects.create(nombre='Proyecto')</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-comment">#               dato={'nombre':'project1', 'descripcion':'p1', 'fechaCreacion':'2015-04-09 21:03:31-04', 'fechaInicio':'2015-04-09 21:03:31-04', 'fechaFin':'2015-04-09 21:03:31-04', 'duracionEstimada':'3', 'estado':'ok', 'usuarios':'1'}</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-comment">#       def test_traet(self):</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-comment">#               valido=True</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-comment">#               #valido=Proyecto.objects.filter(nombre='Proyecto').exists()</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-comment">#               if valido==False:</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-comment">#                       print "\nNo existe el Proyecto"</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-comment">#               if valido == True:</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-comment">#                       print "\nExiste el Proyecto"</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-comment"># class TestProyectoNO(TestCase):</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-comment">#       def setUp(self):</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"><tt class="py-comment">#               print "\n TEST Proyecto no Existe"</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"><tt class="py-comment">#               print "\nBuscar Proyecto Creada"</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-comment">#               #UserStory.objects.create(nombre='Proyecto')</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"><tt class="py-comment">#               dato={'nombre':'project1', 'descripcion':'p1', 'fechaCreacion':'2015-04-09 21:03:31-04', 'fechaInicio':'2015-04-09 21:03:31-04', 'fechaFin':'2015-04-09 21:03:31-04', 'duracionEstimada':'3', 'estado':'ok', 'usuarios':'1'}</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-comment">#       def test_traet(self):</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-comment">#               valido=False</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt class="py-comment">#               #valido=Proyecto.objects.filter(nombre='Proyecto').exists()</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-comment">#               if valido==False:</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"><tt class="py-comment">#                       print "\nNo existe el Proyecto"</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt class="py-comment">#               if valido == True:</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"><tt class="py-comment">#                       print "\nExiste el Proyecto"</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -190,7 +133,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
+    Generated by Epydoc 3.0.1 on Fri Nov 27 23:25:48 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

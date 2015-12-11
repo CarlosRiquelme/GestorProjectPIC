@@ -198,17 +198,19 @@ def iniciar_proyecto(request):
                 user_story2.tiempo_estimado=i.tiempo_estimado
                 user_story2.save()
             ############################################################################
-        us_sprint=UserStory_Sprint.objects.filter(proyecto_id=objeto.id)
-        if not us_sprint.exists():
-            us=UserStory.objects.filter(proyecto_id=objeto.id).order_by('pk')
-            for i in us:
-                us_s=UserStory_Sprint()
-                us_s.proyecto_id=objeto.id
-                us_s.horas_estimada=i.tiempo_estimado
-                us_s.horas_trabajadas=i.tiempo_trabajado
-                us_s.sprint_id=i.sprint_id
-                us_s.us_id=i.id
-                us_s.save()
+        sprint=Sprint.objects.filter(proyecto_id=objeto.id)
+        for i in sprint:
+            suma_tiempo_estimado_us=0
+            us=UserStory.objects.filter(proyecto_id=objeto.id, sprint_id=i.id)
+            for j in us:
+                suma_tiempo_estimado_us+=j.tiempo_estimado
+            us_s=UserStory_Sprint()
+            us_s.proyecto_id=objeto.id
+            us_s.horas_estimada=suma_tiempo_estimado_us
+            us_s.horas_trabajadas=0
+            us_s.sprint_id=i.id
+            us_s.fecha=ahora
+            us_s.save()
 
     return render_to_response('HtmlProyecto/lista_proyectos_iniciados.html',{'lista':lista})
 @login_required(login_url='/admin/login/')
@@ -326,9 +328,10 @@ def listar_usuario_proyecto(request, id_proyecto):
     :param id_proyecto:
     :return:
     """
-    usuarioproyecto=RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto)
-    proyecto=Proyecto.objects.get(pk=id_proyecto)
+    usuarioproyecto=RolUsuarioProyecto.objects.filter(proyecto_id=id_proyecto).order_by('usuario')
+    us=UserStory.objects.filter(proyecto_id=id_proyecto).exclude(usuario=None)
 
+    proyecto=Proyecto.objects.get(pk=id_proyecto)
     paginator=Paginator(usuarioproyecto,5)
     page=request.GET.get('page')
     try:
@@ -521,31 +524,36 @@ def jo5(request,id_sprint):
     :param id_sprint:
     :return:
     """
+
     userstorys = UserStory_aux.objects.filter(sprint_id = id_sprint)
     sprint = Sprint.objects.get(pk=id_sprint)
-    cantidad=0
-    cantidad=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).count()
-    sprint_proceso=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint)
-    print "cantidad: "+str(cantidad)
-    v = [] #eje y estimado
-    v2 = [] # eje x
-    v3 = [] # eje y en proceso
+    # try:
+    #     sprint_proceso=Sprint_En_Proceso.objects.get(sprint_id=id_sprint)
+    # except ObjectDoesNotExist:
+    #     sprint_proceso=''
+    # cantidad=0
+    # if sprint_proceso != '':
+    #     for aux in sprint_proceso:
+    #         cantidad+=1
+
+    v = []
+    v2 = []
+
     suma = 0
     for aux1 in userstorys:
         suma = suma + aux1.tiempo_estimado
-    v3.append(suma)
+
+
 
     c=0
-    contador=0
-    #############Calculo del Sprint en proceso#######################
-    us_sprint=UserStory_Sprint.objects.filter(sprint_id=id_sprint)
-    suma_estimadas_del_sprint=0
-    for i in us_sprint:
-        suma_estimadas_del_sprint=suma_estimadas_del_sprint+i.horas_estimada
-    for au in sprint_proceso:
-        aeiou = suma_estimadas_del_sprint-au.horas_acumulada
-        v3.append(aeiou)
-    #########################################3
+    # contador=0
+    # for au in userstorys:
+    #     if cantidad !=0 and contador < cantidad:
+    #         contador+=1
+    #         aeiou = au.suma_trabajadas
+    #         v3.append(v3[c]-aeiou)
+    #         c=c+1
+
 
     v.append(suma)
     v2.append('Al Inicio')
@@ -609,6 +617,56 @@ def jo5(request,id_sprint):
 
 
     #v2.append(fec)
+    lista108 = v
+    lista300 = v2
+
+###divague
+
+    userstorys = UserStory_aux.objects.filter(sprint_id = id_sprint)
+    sprint = Sprint.objects.get(pk=id_sprint)
+    cantidad=0
+    cantidad=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).count()
+    sprint_proceso=Sprint_En_Proceso.objects.filter(sprint_id=id_sprint).order_by('pk')
+    print "cantidad: "+str(cantidad)
+    v = [] #eje y estimado
+    v2 = [] # eje x
+    v3 = [] # eje y en proceso
+    #####################CALCULO DE ESTIMACION DEL SPRINT#######################
+    suma = 0
+    for aux1 in userstorys:
+        suma = suma + aux1.tiempo_estimado
+
+    v.append(suma)
+    v2.append('Al Inicio')
+    userstorys_actual=UserStory.objects.filter(sprint_id=id_sprint)
+    suma_actual = 0
+    for aux1 in userstorys_actual:
+        suma_actual = suma_actual + aux1.tiempo_estimado
+    ##################### FIN=======CALCULO DE ESTIMACION DEL SPRINT#######################
+    v3.append(suma_actual)
+
+    c=0
+    contador=0
+
+
+    #############Calculo del Sprint en proceso#######################
+    us_sprint=UserStory_Sprint.objects.filter(sprint_id=id_sprint)
+
+    for i in us_sprint:
+        suma_estimadas_del_sprint=0
+        suma_trabajadas_del_sprint=0
+        suma_estimadas_del_sprint=suma_estimadas_del_sprint+i.horas_estimada
+        suma_trabajadas_del_sprint+=i.horas_trabajadas
+        resta=0
+        resta=suma_estimadas_del_sprint-suma_trabajadas_del_sprint
+        #v2.append(str(i.fecha))
+        v3.append(resta)
+    #########################################3
+
+
+
+
+    #v2.append(fec)
     lista1 = v
     lista3 = v2
     #lista3 = [0,1,2,3,4,5]
@@ -631,7 +689,7 @@ def jo5(request,id_sprint):
         ----------------------------------------------------------------------
     """
 
-    return render_to_response('line-basic3/index.html',{'lista3':lista3,'lista2':lista1,'lista1':lista2})
+    return render_to_response('line-basic3/index.html',{'lista3':lista300,'lista2':lista108,'lista1':lista2})
 def jo3(request,id_proyecto):
     """
     Funcion que grafica la estimacion del proyecto con lo que se esta desarrollando
@@ -639,13 +697,8 @@ def jo3(request,id_proyecto):
     :param id_proyecto:
     :return:
     """
-    userstorys=UserStory.objects.filter(proyecto_id=id_proyecto)
+    userstorys=UserStory_aux.objects.filter(proyecto_id=id_proyecto)
 
-    # try:
-    #     proyecto_proceso=Proyecto_En_Proceso.objects.get(proyecto_id=id_proyecto)
-    # except ObjectDoesNotExist:
-    #     proyecto_proceso=''
-    # cantidad=0
 
     lista1=[]   #Lista donde se guarda las estimacion del proyecto
     lista3=[]   #Lista de las fechas del proyecto
@@ -666,55 +719,63 @@ def jo3(request,id_proyecto):
     lista3.append(op)
 
 
-
-    sprints = Sprint.objects.filter(proyecto_id=id_proyecto).order_by("fechaFin")
+    ######################ESTIMACION DEL PROYECTO####################333
+    sprints = Sprint.objects.filter(proyecto_id=id_proyecto).order_by("fechaInicio")
     us_aux=UserStory_aux.objects.filter(proyecto_id=id_proyecto).order_by("sprint_id")
     for dato1 in sprints:
         suma = 0
         for dato2 in us_aux:
-
             if(dato2.sprint_id == dato1.id):
                 suma = suma + dato2.tiempo_estimado
         suma_estimacion_us = suma_estimacion_us - suma
         lista1.append(suma_estimacion_us)
         lista3.append(str(dato1.fechaFin))
+    #########################FIN DE ESTIMACION DEL PROYECTO####################
     print "sprint"
     print sprints
     proyecto_en_proceso=Proyecto_En_Proceso.objects.filter(proyecto_id=id_proyecto).order_by("fecha")
 
-    resta=0
-    fecha_max='2015-01-01'
-    if proyecto_en_proceso.exists():
-        for sp in sprints:
-            for pep in proyecto_en_proceso.reverse():
-                if sp.fechaInicio <= pep.fecha and pep.fecha <= sp.fechaFin:
-                    if fecha_max < str(pep.fecha):
-                        fecha_max=str(pep.fecha)
-                        resta=aux_suma_estimacion_us-pep.horas_acumulada_sprint
-                        lista4.append(resta)
-    else:
-        lista4.append(aux_suma_estimacion_us)
+# resta=0
+# fecha_max='2015-01-01'
+# if proyecto_en_proceso.exists():
+#     for sp in sprints:
+#         for pep in proyecto_en_proceso.reverse():
+#             if sp.fechaInicio <= pep.fecha and pep.fecha <= sp.fechaFin:
+#                 if fecha_max < str(pep.fecha):
+#                     fecha_max=str(pep.fecha)
+#                     resta=aux_suma_estimacion_us-pep.horas_acumulada_sprint
+#                     lista4.append(resta)
+# else:
+#     lista4.append(aux_suma_estimacion_us)
+    ##########################CALCULO DE SPRINT EN PROCESO######################333
+    suma_horas_sprint_trabajado=0
+    for s in sprints:
+
+        suma_horas_sprint_estimado=0
+        us_del_sprint=UserStory.objects.filter(sprint_id=s.id)
+        if s.estado == 'ABIERTO' or s.estado == 'CERRADO':
+            for us in us_del_sprint:
+                suma_horas_sprint_trabajado+=us.tiempo_trabajado
+                suma_horas_sprint_estimado+=us.tiempo_estimado
+            resta=0
+            resta=aux23-suma_horas_sprint_trabajado
+            lista4.append(resta)
+
+
+    ##########################FIN DEL CALCULO DEL SPRINT DEL PROCESO###############
     #lista1 = [120, 100,90,80,70,60,50,40,30,20,10,0]
     lista2 = lista4
     #lista3 = ['1', ' 2', ' 3', ' 4', ' 5', ' 6',
     #            ' 7', ' 8', ' 9', ' 10', ' 11', ' 12']
-
-    print "lista2"
-    print lista2
-    print "lista1"
-    print lista1
-    print "lista3"
-    print lista3
-
-
-
-
     return render_to_response('line-basic2/index.html',{'lista3':lista3,'lista2':lista1,'lista1':lista2})
 
 #################################################################################################
 #############################     A PARTIR DE ACA LOS               #############################
 #############################     DISTITNTOS REPORTES               #############################
 #################################################################################################
+def graficadeultimosprint(request,id_sprint):
+
+    return render_to_response('line-basic2/index.html',{'lista3':lista3,'lista2':lista1,'lista1':lista2})
 
 
 def reporte01(request,id_proyecto):

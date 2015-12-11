@@ -55,9 +55,15 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class UserStoryForm</h1><p class="nomargin-top"><span class="codelink"><a href="UserStory.forms-pysrc.html#UserStoryForm">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-django.forms.ModelForm --+
-                         |
-                        <strong class="uidshort">UserStoryForm</strong>
+                   object --+            
+                            |            
+  django.forms.forms.BaseForm --+        
+                                |        
+django.forms.models.BaseModelForm --+    
+                                    |    
+        django.forms.models.ModelForm --+
+                                        |
+                                       <strong class="uidshort">UserStoryForm</strong>
 </pre>
 
 <hr />
@@ -89,6 +95,79 @@ django.forms.ModelForm --+
     </td>
   </tr>
 </table>
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.models.BaseModelForm</code></b>:
+      <code>__init__</code>,
+      <code>clean</code>,
+      <code>save</code>,
+      <code>validate_unique</code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.models.BaseModelForm</code></b> (private):
+      <code>_get_validation_exclusions</code>,
+      <code>_post_clean</code>,
+      <code>_update_errors</code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.forms.BaseForm</code></b>:
+      <code>__getitem__</code>,
+      <code>__html__</code>,
+      <code>__iter__</code>,
+      <code>__repr__</code>,
+      <code>__str__</code>,
+      <code>__unicode__</code>,
+      <code>add_error</code>,
+      <code>add_initial_prefix</code>,
+      <code>add_prefix</code>,
+      <code>as_p</code>,
+      <code>as_table</code>,
+      <code>as_ul</code>,
+      <code>full_clean</code>,
+      <code>has_changed</code>,
+      <code>has_error</code>,
+      <code>hidden_fields</code>,
+      <code>is_multipart</code>,
+      <code>is_valid</code>,
+      <code>non_field_errors</code>,
+      <code>visible_fields</code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.forms.BaseForm</code></b> (private):
+      <code>_clean_fields</code>,
+      <code>_clean_form</code>,
+      <code>_html_output</code>,
+      <code>_raw_value</code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
 <!-- ==================== CLASS VARIABLES ==================== -->
 <a name="section-ClassVariables"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -106,13 +185,6 @@ django.forms.ModelForm --+
     </table>
   </td>
 </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="UserStory.forms.UserStoryForm-class.html#US_PRIORIDAD" class="summary-name">US_PRIORIDAD</a> = <code title="'BAJA', 'BAJA', ('MEDIA', 'MEDIA'), ('ALTA', 'ALTA'),">'BAJA', 'BAJA', ('MEDIA', 'MEDIA'), ('ALTA', 'A<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -135,8 +207,7 @@ label= &quot;Descripcion&quot;)">forms.CharField(widget= forms.Textarea(attrs= {
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="UserStory.forms.UserStoryForm-class.html#prioridad" class="summary-name">prioridad</a> = <code title="forms.MultipleChoiceField(widget= forms.SelectMultiple, choices= US_PR\
-IORIDAD)">forms.MultipleChoiceField(widget= forms.SelectMult<code class="variable-ellipsis">...</code></code>
+        <a href="UserStory.forms.UserStoryForm-class.html#prioridad" class="summary-name">prioridad</a> = <code title="forms.CharField(widget= forms.Select(choices= US_PRIORIDAD))">forms.CharField(widget= forms.Select(choices= US_P<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -146,6 +217,73 @@ IORIDAD)">forms.MultipleChoiceField(widget= forms.SelectMult<code class="variabl
         <a href="UserStory.forms.UserStoryForm-class.html#tiempo_estimado" class="summary-name">tiempo_estimado</a> = <code title="forms.IntegerField(label= &quot;Tiempo Estimado(hs)&quot;, widget= forms.TextInp\
 ut(attrs= {'class': 'form-control', 'type': 'number', 'min': '0', 'max\
 ': '100'}))">forms.IntegerField(label= &quot;Tiempo Estimado(h<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="UserStory.forms.UserStoryForm-class.html#_meta" class="summary-name" onclick="show_private();">_meta</a> = <code title="&lt;django.forms.models.ModelFormOptions object at 0x7f87e5ba3150&gt;">&lt;django.forms.models.ModelFormOptions object at 0x7f87<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="UserStory.forms.UserStoryForm-class.html#base_fields" class="summary-name">base_fields</a> = <code title="OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7f8\
+7e5b97d90&gt;), ('descripcion', &lt;django.forms.fields.CharField object at \
+0x7f87e5b97e50&gt;), ('prioridad', &lt;django.forms.fields.CharField object \
+at 0x7f87e5b97f50&gt;), ('tiempo_estimado', &lt;django.forms.fields.IntegerF\
+ield object at 0x7f87e5b97fd0&gt;)])">OrderedDict([('nombre', &lt;django.forms.fields.Cha<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="UserStory.forms.UserStoryForm-class.html#declared_fields" class="summary-name">declared_fields</a> = <code title="OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7f8\
+7e5b97d90&gt;), ('descripcion', &lt;django.forms.fields.CharField object at \
+0x7f87e5b97e50&gt;), ('prioridad', &lt;django.forms.fields.CharField object \
+at 0x7f87e5b97f50&gt;), ('tiempo_estimado', &lt;django.forms.fields.IntegerF\
+ield object at 0x7f87e5b97fd0&gt;)])">OrderedDict([('nombre', &lt;django.forms.fields<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="UserStory.forms.UserStoryForm-class.html#media" class="summary-name">media</a><br />
+      Provide a description of all media required to render the widgets on 
+      this form
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>django.forms.forms.BaseForm</code></b>:
+      <code>changed_data</code>,
+      <code>errors</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
     </td>
   </tr>
 </table>
@@ -167,24 +305,6 @@ ut(attrs= {'class': 'form-control', 'type': 'number', 'min': '0', 'max\
   </td>
 </tr>
 </table>
-<a name="US_PRIORIDAD"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">US_PRIORIDAD</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-'BAJA', 'BAJA', ('MEDIA', 'MEDIA'), ('ALTA', 'ALTA'),
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
 <a name="nombre"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -237,8 +357,7 @@ label= &quot;Descripcion&quot;)
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-forms.MultipleChoiceField(widget= forms.SelectMultiple, choices= US_PR<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-IORIDAD)
+forms.CharField(widget= forms.Select(choices= US_PRIORIDAD))
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -261,6 +380,102 @@ ut(attrs= {'class': 'form-control', 'type': 'number', 'min': '0', 'max<span clas
 ': '100'}))
 </pre></td></tr></table>
 </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_meta"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_meta</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;django.forms.models.ModelFormOptions object at 0x7f87e5ba3150&gt;
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="base_fields"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">base_fields</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7f8<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+7e5b97d90&gt;), ('descripcion', &lt;django.forms.fields.CharField object at <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+0x7f87e5b97e50&gt;), ('prioridad', &lt;django.forms.fields.CharField object <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+at 0x7f87e5b97f50&gt;), ('tiempo_estimado', &lt;django.forms.fields.IntegerF<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ield object at 0x7f87e5b97fd0&gt;)])
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="declared_fields"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">declared_fields</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+OrderedDict([('nombre', &lt;django.forms.fields.CharField object at 0x7f8<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+7e5b97d90&gt;), ('descripcion', &lt;django.forms.fields.CharField object at <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+0x7f87e5b97e50&gt;), ('prioridad', &lt;django.forms.fields.CharField object <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+at 0x7f87e5b97f50&gt;), ('tiempo_estimado', &lt;django.forms.fields.IntegerF<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ield object at 0x7f87e5b97fd0&gt;)])
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="media"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">media</h3>
+  <p>Provide a description of all media required to render the widgets on 
+  this form</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><i>unreachable</i>._media(<span class="summary-sig-arg">self</span>)</span>
+    </dd>
   </dl>
 </td></tr></table>
 </div>
@@ -288,7 +503,7 @@ ut(attrs= {'class': 'form-control', 'type': 'number', 'min': '0', 'max<span clas
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May 30 12:16:52 2015
+    Generated by Epydoc 3.0.1 on Fri Nov 27 23:25:47 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

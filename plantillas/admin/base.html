@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}{% endblock %}</title>
+  <title>GestorProjectPIC</title>
 
 
 
@@ -29,7 +29,7 @@
   <script>
     (function ($) {
       $(document).ready(function(){
-        $("#overlay").delay(600).fadeOut(500);
+        $("#overlay").delay(100).fadeOut(50);
       });
     })(django.jQuery);
   </script>
@@ -66,17 +66,17 @@
 
             <div id="sidebar-menu" class="col-xs-6 col-sm-3 col-md-2 sidebar-menu">
               {% block branding %}
-                <a href="{% url 'admin:index' %}" class="django-admin-logo">
+
                   <!-- Django Administration -->
                   <img src="{% static "bootstrap_admin/img/logo-140x60.png" %}" alt="{{ site_header|default:_('Django administration') }}">
-                </a>
+
               {% endblock branding %}
-              {% block filters %}{% endblock filters %}
-               {# {% render_menu_app_list %} #}<!-- Exploto cuando cree vista de actividad por eso esta comentado -->
-     <!-- MENU PRINCIPAL AGREGAR LOS LINK AQUI -->
+
+
+                <!-- MENU PRINCIPAL AGREGAR LOS LINK AQUI -->
                 <!-- USUARIOS-->
                 {% if user.esAdmin %}
-                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Usuarios</a></li>
+                <li><a  class="dropdown-toggle" data-toggle="dropdown"> Usuarios</a></li>
                 <ul>
                     <li><a href="/usuarios">Listar</a></li>
 
@@ -85,7 +85,7 @@
 
                 </ul>
                 <!-- PERMISOS O ROLES-->
-                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Roles</a></li>
+                <li><a  class="dropdown-toggle" data-toggle="dropdown"> Roles</a></li>
 
                 <ul>
                     <li><a href="/rol/listar">Listar</a></li>
@@ -118,7 +118,7 @@
           {% endblock sidebar_menu %}
         {% endif %}
       {% endif %}
-
+<!--  content_container -->
       {% block content_container %}
         <div id="content" class="{% if is_displaying_menu %}col-xs-6 col-xs-offset-6 col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2{% else %}col-sm-12{% endif %} main {% block coltype %}colM{% endblock %}">
           {% block main_header %}
@@ -133,60 +133,22 @@
               {% block pretitle %}{% endblock %}
               {% block content_title %}
                 <h1>
-                {% if title %}
-                  <span class="django-admin-title">{{ site_header|default:_('PIC') }} &raquo;</span>
-                  {{ title }}
-                {% else %}
-                  {{ site_header|default:_('PIC') }}
-                {% endif %}
+
+                   GestorProjectPIC
+
                 </h1>
               {% endblock %}
               <div id="user-tools" class="btn-group">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    {% if user.is_active and user.is_staff %}
-                      {% block welcome-msg %}
-                        {% firstof user.get_short_name user.get_username %}
-                      {% endblock %}
-                    {% endif %}
-                    <span class="caret"></span>
-                  </button>
 
-                  {% url 'django-admindocs-docroot' as docsroot %}
-                  <ul class="dropdown-menu pull-right" role="menu">
-                    {% if docsroot %}
-                      <li class="hidden-sm">
-                        <a href="{{ docsroot }}">{% trans 'Documentation' %}</a>
-                      </li>
-                    {% endif %}
-                    {% if user.has_usable_password %}
-                      <li>
-                        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>
-                      </li>
-                    {% endif %}
-                    <li>
-                      <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
-                    </li>
-                  </ul>
-                </div>
-                {% if docsroot %}
-                  <a href="{{ docsroot }}" title="{% trans 'Documentation' %}" class="btn btn-default hidden-sm"><span class="glyphicon glyphicon-book"></span></a>
-                {% endif %}
                 <a href="{% url 'admin:logout' %}" title="{% trans 'Log out' %}" class="btn btn-default hidden-xs">
                   <span class="glyphicon glyphicon-off"></span>
                 </a>
+
               </div>
             </div>
           {% endblock main_header %}
-          {% block breadcrumbs %}
-            <ol class="breadcrumb">
-              <li class="home">
-                <a href="{% url 'admin:index' %}" title="{% trans 'Home' %}"><span class="glyphicon glyphicon-home"></span></a>
-              </li>
-              <li class="active">{% if title %}{{ title }}{% endif %}</li>
-            </ol>
-          {% endblock %}
-
+<!-- fin  content_container -->
+<!-- messages -->
           {% block messages %}
             {% if messages %}
                 {% for message in messages %}
@@ -197,7 +159,7 @@
                 {% endfor %}
             {% endif %}
           {% endblock messages %}
-
+<!-- fin  messages -->
           {% block content %}
             {% block object-tools %}{% endblock %}
             {{ content }}
